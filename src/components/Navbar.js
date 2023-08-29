@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     let account =JSON.parse(localStorage.getItem('account'));
@@ -43,7 +43,7 @@ const Navbar = () => {
                                                  </li>
                                                  {account.role.name=== "ROLE_HOST" && 
                                                  <li>
-                                                   <a>MANAGER MY HOUSE</a>
+                                                   <Link to="/host">MANAGER MY HOUSE</Link>
                                                  </li>}
                                                  {account.role.name=== "ROLE_ADMIN" && 
                                                  <li>
