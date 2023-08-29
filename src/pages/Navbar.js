@@ -2,6 +2,9 @@ import React from 'react';
 
 
 const Navbar = () => {
+    let account =JSON.parse(localStorage.getItem('account'));
+    // account={id:1,role:{name:"ROLE_ADMIN"}}
+    
     return (
         <>
             <header className="header-area">
@@ -23,21 +26,47 @@ const Navbar = () => {
                                             style={{ marginTop: "-25px" }}
                                         >
                                             <li>
-                                                {/*                                            <a><img style="border-radius: 50%;border-color: #0d0d0d" width="50"*/}
-                                                {/*                                                    height="50"*/}
-                                                {/*                                                    src="https://khoinguonsangtao.vn/wp-content/uploads/2022/02/anh-dai-dien-fb-dep.jpg"></a>*/}
-                                                {/*                                            <ul class="dropdown">*/}
-                                                {/*                                                <li><a>Thông tin cá nhân</a></li>*/}
-                                                {/*                                                <li><a>Lịch sử giao dịch</a></li>*/}
-                                                {/*                                                <li><a>Đăng xuất</a></li>*/}
-                                                {/*                                            </ul>*/}
+                                                {account !==null && 
+                                               <>
+                                               <a>
+                                                 <img
+                                                   style={{ borderRadius: "50%", borderColor: "#0d0d0d" }}
+                                                   width={50}
+                                                   height={50}
+                                                   src={account.avatar}
+                                                 />
+                                               </a>
+                                               <ul className="dropdown">
+                                                 <li>
+                                                   <a>INFORMATION</a>
+                                                 </li>
+                                                 <li>
+                                                   <a>ORDER HISTORY</a>
+                                                 </li>
+                                                 {account.role.name=== "ROLE_HOST" && 
+                                                 <li>
+                                                   <a>MANAGER MY HOUSE</a>
+                                                 </li>}
+                                                 {account.role.name=== "ROLE_ADMIN" && 
+                                                 <li>
+                                                   <a>MANAGER ACCOUNT</a>
+                                                 </li>     
+                                                 }
+                                                 <li>
+                                                   <a>Log out</a>
+                                                 </li>
+                                               </ul>
+                                             </>
+                                             }
+                                                {account ===null && 
+                                                <>
                                                 <div className="header-login-register">
                                                     <ul className="login">
                                                         <li>
                                                             <a style={{ cursor: "pointer" }}>Login</a>
                                                             <div className="login-form">
                                                                 <h4>Login</h4>
-                                                                <form action="#" method="post">
+                                                                <form >
                                                                     <div className="input-box mb-19">
                                                                         <i className="fa fa-user" />
                                                                         <input
@@ -55,14 +84,13 @@ const Navbar = () => {
                                                                         />
                                                                     </div>
                                                                     <div className="social-links mt-25">
-                                                                        <a href="#">
+                                                                        <a >
                                                                             <i className="fa fa-facebook" />
                                                                         </a>
-                                                                        <a href="#">
+                                                                        <a >
                                                                             <i className="fa fa-google-plus" />
                                                                         </a>
                                                                         <button
-                                                                            type="submit"
                                                                             className="register-btn button lemon pull_right"
                                                                         >
                                                                             Login
@@ -123,6 +151,7 @@ const Navbar = () => {
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                </>}
                                             </li>
                                         </ul>
                                     </nav>
