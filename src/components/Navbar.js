@@ -27,17 +27,14 @@ const Navbar = () => {
                 console.log(data)
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
-
-
-
             })
             .catch(function (err) {
                 console.log(err)
                 setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
-
             })
 
     };
+    
     const isValidInput = (input) => {
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(input);
