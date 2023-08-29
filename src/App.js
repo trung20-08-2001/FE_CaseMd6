@@ -1,14 +1,18 @@
 
-import Navbar from "./pages/Navbar";
-import Footer from "./pages/Footer";
-import { Routes } from "react-router-dom";
+import { Routes,Route } from "react-router-dom";
+import Master from "./components/layout/Master";
+import Host from "./components/Host";
+import CreateHouse from "./pages/CreateHouse";
 
 function App() {
   return (
     <>
       <Routes>
-        <Navbar></Navbar>
-        <Footer></Footer>
+        <Route path="" element={<Master/>}>
+          <Route path="host" element={<Host/>}>
+            <Route  index element={<CreateHouse/>}></Route>
+          </Route>
+        </Route>
       </Routes>
     </>
   );

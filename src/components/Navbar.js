@@ -3,7 +3,7 @@ import React from 'react';
 
 const Navbar = () => {
     let account =JSON.parse(localStorage.getItem('account'));
-    // account={id:1,role:{name:"ROLE_ADMIN"}}
+    account={id:1,role:{name:"ROLE_HOST"}}
     
     return (
         <>
@@ -21,10 +21,8 @@ const Navbar = () => {
                             <div className="col-lg-10 d-none d-lg-block">
                                 <div className="pull_right">
                                     <nav id="primary-menu">
-                                        <ul
-                                            className="main-menu text-right"
-                                            style={{ marginTop: "-25px" }}
-                                        >
+                                        <ul className="main-menu text-right"
+                                            style={{ marginTop: "-25px" }} >
                                             <li>
                                                 {account !==null && 
                                                <>
