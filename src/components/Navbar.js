@@ -138,9 +138,6 @@ const Navbar = () => {
                                                     </>
 
                                                 )}
-
-
-
                                                 {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
                                                     <div className="header-login-register">

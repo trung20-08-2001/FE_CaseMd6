@@ -32,7 +32,8 @@ const Register = () => {
                         let account={
                             ...values,
                             role:{id:3},
-                            status:{id:1}
+                            status:{id:1},
+                            avatar:"https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-image-700-205124837.jpg"
                         }
                         axios.post("http://localhost:8080/accounts/createAccount", account);
                         Swal.fire({
