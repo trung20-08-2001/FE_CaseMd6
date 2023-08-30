@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { saveImage, saveImageURL } from "../../services/imageService"
 const initState={
-    imageURL:'',
+    imageURL:'https://afdevinfo.com/wp-content/uploads/2017/10/thiet-ke-hinh-ngoi-nha-dep.jpg',
     image:{}
 }
 

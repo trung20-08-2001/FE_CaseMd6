@@ -13,6 +13,7 @@ export const saveImage = createAsyncThunk(
 export const saveImageURL= createAsyncThunk(
     "image/saveImageURL",
     async(imageURL)=>{
+        console.log(imageURL);
         return imageURL;
     }
 )
