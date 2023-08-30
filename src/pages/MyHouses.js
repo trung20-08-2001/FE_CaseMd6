@@ -16,7 +16,6 @@ function MyHouses() {
     console.log(myHouses);
     return (
         <>
-
             <div className="row single-property_area">
                 {myHouses.map(item => {
                     return(
@@ -27,6 +26,10 @@ function MyHouses() {
                                 <h4 className="text-white mb-12">
                                     <a >{item.house.name}</a>
                                 </h4>
+
+
+
+                                
                                 <span>
                                     <span className="mr-10">
                                         <img src="../images/icons/map.png" alt="" />
