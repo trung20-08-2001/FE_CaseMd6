@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import Register from "../components/Register";
 
 
 const Navbar = () => {
@@ -40,6 +41,7 @@ const Navbar = () => {
         return regex.test(input);
     };
 
+
     return (
         <>
             <header className="header-area">
@@ -49,7 +51,7 @@ const Navbar = () => {
                             <div className="col-lg-2">
                                 <div className="logo">
                                     <a href="index.html">
-                                        <img src="images/logo/logo.png" alt="DomInno" />
+                                        <img src="images/logo/logo.png" alt="DomInno"/>
                                     </a>
                                 </div>
                             </div>
@@ -58,7 +60,7 @@ const Navbar = () => {
                                     <nav id="primary-menu">
                                         <ul
                                             className="main-menu text-right"
-                                            style={{ marginTop: "-25px" }}
+                                            style={{marginTop: "-25px"}}
                                         >
                                             <li>
                                                 {isLoggedIn && (
@@ -97,12 +99,12 @@ const Navbar = () => {
                                                     <div className="header-login-register">
                                                     <ul className="login">
                                                         <li>
-                                                            <a style={{ cursor: "pointer" }}>Login</a>
+                                                            <a style={{cursor: "pointer"}}>Login</a>
                                                             <div className="login-form">
                                                                 <h4>Login</h4>
                                                                 <form onSubmit={handleLogin}>
                                                                     <div className="input-box mb-19">
-                                                                        <i className="fa fa-user" />
+                                                                        <i className="fa fa-user"/>
                                                                         <input
                                                                             type="text"
                                                                             value={username}
@@ -111,7 +113,7 @@ const Navbar = () => {
                                                                         />
                                                                     </div>
                                                                     <div className="input-box">
-                                                                        <i className="fa fa-lock" />
+                                                                        <i className="fa fa-lock"/>
                                                                         <input
                                                                             type="password"
                                                                             value={password}
@@ -127,10 +129,10 @@ const Navbar = () => {
                                                                     )}
                                                                     <div className="social-links mt-25">
                                                                         <a href="#">
-                                                                            <i className="fa fa-facebook" />
+                                                                            <i className="fa fa-facebook"/>
                                                                         </a>
                                                                         <a href="#">
-                                                                            <i className="fa fa-google-plus" />
+                                                                            <i className="fa fa-google-plus"/>
                                                                         </a>
                                                                         <button
                                                                             type="submit"
@@ -145,51 +147,10 @@ const Navbar = () => {
                                                     </ul>
                                                     <ul className="login">
                                                         <li>
-                                                            <a style={{ cursor: "pointer" }}>Register</a>
+                                                            <a style={{cursor: "pointer"}}>Register</a>
                                                             <div className="login-form">
                                                                 <h4>Sign Up</h4>
-                                                                <form>
-                                                                    <div className="input-box mb-19">
-                                                                        <i className="fa fa-user" />
-                                                                        <input
-                                                                            type="text"
-                                                                            name="username"
-                                                                            placeholder="Username"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="input-box mb-19">
-                                                                        <i className="fa fa-phone" />
-                                                                        <input
-                                                                            type="password"
-                                                                            name="phone"
-                                                                            placeholder="Phone"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="input-box mb-19">
-                                                                        <i className="fa fa-lock" />
-                                                                        <input
-                                                                            type="text"
-                                                                            name="password"
-                                                                            placeholder="Password"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="input-box mb-19">
-                                                                        <i className="fa fa-lock" />
-                                                                        <input
-                                                                            type="text"
-                                                                            name="confirmPassword"
-                                                                            placeholder="ConfirmPassword"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="button-box mt-20">
-                                                                        <button
-                                                                            type="submit"
-                                                                            className="register-btn button lemon pull_right"
-                                                                        >
-                                                                            Sign Up
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
+                                                               <Register/>
                                                             </div>
                                                         </li>
                                                     </ul>
