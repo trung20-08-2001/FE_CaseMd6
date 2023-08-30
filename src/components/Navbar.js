@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import Register from "../components/Register";
+import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -54,18 +55,15 @@ const Navbar = () => {
                         <div className="row">
                             <div className="col-lg-2">
                                 <div className="logo">
-                                    <a href="index.html">
-                                        <img src="images/logo/logo.png" alt="DomInno"/>
-                                    </a>
+                                    <Link to="">
+                                        <img src="../images/logo/logo.png" alt="DomInno"/>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="col-lg-10 d-none d-lg-block">
                                 <div className="pull_right">
                                     <nav id="primary-menu">
-                                        <ul
-                                            className="main-menu text-right"
-                                            style={{marginTop: "-25px"}}
-                                        >
+                                        <ul className="main-menu text-right" style={{marginTop: "-25px"}}>
                                             <li>
                                                 {account!==null && (
                                                     <>
@@ -94,7 +92,6 @@ const Navbar = () => {
                                                             />
                                                         </a>
                                                         <ul className="dropdown">
-
 
                                                             {account.role.id === 3 &&
                                                             <>
@@ -129,7 +126,7 @@ const Navbar = () => {
                                                                     <a>Đăng tin</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a>Quan ly cac phong cho thue</a>
+                                                                    <Link to="/host">Quan ly cac phong cho thue</Link>
                                                                 </li>
                                                                 <li>
                                                                     <a>Thông tin cá nhân</a>

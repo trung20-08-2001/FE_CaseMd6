@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse } from "../../services/houseService"
-
-
+import { saveHouse,findHouseByAccount } from "../../services/houseService"
 
 const initState={
-    house:{}
+    house:{},
+    myHouses:[]
 }
 
 
@@ -18,11 +17,19 @@ const houseSlice=createSlice({
             state.house=action.payload
         })
         build.addCase(saveHouse.rejected, (state,action)=>{
-            console.log(action.payload)
             state.house={}
         })
         build.addCase(saveHouse.pending, (state,action)=>{
             state.house={}
+        })
+        build.addCase(findHouseByAccount.fulfilled, (state,action)=>{
+            state.myHouses=action.payload;
+        })
+        build.addCase(findHouseByAccount.rejected, (state,action)=>{
+            state.myHouses=[]
+        })
+        build.addCase(findHouseByAccount.pending, (state,action)=>{
+            state.myHouses=[]
         })
     }
 })

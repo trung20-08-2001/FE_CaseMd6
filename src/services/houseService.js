@@ -8,3 +8,12 @@ export const saveHouse=createAsyncThunk(
         return house;
     }
 )
+
+
+export const findHouseByAccount=createAsyncThunk(
+    "houses/myHouses",
+    async(idAccount)=>{
+        const response=await customAxios.get("/houses/findHouseByAccount/"+idAccount)
+        return response.data;
+    }
+)
