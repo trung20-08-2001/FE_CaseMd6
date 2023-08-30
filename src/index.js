@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.css'; // Import CSS của Bootstrap
+import 'bootstrap/dist/js/bootstrap.js'; // Import JS của Bootstrap
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

@@ -2,7 +2,7 @@ import Navbar from "./pages/Navbar";
 import Footer from "./pages/Footer";
 import EditProfile from "./components/EditProfile";
 import {Route, Routes} from "react-router-dom";
-import ListVendor from "./components/admin/ListVendor";
+import ShowVendor from "./components/admin/ShowVendor";
 
 function App() {
     return (
@@ -10,7 +10,7 @@ function App() {
             <Navbar></Navbar>
             <Routes>
                 <Route path={'/:id'} element={<EditProfile/>}></Route>
-                <Route path={'/admin/vendors'} element={<ListVendor/>}></Route>
+                <Route path={'/admin/vendors'} element={<ShowVendor/>}></Route>
             </Routes>
             <Footer></Footer>
         </>
