@@ -84,10 +84,9 @@ const CreateHouse = () => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Tạo nhà thành công!',
+                    text: 'Congratulations on your successful house creation!',
                 });
             })
-
     };
 
     return (
@@ -152,11 +151,11 @@ const CreateHouse = () => {
                                         ) : null}
 
 
-                                        <Field as="select" name="category" className="mb-28" onChange={(event) => handleCategoryChange(event)}>
+                                        <select name="category" className="mb-28" onChange={(event) => handleCategoryChange(event)}>
                                             {categories.map(category =>
                                                 <option key={category.id} value={category.id}>{category.name}</option>
                                             )}
-                                        </Field>
+                                        </select>
 
 
                                         <Field as="textarea" name="description" placeholder="Enter description" style={{ height: "270px" }} className="mb-28" />
