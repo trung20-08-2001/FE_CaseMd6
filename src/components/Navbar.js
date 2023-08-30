@@ -93,17 +93,18 @@ const Navbar = () => {
                                                         </a>
                                                         <ul className="dropdown">
 
-                                                            <li>
-                                                                <a>Thông tin cá nhân</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Thay doi thong tin co ban</a>
-                                                            </li>
-                                                            <li>
-                                                                <a>Doi mat khau</a>
-                                                            </li>
+
                                                             {account.role.id === 3 &&
                                                             <>
+                                                                <li>
+                                                                    <a>Thông tin cá nhân</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Thay doi thong tin co ban</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Doi mat khau</a>
+                                                                </li>
                                                             <li>
                                                                 <a>Tro thanh nguoi cho thue</a>
                                                             </li>
@@ -125,9 +126,19 @@ const Navbar = () => {
                                                                 <li>
                                                                     <a>Đăng tin</a>
                                                                 </li>
-                                                            <li>
-                                                                <a>Quan ly cac phong cho thue</a>
-                                                            </li>
+                                                                <li>
+                                                                    <a>Quan ly cac phong cho thue</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Thông tin cá nhân</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Thay doi thong tin co ban</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Doi mat khau</a>
+                                                                </li>
+
                                                             </>
                                                             }
                                                             <li>
