@@ -10,6 +10,7 @@ const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
     const account=JSON.parse(localStorage.getItem("account"))
 
+
     const handleLogin = async (event) => {
         event.preventDefault();
         // Kiểm tra các trường đăng nhập
@@ -28,14 +29,17 @@ const Navbar = () => {
                 localStorage.setItem("account",JSON.stringify(data.data));
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
+
+
+
             })
             .catch(function (err) {
                 console.log(err)
                 setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
+
             })
 
     };
-    
     const isValidInput = (input) => {
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(input);
