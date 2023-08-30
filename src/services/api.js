@@ -1,11 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
-const token = '';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://localhost:8080',
-});
+let account=JSON.parse(localStorage.getItem('account')) ?? {};
 
-axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-export default axiosInstance;
+const customAxios = axios.create({
+  
+    headers: {
+        Authorization: `Bearer ${account.token}`
+    },
+    baseURL: 'http://localhost:8080/'
+})
+export default customAxios;

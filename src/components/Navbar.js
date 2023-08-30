@@ -7,7 +7,7 @@ const Navbar = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
-
+    const account=JSON.parse(localStorage.getItem("account"))
 
 
     const handleLogin = async (event) => {
@@ -25,7 +25,7 @@ const Navbar = () => {
 
         axios.post("http://localhost:8080/api/login", account)
             .then(data => {
-                console.log(data)
+                localStorage.setItem("account",JSON.stringify(data.data));
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
@@ -65,25 +65,71 @@ const Navbar = () => {
                                             style={{ marginTop: "-25px" }}
                                         >
                                             <li>
-                                                {isLoggedIn && (
+                                                {account!==null && (
                                                     <>
-                                                        <a>
-                                                            <i
-                                                                className="fa fa-bars"></i>
+                                                        <a
+                                                            style={{
+                                                                display: 'inline-block',
+                                                                border: '2px solid #0d0d0d',
+                                                                borderRadius: '4px',
+                                                                backgroundColor: '#ffffff',
+                                                                padding: '8px 12px',
+                                                                cursor: 'pointer',
+                                                                textDecoration: 'none',
+                                                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                                                transition: 'box-shadow 0.3s ease',
+                                                            }}
+                                                        >
+                                                            <i className="fa fa-bars"></i>
                                                             <img
-                                                                style={{ borderRadius: "50%", borderColor: "#0d0d0d" }}
-                                                                width={35}
-                                                                height={35}
-                                                                src="https://khoinguonsangtao.vn/wp-content/uploads/2022/02/anh-dai-dien-fb-dep.jpg"
+                                                                style={{
+                                                                    borderRadius: '50%',
+                                                                    width: 35,
+                                                                    height: 35,
+                                                                }}
+                                                                src={account.avatar}
+                                                                alt="Avatar"
                                                             />
                                                         </a>
                                                         <ul className="dropdown">
-                                                            <li>
-                                                                <a>Đăng tin</a>
-                                                            </li>
+
                                                             <li>
                                                                 <a>Thông tin cá nhân</a>
                                                             </li>
+                                                            <li>
+                                                                <a>Thay doi thong tin co ban</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Doi mat khau</a>
+                                                            </li>
+                                                            {account.role.id === 3 &&
+                                                            <>
+                                                            <li>
+                                                                <a>Tro thanh nguoi cho thue</a>
+                                                            </li>
+                                                            </>
+                                                            }
+
+                                                            {account.role.id===1 &&
+<>                                                                <li>
+                                                                    <a>Quan lý tài khoản khách hàng</a>
+                                                                </li>
+
+                                                                <li>
+                                                                <a>Quan ly tai khoan chu nha</a>
+                                                                </li>
+</>
+                                                            }
+                                                            {account.role.id===2 &&
+                                                            <>
+                                                                <li>
+                                                                    <a>Đăng tin</a>
+                                                                </li>
+                                                            <li>
+                                                                <a>Quan ly cac phong cho thue</a>
+                                                            </li>
+                                                            </>
+                                                            }
                                                             <li>
                                                                 <a>Lịch sử giao dịch</a>
                                                             </li>
@@ -96,7 +142,8 @@ const Navbar = () => {
                                                 )}
 
 
-                                                {!isLoggedIn && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
+
+                                                {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
                                                     <div className="header-login-register">
                                                     <ul className="login">
