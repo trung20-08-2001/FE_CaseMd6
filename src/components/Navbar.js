@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.css';
-
 
 
 const Navbar = () => {
@@ -10,8 +7,8 @@ const Navbar = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
-    let account=JSON.parse(localStorage.getItem("account"));
-    // if(account===null) account={};account
+
+
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -27,8 +24,8 @@ const Navbar = () => {
         }
 
         axios.post("http://localhost:8080/api/login", account)
-            .then(res => {
-             localStorage.setItem("account",JSON.stringify(res.data))
+            .then(data => {
+                console.log(data)
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
@@ -68,30 +65,16 @@ const Navbar = () => {
                                             style={{ marginTop: "-25px" }}
                                         >
                                             <li>
-                                                {account!==null && (
+                                                {isLoggedIn && (
                                                     <>
-                                                        <a
-                                                            style={{
-                                                                display: 'inline-block',
-                                                                border: '2px solid #0d0d0d',
-                                                                borderRadius: '4px',
-                                                                backgroundColor: '#ffffff',
-                                                                padding: '8px 12px',
-                                                                cursor: 'pointer',
-                                                                textDecoration: 'none',
-                                                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                                                transition: 'box-shadow 0.3s ease',
-                                                            }}
-                                                        >
-                                                            <i className="fa fa-bars"></i>
+                                                        <a>
+                                                            <i
+                                                                className="fa fa-bars"></i>
                                                             <img
-                                                                style={{
-                                                                    borderRadius: '50%',
-                                                                    width: 35,
-                                                                    height: 35,
-                                                                }}
-                                                                src={account.avatar}
-                                                                alt="Avatar"
+                                                                style={{ borderRadius: "50%", borderColor: "#0d0d0d" }}
+                                                                width={35}
+                                                                height={35}
+                                                                src="https://khoinguonsangtao.vn/wp-content/uploads/2022/02/anh-dai-dien-fb-dep.jpg"
                                                             />
                                                         </a>
                                                         <ul className="dropdown">
@@ -113,7 +96,7 @@ const Navbar = () => {
                                                 )}
 
 
-                                                {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
+                                                {!isLoggedIn && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
                                                     <div className="header-login-register">
                                                     <ul className="login">
