@@ -29,7 +29,12 @@ const Register = () => {
                     const response = await axios.post("http://localhost:8080/accounts/register", values);
                     console.log(response)
                     if(response.data==='') {
-                        axios.post("http://localhost:8080/accounts/createAccount", values);
+                        let account={
+                            ...values,
+                            role:{id:3},
+                            status:{id:1}
+                        }
+                        axios.post("http://localhost:8080/accounts/createAccount", account);
                         Swal.fire({
                             icon: 'success',
                             title: 'Đăng ký thành công!',
@@ -65,7 +70,7 @@ const Register = () => {
                     <Field
                         type="text"
                         name="phone"
-                        placeholder="Password"
+                        placeholder="Phone"
                     />
                     <ErrorMessage name="password" component="div"
                                   className="error-message"/>

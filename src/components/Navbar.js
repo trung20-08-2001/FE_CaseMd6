@@ -1,36 +1,48 @@
 import React, {useState} from 'react';
+import axios from "axios";
 import Register from "../components/Register";
 
 
 const Navbar = () => {
-    // const formik = useFormik({
-    //     initialValues: {
-    //         username: '',
-    //         phone: '',
-    //         password: '',
-    //         confirmPassword: ''
-    //     },
-    //     validationSchema: Yup.object({
-    //         username: Yup.string().required("Trường này không ược để trống").matches(/^[a-zA-Z0-9]*$/, 'Phải là chữ hoặc số'),
-    //         phone: Yup.string().required('Trường này không được để trống').matches(/^[0-9]{1,10}$/, 'Phải là số và tối đa 10 chữ số'),
-    //         password: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu phải có ít nhất 6 kí tự').max(32, 'Mật khẩu không được vượt quá 32 kí tự'),
-    //         confirmPassword: Yup.string().required("Mật khẩu không được để trống").oneOf([Yup.ref("password")], "phải nhập đúng mật khẩu vừa nhập")
-    //     })
-    // })
-    // const [account, setAccount] = useState({});
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
 
-    // const handleInputChange = (e) => {
-    //     const {name, value} = e.target;
-    //     setAccount({...account, [name]: value});
-    // };
 
-    // const create = () => {
-    //     axios.post("http://localhost:8080/accounts/createAccount", account)
-    //         .then(data => {
-    //             alert("đăng kí thành công")
-    //         })
-    //         .catch(error => console.log(error))
-    // }
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        // Kiểm tra các trường đăng nhập
+        if (!isValidInput(username) || !isValidInput(password)) {
+            setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
+            return;
+        }
+
+        const account = {
+            username: username,
+            password: password
+        }
+
+        axios.post("http://localhost:8080/api/login", account)
+            .then(data => {
+                // console.log(data)
+                localStorage.setItem("account",JSON.stringify(data.data));
+                setErrorMessage('');
+                setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
+            })
+            .catch(function (err) {
+                console.log(err)
+                setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
+            })
+
+    };
+    
+    const isValidInput = (input) => {
+        const regex = /^[a-zA-Z0-9]+$/;
+        return regex.test(input);
+    };
+
+
     return (
         <>
             <header className="header-area">
@@ -52,37 +64,70 @@ const Navbar = () => {
                                             style={{marginTop: "-25px"}}
                                         >
                                             <li>
-                                                {/*                                            <a><img style="border-radius: 50%;border-color: #0d0d0d" width="50"*/}
-                                                {/*                                                    height="50"*/}
-                                                {/*                                                    src="https://khoinguonsangtao.vn/wp-content/uploads/2022/02/anh-dai-dien-fb-dep.jpg"></a>*/}
-                                                {/*                                            <ul class="dropdown">*/}
-                                                {/*                                                <li><a>Thông tin cá nhân</a></li>*/}
-                                                {/*                                                <li><a>Lịch sử giao dịch</a></li>*/}
-                                                {/*                                                <li><a>Đăng xuất</a></li>*/}
-                                                {/*                                            </ul>*/}
-                                                <div className="header-login-register">
+                                                {isLoggedIn && (
+                                                    <>
+                                                        <a>
+                                                            <i
+                                                                className="fa fa-bars"></i>
+                                                            <img
+                                                                style={{ borderRadius: "50%", borderColor: "#0d0d0d" }}
+                                                                width={35}
+                                                                height={35}
+                                                                src="https://khoinguonsangtao.vn/wp-content/uploads/2022/02/anh-dai-dien-fb-dep.jpg"
+                                                            />
+                                                        </a>
+                                                        <ul className="dropdown">
+                                                            <li>
+                                                                <a>Đăng tin</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Thông tin cá nhân</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Lịch sử giao dịch</a>
+                                                            </li>
+                                                            <li>
+                                                                <a>Đăng xuất</a>
+                                                            </li>
+                                                        </ul>
+                                                    </>
+
+                                                )}
+
+
+                                                {!isLoggedIn && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
+
+                                                    <div className="header-login-register">
                                                     <ul className="login">
                                                         <li>
                                                             <a style={{cursor: "pointer"}}>Login</a>
                                                             <div className="login-form">
                                                                 <h4>Login</h4>
-                                                                <form action="#" method="post">
+                                                                <form onSubmit={handleLogin}>
                                                                     <div className="input-box mb-19">
                                                                         <i className="fa fa-user"/>
                                                                         <input
                                                                             type="text"
-                                                                            name="user-name"
+                                                                            value={username}
                                                                             placeholder="Username"
+                                                                            onChange={(event) => setUsername(event.target.value)}
                                                                         />
                                                                     </div>
                                                                     <div className="input-box">
                                                                         <i className="fa fa-lock"/>
                                                                         <input
                                                                             type="password"
-                                                                            name="user-password"
+                                                                            value={password}
                                                                             placeholder="Password"
+                                                                            onChange={(event) => setPassword(event.target.value)}
+
                                                                         />
                                                                     </div>
+                                                                    {errorMessage && (
+                                                                        <p style={{ color: "red" }} className="error-message">
+                                                                            {errorMessage}
+                                                                        </p>
+                                                                    )}
                                                                     <div className="social-links mt-25">
                                                                         <a href="#">
                                                                             <i className="fa fa-facebook"/>
@@ -111,6 +156,8 @@ const Navbar = () => {
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                )}
+
                                             </li>
                                         </ul>
                                     </nav>
