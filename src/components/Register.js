@@ -45,7 +45,6 @@ const Register = () => {
                 } catch (error) {
                     console.error(error);
                     // alert("Đăng ký thất bại");
-
                 }
             }}
 
