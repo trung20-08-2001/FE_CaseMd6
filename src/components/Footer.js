@@ -7,13 +7,6 @@ const Footer = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <div className="footer-logo">
-                                <a href="index.html">
-                                    <img src="images/logo/footer-logo.png" alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col-lg-12">
                             <div className="social-links mt-25 mb-80">
                                 <a href="#">
                                     <i className="fa fa-facebook" />

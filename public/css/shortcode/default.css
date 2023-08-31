@@ -1,41 +1,4 @@
-/*
-Template:  DomInno
-Author: 
-Version: 1
-Design and Developed by: 
-NOTE: This is main style sheet of template, 
-This file contains the styling for the actual Template. 
-Please do not change anything here! write in a custom.css file if required!
 
-*/
-/*================================================
-[  Table of contents  ]
-================================================
-01. General
-02. Basic margin padding
-03. Section title
-04. button
-05. button small
-06. button variations
-07. Text color
-08. Input
-09. back-to-top
-10. border radius
-11. Custom cloumn
-12. Background variation set 
-13. Additional CSS
-14. Carousel style
-15. Pagination
-16. Hover effect
-17. customizer
- 
-======================================
-[ End table content ]
-======================================*/
-
-/*************************
-    01. General
-*************************/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Raleway:300,400,500,600,700,800');
 @font-face {
     font-family: 'montserratbold';
@@ -198,7 +161,7 @@ li { list-style: none }
 p {margin-bottom: 15px; 
     line-height: 24px;}
 label {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 400;
 }
 *::-moz-selection {
@@ -1117,7 +1080,7 @@ input {
     height: 45px;
     box-shadow: none;
     padding-left: 10px;
-    font-size: 14px;
+    font-size: 20px;
     color: #626262;
     width: 100%;
 }
@@ -1128,7 +1091,7 @@ select {
     height: 45px;
     padding-left: 10px;
     box-shadow: none;
-    font-size: 14px;
+    font-size: 20px;
     color: #626262;
 }
 option {
@@ -1147,7 +1110,7 @@ textarea {
     border: 2px solid #eceff8;
     padding: 10px;
     width: 100%;
-    font-size: 14px;
+    font-size: 20px;
 }
 textarea:focus {
     background: transparent;
