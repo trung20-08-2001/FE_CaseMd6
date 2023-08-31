@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 function MyHouses() {
     const dispatch = useDispatch();
     const myHouses = useSelector(state => state.house.myHouses)
-    console.log(typeof myHouses);
+    
+   
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
-        console.log("lenght", myHouses.lenght);
+        if(myHouses.length===0){
         dispatch(findHouseByAccount(account.id));
+        }
     }, [])
     console.log(myHouses);
     return (
@@ -26,10 +28,6 @@ function MyHouses() {
                                 <h4 className="text-white mb-12">
                                     <a >{item.house.name}</a>
                                 </h4>
-
-
-
-                                
                                 <span>
                                     <span className="mr-10">
                                         <img src="../images/icons/map.png" alt="" />

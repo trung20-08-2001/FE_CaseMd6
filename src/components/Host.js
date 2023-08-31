@@ -25,7 +25,7 @@ function Host() {
               </div>
               <div className="single-sidebar-widget fix mb-60">
                 <div className="sidebar-widget-title mb-32">
-                  <h5>Our Agent</h5>
+                <h5><Link to="edit_house">Edit house</Link></h5>
                 </div>
               </div>
             </div>
