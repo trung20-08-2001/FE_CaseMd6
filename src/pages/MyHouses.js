@@ -15,7 +15,7 @@ function MyHouses() {
         dispatch(findHouseByAccount(account.id));
         }
     }, [])
-    console.log(myHouses);
+    
     return (
         <>
             <div className="row single-property_area">
@@ -48,7 +48,7 @@ function MyHouses() {
                             <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                 <div className="hover-item">
                                     {/* <img className="mr-10" src="../images/icons/floor.png" alt="" /> */}
-                                    <span></span>
+                                    <span>{item.house.status.name}</span>
                                 </div>
                                 <div className="hover-item">
                                     <img className="mr-10" src="../images/icons/bed.png" alt="" />
