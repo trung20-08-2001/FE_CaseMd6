@@ -32,7 +32,7 @@ const Navbar = () => {
         axios.post("http://localhost:8080/api/login", account)
             .then(data => {
                 localStorage.setItem("account",JSON.stringify(data.data));
-                dispatch(login(data.data));
+               
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
