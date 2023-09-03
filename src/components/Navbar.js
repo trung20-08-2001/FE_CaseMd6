@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import axios from "axios";
 import Register from "../components/Register";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../services/accountService';
+
 
 
 const Navbar = () => {
@@ -10,6 +13,7 @@ const Navbar = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
     const account=JSON.parse(localStorage.getItem("account"))
+    const dispatch = useDispatch()
 
 
     const handleLogin = async (event) => {
@@ -28,6 +32,7 @@ const Navbar = () => {
         axios.post("http://localhost:8080/api/login", account)
             .then(data => {
                 localStorage.setItem("account",JSON.stringify(data.data));
+                dispatch(login(data.data));
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
@@ -39,8 +44,8 @@ const Navbar = () => {
                 setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
 
             })
-
     };
+
     const isValidInput = (input) => {
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(input);
@@ -56,7 +61,7 @@ const Navbar = () => {
                             <div className="col-lg-2">
                                 <div className="logo">
                                     <Link to="">
-                                        <img src="../images/logo/logo.png" alt="DomInno"/>
+                                        <img src="/images/logo/logo.png" alt="DomInno"/>
                                     </Link>
                                 </div>
                             </div>
@@ -91,6 +96,7 @@ const Navbar = () => {
                                                                 alt="Avatar"
                                                             />
                                                         </a>
+                                                      
                                                         <ul className="dropdown">
 
                                                             {account.role.id === 3 &&

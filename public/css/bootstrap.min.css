@@ -6475,7 +6475,7 @@ button.close {
 }
 
 .carousel-indicators {
-    position: absolute;
+    /* position: absolute;
     right: 0;
     bottom: 10px;
     left: 0;
@@ -6487,7 +6487,18 @@ button.close {
     padding-left: 0;
     margin-right: 15%;
     margin-left: 15%;
-    list-style: none
+    list-style: none */
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-right: 15%;
+    margin-bottom: 1rem;
+    margin-left: 15%;
 }
 
 .carousel-indicators li {
