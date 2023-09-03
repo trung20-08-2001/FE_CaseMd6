@@ -6,11 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import "../assets/styleFormAddHouse.css";
+import Slide from '../components/Slide';
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { editHouse, findHouseByAccount, saveHouse } from '../services/houseService';
-import Slide from './Slide';
+import { editHouse, findHouseByAccount } from '../services/houseService';
 
 
 
@@ -249,14 +249,12 @@ const EditHouse = () => {
                     ) : null}
 
                     <label htmlFor='category' >Category</label>
-                    <select name="idCategory" id="category" className="mb-28" value={house.house.category.id} onChange={handleCategoryChange}>
-                      
+                    <select name="idCategory" id="category" className="mb-28" defaultValue={house.house.category.id} onChange={handleCategoryChange}>
                         {categories.map(category => (
                           <option key={category.id} value={category.id}>
                             {category.name}
                           </option>
                         ))}
-                      
                     </select>
                   </div>
                   <div className="col-lg-12">

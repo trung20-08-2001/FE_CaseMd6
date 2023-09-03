@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-
-
-
 function Slide(props) {
   return (
     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" style={props.styleImage} >
