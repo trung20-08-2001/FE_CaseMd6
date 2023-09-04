@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 
 const Navbar = () => {
@@ -71,7 +70,7 @@ const Navbar = () => {
                                                         <a
                                                             style={{
                                                                 display: 'inline-block',
-                                                                border: '0px solid #0d0d0d',
+                                                                border: '2px solid #0d0d0d',
                                                                 borderRadius: '4px',
                                                                 backgroundColor: '#ffffff',
                                                                 padding: '8px 12px',
@@ -81,6 +80,7 @@ const Navbar = () => {
                                                                 transition: 'box-shadow 0.3s ease',
                                                             }}
                                                         >
+                                                            <i className="fa fa-bars"></i>
                                                             <img
                                                                 style={{
                                                                     borderRadius: '50%',
@@ -91,73 +91,59 @@ const Navbar = () => {
                                                                 alt="Avatar"
                                                             />
                                                         </a>
-
-
-
-
-                                                        <img
-                                                            style={{
-                                                                borderRadius: '50%',
-                                                                width: 35,
-                                                                height: 35,
-                                                            }}
-                                                            src={"/images/icons/c-globe.png"}/>
-
-
                                                         <ul className="dropdown">
 
 
-
+                                                            {account.role.id === 3 &&
+                                                            <>
+                                                                <li>
+                                                                    <a>Thông tin cá nhân</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Thay doi thong tin co ban</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Doi mat khau</a>
+                                                                </li>
+                                                            <li>
+                                                                <a>Tro thanh nguoi cho thue</a>
+                                                            </li>
+                                                            </>
+                                                            }
 
                                                             {account.role.id===1 &&
 <>                                                                <li>
-                                                                    <a>Quản lý tài khoản khách hàng</a>
+                                                                    <a>Quan lý tài khoản khách hàng</a>
                                                                 </li>
 
                                                                 <li>
-                                                                <a>Quản lý tài khoản chủ nhà</a>
+                                                                <a>Quan ly tai khoan chu nha</a>
                                                                 </li>
 </>
                                                             }
                                                             {account.role.id===2 &&
                                                             <>
                                                                 <li>
-                                                                    <a>Đăng tin cho thuê</a>
+                                                                    <a>Đăng tin</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a>Quản lý các phòng thuê</a>
+                                                                    <a>Quan ly cac phong cho thue</a>
                                                                 </li>
                                                                 <li>
                                                                     <a>Thông tin cá nhân</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a>Thay đổi thông tin cơ bản</a>
+                                                                    <a>Thay doi thong tin co ban</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a>Đổi mật khẩu</a>
+                                                                    <a>Doi mat khau</a>
                                                                 </li>
 
                                                             </>
                                                             }
-                                                            {account.role.id === 3 &&
-                                                                <>
-                                                                    <li>
-                                                                        <a>Thông tin cá nhân</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a>Thay đổi thông tin cơ bản</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a>Đổi mật khẩu</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link to={"/user"}>
-                                                                            Trở thành người cho thuê
-                                                                        </Link>
-                                                                    </li>
-                                                                </>
-                                                            }
-
+                                                            <li>
+                                                                <a>Lịch sử giao dịch</a>
+                                                            </li>
                                                             <li>
                                                                 <a>Đăng xuất</a>
                                                             </li>
@@ -272,15 +258,7 @@ const Navbar = () => {
                                                 </div>
                                                 )}
 
-
-
-
-
-
                                             </li>
-
-
-
                                         </ul>
                                     </nav>
                                 </div>
