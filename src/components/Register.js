@@ -56,7 +56,7 @@ const Register = () => {
 
         >
             <Form>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-user"/>
                     <Field
                         type="text"
@@ -66,7 +66,7 @@ const Register = () => {
                     <ErrorMessage name="username" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-user"/>
                     <Field
                         type="text"
@@ -76,7 +76,7 @@ const Register = () => {
                     <ErrorMessage name="password" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-lock"/>
                     <Field
                         type="password"
@@ -86,7 +86,7 @@ const Register = () => {
                     <ErrorMessage name="password" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-lock"/>
                     <Field
                         type="password"
