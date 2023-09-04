@@ -249,6 +249,7 @@ const Navbar = () => {
                                                                             className="register-btn button lemon pull_right"
                                                                         >
                                                                             Sign Up
+
                                                                         </button>
                                                                     </div>
                                                                 </form>
