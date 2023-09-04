@@ -1,8 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Footer = () => {
+
+    const [showBackToTop, setShowBackToTop] = useState(false);
+
+    const handleScroll = () => {
+        if (window.pageYOffset > 300) {
+            setShowBackToTop(true);
+        } else {
+            setShowBackToTop(false);
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     return (
         <>
+
+            <a
+                id="scrollUp"
+                onClick={scrollToTop}
+                style={{ position: "fixed", zIndex: 2147483647, display: "inline", display: showBackToTop ? 'block' : 'none' }}
+                
+            >
+                Scroll to top
+            </a>
             <div className="footer-widget-area bg-violet black-bg pb-58">
                 <div className="container">
                     <div className="row">
@@ -63,18 +96,18 @@ const Footer = () => {
                                 <div className="footer-widget-content">
                                     <h5 className="mb-8">Duplex Villa Design</h5>
                                     <span className="mb-27 block">
-              Lorem ipsum dolor sit amet, tur
-              <br />
-              acinglit sed do eius{" "}
-            </span>
+                                        Lorem ipsum dolor sit amet, tur
+                                        <br />
+                                        acinglit sed do eius{" "}
+                                    </span>
                                 </div>
                                 <div className="footer-widget-content">
                                     <h5 className="mb-8">Real Estate Fest</h5>
                                     <span>
-              Lorem ipsum dolor sit amet, tur
-              <br />
-              acinglit sed do eius{" "}
-            </span>
+                                        Lorem ipsum dolor sit amet, tur
+                                        <br />
+                                        acinglit sed do eius{" "}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -109,26 +142,26 @@ const Footer = () => {
                                 <div className="footer-contact-info mb-24">
                                     <img src="images/icons/f-map.png" alt="" />
                                     <span className="pl-40 block">
-              256, 1st AVE, Manchester
-              <br />
-              125 , Noth England
-            </span>
+                                        256, 1st AVE, Manchester
+                                        <br />
+                                        125 , Noth England
+                                    </span>
                                 </div>
                                 <div className="footer-contact-info mb-24">
                                     <img src="images/icons/f-phone.png" alt="" />
                                     <span className="pl-40 block">
-              Telephone : +012 345 678 102
-              <br />
-              Telephone : +013 445 678 155
-            </span>
+                                        Telephone : +012 345 678 102
+                                        <br />
+                                        Telephone : +013 445 678 155
+                                    </span>
                                 </div>
                                 <div className="footer-contact-info">
                                     <img src="images/icons/f-globe.png" alt="" />
                                     <span className="pl-40 block">
-              Email : info@example.com
-              <br />
-              Web : www.example.com
-            </span>
+                                        Email : info@example.com
+                                        <br />
+                                        Web : www.example.com
+                                    </span>
                                 </div>
                             </div>
                         </div>
