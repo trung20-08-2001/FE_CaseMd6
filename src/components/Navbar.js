@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
-<<<<<<<<< Temporary merge branch 1
 import Register from "../components/Register";
-=========
 import {Link} from "react-router-dom";
->>>>>>>>> Temporary merge branch 2
 
 
 const Navbar = () => {
