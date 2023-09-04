@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import Register from "../components/Register";
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Navbar = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
-    const account=JSON.parse(localStorage.getItem("account"))
+    const account = JSON.parse(localStorage.getItem("account"))
     const dispatch = useDispatch()
 
 
@@ -31,8 +31,8 @@ const Navbar = () => {
 
         axios.post("http://localhost:8080/api/login", account)
             .then(data => {
-                localStorage.setItem("account",JSON.stringify(data.data));
-               
+                localStorage.setItem("account", JSON.stringify(data.data));
+
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
@@ -61,16 +61,16 @@ const Navbar = () => {
                             <div className="col-lg-2">
                                 <div className="logo">
                                     <Link to="">
-                                        <img src="/images/logo/logo.png" alt="DomInno"/>
+                                        <img src="/images/logo/logo.png" alt="DomInno" />
                                     </Link>
                                 </div>
                             </div>
                             <div className="col-lg-10 d-none d-lg-block">
                                 <div className="pull_right">
                                     <nav id="primary-menu">
-                                        <ul className="main-menu text-right" style={{marginTop: "-25px"}}>
+                                        <ul className="main-menu text-right" style={{ marginTop: "-25px" }}>
                                             <li>
-                                                {account!==null && (
+                                                {account !== null && (
                                                     <>
                                                         <a
                                                             style={{
@@ -96,55 +96,52 @@ const Navbar = () => {
                                                                 alt="Avatar"
                                                             />
                                                         </a>
-                                                      
+
                                                         <ul className="dropdown">
 
                                                             {account.role.id === 3 &&
-                                                            <>
-                                                                <li>
-                                                                    <a>Thông tin cá nhân</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Thay doi thong tin co ban</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Doi mat khau</a>
-                                                                </li>
-                                                            <li>
-                                                                <a>Tro thanh nguoi cho thue</a>
-                                                            </li>
-                                                            </>
+                                                                <>
+                                                                    <li>
+                                                                        <a>Thông tin cá nhân</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Thay doi thong tin co ban</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Doi mat khau</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Tro thanh nguoi cho thue</a>
+                                                                    </li>
+                                                                </>
                                                             }
 
-                                                            {account.role.id===1 &&
-<>                                                                <li>
-                                                                    <a>Quan lý tài khoản khách hàng</a>
-                                                                </li>
-
-                                                                <li>
-                                                                <a>Quan ly tai khoan chu nha</a>
-                                                                </li>
-</>
+                                                            {account.role.id === 1 &&
+                                                                <>
+                                                                    <li>
+                                                                        <Link to="/admin">My account</Link>
+                                                                    </li>
+                                                                </>
                                                             }
-                                                            {account.role.id===2 &&
-                                                            <>
-                                                                <li>
-                                                                    <a>Đăng tin</a>
-                                                                </li>
-                                                                <li>
-                                                                    <Link to="/host">Quan ly cac phong cho thue</Link>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Thông tin cá nhân</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Thay doi thong tin co ban</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Doi mat khau</a>
-                                                                </li>
+                                                            {account.role.id === 2 &&
+                                                                <>
+                                                                    <li>
+                                                                        <a>Đăng tin</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <Link to="/host">Quan ly cac phong cho thue</Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Thông tin cá nhân</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Thay doi thong tin co ban</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>Doi mat khau</a>
+                                                                    </li>
 
-                                                            </>
+                                                                </>
                                                             }
                                                             <li>
                                                                 <a>Lịch sử giao dịch</a>
@@ -156,67 +153,67 @@ const Navbar = () => {
                                                     </>
 
                                                 )}
-                                                {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
+                                                {account === null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
                                                     <div className="header-login-register">
-                                                    <ul className="login">
-                                                        <li>
-                                                            <a style={{cursor: "pointer"}}>Login</a>
-                                                            <div className="login-form">
-                                                                <h4>Login</h4>
-                                                                <form onSubmit={handleLogin}>
-                                                                    <div className="input-box mb-19">
-                                                                        <i className="fa fa-user"/>
-                                                                        <input
-                                                                            type="text"
-                                                                            value={username}
-                                                                            placeholder="Username"
-                                                                            onChange={(event) => setUsername(event.target.value)}
-                                                                        />
-                                                                    </div>
-                                                                    <div className="input-box">
-                                                                        <i className="fa fa-lock"/>
-                                                                        <input
-                                                                            type="password"
-                                                                            value={password}
-                                                                            placeholder="Password"
-                                                                            onChange={(event) => setPassword(event.target.value)}
+                                                        <ul className="login">
+                                                            <li>
+                                                                <a style={{ cursor: "pointer" }}>Login</a>
+                                                                <div className="login-form">
+                                                                    <h4>Login</h4>
+                                                                    <form onSubmit={handleLogin}>
+                                                                        <div className="input-box mb-19">
+                                                                            <i className="fa fa-user" />
+                                                                            <input
+                                                                                type="text"
+                                                                                value={username}
+                                                                                placeholder="Username"
+                                                                                onChange={(event) => setUsername(event.target.value)}
+                                                                            />
+                                                                        </div>
+                                                                        <div className="input-box">
+                                                                            <i className="fa fa-lock" />
+                                                                            <input
+                                                                                type="password"
+                                                                                value={password}
+                                                                                placeholder="Password"
+                                                                                onChange={(event) => setPassword(event.target.value)}
 
-                                                                        />
-                                                                    </div>
-                                                                    {errorMessage && (
-                                                                        <p style={{ color: "red" }} className="error-message">
-                                                                            {errorMessage}
-                                                                        </p>
-                                                                    )}
-                                                                    <div className="social-links mt-25">
-                                                                        <a href="#">
-                                                                            <i className="fa fa-facebook"/>
-                                                                        </a>
-                                                                        <a href="#">
-                                                                            <i className="fa fa-google-plus"/>
-                                                                        </a>
-                                                                        <button
-                                                                            type="submit"
-                                                                            className="register-btn button lemon pull_right"
-                                                                        >
-                                                                            Login
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <ul className="login">
-                                                        <li>
-                                                            <a style={{cursor: "pointer"}}>Register</a>
-                                                            <div className="login-form">
-                                                                <h4>Sign Up</h4>
-                                                               <Register/>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                                            />
+                                                                        </div>
+                                                                        {errorMessage && (
+                                                                            <p style={{ color: "red" }} className="error-message">
+                                                                                {errorMessage}
+                                                                            </p>
+                                                                        )}
+                                                                        <div className="social-links mt-25">
+                                                                            <a href="#">
+                                                                                <i className="fa fa-facebook" />
+                                                                            </a>
+                                                                            <a href="#">
+                                                                                <i className="fa fa-google-plus" />
+                                                                            </a>
+                                                                            <button
+                                                                                type="submit"
+                                                                                className="register-btn button lemon pull_right"
+                                                                            >
+                                                                                Login
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <ul className="login">
+                                                            <li>
+                                                                <a style={{ cursor: "pointer" }}>Register</a>
+                                                                <div className="login-form">
+                                                                    <h4>Sign Up</h4>
+                                                                    <Register />
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 )}
 
                                             </li>
@@ -228,7 +225,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
-            <hr/>
+            <hr />
         </>
     );
 };

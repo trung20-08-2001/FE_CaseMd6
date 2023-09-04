@@ -44,8 +44,8 @@ function Home() {
                                     </div>
                                     <div className="form-box mb-40 pl-15 pr-15">
                                         <div className="select">
-                                            <select name="max-sqft">
-                                                <option selected="" value={0} disabled="">
+                                            <select name="max-sqft" defaultValue={"0"}>
+                                                <option value={0} disabled>
                                                     Giá
                                                 </option>
                                                 <option>Dưới 300$</option>
