@@ -107,7 +107,7 @@ const Register = () => {
                 </div>
             </Form>
         </Formik>
-        </>);
+    </>);
 };
 
 export default Register;

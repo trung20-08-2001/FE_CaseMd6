@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import Register from "../components/Register";
+import {Link, useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 
 const Navbar = () => {
@@ -9,10 +12,41 @@ const Navbar = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
     const account=JSON.parse(localStorage.getItem("account"))
+    const  navigate = useNavigate();
 
-    const handleLogin = async (event) => {
+
+    // const handleLogin = async (event) => {
+    //     event.preventDefault();
+    //     // Kiểm tra các trường đăng nhập
+    //     if (!isValidInput(username) || !isValidInput(password)) {
+    //         setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
+    //         return;
+    //     }
+    //
+    //     const account = {
+    //         username: username,
+    //         password: password
+    //     }
+    //
+    //     axios.post("http://localhost:8080/api/login", account)
+    //         .then(data => {
+    //             localStorage.setItem("account",JSON.stringify(data.data));
+    //             setErrorMessage('');
+    //             setUsername("")
+    //             setPassword("")
+    //             setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
+    //
+    //         })
+    //         .catch(function (err) {
+    //             console.log(err)
+    //             setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
+    //         })
+    //
+    // };
+
+    const handleLogin = (event) => {
         event.preventDefault();
-        // Kiểm tra các trường đăng nhập
+
         if (!isValidInput(username) || !isValidInput(password)) {
             setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
             return;
@@ -21,21 +55,35 @@ const Navbar = () => {
         const account = {
             username: username,
             password: password
-        }
+        };
 
         axios.post("http://localhost:8080/api/login", account)
             .then(data => {
-                localStorage.setItem("account",JSON.stringify(data.data));
+                localStorage.setItem("account", JSON.stringify(data.data));
                 setErrorMessage('');
-                setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
+                setUsername("");
+                setPassword("");
+                setIsLoggedIn(true);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đăng nhập thành công!',
+                    text: 'Bạn đã đăng nhập thành công.',
+                });
             })
             .catch(function (err) {
-                console.log(err)
+                console.log(err);
                 setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
-            })
 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Đăng nhập thất bại',
+                    text: 'Tên đăng nhập hoặc mật khẩu không chính xác.',
+                });
+            });
     };
-    
+
+
     const isValidInput = (input) => {
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(input);
@@ -44,8 +92,8 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="header-area">
-                <div id="sticky-header">
+            <header className="header-area" >
+                <div id="sticky-header" >
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-2">
@@ -98,7 +146,9 @@ const Navbar = () => {
                                                                 <a>Thay doi thong tin co ban</a>
                                                             </li>
                                                             <li>
-                                                                <a>Doi mat khau</a>
+                                                                <Link to={"dmk" }>
+                                                                    Đổi mật khẩu
+                                                                </Link>
                                                             </li>
                                                             {account.role.id === 3 &&
                                                             <>
@@ -132,7 +182,13 @@ const Navbar = () => {
                                                                 <a>Lịch sử giao dịch</a>
                                                             </li>
                                                             <li>
-                                                                <a>Đăng xuất</a>
+                                                                <Link
+                                                                    onClick={
+                                                                    () => {
+                                                                        localStorage.removeItem("account");
+                                                                        navigate("/")
+                                                                    }
+                                                                }>Đăng xuất</Link>
                                                             </li>
                                                         </ul>
                                                     </>
@@ -200,7 +256,6 @@ const Navbar = () => {
                                                     </ul>
                                                 </div>
                                                 )}
-
                                             </li>
                                         </ul>
                                     </nav>
