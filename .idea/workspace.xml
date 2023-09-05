@@ -4,7 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e625f74b-951e-4b39-a7a7-ac4be552e61d" name="Changes" comment="" />
+    <list default="true" id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/logo-negative.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/logo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/sygnet.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/angular.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/react.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/vue.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/styleModal.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/styleSlide.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Banner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ListUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SidebarAdmin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Slide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ChangePassword.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UpRole2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/selector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/slices/accountSlice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/accountService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/shortcode/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/shortcode/default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styleFormAddHouse.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Host.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Host.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CreateHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CreateHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/EditHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/EditHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MyHouses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/imageSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/imageSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/houseService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/houseService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/imageService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/imageService.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,26 +76,30 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProjectId" id="2UcBhRDQW1V813fe8F66g5Kf5V5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/project/case md6/fe/public/css",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/Desktop/Learn-in-Codegym/Module-5/product-dethi-m5/Frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2022.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\project\case md6\fe\public\css" />
@@ -53,13 +110,19 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e625f74b-951e-4b39-a7a7-ac4be552e61d" name="Changes" comment="" />
+      <changelist id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="" />
       <created>1693229106396</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693229106396</updated>
       <workItem from="1693229107463" duration="1392000" />
       <workItem from="1693277252309" duration="4037000" />
+      <workItem from="1693552186858" duration="10827000" />
+      <workItem from="1693723809395" duration="11244000" />
+      <workItem from="1693748203913" duration="5949000" />
+      <workItem from="1693795098371" duration="2025000" />
+      <workItem from="1693797577020" duration="6873000" />
+      <workItem from="1693887428540" duration="6610000" />
     </task>
     <servers />
   </component>
