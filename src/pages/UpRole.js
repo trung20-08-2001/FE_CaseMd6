@@ -117,8 +117,6 @@ const UpRole = () => {
                     </div>
                 </div>
             </div>
-
-
         </>
     );
 };
