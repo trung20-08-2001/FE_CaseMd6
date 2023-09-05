@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import axios from "axios";
 import Register from "../components/Register";
 import {Link} from "react-router-dom";
+import ReactModal from 'react-modal';
+import "../assets/styleModal.css"
+import Swal from "sweetalert2";
 
 
 const Navbar = () => {
@@ -10,7 +13,17 @@ const Navbar = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Thêm state cho trạng thái đăng nhập
     const account=JSON.parse(localStorage.getItem("account"))
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+
+
+
+
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -25,19 +38,27 @@ const Navbar = () => {
             password: password
         }
 
-        axios.post("http://localhost:8080/api/login", account)
-            .then(data => {
-                localStorage.setItem("account",JSON.stringify(data.data));
+
+        axios.post("http://localhost:8081/api/login", account)
+            .then(resp => {
+                console.log(resp)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đăng nhập thành công!',
+                    text: 'Bạn đã đăng nhập thành công tài khoản.',
+                });
+                localStorage.setItem("account",JSON.stringify(resp.data));
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
 
-
-
             })
             .catch(function (err) {
-                console.log(err)
-                setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
-
+                if (err.response && err.response.status === 403) {
+                    setIsModalOpen(true)
+                } else {
+                    console.log(err)
+                    setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
+                }
             })
 
     };
@@ -49,6 +70,7 @@ const Navbar = () => {
 
     return (
         <>
+
             <header className="header-area">
                 <div id="sticky-header">
                     <div className="container">
@@ -68,6 +90,7 @@ const Navbar = () => {
                                             style={{marginTop: "-25px"}}
                                         >
                                             <li>
+
                                                 {account!==null && (
                                                     <>
                                                         <a
@@ -167,6 +190,7 @@ const Navbar = () => {
                                                     </>
 
                                                 )}
+
                                                 {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
                                                     <div className="header-login-register">
@@ -176,6 +200,17 @@ const Navbar = () => {
                                                             <div className="login-form">
                                                                 <h4>Login</h4>
                                                                 <form onSubmit={handleLogin}>
+                                                                    <ReactModal
+                                                                        isOpen={isModalOpen}
+                                                                        onRequestClose={handleCloseModal}
+                                                                        contentLabel="Thông báo"
+                                                                        className="custom-modal"
+                                                                        overlayClassName="custom-overlay"
+                                                                    >
+                                                                        <h4>Tài khoản của bạn đã bị khóa!</h4>
+                                                                        <p>Vui lòng liên hệ với quản trị viên để biết thêm thông tin chi tiết.</p>
+                                                                        <button className="close-button" onClick={handleCloseModal}>Close</button>
+                                                                    </ReactModal>
                                                                     <div className="input-box mb-19">
                                                                         <i className="fa fa-user"/>
                                                                         <input
