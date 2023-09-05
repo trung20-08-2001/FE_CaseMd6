@@ -13,7 +13,7 @@ function ShowVendor() {
     // end
 
     useEffect(() => {
-        axios.get("http://localhost:8080/admin/vendors")
+        axios.get("http://localhost:8081/admin/vendors")
             .then(res => {
                 setVendors(res.data);
             })
@@ -122,7 +122,7 @@ function ShowVendor() {
                 timer: 1000 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
             });
         }
-        axios.post(`http://localhost:8080/accounts/createAccount`, updatedAccount)
+        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
             .then((res) => {
 
             })
@@ -182,7 +182,7 @@ function ShowVendor() {
         updatedAccount.role.id = newRoleId;
         updatedAccount.status.id = newStatusId;
 
-        axios.post(`http://localhost:8080/accounts/createAccount`, updatedAccount)
+        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
             .then((res) => {
                 window.location.reload();
             })

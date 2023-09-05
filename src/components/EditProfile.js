@@ -6,6 +6,8 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import * as Yup from 'yup';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import Swal from "sweetalert2";
+import {useDispatch} from "react-redux";
+import {login} from "../services/accountService";
 
 function EditProfile() {
     const [account, setAccount] = useState({
@@ -22,9 +24,10 @@ function EditProfile() {
     const [previewImage, setPreviewImage] = useState("");
     const [image, setImage] = useState(null)
     const {id} = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/accounts/searchAccount/" + id)
+        axios.get("http://localhost:8081/accounts/searchAccount/" + id)
             .then(res => {
                 setPreviewImage(res.data.avatar);
                 setAccount(res.data)
@@ -37,8 +40,11 @@ function EditProfile() {
     };
 
     const edit = (e) => {
-        axios.post("http://localhost:8080/accounts/edit", account)
+        localStorage.setItem(account);
+        dispatch(login(account));
+        axios.post("http://localhost:8081/accounts/edit", account)
             .then(res => {
+                console.log(res)
                 Swal.fire({
                     icon: 'success',
                     title: 'Successfully!',
@@ -100,10 +106,10 @@ function EditProfile() {
                 onSubmit={async values => {
                     try {
                         console.log(values)
-                        const response = await axios.post("http://localhost:8080/accounts/", values);
+                        const response = await axios.post("http://localhost:8081/accounts/", values);
                         console.log(response)
                         if (response.data === '') {
-                            await axios.post("http://localhost:8080/accounts/edit", values);
+                            await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
                                 title: 'Cập nhật thành công!',
@@ -123,23 +129,23 @@ function EditProfile() {
 
             >
                 <Form>
-                <div className="banner-area bg-2 bg-overlay-2 ptb-165">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="banner-title text-center">
-                                    <h1 className="text-uppercase text-white">Edit Profile</h1>
+                    <div className="banner-area bg-2 bg-overlay-2 ptb-165">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="banner-title text-center">
+                                        <h1 className="text-uppercase text-white">Edit Profile</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="create-agency-area pt-115 pb-120">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-                                <div className="agency-container">
-                                    <h4 className="details-title text-center mb-43">Edit</h4>
+                    <div className="create-agency-area pt-115 pb-120">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                                    <div className="agency-container">
+                                        <h4 className="details-title text-center mb-43">Edit</h4>
 
 
                                         <div className="row">
@@ -196,11 +202,11 @@ function EditProfile() {
                                                 className="register-btn button lemon pull-left">
                                             Update
                                         </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </Form>
             </Formik>
         </>

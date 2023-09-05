@@ -5,14 +5,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/logo-negative.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/logo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/brand/sygnet.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/angular.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/avatars/9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/react.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/vue.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/styleModal.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/styleSlide.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Banner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ListUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SidebarAdmin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Slide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ChangePassword.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UpRole2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/selector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/slices/accountSlice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/accountService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/shortcode/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/shortcode/default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styleFormAddHouse.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Host.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Host.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CreateHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CreateHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/EditHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/EditHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MyHouses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/imageSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/imageSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/houseService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/houseService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/imageService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/imageService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +122,7 @@
       <workItem from="1693748203913" duration="5949000" />
       <workItem from="1693795098371" duration="2025000" />
       <workItem from="1693797577020" duration="6873000" />
-      <workItem from="1693887428540" duration="1823000" />
+      <workItem from="1693887428540" duration="6610000" />
     </task>
     <servers />
   </component>

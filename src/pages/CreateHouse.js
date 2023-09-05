@@ -1,26 +1,24 @@
-import axios from 'axios';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Field, Form, Formik } from 'formik';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
-import * as Yup from 'yup';
-import { storage } from "../config/configFirebase";
-import { getAllCategory } from "../services/categoryService";
-import { saveHouse } from '../services/houseService';
-import { saveImage, saveImageURL } from '../services/imageService';
-import "../assets/style.css"
-import customAxios from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
+import * as Yup from 'yup';
+import "../assets/styleFormAddHouse.css";
+import { storage } from "../config/configFirebase";
+import customAxios from '../services/api';
+import { getAllCategory } from "../services/categoryService";
+import { findHouseByAccount, saveHouse } from '../services/houseService';
 
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .required('Please enter the house name')
-        .matches(/^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz ]*$/, 'Special characters are not allowed'),
+        .matches(/^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz0-9 ]*$/, 'Special characters are not allowed'),
     address: Yup.string()
         .required('Please enter the house address')
-        .matches(/^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz ]*$/, 'Special characters are not allowed'),
+        .matches(/^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz0-9 ]*$/, 'Special characters are not allowed'),
     numberOfBedrooms: Yup.string()
         .required('Please enter the number of bedrooms')
         .matches(/^(?:[1-3])$/, 'The number of bedrooms should be between 1 and 3.'),
@@ -36,30 +34,27 @@ const validationSchema = Yup.object().shape({
 
 const CreateHouse = () => {
     const [selectedImages, setSelectedImages] = useState([]);
-
     const [files, setFiles] = useState([]);
-    const [imageURLs, setImageURLs] = useState([]);
-
     const fileInputRef = useRef(null);
 
-    let  house = {}
-    let images=[];
-
-    const navigate=useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const categories = useSelector(state => state.categories.categories);
     const [idCategory, setIdCategorye] = useState(1)
-    const dispatch = useDispatch();
+
 
     useEffect(() => {
-        dispatch(getAllCategory())
+        if (categories.length === 0) {
+            dispatch(getAllCategory())
+        }
     }, [])
 
     const handleImageChange = (e) => {
         const fileList = e.target.files;
         const fileArray = Array.from(fileList);
         setFiles(fileArray);
-        
+
         if (e.target.files && e.target.files.length > 0) {
             const imagesArray = Array.from(e.target.files);
             Promise.all(
@@ -82,8 +77,6 @@ const CreateHouse = () => {
                 .catch((error) => {
                     console.error('Error reading images:', error);
                 });
-        } else {
-            setSelectedImages([]);
         }
     };
 
@@ -91,7 +84,7 @@ const CreateHouse = () => {
         const updatedImages = [...selectedImages];
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
-        if(updatedImages.length===0){
+        if (updatedImages.length === 0) {
             fileInputRef.current.value = null;
         }
     };
@@ -101,7 +94,7 @@ const CreateHouse = () => {
         setIdCategorye(event.target.value)
     }
 
-    const handleUploadMutilFile = () => {
+    const handleUploadMutilFile = (house) => {
         if (files.length !== 0) {
             const uploadPromises = files.map((file) => {
                 const imgRef = ref(storage, `images/${file.name}`);
@@ -115,46 +108,71 @@ const CreateHouse = () => {
             });
             Promise.all(uploadPromises)
                 .then((urls) => {
-                    console.log(urls);
-                    for(let url of urls) {
-                        images.push({url: url,type:"HOUSE",house:{id:house.id}});
+                    
+                    let images = []
+                    for (let url of urls) {
+                        images.push({ url: url, type: "HOUSE", house: { id: house.id } });
                     }
-                    customAxios.post("/images/save",images)
-                    .then((response) => {
-                        console.log(response);
-                        navigate("my_houses")
-                    })
-                    .catch((error) => console.log(error))
+                    handleSaveImageToDatabase(images)
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+        } else {
+            let image = [{ url: "https://afdevinfo.com/wp-content/uploads/2017/10/thiet-ke-hinh-ngoi-nha-dep.jpg", type: "HOUSE", house: { id: house.id } }]
+            handleSaveImageToDatabase(image)
         }
     };
+
+
+    const handleSaveImageToDatabase = (images) => {
+        customAxios.post("/images/save", images)
+            .then((response) => {
+                dispatch(findHouseByAccount(JSON.parse(localStorage.getItem('account')).id));
+            })
+            .catch((error) => console.log(error))
+    }
+
+    const displaySwalAlter=() => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Congratulations on your  house create successful!',
+            allowOutsideClick: true,
+            willClose: (result) => {
+                if (result.dismiss === Swal.DismissReason.backdrop) {
+                  navigate("/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
+                }else {
+                  navigate("/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
+                }
+              }
+        })
+    }
 
     const handleSubmit = (values, { resetForm }) => {
         validationSchema
             .validate(values, { abortEarly: false })
             .then(() => {
-                let newHouse = { ...values, category: { id: idCategory }, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4 } }
-                customAxios.post("/houses/save", newHouse)
-                    .then(res => {
-                        dispatch(saveHouse(res.data));
-                        house=res.data;
-                        handleUploadMutilFile()
-                    })
-                    .catch(error => console.log(error))
-                console.log(imageURLs);
-                resetForm();
-                fileInputRef.current.value = null;
-                setSelectedImages([]);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Congratulations on your successful house creation!',
-                });
+                let newHouse = { ...values, category: { id: idCategory }, numberOfHire: 0, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4, name: "READY" } }
+                dispatch(saveHouse({ house: newHouse, images: selectedImages.length === 0 ? ["https://afdevinfo.com/wp-content/uploads/2017/10/thiet-ke-hinh-ngoi-nha-dep.jpg"] : selectedImages }))
+                .then(() => {
+                    displaySwalAlter();
+                    customAxios.post("/houses/save", newHouse)
+                        .then(res => {
+                            handleUploadMutilFile(res.data);
+                        })
+                        .catch(error => console.log(error));
+                    resetForm();
+                    fileInputRef.current.value = null;
+                    setSelectedImages([]);
+
             })
+        })
+
     };
+
+
+
 
     return (
         <>

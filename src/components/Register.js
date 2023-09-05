@@ -26,7 +26,7 @@ const Register = () => {
             onSubmit={async values => {
                 try {
                     console.log(values)
-                    const response = await axios.post("http://localhost:8080/accounts/register", values);
+                    const response = await axios.post("http://localhost:8081/accounts/register", values);
                     console.log(response)
                     if(response.data==='') {
                         let account={
@@ -35,7 +35,7 @@ const Register = () => {
                             status:{id:1},
                             avatar:"https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-image-700-205124837.jpg"
                         }
-                        axios.post("http://localhost:8080/accounts/createAccount", account);
+                        axios.post("http://localhost:8081/accounts/createAccount", account);
                         Swal.fire({
                             icon: 'success',
                             title: 'Đăng ký thành công!',
@@ -56,7 +56,7 @@ const Register = () => {
 
         >
             <Form>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-user"/>
                     <Field
                         type="text"
@@ -66,7 +66,7 @@ const Register = () => {
                     <ErrorMessage name="username" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-user"/>
                     <Field
                         type="text"
@@ -76,7 +76,7 @@ const Register = () => {
                     <ErrorMessage name="password" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-lock"/>
                     <Field
                         type="password"
@@ -86,7 +86,7 @@ const Register = () => {
                     <ErrorMessage name="password" component="div"
                                   className="error-message"/>
                 </div>
-                <div className="input-box mb-30">
+                <div className="input-box mb-50">
                     <i className="fa fa-lock"/>
                     <Field
                         type="password"
@@ -107,7 +107,7 @@ const Register = () => {
                 </div>
             </Form>
         </Formik>
-        </>);
+    </>);
 };
 
 export default Register;

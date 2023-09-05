@@ -7,7 +7,7 @@ function VendorDetail() {
     const {id} = useParams();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/admin/vendor/" + id)
+        axios.get("http://localhost:8081/admin/vendor/" + id)
             .then(function (res) {
                 setVendor(res.data)
             })
