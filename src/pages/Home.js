@@ -82,7 +82,7 @@ function Home() {
                                 {/* <span className="opacity-text text-uppercase center">
                                         TOP 5 HOUSE
                                     </span> */}
-                                <h2 className="uppercase mb-25">TOP 5 HOUSE</h2>
+                                <h2 className="uppercase mb-25">TOP 6 HOUSE</h2>
                             </div>
                         </div>
                     </div>

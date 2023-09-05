@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { findListAccountUsers } from '../services/accountService';
-import ReactModal from 'react-modal';
+import { changeStatusAccount, findListAccountUsers } from '../services/accountService';
+import customAxios from '../services/api';
 
 function ListUser() {
     const dispatch = useDispatch();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [userDetail, setUserDetail] = useState({});
     let pages = []
 
     const pageAccountUser = useSelector(state => {
@@ -20,15 +20,6 @@ function ListUser() {
         return listAccountUser.slice(startIndex, endIndex);
     })
 
-    const openModal = () => {
-        setModalIsOpen(true);
-    };
-
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
-
-
 
     useEffect(() => {
         if (pageAccountUser.length === 0) {
@@ -36,9 +27,31 @@ function ListUser() {
         }
     }, [])
 
+    const handleUnlockAccount = (account) => {
+        dispatch(changeStatusAccount({ ...account, status: { id: 1, name: "ACTIVE" } }))
+        customAxios.get("/admin/updateStatus/" + 1 + "/" + account.id)
+            .then((response) => { })
+            .catch((error) => console.log(error));
+    }
+
+    const handleLockAccount = (account) => {
+        dispatch(changeStatusAccount({ ...account, status: { id: 3, name: "BLOCKED" } }))
+        customAxios.get("/admin/updateStatus/" + 3 + "/" + account.id)
+            .then((response) => { })
+            .catch((error) => console.log(error));
+    }
+
+    const handleChangeStatusAccount = (account) => {
+        if (account.status.name === 'ACTIVE') {
+            handleLockAccount(account)
+        }
+        if (account.status.name === 'BLOCKED') {
+            handleUnlockAccount(account)
+        }
+    }
+
     return (
         <>
-
             <table className="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
@@ -53,13 +66,13 @@ function ListUser() {
                     {pageAccountUser.map((item, index) => (
                         <tr key={item.id}>
                             <td>{item.fullName ? item.fullName : "NOT UPDATE"}</td>
-                            <td>{item.phone}</td>
+                            <td className='text-muted'>{item.phone}</td>
                             {
                                 item.status.name === "ACTIVE" ?
                                     <td className='text-success'>{item.status.name}</td> :
                                     <td className='text-danger'>{item.status.name}</td>
                             }
-                            <td>
+                            <td onClick={() => handleChangeStatusAccount(item)}>
                                 {
                                     item.status.name === "BLOCKED" ?
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-unlock" viewBox="0 0 16 16">
@@ -71,7 +84,7 @@ function ListUser() {
                                         </svg>
                                 }
                             </td>
-                            <td data-toggle="modal" data-target="#exampleModalCenter">DETAIL</td>
+                            <td className='text-primary' data-toggle="modal" data-target="#exampleModalCenter" onClick={() => setUserDetail(item)}>DETAIL</td>
                         </tr>
                     ))}
                 </tbody>
@@ -98,29 +111,62 @@ function ListUser() {
                     </li>
                 </ul>
             </nav>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="text-center" >User Detail</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+            <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex={-1}
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="text-center">User Detail</h5>
+                            <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                            >
+                                <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-
-                            <img class="card-img-top" src="..." alt="Card image cap" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div className="modal-body">
+                            <img className="card-img-top" src={userDetail.avatar} alt="Avatar" style={{ width: "150px", height: "150px" }} />
+                            <div className="card-body a ">
+                                <h5 className="card-title">Username: {userDetail.username}</h5>
+                                <h5 className="card-title">FullName: {userDetail.fullName === null ? "NOT UPPDATE" : userDetail.fullName}</h5>
+                                <h5 className="card-title">Phone: {userDetail.phone}</h5>
+                                <h5 className="card-title">Status: {userDetail.status !== undefined && userDetail.status.name}</h5>
+                                <h5 className="card-title">Total Money: {userDetail.totalAllBill}</h5>
+                                <h5 className="card-title">Rental history: {userDetail.bills && userDetail.bills.length === 0 && "Not rental history"}</h5>
                             </div>
-
+                            {userDetail.bills && userDetail.bills.length !== 0 &&
+                                <table className="table table-bordered table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Date Checkin</th>
+                                            <th>Date Checkout</th>
+                                            <th>Total price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {userDetail.bills && userDetail.bills.map((item, index) => (
+                                            <tr key={item.id}>
+                                                <td className='text-success'>{item.dateCheckin}</td>
+                                                <td className='text-danger'>{item.dateCheckout}</td>
+                                                <td>{item.totalPrice}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            }
                         </div>
-
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

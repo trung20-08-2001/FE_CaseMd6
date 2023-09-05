@@ -1,4 +1,4 @@
-import { findListAccountUsers, login } from "../../services/accountService"
+import { findListAccountUsers, login,changeStatusAccount } from "../../services/accountService"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initState={
@@ -22,6 +22,16 @@ const accountSlice=createSlice({
         })
         build.addCase(findListAccountUsers.pending, (state,action)=>{
             state.listAccountUser=[]
+        })
+        build.addCase(changeStatusAccount.fulfilled, (state,action)=>{
+            let newListAccountUser=[...state.listAccountUser];
+            for(let i=0; i<newListAccountUser.length;i++){
+                if(newListAccountUser[i].id==action.payload.id){
+                    newListAccountUser[i]=action.payload;
+                    break;
+                }
+            }
+            state.listAccountUser=newListAccountUser;
         })
     }
 })

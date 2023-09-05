@@ -15,3 +15,10 @@ export const findListAccountUsers = createAsyncThunk(
         return response.data;
     }
 )
+
+export const changeStatusAccount= createAsyncThunk(
+    "account/changeStatusAccount",
+    async (account) => {
+        return account;
+    }
+)

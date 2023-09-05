@@ -10,10 +10,11 @@ import SidebarAdmin from "./components/SidebarAdmin";
 import ListUser from "./components/ListUser";
 import Page404 from "./pages/404";
 import UpRole from "./pages/UpRole";
+import { useSelector } from "react-redux";
 
 
 function App() {
-  let account = JSON.parse(localStorage.getItem("account"));
+  let account = useSelector(state=>state.account.account);
 
   return (
     <>
