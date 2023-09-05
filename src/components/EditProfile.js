@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {storage} from "../config/configFirebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
@@ -20,14 +20,11 @@ function EditProfile() {
         status: {id: 0}
     });
     const [previewImage, setPreviewImage] = useState("");
-    const [image, setImage] = useState(null);
-
-
+    const [image, setImage] = useState(null)
     const {id} = useParams();
-    // const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/accounts/" + id)
+        axios.get("http://localhost:8080/accounts/searchAccount/" + id)
             .then(res => {
                 setPreviewImage(res.data.avatar);
                 setAccount(res.data)
@@ -42,8 +39,12 @@ function EditProfile() {
     const edit = (e) => {
         axios.post("http://localhost:8080/accounts/edit", account)
             .then(res => {
-                console.log(res)
-                // navigate("/")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully!',
+                    showConfirmButton: false, // Ẩn nút "OK"
+                    timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                })
             })
     }
 
@@ -64,9 +65,11 @@ function EditProfile() {
             const imgRef = ref(storage, `images/${file.name}`);
             uploadBytes(imgRef, file)
                 .then(() => {
+                    console.log(imgRef)
                     return getDownloadURL(imgRef);
                 })
                 .then((url) => {
+                    console.log(url)
                     setAccount({...account, avatar: url})
                     // dispatch(saveImageURL(url))
                 })
@@ -78,10 +81,10 @@ function EditProfile() {
     }
 
     const UpdateProfileSchema = Yup.object().shape({
-        username: Yup.string().required("không được để trống").matches(/^[a-zA-Z0-9]*$/, 'Phải là chữ hoặc số'),
-        phone: Yup.string().matches(/^\d{10,12}$/, 'Số điện thoại phải có từ 10 đến 12 chữ số').required('Vui lòng nhập số điện thoại'),
-        fullName: Yup.string().required('không được để trống').matches(/^[a-zA-ZÀ-ỹ]+$/, 'Phải là chữ'),
-        address: Yup.string().required('không được để trống').matches(/^[\w\s,./-À-ỹ]+$/, 'Địa chỉ không hợp lệ'),
+        // username: Yup.string().required("không được để trống").matches(/^[a-zA-Z0-9]*$/, 'Phải là chữ hoặc số'),
+        // phone: Yup.string().matches(/^\d{10,12}$/, 'Số điện thoại phải có từ 10 đến 12 chữ số').required('Vui lòng nhập số điện thoại'),
+        // fullName: Yup.string().required('không được để trống').matches(/^[a-zA-ZÀ-ỹ]+$/, 'Phải là chữ'),
+        // address: Yup.string().required('không được để trống').matches(/^[\w\s,./-À-ỹ]+$/, 'Địa chỉ không hợp lệ'),
     });
 
     return (
@@ -189,7 +192,7 @@ function EditProfile() {
 
                                             </div>
                                         </div>
-                                        <button type={"button"} onClick={edit}
+                                        <button style={{cursor: 'pointer'}} type={"button"} onClick={edit}
                                                 className="register-btn button lemon pull-left">
                                             Update
                                         </button>
@@ -203,6 +206,5 @@ function EditProfile() {
         </>
     );
 }
-
 
 export default EditProfile;

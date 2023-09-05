@@ -6,6 +6,7 @@ import MyHouses from "./pages/MyHouses";
 import EditHouse from "./pages/EditHouse";
 import EditProfile from "./components/EditProfile";
 import ShowVendor from "./components/admin/ShowVendor";
+import VendorDetail from "./components/admin/VendorDetail";
 
 
 
@@ -21,10 +22,12 @@ function App() {
                             <Route index element={<CreateHouse/>}></Route>
                             <Route path="my_houses" element={<MyHouses/>}></Route>
                             <Route path="edit_house" element={<EditHouse/>}></Route>
-                            <Route path={'/:id'} element={<EditProfile/>}></Route>
-                            <Route path={'/admin/vendors'} element={<ShowVendor/>}></Route>
+
                         </Route>
                     }
+                    <Route path={'/edit_profile/:id'} element={<EditProfile/>}></Route>
+                    <Route path={'/admin/vendors'} element={<ShowVendor/>}></Route>
+                    <Route path={'/admin/vendor/detail/:id'} element={<VendorDetail/>}></Route>
                 </Route>
             </Routes>
         </>
