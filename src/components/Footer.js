@@ -31,7 +31,7 @@ const Footer = () => {
             <a
                 id="scrollUp"
                 onClick={scrollToTop}
-                style={{ position: "fixed", zIndex: 2147483647, display: "inline", display: showBackToTop ? 'block' : 'none' }}
+                style={{ position: "fixed", zIndex: 2147483647, display: "inline", display: showBackToTop ? "block" : "none" }}
                 
             >
                 Scroll to top
