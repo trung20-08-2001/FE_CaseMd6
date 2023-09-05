@@ -19,7 +19,7 @@ function SidebarAdmin() {
               </div>
               <div className="single-sidebar-widget fix mb-60">
                 <div className="sidebar-widget-title mb-32">
-                  <h5>History </h5>
+                  {/* <h5>History </h5> */}
                 </div>
               </div>
             </div>

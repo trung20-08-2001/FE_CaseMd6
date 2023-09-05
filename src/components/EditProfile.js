@@ -40,7 +40,7 @@ function EditProfile() {
     };
 
     const edit = (e) => {
-        localStorage.setItem(account);
+        localStorage.setItem("account",JSON.stringify(account));
         dispatch(login(account));
         axios.post("http://localhost:8081/accounts/edit", account)
             .then(res => {

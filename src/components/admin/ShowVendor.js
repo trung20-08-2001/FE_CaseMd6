@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 
 function ShowVendor() {
@@ -28,7 +28,7 @@ function ShowVendor() {
         .map((vendor) => {
             return (
                 <tr key={vendor.account.id}>
-                    <td >{vendor.account.fullName== null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
+                    <td >{vendor.account.fullName == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
                     <td>{vendor.account.phone}</td>
                     <td>${vendor.revenue}</td>
                     <td>{vendor.countHouse}</td>
@@ -194,23 +194,23 @@ function ShowVendor() {
     return (
         <>
 
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h2>List Vendor</h2>
+            {/* <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}> */}
+                <h4 className='text-center pb-20'>List account user</h4>
 
                 <table className="table table-hover">
                     <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone number</th>
-                        <th>Revenue</th>
-                        <th>Count of houses</th>
-                        <th>Detail</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone number</th>
+                            <th>Revenue</th>
+                            <th>Count of houses</th>
+                            <th>Detail</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {displayVendors}
+                        {displayVendors}
                     </tbody>
                 </table>
                 {/* Phân trang */}
@@ -228,7 +228,7 @@ function ShowVendor() {
                     pageClassName={"pagination__item"}
 
                 />
-            </div>
+            {/* </div> */}
 
         </>
     )

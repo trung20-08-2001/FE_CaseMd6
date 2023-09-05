@@ -123,7 +123,7 @@ const Navbar = () => {
                                                             {account.role.id === 1 &&
                                                                 <>
                                                                     <li>
-                                                                        <a>Quản lý tài khoản khách hàng</a>
+                                                                        <Link to="admin">Quản lý tài khoản người dùng</Link>
                                                                     </li>
 
                                                                     <li>
@@ -187,14 +187,14 @@ const Navbar = () => {
                                                                 <a>Lịch sử giao dịch</a>
                                                             </li>
                                                             <li>
-                                                                <Link
+                                                                <a
                                                                     onClick={
                                                                         () => {
                                                                             localStorage.removeItem("account");
                                                                             dispatch(login(JSON.parse(localStorage.getItem("account"))))
                                                                             navigate('/')
                                                                         }
-                                                                    }>Đăng xuất</Link></li>
+                                                                    }>Đăng xuất</a></li>
                                                         </ul>
                                                     </>
 
@@ -294,4 +294,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
->>>>>>> 20643c1803e624ad27c41e2239d55c4074fc8311
