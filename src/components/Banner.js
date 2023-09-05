@@ -7,7 +7,7 @@ import Slide from './Slide'
 function Banner() {
   const imageBanner = useSelector(state => state.image.imageBanner)
   const dispatch =useDispatch()
-  console.log(imageBanner);
+  
   useEffect(() => {
     if (imageBanner.length === 0) {
       dispatch(findImageBanner())

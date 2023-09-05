@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import Register from "../components/Register";
-import {Link} from "react-router-dom";
+import Register from './Register';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../services/accountService';
 import ReactModal from 'react-modal';
 import "../assets/styleModal.css"
 import Swal from "sweetalert2";
 
 
 const Navbar = () => {
+    const navigate=useNavigate();
+    const dispatch=useDispatch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -48,12 +52,16 @@ const Navbar = () => {
                     text: 'Bạn đã đăng nhập thành công tài khoản.',
                 });
                 localStorage.setItem("account",JSON.stringify(resp.data));
+                dispatch(login(resp.data))
                 setErrorMessage('');
                 setIsLoggedIn(true); // Đánh dấu đã đăng nhập thành công
+                setUsername('')
+                setPassword('')
+
 
             })
             .catch(function (err) {
-                if (err.response && err.response.status === 403) {
+                if (err.response && err.response.status === 401) {
                     setIsModalOpen(true)
                 } else {
                     console.log(err)
@@ -67,19 +75,17 @@ const Navbar = () => {
         return regex.test(input);
     };
 
-
     return (
         <>
-
             <header className="header-area">
                 <div id="sticky-header">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-2">
                                 <div className="logo">
-                                    <a href="index.html">
-                                        <img src="images/logo/logo.png" alt="DomInno"/>
-                                    </a>
+                                    <Link to="/">
+                                        <img src="images/logo/logo.png" alt="DomInno" />
+                                    </Link>
                                 </div>
                             </div>
                             <div className="col-lg-10 d-none d-lg-block">
@@ -87,10 +93,9 @@ const Navbar = () => {
                                     <nav id="primary-menu">
                                         <ul
                                             className="main-menu text-right"
-                                            style={{marginTop: "-25px"}}
+                                            style={{ marginTop: "-25px" }}
                                         >
                                             <li>
-
                                                 {account!==null && (
                                                     <>
                                                         <a
@@ -106,6 +111,7 @@ const Navbar = () => {
                                                                 transition: 'box-shadow 0.3s ease',
                                                             }}
                                                         >
+                                                            <i className="fa fa-bars"></i>
                                                             <img
                                                                 style={{
                                                                     borderRadius: '50%',
@@ -116,19 +122,6 @@ const Navbar = () => {
                                                                 alt="Avatar"
                                                             />
                                                         </a>
-
-
-
-
-                                                        <img
-                                                            style={{
-                                                                borderRadius: '50%',
-                                                                width: 35,
-                                                                height: 35,
-                                                            }}
-                                                            src={"/images/icons/c-globe.png"}/>
-
-
                                                         <ul className="dropdown">
 
 
@@ -159,7 +152,9 @@ const Navbar = () => {
                                                                     <a>Thay đổi thông tin cơ bản</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a>Đổi mật khẩu</a>
+                                                                    <Link to={"changePassword" }>
+                                                                        Đổi mật khẩu
+                                                                    </Link>
                                                                 </li>
 
                                                             </>
@@ -173,7 +168,9 @@ const Navbar = () => {
                                                                         <a>Thay đổi thông tin cơ bản</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a>Đổi mật khẩu</a>
+                                                                        <Link to={"changePassword" }>
+                                                                            Đổi mật khẩu
+                                                                        </Link>
                                                                     </li>
                                                                     <li>
                                                                         <Link to={"/user"}>
@@ -184,12 +181,20 @@ const Navbar = () => {
                                                             }
 
                                                             <li>
-                                                                <a>Đăng xuất</a>
-                                                            </li>
+                                                                <Link
+                                                                    onClick={
+                                                                        () => {
+                                                                            localStorage.removeItem("account");
+                                                                            dispatch(login(localStorage.getItem("account")))
+                                                                            navigate('/')
+                                                                        }
+                                                                    }>Đăng xuất</Link>                                                            </li>
                                                         </ul>
                                                     </>
 
                                                 )}
+
+
 
                                                 {account===null && ( // Hiển thị phần đăng nhập chỉ khi chưa đăng nhập thành công
 
@@ -221,7 +226,7 @@ const Navbar = () => {
                                                                         />
                                                                     </div>
                                                                     <div className="input-box">
-                                                                        <i className="fa fa-lock"/>
+                                                                        <i className="fa fa-lock" />
                                                                         <input
                                                                             type="password"
                                                                             value={password}
@@ -237,10 +242,10 @@ const Navbar = () => {
                                                                     )}
                                                                     <div className="social-links mt-25">
                                                                         <a href="#">
-                                                                            <i className="fa fa-facebook"/>
+                                                                            <i className="fa fa-facebook" />
                                                                         </a>
                                                                         <a href="#">
-                                                                            <i className="fa fa-google-plus"/>
+                                                                            <i className="fa fa-google-plus" />
                                                                         </a>
                                                                         <button
                                                                             type="submit"
@@ -265,15 +270,7 @@ const Navbar = () => {
                                                 </div>
                                                 )}
 
-
-
-
-
-
                                             </li>
-
-
-
                                         </ul>
                                     </nav>
                                 </div>
