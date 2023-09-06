@@ -162,7 +162,7 @@ function EditProfile() {
                                                        onChange={handleInputChange}
                                                        name="password" placeholder="password" className="mb-28"/>
                                                 <label>Username</label>
-                                                <Field type="text" value={account.username} onChange={handleInputChange}
+                                                <Field readOnly={true} type="text" value={account.username} onChange={handleInputChange}
                                                        name="username" placeholder="Username" className="mb-28"/>
                                                 <ErrorMessage name="username" component="div"
                                                               className="error-message"/>

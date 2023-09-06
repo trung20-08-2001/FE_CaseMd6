@@ -15,6 +15,7 @@ import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
+import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -28,6 +29,7 @@ function App() {
                         <Route path="admin" element={<SidebarAdmin/>}>
                             <Route path={'vendors'} element={<ShowVendor/>}></Route>
                             <Route path={'vendor/detail/:id'} element={<VendorDetail/>}></Route>
+                            <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor/>}></Route>
                             <Route index element={<ListUser/>}/>
                         </Route>
                     }
