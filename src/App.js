@@ -12,6 +12,7 @@ import Page404 from "./pages/404";
 import UpRole from "./pages/UpRole";
 import { useSelector } from "react-redux";
 import ChangePassword from "./pages/ChangePassword";
+import HouseDetail from "./pages/HouseDetail";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           }
           <Route path={"user"} element={<UpRole/>}></Route>
             <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
+            <Route path={"houseDetail/:index"} element={<HouseDetail></HouseDetail>}></Route>
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
