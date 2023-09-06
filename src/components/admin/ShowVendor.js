@@ -41,18 +41,9 @@ function ShowVendor() {
                     <td>
                         {vendor.account.status.id === 2 ? (
                             <div>
-                                <button
-                                    className="btn btn-outline-success"
-                                    onClick={() => handleUpRoleClick(vendor.account.id, "ACCEPT")}
-                                >
-                                    ACCEPT
-                                </button>
-                                <button
-                                    className="btn btn-outline-danger"
-                                    onClick={() => handleUpRoleClick(vendor.account.id, "REJECT")}
-                                >
-                                    Reject
-                                </button>
+                                <Link className="btn btn-outline-secondary" to={`/admin/vendor/upRole/${vendor.account.id}`}>
+                                    Up Role
+                                </Link>
                             </div>
                         ) : (
                             <i

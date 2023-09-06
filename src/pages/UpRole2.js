@@ -188,10 +188,7 @@ const UpRole2 = () => {
                                             <button type="submit" className="btn btn-success btn-submit">Submit</button>
                                         </div>
                                     </Form>)}
-
-
                             </Formik>
-
                         </div>
 
                         <div className="property-package">
