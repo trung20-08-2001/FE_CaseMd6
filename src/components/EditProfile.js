@@ -40,7 +40,7 @@ function EditProfile() {
     };
 
     const edit = (e) => {
-        localStorage.setItem(account);
+        localStorage.setItem("account",JSON.stringify(account));
         dispatch(login(account));
         axios.post("http://localhost:8081/accounts/edit", account)
             .then(res => {
@@ -75,9 +75,7 @@ function EditProfile() {
                     return getDownloadURL(imgRef);
                 })
                 .then((url) => {
-                    console.log(url)
                     setAccount({...account, avatar: url})
-                    // dispatch(saveImageURL(url))
                 })
                 .catch((error) => {
                     console.log(error);
@@ -105,9 +103,7 @@ function EditProfile() {
                 validationSchema={UpdateProfileSchema}
                 onSubmit={async values => {
                     try {
-                        console.log(values)
                         const response = await axios.post("http://localhost:8081/accounts/", values);
-                        console.log(response)
                         if (response.data === '') {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
@@ -126,7 +122,6 @@ function EditProfile() {
                         console.error(error);
                     }
                 }}
-
             >
                 <Form>
                     <div className="banner-area bg-2 bg-overlay-2 ptb-165">
