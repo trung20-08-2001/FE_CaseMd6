@@ -14,7 +14,6 @@ import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
-import HouseDetail from "./components/HouseDetail";
 
 function App() {
   let account = useSelector(state => state.account.account);
