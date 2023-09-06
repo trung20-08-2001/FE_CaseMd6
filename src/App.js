@@ -43,7 +43,6 @@ function App() {
           }
           <Route path={'/edit_profile/:id'} element={<EditProfile />}></Route>
           <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
-          <Route path="houseDetail/:idHouse" element={<HouseDetail />}></Route>
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
