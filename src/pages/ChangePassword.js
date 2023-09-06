@@ -4,6 +4,8 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from '../services/accountService';
 
 const SignupSchema = Yup.object().shape({
     oldPassword: Yup.string().required('The old password cannot be blank'),
@@ -14,9 +16,10 @@ const SignupSchema = Yup.object().shape({
 const ChangePassword = () => {
     const account = JSON.parse(localStorage.getItem("account"))
     const  navigate = useNavigate();
+    const dispatch=useDispatch();
 
     let accountCurrent = {}
-    axios.get("http://localhost:8080/accounts/searchAccount/" + account.id)
+    axios.get("http://localhost:8081/accounts/searchAccount/" + account.id)
         .then(res => {
             accountCurrent = res.data
         })
@@ -47,13 +50,14 @@ const ChangePassword = () => {
                                 text: 'Mậu khẩu cũ không chính xác',
                             });
                         } else {
-                            axios.post("http://localhost:8080/accounts/createAccount", {...accountCurrent,password:values.password});
+                            axios.post("http://localhost:8081/accounts/createAccount", {...accountCurrent,password:values.password});
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Đổi mật khẩu thành công!',
                                 text: 'Bạn đã đổi thành công mật khẩu.',
                             });
                             localStorage.removeItem("account");
+                            dispatch(login(JSON.parse(localStorage.getItem("account"))));
                             navigate("/")
                         }
 

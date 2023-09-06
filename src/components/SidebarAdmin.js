@@ -14,12 +14,12 @@ function SidebarAdmin() {
               </div>
               <div className="single-sidebar-widget fix mb-60 d-none d-md-block">
                 <div className="sidebar-widget-title mb-32">
-                <h5><Link to="create_house">Account host</Link></h5>
+                <h5><Link to="/admin/vendors">Account host</Link></h5>
                 </div>
               </div>
               <div className="single-sidebar-widget fix mb-60">
                 <div className="sidebar-widget-title mb-32">
-                  <h5>History </h5>
+                  {/* <h5>History </h5> */}
                 </div>
               </div>
             </div>
