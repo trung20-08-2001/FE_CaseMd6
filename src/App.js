@@ -15,6 +15,7 @@ import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
+import Search from "./components/Search";
 
 function App() {
   let account = useSelector(state => state.account.account);
@@ -23,7 +24,6 @@ function App() {
     <>
       <Routes>
         <Route path="" element={<Master />}>
-          <Route index element={<Home />}></Route>
           {account !== null && account.role.id === 1 &&
             <Route path="admin" element={<SidebarAdmin />}>
               <Route path={'vendors'} element={<ShowVendor />}></Route>
@@ -41,6 +41,7 @@ function App() {
           {account !== null && account.role.id === 3 &&
             <Route path={"user"} element={<UpRole2 />}></Route>
           }
+          <Route index element={<Home />}></Route>
           <Route path={'/edit_profile/:id'} element={<EditProfile />}></Route>
           <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
         </Route>

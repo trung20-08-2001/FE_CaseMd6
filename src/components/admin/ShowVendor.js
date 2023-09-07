@@ -29,6 +29,7 @@ function ShowVendor() {
             return (
                 <tr key={vendor.account.id}>
                     <td >{vendor.account.fullName == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
+                    <td>{vendor.account.email == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.email}</p>}</td>
                     <td>{vendor.account.phone}</td>
                     <td>${vendor.revenue}</td>
                     <td>{vendor.countHouse}</td>
@@ -184,7 +185,12 @@ function ShowVendor() {
 
         axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
             .then((res) => {
+                if (updatedAccount.role.id == 3) {
+                    axios.post('http://localhost:8081/send-email/'+updatedAccount.email)
+                    console.log(updatedAccount.email)
+                }
                 window.location.reload();
+
             })
             .catch((err) => {
                 console.log("Error updating vendor status:", err);
@@ -201,6 +207,7 @@ function ShowVendor() {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Phone number</th>
                             <th>Revenue</th>
                             <th>Count of houses</th>

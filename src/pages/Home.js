@@ -3,7 +3,6 @@ import Banner from '../components/Banner'
 
 function Home() {
     return (
-
         <>
             <div className="find-area pt-10 pb-10">
                 <div className="container">
