@@ -184,7 +184,7 @@ const Navbar = () => {
                                                                 </>
                                                             }
                                                             <li>
-                                                                <a>Lịch sử giao dịch</a>
+                                                                <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
                                                             </li>
                                                             <li>
                                                                 <a

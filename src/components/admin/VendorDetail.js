@@ -61,7 +61,7 @@ function VendorDetail() {
 
                 </table>
                 <Link to={"/admin/vendors"}>
-                    <button className="btn btn-info">Trở lại</button>
+                    <button className="btn btn-info">Back</button>
                 </Link>
             </div>
         </>

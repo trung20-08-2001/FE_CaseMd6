@@ -122,71 +122,11 @@ function ShowVendor() {
             });
     };
 
-    const handleUpRoleClick = (vendorId, action) => {
-        const updatedVendors = vendors.map((vendor) => {
-            if (vendor.account.id === vendorId) {
-                let newRoleId = vendor.account.role.id;
-                let newStatusId = vendor.account.status.id;
-
-                if (action === "ACCEPT") {
-                    newRoleId = 2;
-                    newStatusId = 1;
-                } else if (action === "REJECT") {
-                    newRoleId = 3;
-                    newStatusId = 1;
-                }
-
-                return {
-                    ...vendor,
-                    account: {
-                        ...vendor.account,
-                        role: {
-                            ...vendor.account.role,
-                            id: newRoleId,
-                        },
-                        status: {
-                            ...vendor.account.status,
-                            id: newStatusId,
-                        },
-                    },
-                };
-            }
-            return vendor;
-        });
-        setVendors(updatedVendors);
-        updateUseUpToVendor(vendorId, action);
-    };
-
-    const updateUseUpToVendor = (vendorId, action) => {
-        const updatedAccount = vendors.find((vendor) => vendor.account.id === vendorId).account;
-        let newRoleId = updatedAccount.role.id;
-        let newStatusId = updatedAccount.status.id;
-
-        if (action === "ACCEPT") {
-            newRoleId = 2;
-            newStatusId = 1;
-        } else if (action === "REJECT") {
-            newRoleId = 3;
-            newStatusId = 1;
-        }
-
-        updatedAccount.role.id = newRoleId;
-        updatedAccount.status.id = newStatusId;
-
-        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
-            .then((res) => {
-                window.location.reload();
-            })
-            .catch((err) => {
-                console.log("Error updating vendor status:", err);
-            });
-    };
-
     return (
         <>
 
-            {/* <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}> */}
-                <h4 className='text-center pb-20'>List account user</h4>
+             <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
+                <h4 className='text-center pb-20'>List account Vendor</h4>
 
                 <table className="table table-hover">
                     <thead>
@@ -219,7 +159,7 @@ function ShowVendor() {
                     pageClassName={"pagination__item"}
 
                 />
-            {/* </div> */}
+             </div>
 
         </>
     )
