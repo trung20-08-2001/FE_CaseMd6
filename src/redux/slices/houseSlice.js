@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse, findHouseByAccount, editHouse } from "../../services/houseService"
+import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse } from "../../services/houseService"
 
 const initState = {
-    myHousesDTO: []   // house and list images for each house
+    myHousesDTO: [],   // house and list images for each house
+    topHouse: [],
+    allHouse:[]
 }
 
 const houseSlice = createSlice({
@@ -35,6 +37,24 @@ const houseSlice = createSlice({
         })
         build.addCase(findHouseByAccount.pending, (state, action) => {
             state.myHousesDTO = [];
+        })
+        build.addCase(findTopHouse.fulfilled,(state,action) => {
+            state.topHouse = action.payload;
+        })
+        build.addCase(findTopHouse.rejected,(state,action) => {      
+            state.topHouse=[]
+        })
+        build.addCase(findTopHouse.pending,(state,action) => {
+            state.topHouse=[]
+        })
+        build.addCase(findAllHouse.fulfilled,(state,action) => {
+            state.allHouse=action.payload;
+        })
+        build.addCase(findAllHouse.rejected,(state,action) => {
+            state.allHouse=[]
+        })
+        build.addCase(findAllHouse.pending,(state,action)=>{
+            state.allHouse=[]
         })
     }
 })

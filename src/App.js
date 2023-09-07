@@ -10,7 +10,6 @@ import ListUser from "./components/ListUser";
 import Page404 from "./pages/404";
 import {useSelector} from "react-redux";
 import ChangePassword from "./pages/ChangePassword";
-
 import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
