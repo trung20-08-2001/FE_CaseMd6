@@ -55,7 +55,7 @@ const Search = (props) => {
                     })
                     .catch((error) => console.log(error));
             }
-            setSearchClicked(false);
+            // setSearchClicked(false);
         }
     }, [searchClicked, nameHouse, selectValue]);
 

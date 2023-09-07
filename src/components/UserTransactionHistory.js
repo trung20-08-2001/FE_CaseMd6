@@ -83,6 +83,7 @@ function UserTransactionHistory() {
             const totalPrice = '$'+bill?.bill.totalPrice || '$0';
             const address = bill?.house.address || 'No Address';
             const status = bill?.bill.status.name || 'No Status';
+            console.log(bill.bill.status)
 
             // Tính toán thời gian đặt thuê
             const checkinDate = new Date(dateCheckin);

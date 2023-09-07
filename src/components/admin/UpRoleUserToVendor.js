@@ -66,6 +66,10 @@ function UpRoleUserToVendor() {
 
         axios.post(`http://localhost:8081/accounts/createAccount`, user)
             .then((res) => {
+                if (user.role.id == 3) {
+                    axios.post('http://localhost:8081/send-email/'+user.email)
+                    console.log(user.email)
+                }
                 navigate("/admin/vendors")
             })
             .catch((err) => {
