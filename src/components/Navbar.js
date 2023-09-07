@@ -143,7 +143,7 @@ const Navbar = () => {
                                                                         <Link to={`/host/create_house`}>Đăng tin cho thuê</Link>
                                                                     </li>
                                                                     <li>
-                                                                        <Link to={`/host`}>Quản lý các phòng thuê</Link>
+                                                                        <Link to="host">Quản lý các phòng thuê</Link>
                                                                     </li>
                                                                     <li>
                                                                         <a>Thông tin cá nhân</a>
@@ -184,7 +184,7 @@ const Navbar = () => {
                                                                 </>
                                                             }
                                                             <li>
-                                                                <a>Lịch sử giao dịch</a>
+                                                                <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
                                                             </li>
                                                             <li>
                                                                 <a

@@ -75,9 +75,7 @@ function EditProfile() {
                     return getDownloadURL(imgRef);
                 })
                 .then((url) => {
-                    console.log(url)
                     setAccount({...account, avatar: url})
-                    // dispatch(saveImageURL(url))
                 })
                 .catch((error) => {
                     console.log(error);
@@ -105,9 +103,7 @@ function EditProfile() {
                 validationSchema={UpdateProfileSchema}
                 onSubmit={async values => {
                     try {
-                        console.log(values)
                         const response = await axios.post("http://localhost:8081/accounts/", values);
-                        console.log(response)
                         if (response.data === '') {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
@@ -126,7 +122,6 @@ function EditProfile() {
                         console.error(error);
                     }
                 }}
-
             >
                 <Form>
                     <div className="banner-area bg-2 bg-overlay-2 ptb-165">
@@ -162,7 +157,7 @@ function EditProfile() {
                                                        onChange={handleInputChange}
                                                        name="password" placeholder="password" className="mb-28"/>
                                                 <label>Username</label>
-                                                <Field type="text" value={account.username} onChange={handleInputChange}
+                                                <Field readOnly={true} type="text" value={account.username} onChange={handleInputChange}
                                                        name="username" placeholder="Username" className="mb-28"/>
                                                 <ErrorMessage name="username" component="div"
                                                               className="error-message"/>

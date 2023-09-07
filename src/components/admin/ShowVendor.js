@@ -42,18 +42,9 @@ function ShowVendor() {
                     <td>
                         {vendor.account.status.id === 2 ? (
                             <div>
-                                <button
-                                    className="btn btn-outline-success"
-                                    onClick={() => handleUpRoleClick(vendor.account.id, "ACCEPT")}
-                                >
-                                    ACCEPT
-                                </button>
-                                <button
-                                    className="btn btn-outline-danger"
-                                    onClick={() => handleUpRoleClick(vendor.account.id, "REJECT")}
-                                >
-                                    Reject
-                                </button>
+                                <Link className="btn btn-outline-secondary" to={`/admin/vendor/upRole/${vendor.account.id}`}>
+                                    Up Role
+                                </Link>
                             </div>
                         ) : (
                             <i
@@ -200,8 +191,8 @@ function ShowVendor() {
     return (
         <>
 
-            {/* <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}> */}
-                <h4 className='text-center pb-20'>List account user</h4>
+             <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
+                <h4 className='text-center pb-20'>List account Vendor</h4>
 
                 <table className="table table-hover">
                     <thead>
@@ -235,7 +226,7 @@ function ShowVendor() {
                     pageClassName={"pagination__item"}
 
                 />
-            {/* </div> */}
+             </div>
 
         </>
     )
