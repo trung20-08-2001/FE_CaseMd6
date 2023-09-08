@@ -29,6 +29,7 @@ function ShowVendor() {
             return (
                 <tr key={vendor.account.id}>
                     <td >{vendor.account.fullName == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
+                    <td>{vendor.account.email == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.email}</p>}</td>
                     <td>{vendor.account.phone}</td>
                     <td>${vendor.revenue}</td>
                     <td>{vendor.countHouse}</td>
@@ -122,6 +123,71 @@ function ShowVendor() {
             });
     };
 
+    const handleUpRoleClick = (vendorId, action) => {
+        const updatedVendors = vendors.map((vendor) => {
+            if (vendor.account.id === vendorId) {
+                let newRoleId = vendor.account.role.id;
+                let newStatusId = vendor.account.status.id;
+
+                if (action === "ACCEPT") {
+                    newRoleId = 2;
+                    newStatusId = 1;
+                } else if (action === "REJECT") {
+                    newRoleId = 3;
+                    newStatusId = 1;
+                }
+
+                return {
+                    ...vendor,
+                    account: {
+                        ...vendor.account,
+                        role: {
+                            ...vendor.account.role,
+                            id: newRoleId,
+                        },
+                        status: {
+                            ...vendor.account.status,
+                            id: newStatusId,
+                        },
+                    },
+                };
+            }
+            return vendor;
+        });
+        setVendors(updatedVendors);
+        updateUseUpToVendor(vendorId, action);
+    };
+
+    const updateUseUpToVendor = (vendorId, action) => {
+        const updatedAccount = vendors.find((vendor) => vendor.account.id === vendorId).account;
+        let newRoleId = updatedAccount.role.id;
+        let newStatusId = updatedAccount.status.id;
+
+        if (action === "ACCEPT") {
+            newRoleId = 2;
+            newStatusId = 1;
+        } else if (action === "REJECT") {
+            newRoleId = 3;
+            newStatusId = 1;
+        }
+
+        updatedAccount.role.id = newRoleId;
+        updatedAccount.status.id = newStatusId;
+
+        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
+            .then((res) => {
+                if (updatedAccount.role.id == 3) {
+                    axios.post('http://localhost:8081/send-email/'+updatedAccount.email)
+                    console.log(updatedAccount.email)
+                }
+                window.location.reload();
+
+            })
+            .catch((err) => {
+                console.log("Error updating vendor status:", err);
+            });
+    };
+
     return (
         <>
 
@@ -132,6 +198,7 @@ function ShowVendor() {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Phone number</th>
                             <th>Revenue</th>
                             <th>Count of houses</th>

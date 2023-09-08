@@ -1,15 +1,16 @@
-import {Routes, Route} from "react-router-dom";
-import Master from "./components/layout/Master";
+import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Host from "./components/Host";
+import Income from "./components/Income";
+import ListUser from "./components/ListUser";
+import SidebarAdmin from "./components/SidebarAdmin";
+import Master from "./components/layout/Master";
+import Page404 from "./pages/404";
+import ChangePassword from "./pages/ChangePassword";
 import CreateHouse from "./pages/CreateHouse";
-import MyHouses from "./pages/MyHouses";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
-import SidebarAdmin from "./components/SidebarAdmin";
-import ListUser from "./components/ListUser";
-import Page404 from "./pages/404";
-import {useSelector} from "react-redux";
-import ChangePassword from "./pages/ChangePassword";
+import MyHouses from "./pages/MyHouses";
 import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
@@ -19,7 +20,7 @@ import UserTransactionHistory from "./components/UserTransactionHistory";
 import VendorTransactionHistory from "./components/VendorTransactionHistory";
 
 function App() {
-    let account = useSelector(state => state.account.account);
+  let account = useSelector(state => state.account.account);
 
     return (
         <>
@@ -39,6 +40,7 @@ function App() {
                             <Route path="create_house" element={<CreateHouse/>}></Route>
                             <Route index element={<MyHouses/>}></Route>
                             <Route path="edit_house/:indexHouseEdit" element={<EditHouse/>}></Route>
+                            <Route path="income" element={<Income/>}></Route>
                         </Route>
                     }
                     {account !== null && account.role.id === 3 &&
