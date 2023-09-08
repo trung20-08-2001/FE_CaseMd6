@@ -140,7 +140,7 @@ const Navbar = () => {
                                                             {account.role.id === 2 &&
                                                                 <>
                                                                     <li>
-                                                                        <a>Đăng tin cho thuê</a>
+                                                                        <Link to={`/host/create_house`}>Đăng tin cho thuê</Link>
                                                                     </li>
                                                                     <li>
                                                                         <Link to="host">Quản lý các phòng thuê</Link>
@@ -184,7 +184,7 @@ const Navbar = () => {
                                                                 </>
                                                             }
                                                             <li>
-                                                                <a>Lịch sử giao dịch</a>
+                                                                <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
                                                             </li>
                                                             <li>
                                                                 <a

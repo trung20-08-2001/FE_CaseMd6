@@ -1,24 +1,25 @@
-import {Routes, Route} from "react-router-dom";
-import Master from "./components/layout/Master";
+import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import EditProfile from "./components/EditProfile";
 import Host from "./components/Host";
+import Income from "./components/Income";
+import ListUser from "./components/ListUser";
+import SidebarAdmin from "./components/SidebarAdmin";
+import UserTransactionHistory from "./components/UserTransactionHistory";
+import ShowVendor from "./components/admin/ShowVendor";
+import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
+import VendorDetail from "./components/admin/VendorDetail";
+import Master from "./components/layout/Master";
+import Page404 from "./pages/404";
+import ChangePassword from "./pages/ChangePassword";
 import CreateHouse from "./pages/CreateHouse";
-import MyHouses from "./pages/MyHouses";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
-import SidebarAdmin from "./components/SidebarAdmin";
-import ListUser from "./components/ListUser";
-import Page404 from "./pages/404";
-import {useSelector} from "react-redux";
-import ChangePassword from "./pages/ChangePassword";
+import MyHouses from "./pages/MyHouses";
 import UpRole2 from "./pages/UpRole2";
-import VendorDetail from "./components/admin/VendorDetail";
-import ShowVendor from "./components/admin/ShowVendor";
-import EditProfile from "./components/EditProfile";
-import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
-import Income from "./components/Income";
 
 function App() {
-    let account = useSelector(state => state.account.account);
+  let account = useSelector(state => state.account.account);
 
     return (
         <>
@@ -44,8 +45,9 @@ function App() {
                     {account !== null && account.role.id === 3 &&
                         <Route path={"user"} element={<UpRole2/>}></Route>
                     }
-                    <Route path={'/edit_profile/:id'} element={<EditProfile/>}></Route>
+                    <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
                     <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
+                    <Route path={'bills_user/:id'} element={<UserTransactionHistory/>}></Route>
                 </Route>
                 <Route path="*" element={<Page404/>}/>
             </Routes>
