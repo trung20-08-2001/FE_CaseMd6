@@ -52,7 +52,7 @@ function ListHouse() {
                                                 </div>
                                             </div>
                                             <div className="property-image">
-                                                <Link to={"houseDetail/"+item.house.id}><img src={item.images[0].url} alt="" style={{width:"100%",height:"300px"}} /></Link>     
+                                                <Link to={"houseDetail/"+item.house.id}><img src={item.images.lenght ?item.images[0].url:""} alt="" style={{width:"100%",height:"300px"}} /></Link>
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
                                                         <span>{item.house.status.name}</span>
