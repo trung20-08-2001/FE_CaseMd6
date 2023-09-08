@@ -16,6 +16,7 @@ import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
 import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 import UserTransactionHistory from "./components/UserTransactionHistory";
+import VendorTransactionHistory from "./components/VendorTransactionHistory";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -46,6 +47,7 @@ function App() {
                     <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
                     <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
                     <Route path={'bills_user/:id'} element={<UserTransactionHistory/>}></Route>
+                    <Route path={'bills_vendor/:id'} element={<VendorTransactionHistory/>}></Route>
                 </Route>
                 <Route path="*" element={<Page404/>}/>
             </Routes>

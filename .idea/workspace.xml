@@ -7,9 +7,9 @@
     <list default="true" id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ListUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +31,9 @@
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2UcBhRDQW1V813fe8F66g5Kf5V5" />
   <component name="ProjectViewState">
@@ -78,6 +81,7 @@
       <workItem from="1693887428540" duration="6610000" />
       <workItem from="1693962955280" duration="6703000" />
       <workItem from="1694050277983" duration="14669000" />
+      <workItem from="1694138002112" duration="8319000" />
     </task>
     <servers />
   </component>

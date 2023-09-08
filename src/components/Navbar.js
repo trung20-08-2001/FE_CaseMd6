@@ -135,6 +135,9 @@ const Navbar = () => {
                                                                             đổi
                                                                             thông tin</Link>
                                                                     </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
+                                                                    </li>
                                                                 </>
                                                             }
                                                             {account.role.id === 2 &&
@@ -152,6 +155,12 @@ const Navbar = () => {
                                                                         <Link to={`/edit_profile/${account.id}`}>Thay
                                                                             đổi
                                                                             thông tin</Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_vendor/${account.id}`}>Lịch đặt thuê nhà</Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
                                                                     </li>
                                                                     <li>
                                                                         <Link to={"changePassword"}>
@@ -172,6 +181,9 @@ const Navbar = () => {
                                                                             thông tin</Link>
                                                                     </li>
                                                                     <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
+                                                                    </li>
+                                                                    <li>
                                                                         <Link to={"changePassword"}>
                                                                             Đổi mật khẩu
                                                                         </Link>
@@ -183,9 +195,6 @@ const Navbar = () => {
                                                                     </li>
                                                                 </>
                                                             }
-                                                            <li>
-                                                                <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
-                                                            </li>
                                                             <li>
                                                                 <a
                                                                     onClick={

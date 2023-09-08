@@ -6,8 +6,6 @@ import Swal from "sweetalert2";
 
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
-    const navigate = useNavigate();
-
     const {id} = useParams();
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
@@ -52,7 +50,7 @@ function UserTransactionHistory() {
             .then((res) => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'you have Cancelled!',
+                    title: 'You have Cancelled!',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
@@ -98,7 +96,7 @@ function UserTransactionHistory() {
             ) : null;
 
             return (
-                <tr key={userId}>
+                <tr key={userId} style={{height:'60px'}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
