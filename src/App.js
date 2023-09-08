@@ -15,6 +15,7 @@ import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
 import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
+import Income from "./components/Income";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -37,6 +38,7 @@ function App() {
                             <Route path="create_house" element={<CreateHouse/>}></Route>
                             <Route index element={<MyHouses/>}></Route>
                             <Route path="edit_house/:indexHouseEdit" element={<EditHouse/>}></Route>
+                            <Route path="income" element={<Income/>}></Route>
                         </Route>
                     }
                     {account !== null && account.role.id === 3 &&
