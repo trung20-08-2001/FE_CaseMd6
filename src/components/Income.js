@@ -109,7 +109,7 @@ export default function Income() {
                     <Bar options={options} data={chartData} />
                     {revenue.map((item,index) => {
                         return (
-                            <button className='btn btn-primary' onClick={() => handleButtonClick(index)}>{item.year}</button>
+                            <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
                         )
                     })}
                 </>

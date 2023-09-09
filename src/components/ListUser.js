@@ -52,7 +52,7 @@ function ListUser() {
 
     return (
         <>
-        <h4 className='text-center pb-20'>List account user</h4>
+            <h4 className='text-center pb-20'>List account user</h4>
             <table className="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
@@ -91,27 +91,26 @@ function ListUser() {
                 </tbody>
             </table>
             <br></br>
-            <nav aria-label="Page navigation example">
-                <ul className="pagination">
-                    <li className="page-item" onClick={() => (currentPage > 1) && setCurrentPage(currentPage - 1)}>
-                        <a className="page-link" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span className="sr-only">Previous</span>
+            <div className="pagination-content text-center block top-margin">
+                <ul className="pagination fix mt-10 mb-0">
+                    <li>
+                        <a onClick={() => (currentPage > 1) && setCurrentPage(currentPage - 1)}>
+                            <i className="zmdi zmdi-long-arrow-left" />
                         </a>
                     </li>
                     {pages.map(item => {
-                        return currentPage === item ?
-                            <li key={item} className="page-item active"><a className="page-link" onClick={() => setCurrentPage(item)} >{item}</a></li>
-                            : <li key={item} className="page-item"><a className="page-link" onClick={() => setCurrentPage(item)} >{item}</a></li>
+                        return <li>
+                            <a onClick={() => setCurrentPage(item)} >{item}</a>
+                        </li>
                     })}
-                    <li className="page-item" onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>
-                        <a className="page-link" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span className="sr-only">Next</span>
+                    <li className="current">
+                        <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>
+                            <i className="zmdi zmdi-long-arrow-right" />
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </div>
+
             <div
                 className="modal fade"
                 id="exampleModalCenter"

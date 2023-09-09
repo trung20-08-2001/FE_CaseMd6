@@ -26,7 +26,6 @@ function UserTransactionHistory() {
         const updatedBills = bills_User.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-
                 const updatedBill = { ...bill };
                 updatedBill.bill.status.id = 8; // CANCELED
                 updatedBill.bill.status.name = newStatus;

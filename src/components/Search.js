@@ -24,7 +24,6 @@ const Search = (props) => {
                         account.id
                     )
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -33,7 +32,6 @@ const Search = (props) => {
                 axios
                     .get('http://localhost:8081/houses/getAllHouseByStatus/' + selectValue + '/' + account.id)
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -42,7 +40,6 @@ const Search = (props) => {
                 axios
                     .get('http://localhost:8081/houses/getAllHouseByName/' + nameHouse + '/' + account.id)
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -50,7 +47,6 @@ const Search = (props) => {
             if (nameHouse === '' && selectValue === 0) {
                 axios.get("http://localhost:8081/houses/findHouseByAccount/" + account.id)
                     .then(res => {
-                        console.log(res)
                         setHouses(res.data)
                     })
                     .catch((error) => console.log(error));
