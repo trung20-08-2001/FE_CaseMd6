@@ -1,14 +1,7 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import EditProfile from "./components/EditProfile";
-import Host from "./components/Host";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
-import SidebarAdmin from "./components/SidebarAdmin";
-import UserTransactionHistory from "./components/UserTransactionHistory";
-import ShowVendor from "./components/admin/ShowVendor";
-import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
-import VendorDetail from "./components/admin/VendorDetail";
 import Master from "./components/layout/Master";
 import Page404 from "./pages/404";
 import ChangePassword from "./pages/ChangePassword";
@@ -20,6 +13,12 @@ import UpRole2 from "./pages/UpRole2";
 import Login from "./pages/login_register/Login";
 import Register from "./pages/login_register/Register";
 import SideBar from "./pages/Sidebar";
+import VendorDetail from "./components/admin/VendorDetail";
+import ShowVendor from "./components/admin/ShowVendor";
+import EditProfile from "./components/EditProfile";
+import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
+import UserTransactionHistory from "./components/UserTransactionHistory";
+import VendorTransactionHistory from "./components/VendorTransactionHistory";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -50,6 +49,7 @@ function App() {
                                         <Route path="income" element={<Income />}></Route>
                                         <Route path="create_house" element={<CreateHouse />}></Route>
                                         <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
+                                        <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
                                     </>
                                 }
                                 {account.role.id === 3 &&
@@ -60,7 +60,7 @@ function App() {
                                 }
                             </Route>
                         </>
-                    } 
+                    }
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />

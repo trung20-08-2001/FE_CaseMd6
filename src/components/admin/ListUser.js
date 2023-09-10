@@ -170,5 +170,4 @@ function ListUser() {
         </>
     )
 }
-
-export default ListUser
+export default ListUser;
