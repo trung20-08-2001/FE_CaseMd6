@@ -124,7 +124,7 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    <div className="banner-area bg-2 bg-overlay-2 ptb-165">
+                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -134,8 +134,8 @@ function EditProfile() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="create-agency-area pt-115 pb-120">
+                    </div> */}
+                    <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">

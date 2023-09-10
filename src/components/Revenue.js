@@ -61,7 +61,7 @@ export default function Income() {
         labels,
         datasets: [
             {
-                label: 'Thu nhập năm',
+                label: 'Thu nhập năm ' +revenue[0]?.year,
                 data: [],
                 backgroundColor: 'green',
             },
@@ -78,7 +78,7 @@ export default function Income() {
         if (revenue.length > 0) {
             setChartData(prevData => ({
                 ...prevData,
-                // label:'Thu nhập năm '+revenue[0],
+                label:'Thu nhập năm '+revenue[0].year,
                 datasets: [
                     {
                         ...prevData.datasets[0],
@@ -91,30 +91,32 @@ export default function Income() {
 
     const handleButtonClick = (index) => {
         if (revenue.length > 0 && index >= 0 && index < revenue.length) {
-          setChartData(prevData => ({
-            ...prevData,
-            datasets: [
-              {
-                ...prevData.datasets[0],
-                data: revenue[index].months,
-              },
-            ],
-          }));
+            setChartData(prevData => ({
+                ...prevData,
+                datasets: [
+                    {
+                        ...prevData.datasets[0],
+                        data: revenue[index].months,
+                    },
+                ],
+            }));
         }
-      };
+    };
     return (
         <>
-            {revenue.length > 0 ?
-                <>
-                    <Bar options={options} data={chartData} />
-                    {revenue.map((item,index) => {
-                        return (
-                            <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
-                        )
-                    })}
-                </>
-                : <h1>Bạn chưa có doanh thu</h1>
-            }
+            <div className='mt-50'>
+                {revenue.length > 0 ?
+                    <>
+                        <Bar options={options} data={chartData} />
+                        {revenue.map((item, index) => {
+                            return (
+                                <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
+                            )
+                        })}
+                    </>
+                    : <h1>Bạn chưa có doanh thu</h1>
+                }
+            </div>
         </>
     );
 }

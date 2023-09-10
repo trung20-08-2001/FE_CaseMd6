@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Yup from "yup";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { login } from '../services/accountService';
 
@@ -15,8 +15,8 @@ const SignupSchema = Yup.object().shape({
 
 const ChangePassword = () => {
     const account = JSON.parse(localStorage.getItem("account"))
-    const  navigate = useNavigate();
-    const dispatch=useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     let accountCurrent = {}
     axios.get("http://localhost:8081/accounts/searchAccount/" + account.id)
@@ -50,7 +50,7 @@ const ChangePassword = () => {
                                 text: 'Mậu khẩu cũ không chính xác',
                             });
                         } else {
-                            axios.post("http://localhost:8081/accounts/createAccount", {...accountCurrent,password:values.password});
+                            axios.post("http://localhost:8081/accounts/createAccount", { ...accountCurrent, password: values.password });
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Đổi mật khẩu thành công!',
@@ -66,40 +66,40 @@ const ChangePassword = () => {
                     }
                 }}
             >
-                <Form style={{marginLeft: "550px"}}>
+                <Form style={{ marginLeft: "300px" }}>
                     <label>Old Password</label>
-                    <div className="input-box mb-40" style={{width: "400px"}}>
+                    <div className="input-box mb-40" style={{ width: "400px" }}>
 
-                        <i className="fa fa-user"/>
+                        <i className="fa fa-user" />
                         <Field
                             type="password"
                             name="oldPassword"
                             placeholder="Mật khẩu cũ"
                         />
-                        <ErrorMessage name="oldPassword" component="div" className="error-message"/>
+                        <ErrorMessage name="oldPassword" component="div" className="error-message" />
                     </div>
                     <label>New password</label>
-                    <div className="input-box mb-40" style={{width: "400px"}}>
-                        <i className="fa fa-lock"/>
+                    <div className="input-box mb-40" style={{ width: "400px" }}>
+                        <i className="fa fa-lock" />
                         <Field
                             type="password"
                             name="password"
                             placeholder="Mật khẩu mới"
                         />
-                        <ErrorMessage name="password" component="div" className="error-message"/>
+                        <ErrorMessage name="password" component="div" className="error-message" />
                     </div>
                     <label>Confirm new password</label>
-                    <div className="input-box mb-40" style={{width: "400px"}}>
-                        <i className="fa fa-lock"/>
+                    <div className="input-box mb-40" style={{ width: "400px" }}>
+                        <i className="fa fa-lock" />
                         <Field
                             type="password"
                             name="confirmPassword"
                             placeholder="Nhập lại mật khẩu mới"
                         />
-                        <ErrorMessage name="confirmPassword" component="div" className="error-message"/>
+                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
                     </div>
                     <div>
-                            <button type="submit" className="btn btn-success" style={{marginLeft: "160px"}}>OK</button>
+                        <button type="submit" className="btn btn-success" style={{ marginLeft: "160px" }}>OK</button>
                     </div>
                 </Form>
             </Formik>

@@ -22,6 +22,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { login } from '../services/accountService';
+import EditIcon from '@mui/icons-material/Edit';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
+import PeopleIcon from '@mui/icons-material/People';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import HistoryIcon from '@mui/icons-material/History';
+import BackupIcon from '@mui/icons-material/Backup';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -97,6 +105,200 @@ export default function PrimarySearchAppBar() {
     };
 
     const menuId = 'primary-search-account-menu';
+    const menuAdmin = [
+        <Link to="myaccount/account_user" onClick={() => setAnchorEl(null)} ><MenuItem>Accounts user</MenuItem></Link>,
+        <Link to="myaccount/vendors" onClick={() => setAnchorEl(null)}  ><MenuItem>Accounts host</MenuItem></Link>,
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>
+    ]
+    const menuHost = [
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>,
+        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
+        <Link to="myaccount/host" onClick={() => setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>,
+        <Link to="myaccount/create_house" onClick={() => setAnchorEl(null)}><MenuItem>Create houses</MenuItem></Link>,
+        <Link to="myaccount/income" onClick={() => setAnchorEl(null)}><MenuItem>Revenue</MenuItem></Link>
+
+    ]
+    const menuUser = [
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>,
+        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
+        <Link to={`myaccount/bills_user/${account?.id}`}><MenuItem>Transaction history</MenuItem></Link>,
+        <Link to={"myaccount/user"} onClick={() => setAnchorEl(null)}><MenuItem>UP Role</MenuItem></Link>
+    ]
+
+    const menuMobile = [
+        <MenuItem>
+            <IconButton size="large" aria-label="show 4 new mails" color="black">
+                <Badge badgeContent={0} color="error">
+                    <MailIcon />
+                </Badge>
+            </IconButton>
+            <p>Messages</p>
+        </MenuItem>,
+        <MenuItem>
+            <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+            >
+                <Badge badgeContent={0} color="error">
+                    <NotificationsIcon />
+
+                </Badge>
+            </IconButton>
+            <p>Notifications</p>
+        </MenuItem>,
+        <Link>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <AccountCircle />
+                    </Badge>
+                </IconButton>
+                <p>My profile</p>
+            </MenuItem>
+        </Link>,
+        <Link to={`/myaccount/edit_profile/${account?.id}`}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <EditIcon />
+                    </Badge>
+                </IconButton>
+                <p>Edit profile</p>
+            </MenuItem>
+        </Link>,
+        <Link to={"/myaccount/changePassword"}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <ChangeCircleIcon />
+                    </Badge>
+                </IconButton>
+                <p>Change password</p>
+            </MenuItem>
+        </Link>
+    ]
+
+
+    const menuMobileAdmin = [
+        <Link to="/myaccount/account_user">
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <PeopleIcon />
+                    </Badge>
+                </IconButton>
+                <p>Accounts user</p>
+            </MenuItem>
+        </Link>,
+        <Link to="/myaccount/vendors">
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <PeopleIcon />
+                    </Badge>
+                </IconButton>
+                <p>Accounts host</p>
+            </MenuItem>
+        </Link>
+    ]
+
+
+    const menuMobileHost = [
+        <Link to="/myaccount/host">
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <HolidayVillageIcon />
+                    </Badge>
+                </IconButton>
+                <p>My houses</p>
+            </MenuItem>
+        </Link>,
+        <Link to="/myaccount/create_house">
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <AddBusinessIcon />
+                    </Badge>
+                </IconButton>
+                <p>Create houses</p>
+            </MenuItem>
+        </Link>,
+        <Link to="/myaccount/income">
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <BarChartIcon />
+                    </Badge>
+                </IconButton>
+                <p>Revenue</p>
+            </MenuItem>
+        </Link>
+    ]
+
+    const menuMobileUser = [
+        <Link to={`/myaccount/bills_user/${account?.id}`}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <HistoryIcon />
+                    </Badge>
+                </IconButton>
+                <p>Transaction history</p>
+            </MenuItem>
+        </Link>,
+        <Link to={"/myaccount/user"}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <BackupIcon />
+                    </Badge>
+                </IconButton>
+                <p>Become a host</p>
+            </MenuItem>
+        </Link>
+    ]
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -114,35 +316,17 @@ export default function PrimarySearchAppBar() {
             onClose={() => {
                 setAnchorEl(null);
                 handleMobileMenuClose();
-            }
-            }
+            }}
         >
-            <Link ><MenuItem>My profile</MenuItem></Link>
-            {account && account.role.id === 1 &&
-                <>
-                    <Link to="account_user" onClick={()=>setAnchorEl(null)} ><MenuItem>Account user</MenuItem></Link>
-                    <Link to="account_host" onClick={()=>setAnchorEl(null)}><MenuItem>Account host</MenuItem></Link>
-                    <Link to={`/edit_profile/${account.id}`} onClick={()=>setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>
-                </>
-            }
-            {account && account.role.id === 2 &&
-                <>
-                    <Link to="host" onClick={()=>setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>
-                    <Link to={`/edit_profile/${account.id}`} onClick={()=>setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>
-                    <Link to={"changePassword"} onClick={()=>setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>
-                </>
-            }
-            {account && account.role.id === 3 &&
-                <>
-                    <Link to={`/edit_profile/${account.id}`} onClick={()=>setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>
-                    <Link to={"changePassword"} onClick={()=>setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>
-                    <Link to={`/bills_user/${account.id}`}><MenuItem>Transaction history</MenuItem></Link>
-                    <Link to={"/user"} onClick={()=>setAnchorEl(null)}><MenuItem>UP Role</MenuItem></Link>
-                </>
-            }
+            <Link onClick={() => setAnchorEl(null)}><MenuItem>My profile</MenuItem></Link>
+            {account?.role?.id === 1 && menuAdmin.map(item => item)}
+            {account?.role?.id === 2 && menuHost.map(item => item)}
+            {account?.role?.id === 3 && menuUser.map(item => item)}
             <MenuItem onClick={handleMenuClose} >Log out</MenuItem>
         </Menu>
     );
+
+
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -161,14 +345,10 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={0} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
+            {menuMobile.map(item => item)}
+            {account?.role?.id === 1 && menuMobileAdmin.map(item => item)}
+            {account?.role?.id === 2 && menuMobileHost.map(item => item)}
+            {account?.role?.id === 3 && menuMobileUser.map(item => item)}
             <MenuItem>
                 <IconButton
                     size="large"
@@ -176,35 +356,12 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={0} color="error">
-                        <AccountCircle />
-                    </Badge>
-                </IconButton>
-                <Link to="myaccount"><p>My account</p></Link>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={0} color="error">
-                        <AccountCircle />
+                        <i className="fs-20 bi-box-arrow-left" />
                     </Badge>
                 </IconButton>
                 <p onClick={handleMenuClose}>Log out</p>
             </MenuItem>
+
             {/* <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     size="large"
@@ -222,7 +379,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" style={{ backgroundColor: "#fff" }}>
                 <Toolbar>
                     <Link to="">
                         <Typography
@@ -230,7 +387,7 @@ export default function PrimarySearchAppBar() {
                             noWrap
                             component="div"
                             aria-label="open drawer"
-                            color={"white"}
+                            color={"primary"}
                             sx={{ display: { xs: 'block', sm: 'block' } }}
                         >
                             BOOKING HOUSE
@@ -251,7 +408,7 @@ export default function PrimarySearchAppBar() {
                     {account ?
                         <>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                <IconButton size="large" aria-label="show 4 new mails" color="black">
                                     <Badge badgeContent={0} color="error">
                                         <MailIcon />
                                     </Badge>
@@ -259,7 +416,7 @@ export default function PrimarySearchAppBar() {
                                 <IconButton
                                     size="large"
                                     aria-label="show 17 new notifications"
-                                    color="inherit"
+                                    color="black"
                                 >
                                     <Badge badgeContent={0} color="error">
                                         <NotificationsIcon />
@@ -284,7 +441,7 @@ export default function PrimarySearchAppBar() {
                                     aria-controls={mobileMenuId}
                                     aria-haspopup="true"
                                     onClick={handleMobileMenuOpen}
-                                    color="inherit"
+                                    color="black"
                                 >
                                     <MoreIcon />
                                 </IconButton>
@@ -297,7 +454,7 @@ export default function PrimarySearchAppBar() {
                                 noWrap
                                 component="div"
                                 aria-label="open drawer"
-                                color={"white"}
+                                color={"black"}
                                 sx={{ display: { xs: 'block', sm: 'block' } }}
                             >
                                 LOGIN

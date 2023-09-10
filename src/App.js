@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import EditProfile from "./components/EditProfile";
 import Host from "./components/Host";
-import Income from "./components/Income";
-import ListUser from "./components/ListUser";
+import Income from "./components/Revenue";
+import ListUser from "./components/admin/ListUser";
 import SidebarAdmin from "./components/SidebarAdmin";
 import UserTransactionHistory from "./components/UserTransactionHistory";
 import ShowVendor from "./components/admin/ShowVendor";
@@ -30,34 +30,41 @@ function App() {
                 <Route path="" element={<Master />}>
                     <Route index element={<Home />}></Route>
                     {account &&
-                        <Route path="myaccount" element={<SideBar></SideBar>} />
-                    }
-                    {account !== null && account.role.id === 1 &&
-                        <Route path="admin" element={<SidebarAdmin />}>
-                            <Route path={'vendors'} element={<ShowVendor />}></Route>
-                            <Route path={'vendor/detail/:id'} element={<VendorDetail />}></Route>
-                            <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor />}></Route>
-                            <Route index element={<ListUser />} />
-                        </Route>
-                    }
-                    {account !== null && account.role.id === 2 &&
-                        <Route path="host" element={<Host />}>
-                            <Route path="create_house" element={<CreateHouse />}></Route>
-                            <Route index element={<MyHouses />}></Route>
-                            <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
-                            <Route path="income" element={<Income />}></Route>
-                        </Route>
-                    }
-                    {account !== null && account.role.id === 3 &&
-                        <Route path={"user"} element={<UpRole2 />}></Route>
-                    }
-                    <Route path={'edit_profile/:id'} element={<EditProfile />}></Route>
-                    <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
-                    <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
+                        <>
+                            <Route path="myaccount" element={<SideBar />}>
+                                <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
+                                <Route path={'edit_profile/:id'} element={<EditProfile />}></Route>
+                                {account.role.id === 1 &&
+                                    <>
+                                        <Route path={'vendors'} element={<ShowVendor />}></Route>
+                                        <Route path={'vendor/detail/:id'} element={<VendorDetail />}></Route>
+                                        <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor />}></Route>
+                                        <Route path="account_user" element={<ListUser />} />
+                                    </>
+                                }
+                                {account.role.id === 2 &&
+                                    <>
+                                        <Route path="create_house" element={<CreateHouse />}></Route>
+                                        <Route path="host" element={<MyHouses />}></Route>
+                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
+                                        <Route path="income" element={<Income />}></Route>
+                                        <Route path="create_house" element={<CreateHouse />}></Route>
+                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
+                                    </>
+                                }
+                                {account.role.id === 3 &&
+                                    <>
+                                        <Route path={"user"} element={<UpRole2 />}></Route>
+                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
+                                    </>
+                                }
+                            </Route>
+                        </>
+                    } 
                 </Route>
-                <Route path="*" element={<Page404 />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
+                <Route path="*" element={<Page404 />} />
             </Routes>
         </>
     );

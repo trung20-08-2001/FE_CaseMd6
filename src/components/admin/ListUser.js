@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeStatusAccount, findListAccountUsers } from '../services/accountService';
-import customAxios from '../services/api';
+import { changeStatusAccount, findListAccountUsers } from '../../services/accountService';
+import customAxios from '../../services/api';
 
 function ListUser() {
     const dispatch = useDispatch();
@@ -52,15 +52,15 @@ function ListUser() {
 
     return (
         <>
-            <h4 className='text-center pb-20'>List account user</h4>
+            <h4 className='text-center pb-20 mt-50'>List account user</h4>
             <table className="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
-                        <th>FullName</th>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        <th>Detail</th>
+                        <th className="text-center">FullName</th>
+                        <th className="text-center">Phone</th>
+                        <th className="text-center">Status</th>
+                        <th className="text-center">Action</th>
+                        <th className="text-center">Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +99,7 @@ function ListUser() {
                         </a>
                     </li>
                     {pages.map(item => {
-                        return <li>
+                        return <li key={item}>
                             <a onClick={() => setCurrentPage(item)} >{item}</a>
                         </li>
                     })}
