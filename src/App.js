@@ -12,7 +12,6 @@ import Page404 from "./pages/404";
 import {useSelector} from "react-redux";
 import ChangePassword from "./pages/ChangePassword";
 import HouseDetail from "./pages/HouseDetail";
-
 import UpRole2 from "./pages/UpRole2";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
@@ -47,7 +46,7 @@ function App() {
                     }
                     <Route path={'/edit_profile/:id'} element={<EditProfile/>}></Route>
                     <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
-                    <Route path={"houseDetail/:index"} element={<HouseDetail></HouseDetail>}></Route>
+                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                 </Route>
                 <Route path="*" element={<Page404/>}/>
             </Routes>

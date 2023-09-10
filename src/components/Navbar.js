@@ -79,7 +79,7 @@ const Navbar = () => {
                             <div className="col-lg-2">
                                 <div className="logo">
                                     <Link to="/">
-                                        <img src="images/logo/logo.png" alt="DomInno"/>
+                                        <img src="../images/logo/logo.png" alt="DomInno"/>
                                     </Link>
                                 </div>
                             </div>
