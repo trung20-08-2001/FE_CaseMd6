@@ -135,15 +135,18 @@ const Navbar = () => {
                                                                             đổi
                                                                             thông tin</Link>
                                                                     </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
+                                                                    </li>
                                                                 </>
                                                             }
                                                             {account.role.id === 2 &&
                                                                 <>
                                                                     <li>
-                                                                        <a>Đăng tin cho thuê</a>
+                                                                        <Link to={`/host/create_house`}>Đăng tin cho thuê</Link>
                                                                     </li>
                                                                     <li>
-                                                                        <a>Quản lý các phòng thuê</a>
+                                                                        <Link to="host">Quản lý các phòng thuê</Link>
                                                                     </li>
                                                                     <li>
                                                                         <a>Thông tin cá nhân</a>
@@ -152,6 +155,12 @@ const Navbar = () => {
                                                                         <Link to={`/edit_profile/${account.id}`}>Thay
                                                                             đổi
                                                                             thông tin</Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_vendor/${account.id}`}>Lịch đặt thuê nhà</Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
                                                                     </li>
                                                                     <li>
                                                                         <Link to={"changePassword"}>
@@ -172,6 +181,9 @@ const Navbar = () => {
                                                                             thông tin</Link>
                                                                     </li>
                                                                     <li>
+                                                                        <Link to={`/bills_user/${account.id}`}>Lịch sử giao dịch</Link>
+                                                                    </li>
+                                                                    <li>
                                                                         <Link to={"changePassword"}>
                                                                             Đổi mật khẩu
                                                                         </Link>
@@ -183,9 +195,6 @@ const Navbar = () => {
                                                                     </li>
                                                                 </>
                                                             }
-                                                            <li>
-                                                                <a>Lịch sử giao dịch</a>
-                                                            </li>
                                                             <li>
                                                                 <a
                                                                     onClick={

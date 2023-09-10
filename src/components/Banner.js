@@ -12,7 +12,7 @@ function Banner() {
     if (imageBanner.length === 0) {
       dispatch(findImageBanner())
     }
-  })
+  },[])
 
   return (
     <>

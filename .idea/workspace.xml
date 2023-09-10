@@ -4,14 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="">
+    <list default="true" id="f29bd3fb-046e-4d76-8bf6-6f587cd6a851" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/styleSearch.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Income.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ListHouse.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TopHouse.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/slices/revenueSlice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/revenueService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Banner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Host.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Host.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ListUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SidebarAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SidebarAdmin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Slide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Slide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/UpRoleUserToVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/UpRoleUserToVendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CreateHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CreateHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/HouseDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HouseDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MyHouses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/accountService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/accountService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/houseService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/houseService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,11 +47,26 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sondinh98&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="952365bd-f08c-4974-bf9e-fafc0d8e46bf" />
+        <option name="url" value="https://github.com/trung20-08-2001/FE_CaseMd6.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -35,32 +74,30 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2UcBhRDQW1V813fe8F66g5Kf5V5" />
   <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "search__house",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/md5/thithuchanh/baithimd5",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\WebStorm 2023.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging search__house&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/md6FE/FE_CaseMd6&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\project\case md6\fe\public\css" />
@@ -90,6 +127,8 @@
       <workItem from="1693887428540" duration="6610000" />
       <workItem from="1693962955280" duration="6703000" />
       <workItem from="1694068805457" duration="20199000" />
+      <workItem from="1694050277983" duration="14669000" />
+      <workItem from="1693961903344" duration="22219000" />
     </task>
     <servers />
   </component>
@@ -108,6 +147,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'login' of https://github.com/trung20-08-2001/FE_CaseMd6" />
+    <MESSAGE value="ghep code Tien done" />
+    <MESSAGE value="check code ngay 04-09" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
 </project>

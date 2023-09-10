@@ -165,10 +165,8 @@ const CreateHouse = () => {
                     resetForm();
                     fileInputRef.current.value = null;
                     setSelectedImages([]);
-
             })
         })
-
     };
 
 

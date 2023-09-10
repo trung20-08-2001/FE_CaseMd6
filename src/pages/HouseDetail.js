@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import customAxios from "../services/api";
 import Slide from "../components/Slide"
-import "react-datepicker/dist/react-datepicker.css";
 import {useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import {useParams} from "react-router-dom";
@@ -203,7 +202,7 @@ const HouseDetail = () => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Thuê thất bại',
-                        text: 'Thuê nhà không thành công.',
+                        text: 'Nhà này đã có người thuê rồi.',
                     });
                 });
         }
