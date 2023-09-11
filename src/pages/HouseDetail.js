@@ -226,7 +226,7 @@ const HouseDetail = () => {
                 text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + 3)
+            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
                 .then(response => {
                     if (response.data) {
                         return saveBill();

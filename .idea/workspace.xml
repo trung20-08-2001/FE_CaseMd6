@@ -59,7 +59,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging search__house&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;search__house&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/md6FE/FE_CaseMd6&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -102,6 +102,7 @@
       <workItem from="1693961903344" duration="22219000" />
       <workItem from="1694396379487" duration="3000" />
       <workItem from="1694398752953" duration="2000" />
+      <workItem from="1694398977062" duration="739000" />
     </task>
     <servers />
   </component>
