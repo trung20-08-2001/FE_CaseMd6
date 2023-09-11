@@ -71,7 +71,7 @@ const SeeReviews = () => {
     }
     return (
         <>
-            <div className="property-area property-area-2 ptb-120">
+            <div className="property-area property-area-2 ptb-20">
                 <div className="container">
                     <div className="row property-details_wrap">
                         <div className="col-lg-4 pl-35 order-2">
