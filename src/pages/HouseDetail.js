@@ -3,7 +3,7 @@ import customAxios from "../services/api";
 import Slide from "../components/Slide"
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HouseDetail = () => {
     const [houseDTO, setHouseDTO] = useState(null);
@@ -15,14 +15,15 @@ const HouseDetail = () => {
     const account = useSelector(state => state.account.account);
     const today = new Date().toISOString().split('T')[0];
     const { idHouse } = useParams()
-    const [myFeedback, setMyFeedback] = useState(null);
+    const [myFeedback, setMyFeedback] = useState("");
     const [numberOfStars, setNumberOfStars] = useState
         ({
             start: 0,
             starts: [1, 2, 3, 4, 5]
         });
     const [comment, setComment] = useState('');
-   
+    const navigate=useNavigate()
+
     useEffect(() => {
         customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
@@ -31,7 +32,7 @@ const HouseDetail = () => {
             .catch((err) => {
                 console.log(err)
             })
-        customAxios.get("/feedBack/findFeedbackByHouseAndUser/" + account.id + "/" + idHouse)
+        customAxios.get("/feedBack/findFeedbackByHouseAndUser/" + account?.id + "/" + idHouse)
             .then(response =>
                 setMyFeedback(response.data)
             )
@@ -114,62 +115,77 @@ const HouseDetail = () => {
     };
 
     const saveFeedback = () => {
-        if (myFeedback !== "") {
-            if (account.id === houseDTO.house.account.id) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Feedback thất bại',
-                    text: 'Bạn không thể đánh giá nhà của mình',
-                });
-            } else if (myFeedback.status.id === 2) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Feedback thất bại',
-                    text: 'Bạn không thể đánh giá nhà khi bạn chưa sử dụng',
-                });
-            } else if (myFeedback.status.id === 7) {
-                customAxios.post("/feedBack/addFeedBack", {
-                    ...myFeedback,
-                    numberOfStars: numberOfStars.start,
-                    date: new Date(),
-                    comment: comment,
-                    status: { id: 1 }
-                })
-                    .then(response => {
-                        setNumberOfStars({
-                            ...numberOfStars,
-                            start: 0
-                        });
-                        setComment('')
-                        setMyFeedback("")
+        if (account) {
+            if (myFeedback !== "") {
+                if (account.id === houseDTO.house.account.id) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn không thể đánh giá nhà của mình',
+                    });
+                } else if (myFeedback.status.id === 2) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn không thể đánh giá nhà khi bạn chưa sử dụng',
+                    });
+                } else if (myFeedback.status.id === 7) {
+                    customAxios.post("/feedBack/addFeedBack", {
+                        ...myFeedback,
+                        numberOfStars: numberOfStars.start,
+                        date: new Date(),
+                        comment: comment,
+                        status: { id: 1 }
+                    })
+                        .then(response => {
+                            setNumberOfStars({
+                                ...numberOfStars,
+                                start: 0
+                            });
+                            setComment('')
+                            setMyFeedback("")
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Feedback thành công',
-                        })
-                        customAxios.get("/feedBack/showFeedback/" + idHouse)
-                            .then(res => {
-                                setListFeedback(res.data);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Feedback thành công',
                             })
-                            .catch((err) => {
-                                console.log(err)
-                            })
-                    }
-                    )
-                    .catch(error => console.log(error))
-            } else if (myFeedback.status.id === 1) {
+                            customAxios.get("/feedBack/showFeedback/" + idHouse)
+                                .then(res => {
+                                    setListFeedback(res.data);
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
+                        }
+                        )
+                        .catch(error => console.log(error))
+                } else if (myFeedback.status.id === 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn đã feedback rồi',
+                    });
+                }
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Feedback thất bại',
-                    text: 'Bạn đã feedback rồi',
+                    text: 'Bạn chưa thuê nhà này.',
                 });
             }
-        } else {
+        }else{
             Swal.fire({
-                icon: 'error',
                 title: 'Feedback thất bại',
-                text: 'Bạn chưa thuê nhà này.',
-            });
+                icon: 'error',
+                text: 'You are not logged in.',
+                showCancelButton: true,
+                confirmButtonText: "LOGIN",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+
+            })
         }
     }
 

@@ -1,6 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-
 export const listMyHouseDTO = (state) => state.house.myHousesDTO;
 export const filterStatusHouse = (state) => state.house.statusHouse;
 export const filterNameHouseSearch = (state) => state.house.nameHouseSearch;

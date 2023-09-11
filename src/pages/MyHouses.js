@@ -15,9 +15,6 @@ function MyHouses() {
     const myHousesDTO = useSelector(filterHouseByNameAndStatus)
     const categories = useSelector(state => state.categories.categories);
     const [isSearchChanged, setIsSearchChanged] = useState(false);
-    const [houses, setHouses] = useState([])
-    const [nameHouse, setNameHouse] = useState('');
-    const [selectValue, setSelectValue] = useState(0);
     
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
@@ -29,13 +26,6 @@ function MyHouses() {
         }
     }, [])
 
-    const handleSearchChange = () => {
-        if (isSearchChanged) {
-            setIsSearchChanged(false)
-        } else {
-            setIsSearchChanged(true)
-        }
-    };
 
     const handleUpdateStatus = (item, index) => {
         if (item.house.status.name === "USING" || item.house.status.name === "ORDERED") {
@@ -64,7 +54,6 @@ function MyHouses() {
                         })
                         .catch(err => console.log(err))
                 }
-
             }
             )
         } else if (item.house.status.name === "BLOCKED") {
@@ -98,7 +87,7 @@ function MyHouses() {
                 <input
                     name="nameHouse"
                     type="text"
-                    placeholder="Tên nhà..."
+                    placeholder="Name House..."
                    
                     onChange={e =>dispatch(nameHouseSearch(e.target.value))}
                     style={{ flex: 2, marginRight: '10px' }}
@@ -112,7 +101,7 @@ function MyHouses() {
                     <option value={"READY"}>READY</option>
                     <option value={"ORDERED"}>ORDERED</option>
                     <option value={"USING"}>USING</option>
-                    <option value={"BLOCKED"}>BLOCK</option>
+                    <option value={"BLOCKED"}>BLOCKED</option>
                 </select>
             </div>
             {myHousesDTO.length === 0 ?
