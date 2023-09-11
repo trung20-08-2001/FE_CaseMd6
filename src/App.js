@@ -7,6 +7,7 @@ import SidebarAdmin from "./components/SidebarAdmin";
 import Master from "./components/layout/Master";
 import Page404 from "./pages/404";
 import ChangePassword from "./pages/ChangePassword";
+import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
@@ -52,6 +53,7 @@ function App() {
                     }
                     <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
                     <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
+                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                     <Route path={'bills_user/:id'} element={<UserTransactionHistory/>}></Route>
                     <Route path={'bills_vendor/:id'} element={<VendorTransactionHistory/>}></Route>
                 </Route>
