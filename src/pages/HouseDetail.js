@@ -69,7 +69,7 @@ const HouseDetail = () => {
 
 
     useEffect(() => {
-        customAxios.get("/feedBack/showFeedback/" + 3)
+        customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
                 setListFeedback(res.data);
             })
@@ -143,7 +143,7 @@ const HouseDetail = () => {
                 id: houseDTO.house.account.id
             },
             status: {
-                id: 5
+                id: 2
             },
             house: {
                 id: houseDTO.house.id
@@ -191,7 +191,7 @@ const HouseDetail = () => {
                                 icon: 'success',
                                 title: 'Feedback thành công',
                             })
-                        customAxios.get("/feedBack/showFeedback/" + 3)
+                        customAxios.get("/feedBack/showFeedback/" + idHouse)
                             .then(res => {
                                 setListFeedback(res.data);
                             })
@@ -226,7 +226,7 @@ const HouseDetail = () => {
                 text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + 3)
+            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
                 .then(response => {
                     if (response.data) {
                         return saveBill();
