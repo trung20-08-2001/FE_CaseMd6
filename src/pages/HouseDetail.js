@@ -24,6 +24,51 @@ const HouseDetail = () => {
     const [comment, setComment] = useState('');
     const navigate=useNavigate()
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
+
+    const startIndex = (currentPage - 1) * reviewsPerPage;
+    const endIndex = startIndex + reviewsPerPage;
+    const displayedReviews = listFeedback.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const renderPagination = () => {
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    className={`page-button ${currentPage === i ? "active" : ""}`}
+                    style={{ color: "red" }}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return (
+            <div className="pagination">
+                {currentPage > 1 && (
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage - 1)} style={{ backgroundColor: "blue" }}>
+                        &lt; Back
+                    </button>
+                )}
+                {pages}
+                {currentPage < totalPages && (
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage + 1)} style={{ backgroundColor: "blue" }}>
+                        Next &gt;
+                    </button>
+                )}
+            </div>
+        );
+    };
+
+
     useEffect(() => {
         customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
@@ -198,7 +243,7 @@ const HouseDetail = () => {
                 text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + 3)
+            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
                 .then(response => {
                     if (response.data) {
                         return saveBill();
@@ -213,6 +258,8 @@ const HouseDetail = () => {
                         icon: 'success',
                         title: 'Thuê thành công!',
                         text: 'Bạn đã thuê nhà thành công',
+                        showConfirmButton: false, // Ẩn nút "OK"
+                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     });
                 })
                 .catch(error => {
@@ -220,6 +267,8 @@ const HouseDetail = () => {
                         icon: 'error',
                         title: 'Thuê thất bại',
                         text: 'Nhà này đã có người thuê rồi.',
+                        showConfirmButton: false, // Ẩn nút "OK"
+                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     });
                 });
         }
@@ -296,7 +345,7 @@ const HouseDetail = () => {
                                 </div>
                                 <h4 className="details-title pb-8 mb-27"> Feedback</h4>
                                 {
-                                    listFeedback.map((f) => {
+                                    displayedReviews.map((f) => {
 
                                         return (
                                             <div className="comments fix pt-50" key={f.id}>
@@ -322,9 +371,9 @@ const HouseDetail = () => {
                                                                 )
                                                                 else return (
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="15"
-                                                                        height="15"
-                                                                        viewBox="0 0 16 16" key={item}
-                                                                        onClick={() => changeStart(item)}>
+                                                                         height="15"
+                                                                         viewBox="0 0 16 16" key={item}
+                                                                         onClick={() => changeStart(item)}>
                                                                         <path
                                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
                                                                             fill="yellow" />
@@ -351,7 +400,7 @@ const HouseDetail = () => {
                                         )
                                         else return (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
+                                                 viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
                                                 <path
                                                     d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
                                                     fill="yellow" />
