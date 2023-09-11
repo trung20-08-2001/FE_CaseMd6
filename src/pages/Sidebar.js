@@ -89,8 +89,8 @@ function Sidebar() {
                                     </li>
                                     <li className="nav-item">
                                         <Link to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
-                                            <AddBusinessIcon/>
-                                            <h5 className="ms-1 d-none d-sm-inline">Create houses</h5>
+                                            <HistoryIcon/>
+                                            <h5 className="ms-1 d-none d-sm-inline">Renting a House</h5>
                                         </Link>
                                     </li>
                                     <li className="nav-item">

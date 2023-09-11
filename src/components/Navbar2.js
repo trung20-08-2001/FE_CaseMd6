@@ -4,7 +4,6 @@ import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import { Container } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -115,14 +114,14 @@ export default function PrimarySearchAppBar() {
         <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
         <Link to="myaccount/host" onClick={() => setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>,
         <Link to="myaccount/create_house" onClick={() => setAnchorEl(null)}><MenuItem>Create houses</MenuItem></Link>,
-        <Link to={`myaccount/bills_vendor/${account?.id}`}  onClick={() => setAnchorEl(null)}><MenuItem>Transaction history</MenuItem></Link>,
+        <Link to={`myaccount/bills_vendor/${account?.id}`}  onClick={() => setAnchorEl(null)}><MenuItem>Renting a House</MenuItem></Link>,
         <Link to="myaccount/income" onClick={() => setAnchorEl(null)}><MenuItem>Revenue</MenuItem></Link>
 
     ]
     const menuUser = [
         <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>,
         <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
-        <Link to={`myaccount/bills_user/${account?.id}`}><MenuItem>Transaction history</MenuItem></Link>,
+        <Link to={`myaccount/bills_user/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Transaction history</MenuItem></Link>,
         <Link to={"myaccount/user"} onClick={() => setAnchorEl(null)}><MenuItem>UP Role</MenuItem></Link>
     ]
 
@@ -265,7 +264,7 @@ export default function PrimarySearchAppBar() {
                     <HistoryIcon />
                 </Badge>
             </IconButton>
-            <p>Transaction history</p>
+            <p>Renting a House</p>
         </MenuItem>
     </Link>,
         <Link to="/myaccount/income">

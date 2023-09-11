@@ -5,6 +5,7 @@ import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
 import Page404 from "./pages/404";
 import ChangePassword from "./pages/ChangePassword";
+import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
@@ -60,7 +61,8 @@ function App() {
                                 }
                             </Route>
                         </>
-                    }
+                    }    
+                   <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />

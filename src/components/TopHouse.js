@@ -2,15 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { findTopHouse } from '../services/houseService';
 import Loading from './Loading';
-import Link from "react-dom"
 
 
 
 function TopHouse() {
     const dispatch = useDispatch();
     const topHouse = useSelector(state => state.house.topHouse);
-    console.log(topHouse)
-
+   
     useEffect(() => {
         if (topHouse.length === 0) {
             dispatch(findTopHouse())

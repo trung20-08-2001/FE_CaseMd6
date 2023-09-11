@@ -3,16 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Search from "../components/Search";
 import { getAllCategory } from '../services/categoryService';
-import { findHouseByAccount } from '../services/houseService';
+import { editHouse, findHouseByAccount } from '../services/houseService';
 import "./style2.css"
+import Swal from 'sweetalert2';
+import customAxios from '../services/api';
+import { filterHouseByNameAndStatus} from '../redux/selector';
+import { nameHouseSearch,filterStatusHouse } from '../services/filterService';
 
 function MyHouses() {
     const dispatch = useDispatch();
-    const myHousesDTO = useSelector(state => state.house.myHousesDTO)
+    const myHousesDTO = useSelector(filterHouseByNameAndStatus)
     const categories = useSelector(state => state.categories.categories);
     const [isSearchChanged, setIsSearchChanged] = useState(false);
-
-
+    const [houses, setHouses] = useState([])
+    const [nameHouse, setNameHouse] = useState('');
+    const [selectValue, setSelectValue] = useState(0);
+    
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
         if (myHousesDTO.length === 0) {
@@ -31,8 +37,84 @@ function MyHouses() {
         }
     };
 
+    const handleUpdateStatus = (item, index) => {
+        if (item.house.status.name === "USING" || item.house.status.name === "ORDERED") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Status cannot be changed while there is a tenant!',
+            })
+        } else if (item.house.status.name === "READY") {
+            Swal.fire({
+                title: 'Are you sure you want to lock?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: "BLOCK",
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(editHouse({
+                        house: { ...item.house, status: { id: 1, name: "BLOCKED" } },
+                        images: { ...item.images },
+                        indexHouseEdit: index
+                    }))
+                    customAxios.post("/houses/save", { ...item.house, status: { id: 3 } })
+                        .then(() => {
+                            Swal.fire('Changes are saved!', '', 'success')
+                        })
+                        .catch(err => console.log(err))
+                }
+
+            }
+            )
+        } else if (item.house.status.name === "BLOCKED") {
+            Swal.fire({
+                title: 'You definitely want to unlock it ?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: "READY",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(editHouse({
+                        house: { ...item.house, status: { id: 1, name: "READY" } },
+                        images: { ...item.images },
+                        indexHouseEdit: index
+                    }))
+                    customAxios.post("/houses/save", { ...item.house, status: { id: 4 } })
+                        .then(() => {
+                            Swal.fire('Changes are saved!', '', 'success')
+                        })
+                        .catch(err => console.log(err))
+                }
+            })
+        }
+
+    }
+
+
     return (
         <>
+            <div style={{ display: 'flex', alignItems: 'center' }} className='mt-20'>
+                <input
+                    name="nameHouse"
+                    type="text"
+                    placeholder="Tên nhà..."
+                   
+                    onChange={e =>dispatch(nameHouseSearch(e.target.value))}
+                    style={{ flex: 2, marginRight: '10px' }}
+                />
+                <select
+                    name="select"
+                    onChange={e => dispatch(filterStatusHouse(e.target.value))}
+                    style={{ flex: 2, marginRight: '10px' }}
+                >
+                    <option value={"ALL"}>All</option>
+                    <option value={"READY"}>READY</option>
+                    <option value={"ORDERED"}>ORDERED</option>
+                    <option value={"USING"}>USING</option>
+                    <option value={"BLOCKED"}>BLOCK</option>
+                </select>
+            </div>
             {myHousesDTO.length === 0 ?
                 <h1 className='text-center' style={{ color: "red" }}>You don't have any house to rent yet</h1>
                 :
@@ -40,8 +122,8 @@ function MyHouses() {
                     <div className='row mt-20'>
                         {myHousesDTO.length !== 0 && myHousesDTO.map((item, index) => {
                             return (
-                                <div className="col-md-6  card_house mb-40" key={item.house.id}>
-                                    <div className="single-property hover-effect-two">
+                                <div className="col-md-6  card_house mb-40 " key={item.house.id}>
+                                    <div className="single-property hover-effect-two bg-violet">
                                         <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
                                             <div className="title-left pull_left">
                                                 <h4 className="text-white mb-12">
@@ -93,8 +175,9 @@ function MyHouses() {
                                             </div>
                                         </div>
                                         <div className='mt-10' >
-                                            <button className="button fill"> <Link to={"/myaccount/edit_house/" + index} style={{ color: "white" }} >EDIT</Link></button>
-                                            <button className="button fill">UPDATE STATUS</button>
+                                            <button className="button fill mb-10"> <Link to={"/myaccount/edit_house/" + index} style={{ color: "white" }} >EDIT</Link></button>
+                                            <button className="button fill mb-10" onClick={() => handleUpdateStatus(item, index)}>UPDATE STATUS</button>
+                                            {/* <button className="button fill mb-10" >DETAIL</button> */}
                                         </div>
                                     </div>
                                 </div>
