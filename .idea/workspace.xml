@@ -5,37 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f29bd3fb-046e-4d76-8bf6-6f587cd6a851" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/styleSearch.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Income.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ListHouse.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Loading.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/TopHouse.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/revenueSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/revenueService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/AverageStarsFeedback.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/SeeReviews.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/StarFeedback.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Banner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Host.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Host.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ListUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SidebarAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SidebarAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Slide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Slide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/UpRoleUserToVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/UpRoleUserToVendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/VendorDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CreateHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CreateHouse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/HouseDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HouseDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MyHouses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/houseSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/accountService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/accountService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/houseService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/houseService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,21 +61,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging search__house&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/md6FE/FE_CaseMd6&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging search__house",
+    "last_opened_file_path": "D:/project/case md6/fe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\project\case md6\fe\public\css" />
@@ -112,7 +90,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c50b272c-1b19-484b-ba73-1450efc1e442" name="Changes" comment="" />
+      <changelist id="f29bd3fb-046e-4d76-8bf6-6f587cd6a851" name="Changes" comment="" />
       <created>1693229106396</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -129,6 +107,7 @@
       <workItem from="1694068805457" duration="20199000" />
       <workItem from="1694050277983" duration="14669000" />
       <workItem from="1693961903344" duration="22219000" />
+      <workItem from="1694402741793" duration="231000" />
     </task>
     <servers />
   </component>

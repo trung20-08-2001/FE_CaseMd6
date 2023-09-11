@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
@@ -154,7 +155,6 @@ const Search = (props) => {
                                                     <div className="hover-item">
                                                         {/* <img className="mr-10" src="../images/icons/garage.png" alt="" /> */}
                                                         <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
-
                                                         <span>{item.house.numberOfHire}</span>
                                                     </div>
                                                 </div>
