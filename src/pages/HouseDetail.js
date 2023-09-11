@@ -23,6 +23,51 @@ const HouseDetail = () => {
     });
     const [comment, setComment] = useState('');
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
+
+    const startIndex = (currentPage - 1) * reviewsPerPage;
+    const endIndex = startIndex + reviewsPerPage;
+    const displayedReviews = listFeedback.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const renderPagination = () => {
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    className={`page-button ${currentPage === i ? "active" : ""}`}
+                    style={{ color: "red" }}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return (
+            <div className="pagination">
+                {currentPage > 1 && (
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage - 1)} style={{ backgroundColor: "blue" }}>
+                        &lt; Back
+                    </button>
+                )}
+                {pages}
+                {currentPage < totalPages && (
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage + 1)} style={{ backgroundColor: "blue" }}>
+                        Next &gt;
+                    </button>
+                )}
+            </div>
+        );
+    };
+
+
     useEffect(() => {
         customAxios.get("/feedBack/showFeedback/" + 3)
             .then(res => {
@@ -196,6 +241,8 @@ const HouseDetail = () => {
                         icon: 'success',
                         title: 'Thuê thành công!',
                         text: 'Bạn đã thuê nhà thành công',
+                        showConfirmButton: false, // Ẩn nút "OK"
+                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     });
                 })
                 .catch(error => {
@@ -203,6 +250,8 @@ const HouseDetail = () => {
                         icon: 'error',
                         title: 'Thuê thất bại',
                         text: 'Nhà này đã có người thuê rồi.',
+                        showConfirmButton: false, // Ẩn nút "OK"
+                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     });
                 });
         }
@@ -277,7 +326,7 @@ const HouseDetail = () => {
                                 </div>
                                 <h4 className="details-title pb-8 mb-27"> Feedback</h4>
                                 {
-                                    listFeedback.map((f) => {
+                                    displayedReviews.map((f) => {
 
                                         return (
                                             <div className="comments fix pt-50" key={f.id}>
@@ -318,6 +367,7 @@ const HouseDetail = () => {
                                                 </div>
                                             </div>)
                                     })}
+                                {renderPagination()}
 
                                 <div className="new-comment-post mt-35">
                                     <h4 className="details-title pb-8 mb-27"> Review</h4>
