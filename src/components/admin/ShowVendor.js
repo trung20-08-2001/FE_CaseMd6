@@ -42,7 +42,7 @@ function ShowVendor() {
                     <td>
                         {vendor.account.status.id === 2 ? (
                             <div>
-                                <Link className="btn btn-outline-secondary" to={`/myaccounout/vendor/upRole/${vendor.account.id}`}>
+                                <Link className="btn btn-outline-secondary" to={`/myaccount/vendor/upRole/${vendor.account.id}`}>
                                     Up Role
                                 </Link>
                             </div>
