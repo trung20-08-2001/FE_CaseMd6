@@ -11,6 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { findRevenueOfHost } from '../services/revenueService';
+import Loading from  "./Loading"
 
 
 
@@ -74,15 +75,17 @@ export default function Income() {
         }
     }, []);
 
+    
     useEffect(() => {
         if (revenue.length > 0) {
             setChartData(prevData => ({
                 ...prevData,
-                // label:'Thu nhập năm '+revenue[0],
+                label:'Thu nhập năm',
                 datasets: [
                     {
                         ...prevData.datasets[0],
                         data: revenue[0].months,
+                        label: 'Thu nhập năm' + revenue[0].year,
                     },
                 ],
             }));
@@ -91,30 +94,34 @@ export default function Income() {
 
     const handleButtonClick = (index) => {
         if (revenue.length > 0 && index >= 0 && index < revenue.length) {
-          setChartData(prevData => ({
-            ...prevData,
-            datasets: [
-              {
-                ...prevData.datasets[0],
-                data: revenue[index].months,
-              },
-            ],
-          }));
+            setChartData(prevData => ({
+                ...prevData,
+                
+                datasets: [
+                    {
+                        ...prevData.datasets[0],
+                        data: revenue[index].months,
+                        label:'Thu nhập năm '+revenue[index].year,
+                    },
+                ],
+            }));
         }
-      };
+    };
     return (
         <>
-            {revenue.length > 0 ?
-                <>
-                    <Bar options={options} data={chartData} />
-                    {revenue.map((item,index) => {
-                        return (
-                            <button className='btn btn-primary' onClick={() => handleButtonClick(index)}>{item.year}</button>
-                        )
-                    })}
-                </>
-                : <h1>Bạn chưa có doanh thu</h1>
-            }
+            <div className='mt-50'>
+                {revenue.length > 0 ?
+                    <>
+                        <Bar options={options} data={chartData} />
+                        {revenue.map((item, index) => {
+                            return (
+                                <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
+                            )
+                        })}
+                    </>
+                    :<Loading></Loading>
+                }
+            </div>
         </>
     );
 }

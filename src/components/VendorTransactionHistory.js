@@ -3,10 +3,18 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
     const {id} = useParams();
+    const [nameHouse, setNameHouse] = useState('');
+    const [selectValue, setSelectValue] = useState(0);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [filter, setFilter] = useState(bills_vendor);
+    const dispatch=useDispatch()
+
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
@@ -146,12 +154,12 @@ function VendorTransactionHistory() {
                     });
             };
             return (
-                <tr key={userId} style={{height: '60px'}}>
+                <tr key={bill.bill.id} style={{height: '60px'}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
-                    <td>{totalPrice}</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
                     <td>{status}</td>
                     <td>
                         <button style={{width: "114px"}}
@@ -211,8 +219,57 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
+    const handleSearch=() => {
+        if(nameHouse!=="" && startDate!==null && endDate!==null){
+
+        }
+    }
+
     return (
         <>
+         <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
+                    <input
+                        name="nameHouse"
+                        type="text"
+                        placeholder="Name house..."
+                        onChange={e =>dispatch({type:"bill/findBillHistoryHost",payload:e.target.value}) }
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                    <input
+                        name="nameHouse"
+                        type="DATE"
+                        value={startDate}
+                        onChange={e => setStartDate(e.target.value)}
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                    <input
+                        name="nameHouse"
+                        type="DATE"
+                        value={endDate}
+                        onChange={e => setEndDate(e.target.value)}
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                    <select
+                        name="select"
+                        value={selectValue}
+                        onChange={e => setSelectValue(parseInt(e.target.value))}
+                        style={{flex: 2, marginRight: '10px'}}
+                    >
+                        <option value={0}>All</option>
+                        <option value={5}>ORDERED</option>
+                        <option value={6}>USING</option>
+                        <option value={7}>CHECK_OUT</option>
+                        <option value={8}>CANCELED</option>
+                    </select>
+                    <button
+                        type="button"
+                        className="btn btn-outline-danger"
+
+                        style={{flex: 1}}
+                    >
+                        Tìm kiếm
+                    </button>
+                </div>
 
             <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
                 <h4 className='text-center pb-20'>Renting a house</h4>

@@ -141,9 +141,9 @@ const CreateHouse = () => {
             allowOutsideClick: true,
             willClose: (result) => {
                 if (result.dismiss === Swal.DismissReason.backdrop) {
-                  navigate("/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
+                  navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
                 }else {
-                  navigate("/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
+                  navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
                 }
               }
         })

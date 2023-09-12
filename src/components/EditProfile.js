@@ -44,7 +44,6 @@ function EditProfile() {
         dispatch(login(account));
         axios.post("http://localhost:8081/accounts/edit", account)
             .then(res => {
-                console.log(res)
                 Swal.fire({
                     icon: 'success',
                     title: 'Successfully!',
@@ -71,7 +70,6 @@ function EditProfile() {
             const imgRef = ref(storage, `images/${file.name}`);
             uploadBytes(imgRef, file)
                 .then(() => {
-                    console.log(imgRef)
                     return getDownloadURL(imgRef);
                 })
                 .then((url) => {
@@ -124,7 +122,7 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    <div className="banner-area bg-2 bg-overlay-2 ptb-165">
+                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -134,15 +132,13 @@ function EditProfile() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="create-agency-area pt-115 pb-120">
+                    </div> */}
+                    <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
                                         <h4 className="details-title text-center mb-43">Edit</h4>
-
-
                                         <div className="row">
                                             <div className="col-lg-6">
 

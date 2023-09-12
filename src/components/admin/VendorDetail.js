@@ -47,7 +47,7 @@ function VendorDetail() {
                     </tr>
                     <tr>
                         <th>Revenue</th>
-                        <td>${vendor.revenue}</td>
+                        <td>{new Intl.NumberFormat().format(vendor.revenue)} VNĐ</td>
                     </tr>
                     {
                         vendor.account?.status.id !== 2 &&
@@ -60,7 +60,7 @@ function VendorDetail() {
                     }
 
                 </table>
-                <Link to={"/admin/vendors"}>
+                <Link to={"/myaccount/vendors"}>
                     <button className="btn btn-info">Back</button>
                 </Link>
             </div>

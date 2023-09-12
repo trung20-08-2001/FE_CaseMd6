@@ -24,7 +24,6 @@ function UserTransactionHistory() {
         const updatedBills = bills_User.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-
                 const updatedBill = {...bill};
                 updatedBill.bill.status.id = 8; // CANCELED
                 updatedBill.bill.status.name = newStatus;
@@ -55,6 +54,10 @@ function UserTransactionHistory() {
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
                 console.log("Bill status updated successfully");
+                axios.get("http://localhost:8081/bills_user/" + id)
+                .then(function (res) {
+                    setBills_User(res.data)
+                })
             })
             .catch((err) => {
                 console.log("Error updating bill status:", err);
@@ -78,7 +81,7 @@ function UserTransactionHistory() {
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
             const dateCheckout = bill?.bill.dateCheckout || 'No Checkout';
             const houseName = bill?.house.name || 'No Name';
-            const totalPrice = '$'+bill?.bill.totalPrice || '$0';
+            const totalPrice = bill?.bill.totalPrice || 0;
             const address = bill?.house.address || 'No Address';
             const status = bill?.bill.status.name || 'No Status';
 
@@ -96,11 +99,11 @@ function UserTransactionHistory() {
             ) : null;
 
             return (
-                <tr key={userId} style={{height:'60px'}}>
+                <tr key={bill.bill.id} style={{ height: '60px' }}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
-                    <td>{totalPrice}</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
                     <td>{address}</td>
                     <td>{status}</td>
                     <td>{cancelButton}</td>

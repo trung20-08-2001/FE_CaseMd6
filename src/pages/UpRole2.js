@@ -77,7 +77,7 @@ const UpRole2 = () => {
 
     return (
         <>
-        <div className="create-agency-area pt-115 pb-120">
+        <div className="create-agency-area pt-20 pb-120">
             <div className="container">
                 <div className="row">
                     <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">

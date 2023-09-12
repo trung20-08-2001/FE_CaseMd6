@@ -4,6 +4,7 @@ import houseSlice from "./slices/houseSlice";
 import imageSlice from "./slices/imageSlice";
 import accountSlice from "./slices/accountSlice";
 import revenueSlice from "./slices/revenueSlice";
+import billSlice from "./slices/billSlice";
 
 const store=configureStore({
     reducer:{
@@ -11,7 +12,8 @@ const store=configureStore({
         house:houseSlice,
         image:imageSlice,
         account:accountSlice,
-        revenue:revenueSlice
+        revenue:revenueSlice,
+        bill:billSlice
     }
 })
 

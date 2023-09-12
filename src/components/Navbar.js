@@ -79,7 +79,7 @@ const Navbar = () => {
                             <div className="col-lg-2">
                                 <div className="logo">
                                     <Link to="/">
-                                        <img src="images/logo/logo.png" alt="DomInno"/>
+                                        <img src="../images/logo/logo.png" alt="DomInno"/>
                                     </Link>
                                 </div>
                             </div>
@@ -226,9 +226,9 @@ const Navbar = () => {
                                                                             className="custom-modal"
                                                                             overlayClassName="custom-overlay"
                                                                         >
-                                                                            <h4>Tài khoản của bạn đã bị khóa!</h4>
-                                                                            <p>Vui lòng liên hệ với quản trị viên để
-                                                                                biết thêm thông tin chi tiết.</p>
+                                                                            <h4>Your account has been locked!</h4>
+                                                                            <p>Please contact the administrator to
+                                                                                get more detailed information.</p>
                                                                             <button className="close-button"
                                                                                     onClick={handleCloseModal}>Close
                                                                             </button>
