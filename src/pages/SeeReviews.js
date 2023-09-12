@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import AverageStarsFeedback from "./AverageStarsFeedback";
 import StarFeedback from "./StarFeedback";
 import ReactModal from "react-modal";
-import loading from "../components/Loading";
 
 
 const SeeReviews = () => {
@@ -14,7 +13,7 @@ const SeeReviews = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5); // Số mục trên mỗi trang
     // Tổng số trang
     const totalPages = Math.ceil(feedbacks.length / itemsPerPage);
-    const {idHouse} = useParams();
+    const { idHouse } = useParams();
     // Lấy mục trên trang hiện tại
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -34,16 +33,14 @@ const SeeReviews = () => {
     useEffect(() => {
         axios.get("http://localhost:8081/houses/houseDetail/" + idHouse)
             .then(res => {
-                console.log(res.data)
                 setHouse(res.data)
-                axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
-                    .then(res1 => {
-                        console.log(res1.data)
-                        setFeedbacks(res1.data)
-                    })
-                    .catch(function (err) {
-                        console.log(err)
-                    })
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+            .then(res1 => {
+                setFeedbacks(res1.data)
             })
             .catch(function (err) {
                 console.log(err)
@@ -53,8 +50,9 @@ const SeeReviews = () => {
     const handleSelectChange = (e, feedbackId) => {
         setIsOpen(true)
         setFbId(parseInt(feedbackId))
-
     };
+
+    
     const handleConfirm = () => {
         axios.post("http://localhost:8081/api/feedback/updateFeedback/" + fbId)
             .then(() => {
@@ -168,17 +166,17 @@ const SeeReviews = () => {
                                                 className="slider-range ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
                                                 <div
                                                     className="ui-slider-range ui-widget-header ui-corner-all"
-                                                    style={{left: "9.09091%", width: "70.2479%"}}
+                                                    style={{ left: "9.09091%", width: "70.2479%" }}
                                                 />
                                                 <span
                                                     className="ui-slider-handle ui-state-default ui-corner-all"
                                                     tabIndex={0}
-                                                    style={{left: "9.09091%"}}
+                                                    style={{ left: "9.09091%" }}
                                                 />
                                                 <span
                                                     className="ui-slider-handle ui-state-default ui-corner-all"
                                                     tabIndex={0}
-                                                    style={{left: "79.3388%"}}
+                                                    style={{ left: "79.3388%" }}
                                                 />
                                             </div>
                                         </div>
@@ -187,9 +185,9 @@ const SeeReviews = () => {
                                             type="button"
                                             className="button search_price lemon mt-36"
                                         >
-                <span>
-                  <span>SEARCH PROPERTY</span>
-                </span>
+                                            <span>
+                                                <span>SEARCH PROPERTY</span>
+                                            </span>
                                         </button>
                                     </div>
                                 </form>
@@ -213,10 +211,10 @@ const SeeReviews = () => {
                                                     href="properties-details.html"
                                                     className="block dark-hover"
                                                 >
-                                                    <img src="images/properties/s-1.jpg" alt=""/>
+                                                    <img src="images/properties/s-1.jpg" alt="" />
                                                     <span className="img-button text-uppercase">
-                      More Details
-                    </span>
+                                                        More Details
+                                                    </span>
                                                 </a>
                                             </div>
                                             <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
@@ -238,10 +236,10 @@ const SeeReviews = () => {
                                                     href="properties-details.html"
                                                     className="block dark-hover"
                                                 >
-                                                    <img src="images/properties/s-2.jpg" alt=""/>
+                                                    <img src="images/properties/s-2.jpg" alt="" />
                                                     <span className="img-button text-uppercase">
-                      More Details
-                    </span>
+                                                        More Details
+                                                    </span>
                                                 </a>
                                             </div>
                                             <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
@@ -263,10 +261,10 @@ const SeeReviews = () => {
                                                     href="properties-details.html"
                                                     className="block dark-hover"
                                                 >
-                                                    <img src="images/properties/s-3.jpg" alt=""/>
+                                                    <img src="images/properties/s-3.jpg" alt="" />
                                                     <span className="img-button text-uppercase">
-                      More Details
-                    </span>
+                                                        More Details
+                                                    </span>
                                                 </a>
                                             </div>
                                             <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
@@ -288,10 +286,10 @@ const SeeReviews = () => {
                                                     href="properties-details.html"
                                                     className="block dark-hover"
                                                 >
-                                                    <img src="images/properties/s-4.jpg" alt=""/>
+                                                    <img src="images/properties/s-4.jpg" alt="" />
                                                     <span className="img-button text-uppercase">
-                      More Details
-                    </span>
+                                                        More Details
+                                                    </span>
                                                 </a>
                                             </div>
                                             <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
@@ -310,7 +308,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 mb-22 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-1.jpg" alt=""/>
+                                                    <img src="images/team/s-1.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -322,7 +320,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 mb-22 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-2.jpg" alt=""/>
+                                                    <img src="images/team/s-2.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -334,7 +332,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 mb-22 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-3.jpg" alt=""/>
+                                                    <img src="images/team/s-3.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -346,7 +344,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-4.jpg" alt=""/>
+                                                    <img src="images/team/s-4.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -358,7 +356,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-5.jpg" alt=""/>
+                                                    <img src="images/team/s-5.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -370,7 +368,7 @@ const SeeReviews = () => {
                                         <div className="col-lg-4 col-md-2 col-4">
                                             <div className="agent-hover">
                                                 <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-6.jpg" alt=""/>
+                                                    <img src="images/team/s-6.jpg" alt="" />
                                                 </a>
                                                 <h5>
                                                     <a href="agent-details.html" className="block">
@@ -421,7 +419,7 @@ const SeeReviews = () => {
                                     <div className="col-lg-8 order-1">
                                         <h1 className="details-title mb-22">{houses.house.name}</h1>
                                         <div className="property-image mb-57">
-                                            <img src={houses.images[0].url} alt=""/>
+                                            <img src={houses.images[0].url} alt="" />
                                         </div>
                                         <div className="property-desc mb-56">
                                             <h4 className="details-title mb-22">Description</h4>
@@ -436,11 +434,11 @@ const SeeReviews = () => {
                                                     <h4 className="details-title mb-38">Condition</h4>
                                                     <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
                                                         <div className="desc-info mb-37">
-                                                            <img src="../images/icons/g-floor.png" alt="" className="pr-8"/>
+                                                            <img src="../images/icons/g-floor.png" alt="" className="pr-8" />
                                                             <span>Area 450 sqft</span>
                                                         </div>
                                                         <div className="desc-info mb-37">
-                                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8"/>
+                                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8" />
                                                             <span>Bedroom {houses.house.numberOfBedrooms}</span>
                                                         </div>
                                                         <div className="desc-info mb-37">
@@ -460,17 +458,17 @@ const SeeReviews = () => {
                                                             <span>{houses.house.category.name}</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
-                                                            <img src="../images/icons/kitchen.png" alt="" className="pr-8"/>
+                                                            <img src="../images/icons/kitchen.png" alt="" className="pr-8" />
                                                             <span>Kitchen 2</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <span className="price">{houses.house.price} VND</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <img src="../images/icons/g-map.png" alt="" className="pr-8"/>
+                                                            <img src="../images/icons/g-map.png" alt="" className="pr-8" />
                                                             <span className="location">
-                    {houses.house.address}
-                  </span>
+                                                                {houses.house.address}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -478,75 +476,65 @@ const SeeReviews = () => {
                                                     <h4 className="details-title mb-38">Amenities</h4>
                                                     <div className="bg-gray fix pl-50 pr-50 pt-44 pb-38 right-column mb-56">
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Air Conditioning</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Bedding</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Balcony</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Cable TV</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Internet</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Parking</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Lift</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Pool</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Dishwasher</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Toaster</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="comments fix pt-50">
-                                                <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
+                                            <div className="comments fix pt-10">
+                                                <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 mb-56">
                                                     <div>
                                                         <h4 className="details-title pb-8 mb-27">{feedbacks.length} Feedback</h4>
-                                                        {/*<div>*/}
-                                                        {/*    <AverageStarsFeedback houseId={idHouse}/>*/}
-                                                        {/*</div>*/}
-                                                        {/*<div>*/}
-                                                        {/*    <button>Tất cả</button>*/}
-                                                        {/*    <button>5 Sao</button>*/}
-                                                        {/*    <button>4 Sao</button>*/}
-                                                        {/*    <button>3 Sao</button>*/}
-                                                        {/*    <button>2 Sao</button>*/}
-                                                        {/*    <button>1 Sao</button>*/}
-                                                        {/*</div>*/}
-                                                        <div style={{display: 'flex'}}>
-                                                            <div style={{flex: '1'}}>
-                                                                <AverageStarsFeedback houseId={idHouse}/>
-                                                            </div>
-                                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <div style={{ flex: '1' }}>
+                                                            <AverageStarsFeedback houseId={idHouse} />
+                                                        </div>
+                                                        <div style={{ display: 'flex' }}>
+
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>5 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>5 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -554,7 +542,7 @@ const SeeReviews = () => {
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>4 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>4 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -562,7 +550,7 @@ const SeeReviews = () => {
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>3 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>3 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -570,7 +558,7 @@ const SeeReviews = () => {
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>2 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>2 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -578,7 +566,7 @@ const SeeReviews = () => {
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>1 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>1 Sao</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -591,7 +579,7 @@ const SeeReviews = () => {
                                                     return (
                                                         <>
                                                             <div>
-                                                                <div className="comments fix pt-50">
+                                                                <div className="comments fix pt-50" key={fb.id}>
                                                                     <div className="single-comment fix mb-18">
                                                                         <div className="author-image pull_left mr-23">
                                                                             <img alt="" src={fb.account.avatar} style={{
@@ -600,13 +588,13 @@ const SeeReviews = () => {
                                                                                 borderRadius: '50%',
                                                                                 objectFit: 'cover',
                                                                                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-                                                                            }}/></div>
+                                                                            }} /></div>
                                                                         <div className="comment-text fix">
                                                                             <div className="author-info">
                                                                                 <h5 className="mb-8">
                                                                                     <a href="#">{fb.account.username}</a>
                                                                                 </h5>
-                                                                                <div style={{float: "right"}}>
+                                                                                <div style={{ float: "right" }}>
                                                                                     <select
                                                                                         style={{
                                                                                             borderRadius: "20px",
@@ -618,18 +606,18 @@ const SeeReviews = () => {
                                                                                         value={selectedOption}
                                                                                         onChange={(e) => handleSelectChange(e, fb.id)}
                                                                                     >
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={1}>Show
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={1}>Show
                                                                                         </option>
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={3}>Hidden
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={3}>Hidden
                                                                                         </option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <span className="block mb-11">{fb.date}</span>
                                                                                 <span className="block mb-11">
-                                                                                <StarFeedback star={fb.numberOfStars}/>
-                                                                            </span>
+                                                                                    <StarFeedback star={fb.numberOfStars} />
+                                                                                </span>
                                                                             </div>
                                                                             <p className="mb-18">
                                                                                 {fb.comment}
@@ -637,7 +625,7 @@ const SeeReviews = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <hr/>
+                                                                <hr />
                                                             </div>
                                                             <ReactModal
                                                                 isOpen={isOpen}
@@ -658,8 +646,8 @@ const SeeReviews = () => {
                                                                         backgroundColor: 'yellowgreen'
                                                                     }} onClick={handleCance}>Hủy
                                                                     </button>
-                                                                    <button style={{backgroundColor: 'red'}}
-                                                                            onClick={handleConfirm}>Xác nhận
+                                                                    <button style={{ backgroundColor: 'red' }}
+                                                                        onClick={handleConfirm}>Xác nhận
                                                                     </button>
                                                                 </div>
                                                             </ReactModal>
@@ -670,7 +658,7 @@ const SeeReviews = () => {
                                             }
                                             <div className="pagination-content text-center block fix col-10">
                                                 <div>
-                                                    {Array.from({length: totalPages}, (_, index) => index + 1).map(
+                                                    {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                                                         (pageNumber) => (
                                                             <button
                                                                 key={pageNumber}
@@ -681,7 +669,6 @@ const SeeReviews = () => {
                                                                     color: currentPage === pageNumber ? 'white' : 'black',
 
                                                                 }}
-                                                                onClick={() => handlePageChange(pageNumber)}
                                                             >
                                                                 {pageNumber}
                                                             </button>

@@ -11,6 +11,7 @@ const billSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(findBillHistoryHost.fulfilled, (state, action) => {
+            console.log(action.payload);
             state.billHistoryHost = action.payload
         })
         builder.addCase(findBillHistoryHost.pending, (state, action) => {

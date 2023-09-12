@@ -3,6 +3,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
@@ -12,6 +13,7 @@ function VendorTransactionHistory() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [filter, setFilter] = useState(bills_vendor);
+    const dispatch=useDispatch()
 
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
@@ -169,8 +171,7 @@ function VendorTransactionHistory() {
                         name="nameHouse"
                         type="text"
                         placeholder="Name house..."
-                        value={nameHouse}
-                        onChange={e => setNameHouse(e.target.value)}
+                        onChange={e =>dispatch({type:"bill/findBillHistoryHost",payload:e.target.value}) }
                         style={{flex: 2, marginRight: '10px'}}
                     />
                     <input

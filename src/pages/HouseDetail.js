@@ -22,7 +22,7 @@ const HouseDetail = () => {
             starts: [1, 2, 3, 4, 5]
         });
     const [comment, setComment] = useState('');
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -161,7 +161,15 @@ const HouseDetail = () => {
 
     const saveFeedback = () => {
         if (account) {
-            if (myFeedback !== "") {
+            if (houseDTO.house.account.id === account.id) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Thuê thất bại',
+                    text: 'Bạn không thể thuê nhà của mình.',
+                    showConfirmButton: false, // Ẩn nút "OK"
+                    timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                });
+            }else if (myFeedback !== "") {
                 if (account.id === houseDTO.house.account.id) {
                     Swal.fire({
                         icon: 'error',
@@ -218,7 +226,7 @@ const HouseDetail = () => {
                     text: 'Bạn chưa thuê nhà này.',
                 });
             }
-        }else{
+        } else {
             Swal.fire({
                 title: 'Feedback thất bại',
                 icon: 'error',
@@ -371,9 +379,9 @@ const HouseDetail = () => {
                                                                 )
                                                                 else return (
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="15"
-                                                                         height="15"
-                                                                         viewBox="0 0 16 16" key={item}
-                                                                         onClick={() => changeStart(item)}>
+                                                                        height="15"
+                                                                        viewBox="0 0 16 16" key={item}
+                                                                        onClick={() => changeStart(item)}>
                                                                         <path
                                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
                                                                             fill="yellow" />
@@ -400,7 +408,7 @@ const HouseDetail = () => {
                                         )
                                         else return (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                 viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
+                                                viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
                                                 <path
                                                     d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
                                                     fill="yellow" />
