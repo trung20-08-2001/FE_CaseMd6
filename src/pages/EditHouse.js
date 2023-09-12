@@ -104,6 +104,7 @@ const EditHouse = () => {
   };
 
 
+
   const handleRemoveImage = (index) => {
     const updatedImages = [...selectedImages];
     updatedImages.splice(index, 1);
