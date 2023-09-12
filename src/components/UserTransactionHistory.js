@@ -50,7 +50,7 @@ function UserTransactionHistory() {
             .then((res) => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'You have Cancelled!',
+                    title: 'You have cancelled!',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
@@ -120,7 +120,7 @@ function UserTransactionHistory() {
         <>
 
             <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h4 className='text-center pb-20'>Transaction History</h4>
+                <h4 className='text-center pb-20'>Transaction history</h4>
 
                 <table className="table table-hover">
                     <thead>
