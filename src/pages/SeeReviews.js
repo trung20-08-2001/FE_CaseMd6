@@ -521,20 +521,9 @@ const SeeReviews = () => {
                                                 </div>
                                             </div>
                                             <div className="comments fix pt-50">
-                                                <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
+                                                <div>
                                                     <div>
                                                         <h4 className="details-title pb-8 mb-27">{feedbacks.length} Feedback</h4>
-                                                        {/*<div>*/}
-                                                        {/*    <AverageStarsFeedback houseId={idHouse}/>*/}
-                                                        {/*</div>*/}
-                                                        {/*<div>*/}
-                                                        {/*    <button>Tất cả</button>*/}
-                                                        {/*    <button>5 Sao</button>*/}
-                                                        {/*    <button>4 Sao</button>*/}
-                                                        {/*    <button>3 Sao</button>*/}
-                                                        {/*    <button>2 Sao</button>*/}
-                                                        {/*    <button>1 Sao</button>*/}
-                                                        {/*</div>*/}
                                                         <div style={{display: 'flex'}}>
                                                             <div style={{flex: '1'}}>
                                                                 <AverageStarsFeedback houseId={idHouse}/>
@@ -645,8 +634,8 @@ const SeeReviews = () => {
                                                                 className="custom-modal"
                                                                 overlayClassName="custom-overlay"
                                                             >
-                                                                <h4>Xác nhận!</h4>
-                                                                <p>Bạn có chắc chắn muốn ẩn bình luận này?.</p>
+                                                                <h4>Confirm!</h4>
+                                                                <p>Are you sure you want to hide this comment?.</p>
                                                                 <div style={{
                                                                     display: 'flex',
                                                                     justifyContent: 'flex-end',
@@ -656,10 +645,10 @@ const SeeReviews = () => {
                                                                         margin: '0 10px',
                                                                         width: '100px',
                                                                         backgroundColor: 'yellowgreen'
-                                                                    }} onClick={handleCance}>Hủy
+                                                                    }} onClick={handleCance}>Cancel
                                                                     </button>
                                                                     <button style={{backgroundColor: 'red'}}
-                                                                            onClick={handleConfirm}>Xác nhận
+                                                                            onClick={handleConfirm}>Agree
                                                                     </button>
                                                                 </div>
                                                             </ReactModal>

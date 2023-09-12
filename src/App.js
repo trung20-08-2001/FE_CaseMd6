@@ -53,7 +53,8 @@ function App() {
                                         <Route path="create_house" element={<CreateHouse />}></Route>
                                         <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
                                         <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
-                                        
+                                        <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
+
                                     </>
                                 }
                                 {account.role.id === 3 &&
@@ -65,7 +66,6 @@ function App() {
                             </Route>
                         </>
                     }    
-                    <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />
