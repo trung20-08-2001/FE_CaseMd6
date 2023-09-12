@@ -43,7 +43,7 @@ function TopHouse() {
                                                         <a href="properties-details.html">{item.house.name}</a>
                                                     </h4>
                                                     <span>
-                                                        <span className="mr-10">
+                                                        <  span className="mr-10">
                                                             <img src="images/icons/map.png" alt="" />
                                                         </span>
                                                         {item.house.address}

@@ -11,7 +11,6 @@ function UpRoleUserToVendor() {
     useEffect(() => {
         axios.get("http://localhost:8081/accounts/searchAccount/" + id)
             .then(function (res) {
-                console.log(res.data)
                 setUser(res.data);
             })
     }, []);
@@ -68,9 +67,8 @@ function UpRoleUserToVendor() {
             .then((res) => {
                 if (user.role.id == 3) {
                     axios.post('http://localhost:8081/send-email/'+user.email)
-                    console.log(user.email)
                 }
-                navigate("/admin/vendors")
+                navigate("/myaccount/vendors")
             })
             .catch((err) => {
                 console.log("Error updating user status:", err);
@@ -131,7 +129,7 @@ function UpRoleUserToVendor() {
                     Reject
                 </button><br/>
                 <p style={{marginTop: "50px"}}>
-                <Link to={"/admin/vendors"}>
+                <Link to={"/myaccount/vendors"}>
                     <button className="btn btn-info">Back</button>
                 </Link></p>
             </div>

@@ -66,6 +66,7 @@ function App() {
                             </Route>
                         </>
                     }    
+
                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />

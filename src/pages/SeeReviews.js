@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import AverageStarsFeedback from "./AverageStarsFeedback";
 import StarFeedback from "./StarFeedback";
@@ -14,7 +14,7 @@ const SeeReviews = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5); // Số mục trên mỗi trang
     // Tổng số trang
     const totalPages = Math.ceil(feedbacks.length / itemsPerPage);
-    const {idHouse} = useParams();
+    const { idHouse } = useParams();
     // Lấy mục trên trang hiện tại
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -34,16 +34,14 @@ const SeeReviews = () => {
     useEffect(() => {
         axios.get("http://localhost:8081/houses/houseDetail/" + idHouse)
             .then(res => {
-                console.log(res.data)
                 setHouse(res.data)
-                axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
-                    .then(res1 => {
-                        console.log(res1.data)
-                        setFeedbacks(res1.data)
-                    })
-                    .catch(function (err) {
-                        console.log(err)
-                    })
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+            .then(res1 => {
+                setFeedbacks(res1.data)
             })
             .catch(function (err) {
                 console.log(err)
@@ -53,8 +51,9 @@ const SeeReviews = () => {
     const handleSelectChange = (e, feedbackId) => {
         setIsOpen(true)
         setFbId(parseInt(feedbackId))
-
     };
+
+
     const handleConfirm = () => {
         axios.post("http://localhost:8081/api/feedback/updateFeedback/" + fbId)
             .then(() => {
@@ -520,15 +519,16 @@ const SeeReviews = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="comments fix pt-50">
-                                                <div>
+                                            <div className="comments fix pt-10">
+                                                <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 mb-56">
                                                     <div>
                                                         <h4 className="details-title pb-8 mb-27">{feedbacks.length} Feedback</h4>
-                                                        <div style={{display: 'flex'}}>
-                                                            <div style={{flex: '1'}}>
-                                                                <AverageStarsFeedback houseId={idHouse}/>
-                                                            </div>
-                                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <div style={{ flex: '1' }}>
+                                                            <AverageStarsFeedback houseId={idHouse} />
+                                                        </div>
+                                                        <div style={{ display: 'flex' }}>
+
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
@@ -659,7 +659,7 @@ const SeeReviews = () => {
                                             }
                                             <div className="pagination-content text-center block fix col-10">
                                                 <div>
-                                                    {Array.from({length: totalPages}, (_, index) => index + 1).map(
+                                                    {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                                                         (pageNumber) => (
                                                             <button
                                                                 key={pageNumber}
@@ -670,7 +670,6 @@ const SeeReviews = () => {
                                                                     color: currentPage === pageNumber ? 'white' : 'black',
 
                                                                 }}
-                                                                onClick={() => handlePageChange(pageNumber)}
                                                             >
                                                                 {pageNumber}
                                                             </button>
