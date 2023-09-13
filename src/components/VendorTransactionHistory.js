@@ -37,7 +37,7 @@ function VendorTransactionHistory() {
             const dateCheckout = bill?.bill.dateCheckout || 'No Checkout';
             const houseName = bill?.house.name || 'No House Name';
             const userName = bill?.bill.user.username || 'No User Name';
-            const totalPrice = '$' + bill?.bill.totalPrice || '$0';
+            const totalPrice =bill?.bill.totalPrice || 0;
             const status = bill?.bill.status.name || 'No Status';
 
             const handleBillClick = (billId) => {
@@ -94,10 +94,10 @@ function VendorTransactionHistory() {
                                 totalPrice = parseFloat(totalPrice.replace('$', ''));
                             }
 
-                            const timeDifference = dateCheckout.getDate() - currentDate.getDate();
+                            const timeDifference = dateCheckout.getTime() - currentDate.getTime();
                             if (timeDifference >= 0) {
-                                // Calculate the updated totalPrice when the Checkout date is in the past
-                                const updatedTotalPrice = totalPrice - (timeDifference * 0.7 * bill.house.price);
+                                const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                                const updatedTotalPrice = totalPrice - (daysDifference * 0.7 * bill.house.price);
                                 return {
                                     ...bill,
                                     bill: {
@@ -118,8 +118,8 @@ function VendorTransactionHistory() {
                                     }
                                 };
                             } else {
-                                // Calculate the updated totalPrice when the Checkout date is in the future
-                                const updatedTotalPrice = totalPrice + (-timeDifference * bill.house.price);
+                                const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                                const updatedTotalPrice = totalPrice + (-daysDifference * bill.house.price);
                                 return {
                                     ...bill,
                                     bill: {

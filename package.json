@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "sockjs-client": "^1.5.2",
+    "stompjs": "^2.3.3",
+    "net": "^1.0.2",
     "@coreui/react": "^5.0.0-alpha.0",
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
