@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
-    const { id } = useParams();
-    
+    const {id} = useParams();
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
@@ -25,7 +24,7 @@ function UserTransactionHistory() {
         const updatedBills = bills_User.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-                const updatedBill = { ...bill };
+                const updatedBill = {...bill};
                 updatedBill.bill.status.id = 8; // CANCELED
                 updatedBill.bill.status.name = newStatus;
                 updatedBill.house.status.id = 4; // READY
@@ -50,7 +49,7 @@ function UserTransactionHistory() {
             .then((res) => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'You have Cancelled!',
+                    title: 'You have cancelled!',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
@@ -95,7 +94,7 @@ function UserTransactionHistory() {
             // Kiểm tra nếu thời gian đặt thuê lớn hơn 1 ngày, hiển thị nút "Cancel"
             const cancelButton = (diffInDays > 1 && bill.bill.status.id === 2) ? (
                 <button className="btn btn-outline-danger"
-                    onClick={() => handleCancelClick(bill?.bill.id)}
+                        onClick={() => handleCancelClick(bill?.bill.id)}
                 >Cancel</button>
             ) : null;
 
@@ -114,7 +113,7 @@ function UserTransactionHistory() {
 
     const pageCount = Math.ceil(bills_User.length / billsPerPage);
 
-    const changePage = ({ selected }) => {
+    const changePage = ({selected}) => {
         setPageNumber(selected);
     };
     // end
@@ -123,23 +122,23 @@ function UserTransactionHistory() {
     return (
         <>
 
-            <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
-                <h4 className='text-center pb-20'>Transaction History</h4>
+            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+                <h4 className='text-center pb-20'>Transaction history</h4>
 
                 <table className="table table-hover">
                     <thead>
-                        <tr>
-                            <th>Date CheckIN</th>
-                            <th>Date CheckOut</th>
-                            <th>Name House</th>
-                            <th>Total Price</th>
-                            <th>Address</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                    <tr>
+                        <th>Date CheckIN</th>
+                        <th>Date CheckOut</th>
+                        <th>Name House</th>
+                        <th>Total Price</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {displayBills_User}
+                    {displayBills_User}
                     </tbody>
                 </table>
                 {/* Phân trang */}

@@ -3,7 +3,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
@@ -13,11 +13,11 @@ function VendorTransactionHistory() {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [filter, setFilter] = useState(bills_vendor);
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 11; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     // end
 
@@ -36,10 +36,133 @@ function VendorTransactionHistory() {
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
             const dateCheckout = bill?.bill.dateCheckout || 'No Checkout';
             const houseName = bill?.house.name || 'No House Name';
-            const userName = bill?.bill.user.fullName || bill?.bill.user.username || 'No User Name';
+            const userName = bill?.bill.user.username || 'No User Name';
             const totalPrice = bill?.bill.totalPrice || 0;
             const status = bill?.bill.status.name || 'No Status';
 
+            const handleBillClick = (billId) => {
+                const updatedBills = bills_vendor.map((bill) => {
+                    if (bill.bill.id === billId) {
+                        const currentDate = new Date()
+                        const year = currentDate.getFullYear();
+                        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(currentDate.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day}`;
+
+                        const dateCheckout = new Date(bill.bill.dateCheckout);
+                        const dateCheckin = new Date(bill.bill.dateCheckin);
+                        if (bill.bill.status.id === 2) {
+                            if (dateCheckin <= currentDate) {
+                                // Checkin is allowed
+                                const newIdStatus_bill = 6; // USING
+                                const newNameStatus_bill = 'USING';
+                                const newIdStatus_house = 5; // ORDERED
+                                const newNameStatus_house = 'ORDERED';
+
+                                return {
+                                    ...bill,
+                                    bill: {
+                                        ...bill.bill,
+                                        status: {
+                                            ...bill.bill.status,
+                                            id: newIdStatus_bill,
+                                            name: newNameStatus_bill
+                                        }
+                                    },
+                                    house: {
+                                        ...bill.house,
+                                        status: {
+                                            ...bill.house.status,
+                                            id: newIdStatus_house,
+                                            name: newNameStatus_house
+                                        }
+                                    }
+                                };
+                            } else {
+                                // Show error message when trying to checkin before the current date
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Cannot Checkin',
+                                    text: 'The Checkin date is in the future.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                            }
+                        } else if (bill.bill.status.id === 6) {
+                            let totalPrice = bill.bill.totalPrice;
+                            if (typeof totalPrice === 'string') {
+                                totalPrice = parseFloat(totalPrice.replace('$', ''));
+                            }
+
+                            const timeDifference = dateCheckout.getTime() - currentDate.getTime();
+                            if (timeDifference >= 0) {
+                                const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                                let updatedTotalPrice = totalPrice - (daysDifference * 0.7 * bill.house.price);
+                                if (updatedTotalPrice < bill.house.price) {
+                                    updatedTotalPrice = updatedTotalPrice + 1000 - bill.house.price * 0.3
+                                    if (daysDifference === 1) {
+                                        updatedTotalPrice = 1000
+                                    }
+                                }
+                                console.log(timeDifference)
+                                console.log(daysDifference)
+                                console.log((daysDifference * 0.7 * bill.house.price))
+                                console.log(updatedTotalPrice)
+                                return {
+                                    ...bill,
+                                    bill: {
+                                        ...bill.bill,
+                                        dateCheckout: formattedDate,
+                                        totalPrice: `${updatedTotalPrice.toFixed(0)}`,
+                                        status: {
+                                            id: 7,
+                                            name: 'CHECKED_OUT',
+                                        }
+                                    },
+                                    house: {
+                                        ...bill.house,
+                                        status: {
+                                            id: 4,
+                                            name: 'READY',
+                                        }
+                                    }
+                                };
+                            } else {
+                                const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                                const updatedTotalPrice = totalPrice + (-daysDifference * bill.house.price);
+                                return {
+                                    ...bill,
+                                    bill: {
+                                        ...bill.bill,
+                                        dateCheckout: formattedDate,
+                                        totalPrice: `${updatedTotalPrice.toFixed(0)}`,
+                                        status: {
+                                            id: 7,
+                                            name: 'CHECKED_OUT',
+                                        }
+                                    },
+                                    house: {
+                                        ...bill.house,
+                                        status: {
+                                            id: 4,
+                                            name: 'READY',
+                                        }
+                                    }
+                                };
+                            }
+                        }
+                    }
+                    return bill;
+                });
+
+                updateStatus_billAndHouse(billId, updatedBills)
+                    .then(() => {
+                        setBills_vendor(updatedBills);
+                    })
+                    .catch((error) => {
+                        console.log("Error updating bill and house status:", error);
+                    });
+            };
             return (
                 <tr key={bill.bill.id} style={{height: '60px'}}>
                     <td>{dateCheckin}</td>
@@ -70,62 +193,10 @@ function VendorTransactionHistory() {
     };
     // end
 
-    const handleBillClick = (billId) => {
-        const updatedBills = bills_vendor.map((bill) => {
-            if (bill.bill.id === billId) {
-                let newIdStatus_bill = bill.bill.status.id;
-                let newNameStatus_bill = bill.bill.status.name;
-
-                let newIdStatus_house = bill.house.status.id;
-                let newNameStatus_house = bill.house.status.name;
-
-                if (bill.bill.status.id === 2) {
-                    newIdStatus_bill = 6; //USING
-                    newNameStatus_bill = 'USING'
-                    newIdStatus_house = 5; //ORDERED
-                    newNameStatus_house = 'ORDERED'
-                } else if (bill.bill.status.id === 6) {
-                    newIdStatus_bill = 7; //CHECKED_OUT
-                    newNameStatus_bill = 'CHECKED_OUT'
-                    newIdStatus_house = 4; //READY
-                    newNameStatus_house = 'READY'
-                }
-
-                return {
-                    ...bill,
-                    bill: {
-                        ...bill.bill,
-                        status: {
-                            ...bill.bill.status,
-                            id: newIdStatus_bill,
-                            name: newNameStatus_bill
-                        }
-                    },
-                    house: {
-                        ...bill.house,
-                        status: {
-                            ...bill.house.status,
-                            id: newIdStatus_house,
-                            name: newNameStatus_house
-                        }
-                    }
-                };
-            }
-            return bill;
-        });
-        updateStatus_billAndHouse(billId, updatedBills)
-            .then(() => {
-                setBills_vendor(updatedBills);
-            })
-            .catch((error) => {
-                console.log("Error updating bill and house status:", error);
-            });
-    };
 
     const updateStatus_billAndHouse = (billId, updatedBills) => {
         const updatedStatus_bill = updatedBills.find((bill) => bill.bill.id === billId).bill;
         const updatedStatus_house = updatedBills.find((bill) => bill.bill.id === billId).house;
-
         const updateBillPromise = axios.post(`http://localhost:8081/bills_vendor/${billId}/bill`, updatedStatus_bill)
             .then((res) => {
                 if (updatedStatus_bill.status.id === 6) {
@@ -158,59 +229,60 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-    const handleSearch=() => {
-        if(nameHouse!=="" && startDate!==null && endDate!==null){
+    const handleSearch = () => {
+        if (nameHouse !== "" && startDate !== null && endDate !== null) {
 
         }
     }
 
     return (
         <>
-         <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
-                    <input
-                        name="nameHouse"
-                        type="text"
-                        placeholder="Name house..."
-                        onChange={e =>dispatch({type:"bill/findBillHistoryHost",payload:e.target.value}) }
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <input
-                        name="nameHouse"
-                        type="DATE"
-                        value={startDate}
-                        onChange={e => setStartDate(e.target.value)}
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <input
-                        name="nameHouse"
-                        type="DATE"
-                        value={endDate}
-                        onChange={e => setEndDate(e.target.value)}
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <select
-                        name="select"
-                        value={selectValue}
-                        onChange={e => setSelectValue(parseInt(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
-                    >
-                        <option value={0}>All</option>
-                        <option value={5}>ORDERED</option>
-                        <option value={6}>USING</option>
-                        <option value={7}>CHECK_OUT</option>
-                        <option value={8}>CANCELED</option>
-                    </select>
-                    <button
-                        type="button"
-                        className="btn btn-outline-danger"
-                        
-                        style={{flex: 1}}
-                    >
-                        Tìm kiếm
-                    </button>
-                </div>
-            <div style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h4 className='text-center pb-20'>Renting a House</h4>
+            <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
+                <input
+                    name="nameHouse"
+                    type="text"
+                    placeholder="Name house..."
+                    onChange={e => dispatch({type: "bill/findBillHistoryHost", payload: e.target.value})}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <input
+                    name="nameHouse"
+                    type="DATE"
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <input
+                    name="nameHouse"
+                    type="DATE"
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <select
+                    name="select"
+                    value={selectValue}
+                    onChange={e => setSelectValue(parseInt(e.target.value))}
+                    style={{flex: 2, marginRight: '10px'}}
+                >
+                    <option value={0}>All</option>
+                    <option value={5}>ORDERED</option>
+                    <option value={6}>USING</option>
+                    <option value={7}>CHECK_OUT</option>
+                    <option value={8}>CANCELED</option>
+                </select>
+                <button
+                    type="button"
+                    className="btn btn-outline-danger"
+
+                    style={{flex: 1}}
+                >
+                    Tìm kiếm
+                </button>
+            </div>
+
+            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+                <h4 className='text-center pb-20'>Renting a house</h4>
 
                 <table className="table table-hover">
                     <thead>

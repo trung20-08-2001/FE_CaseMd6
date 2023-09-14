@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import {useEffect, useState} from 'react';
+import {styled, alpha} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -17,10 +17,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { login } from '../services/accountService';
+import {Link, useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {login} from '../services/accountService';
 import EditIcon from '@mui/icons-material/Edit';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
@@ -30,10 +30,9 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
-import { useEffect } from 'react';
 import Notification from "../components/Notification"
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -49,7 +48,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -59,7 +58,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -116,23 +115,30 @@ export default function PrimarySearchAppBar() {
 
     const menuId = 'primary-search-account-menu';
     const menuAdmin = [
-        <Link to="myaccount/account_user" onClick={() => setAnchorEl(null)} ><MenuItem>Accounts user</MenuItem></Link>,
-        <Link to="myaccount/vendors" onClick={() => setAnchorEl(null)}  ><MenuItem>Accounts host</MenuItem></Link>,
-        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>
+        <Link to="myaccount/account_user" onClick={() => setAnchorEl(null)}><MenuItem>Accounts user</MenuItem></Link>,
+        <Link to="myaccount/vendors" onClick={() => setAnchorEl(null)}><MenuItem>Accounts host</MenuItem></Link>,
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit
+            profile</MenuItem></Link>
     ]
     const menuHost = [
-        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>,
-        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit
+            profile</MenuItem></Link>,
+        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change
+            password</MenuItem></Link>,
         <Link to="myaccount/host" onClick={() => setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>,
         <Link to="myaccount/create_house" onClick={() => setAnchorEl(null)}><MenuItem>Create houses</MenuItem></Link>,
-        <Link to={`myaccount/bills_vendor/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Renting a House</MenuItem></Link>,
+        <Link to={`myaccount/bills_vendor/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Renting a
+            House</MenuItem></Link>,
         <Link to="myaccount/income" onClick={() => setAnchorEl(null)}><MenuItem>Revenue</MenuItem></Link>
 
     ]
     const menuUser = [
-        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit profile</MenuItem></Link>,
-        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
-        <Link to={`myaccount/bills_user/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Transaction history</MenuItem></Link>,
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit
+            profile</MenuItem></Link>,
+        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change
+            password</MenuItem></Link>,
+        <Link to={`myaccount/bills_user/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Transaction
+            history</MenuItem></Link>,
         <Link to={"myaccount/user"} onClick={() => setAnchorEl(null)}><MenuItem>UP Role</MenuItem></Link>
     ]
 
@@ -141,7 +147,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="black">
                     <Badge badgeContent={0} color="error">
-                        <MailIcon />
+                        <MailIcon/>
                     </Badge>
                 </IconButton>
                 <p>Chat</p>
@@ -154,7 +160,7 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
             >
                 <Badge badgeContent={0} color="error">
-                    <NotificationsIcon />
+                    <NotificationsIcon/>
 
                 </Badge>
             </IconButton>
@@ -168,7 +174,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <AccountCircle />
+                        <AccountCircle/>
                     </Badge>
                 </IconButton>
                 <p>My profile</p>
@@ -182,7 +188,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <EditIcon />
+                        <EditIcon/>
                     </Badge>
                 </IconButton>
                 <p>Edit profile</p>
@@ -196,7 +202,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <ChangeCircleIcon />
+                        <ChangeCircleIcon/>
                     </Badge>
                 </IconButton>
                 <p>Change password</p>
@@ -213,7 +219,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <PeopleIcon />
+                        <PeopleIcon/>
                     </Badge>
                 </IconButton>
                 <p>Accounts user</p>
@@ -227,13 +233,14 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <PeopleIcon />
+                        <PeopleIcon/>
                     </Badge>
                 </IconButton>
                 <p>Accounts host</p>
             </MenuItem>
         </Link>
     ]
+
 
     const menuMobileHost = [
         <Link to="/myaccount/host">
@@ -244,7 +251,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HolidayVillageIcon />
+                        <HolidayVillageIcon/>
                     </Badge>
                 </IconButton>
                 <p>My houses</p>
@@ -258,7 +265,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <AddBusinessIcon />
+                        <AddBusinessIcon/>
                     </Badge>
                 </IconButton>
                 <p>Create houses</p>
@@ -272,7 +279,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HistoryIcon />
+                        <HistoryIcon/>
                     </Badge>
                 </IconButton>
                 <p>Renting a House</p>
@@ -286,7 +293,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <BarChartIcon />
+                        <BarChartIcon/>
                     </Badge>
                 </IconButton>
                 <p>Revenue</p>
@@ -303,7 +310,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HistoryIcon />
+                        <HistoryIcon/>
                     </Badge>
                 </IconButton>
                 <p>Transaction history</p>
@@ -317,14 +324,13 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <BackupIcon />
+                        <BackupIcon/>
                     </Badge>
                 </IconButton>
                 <p>Become a host</p>
             </MenuItem>
         </Link>
     ]
-
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -349,7 +355,7 @@ export default function PrimarySearchAppBar() {
             {account?.role?.id === 2 && menuHost.map(item => item)}
             {account?.role?.id === 3 && menuUser.map(item => item)}
             <Link to="myaccount/chat" onClick={() => setAnchorEl(null)}><MenuItem>Chat</MenuItem></Link>
-            <MenuItem onClick={handleMenuClose} >Log out</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
         </Menu>
     );
     const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -380,7 +386,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <i className="fs-20 bi-box-arrow-left" />
+                        <i className="fs-20 bi-box-arrow-left"/>
                     </Badge>
                 </IconButton>
                 <p onClick={handleMenuClose}>Log out</p>
@@ -403,22 +409,22 @@ export default function PrimarySearchAppBar() {
 
     return (
         <>
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" style={{ backgroundColor: "#fff" }}>
-                <Toolbar>
-                    <Link to="">
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            aria-label="open drawer"
-                            color={"primary"}
-                            sx={{ display: { xs: 'block', sm: 'block' } }}
-                        >
-                            BOOKING HOUSE
-                        </Typography>
-                    </Link>
-                    {/* <Search>
+            <Box sx={{flexGrow: 1}}>
+                <AppBar position="static" style={{backgroundColor: "#fff"}}>
+                    <Toolbar>
+                        <Link to="">
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
+                                aria-label="open drawer"
+                                color={"primary"}
+                                sx={{display: {xs: 'block', sm: 'block'}}}
+                            >
+                                BOOKING HOUSE
+                            </Typography>
+                        </Link>
+                        {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
@@ -429,73 +435,70 @@ export default function PrimarySearchAppBar() {
                         />
                     </Search>
                     */}
-                    <Box sx={{ flexGrow: 1 }} />
-                    {account ?
-                        <>
-                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                    <Link to="myaccount/chat">
+                        <Box sx={{flexGrow: 1}}/>
+                        {account ?
+                            <>
+                                <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                                    <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                        <Link to="myaccount/chat">
+                                            <Badge badgeContent={0} color="error">
+                                                <MailIcon/>
+                                            </Badge>
+                                        </Link>
+                                    </IconButton>
+                                    <IconButton
+                                        size="large"
+                                        aria-label="show 17 new notifications"
+                                        color="black"
+                                    >
                                         <Badge badgeContent={0} color="error">
-                                            <MailIcon />
+                                            <NotificationsIcon/>
                                         </Badge>
-                                    </Link>
-                                </IconButton>
-                                <IconButton
-                                    size="large"
-                                    aria-label="show 17 new notifications"
-                                    color="black"
+                                    </IconButton>
+                                    <IconButton
+                                        size="large"
+                                        edge="end"
+                                        aria-label="account of current user"
+                                        aria-controls={menuId}
+                                        aria-haspopup="true"
+                                        onClick={handleProfileMenuOpen}
+                                        color="inherit"
+                                    >
+                                        <Avatar alt={account.username} src={account.avatar}/>
+                                    </IconButton>
+                                </Box>
+                                <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+                                    <IconButton
+                                        size="large"
+                                        aria-label="show more"
+                                        aria-controls={mobileMenuId}
+                                        aria-haspopup="true"
+                                        onClick={handleMobileMenuOpen}
+                                        color="black"
+                                    >
+                                        <MoreIcon/>
+                                    </IconButton>
+                                </Box>
+                            </>
+                            :
+                            <Link to="login">
+                                <Typography
+                                    variant="h6"
+                                    noWrap
+                                    component="div"
+                                    aria-label="open drawer"
+                                    color={"black"}
+                                    sx={{display: {xs: 'block', sm: 'block'}}}
                                 >
-                                    <Badge badgeContent={0} color="error">
-                                        <NotificationsIcon />
-                                    </Badge>
-                                </IconButton>
-                                <IconButton
-                                    size="large"
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-controls={menuId}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuOpen}
-                                    color="inherit"
-                                >
-                                    <Avatar alt={account.username} src={account.avatar} />
-                                </IconButton>
-                            </Box>
-                            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                                <IconButton
-                                    size="large"
-                                    aria-label="show more"
-                                    aria-controls={mobileMenuId}
-                                    aria-haspopup="true"
-                                    onClick={handleMobileMenuOpen}
-                                    color="black"
-                                >
-                                    <MoreIcon />
-                                </IconButton>
-                            </Box>
-                        </>
-                        :
-                        <Link to="login">
-                            <Typography
-                                variant="h6"
-                                noWrap
-                                component="div"
-                                aria-label="open drawer"
-                                color={"black"}
-                                sx={{ display: { xs: 'block', sm: 'block' } }}
-                            >
-                                LOGIN
-                            </Typography>
-                        </Link>
-                    }
-                </Toolbar>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-        </Box>
-        <Notification></Notification>
+                                    LOGIN
+                                </Typography>
+                            </Link>
+                        }
+                    </Toolbar>
+                </AppBar>
+                {renderMobileMenu}
+                {renderMenu}
+            </Box>
         </>
-        
-
     );
 }

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import Register from './Register';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../services/accountService';
@@ -226,9 +225,9 @@ const Navbar = () => {
                                                                             className="custom-modal"
                                                                             overlayClassName="custom-overlay"
                                                                         >
-                                                                            <h4>Tài khoản của bạn đã bị khóa!</h4>
-                                                                            <p>Vui lòng liên hệ với quản trị viên để
-                                                                                biết thêm thông tin chi tiết.</p>
+                                                                            <h4>Your account has been locked!</h4>
+                                                                            <p>Please contact the administrator to
+                                                                                get more detailed information.</p>
                                                                             <button className="close-button"
                                                                                     onClick={handleCloseModal}>Close
                                                                             </button>
@@ -281,7 +280,6 @@ const Navbar = () => {
                                                                 <a style={{cursor: "pointer"}}>Register</a>
                                                                 <div className="login-form">
                                                                     <h4>Sign Up</h4>
-                                                                    <Register/>
                                                                 </div>
                                                             </li>
                                                         </ul>

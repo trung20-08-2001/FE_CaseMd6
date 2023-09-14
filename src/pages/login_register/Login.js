@@ -23,6 +23,13 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Người dùng đã đăng nhập:", user);
+    } else {
+      console.log("Người dùng chưa đăng nhập");
+    }
+  });
 
 
 
@@ -130,14 +137,12 @@ function Login() {
                 <span>Or Sign Up Using</span>
               </div>
               <div className="flex-c-m">
-                <a href="#" className="login100-social-item bg1">
-                  <i className="fa fa-facebook" />
+                <a className="login100-social-item bg1">
+                  <i className="fa fa-facebook"   />
                 </a>
-                <a href="#" className="login100-social-item bg2">
-                  <i className="fa fa-twitter" />
-                </a>
-                <a href="#" className="login100-social-item bg3">
-                  <i className="fa fa-google" />
+
+                <a className="login100-social-item bg3">
+                  <i className="fa fa-google"/>
                 </a>
               </div>
               <div className="flex-col-c p-t-10">
@@ -155,3 +160,5 @@ function Login() {
 }
 
 export default Login
+
+
