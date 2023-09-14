@@ -16,8 +16,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
-import { auth, facebookProvider, googleProvider} from "../../config/configFirebase";
-import { signInWithPopup,onAuthStateChanged } from "firebase/auth";
 
 function Login() {
   const navigate = useNavigate();
@@ -25,31 +23,6 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-
-
-  const handleLoginSocial = (provider) => {
-    signInWithPopup(auth, provider).then(result => {
-      let account={
-        uid:result.user.uid,
-        user:result.user.displayName,
-        photoURL:result.user.photoURL,
-        email:result.user.email,
-        emailVerified:result.user.emailVerified,
-        phoneNumber:result.user.phoneNumber,
-        providerData:result.user.providerData,
-        providerId:result.user.providerId,
-        refreshToken:result.user.refreshToken,
-        token:result.user.token,
-      }
-     // dispatch(login(account))
-      navigate("/")
-      console.log(account);
-      customAxios.post("/accounts/loginGg", account)
-    });
-  }
-
-
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("Người dùng đã đăng nhập:", user);
@@ -165,11 +138,11 @@ function Login() {
               </div>
               <div className="flex-c-m">
                 <a className="login100-social-item bg1">
-                  <i className="fa fa-facebook"  onClick={()=>handleLoginSocial(facebookProvider)} />
+                  <i className="fa fa-facebook"   />
                 </a>
 
                 <a className="login100-social-item bg3">
-                  <i className="fa fa-google"  onClick={()=>handleLoginSocial(googleProvider)}/>
+                  <i className="fa fa-google"/>
                 </a>
               </div>
               <div className="flex-col-c p-t-10">

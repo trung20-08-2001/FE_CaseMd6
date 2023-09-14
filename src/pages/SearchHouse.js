@@ -58,7 +58,7 @@ const SearchHouse = () => {
                     </div>
                 </div>
                     {resultSearch.length === 0 ?
-                        <h1 className='text-center' style={{ color: "red" }}>You don't have any house to rent yet</h1>
+                        <h1 className='text-center' style={{ color: "red" }}>There are no results, please search again</h1>
                         :
                         <>
                             <div className='row mt-20'>

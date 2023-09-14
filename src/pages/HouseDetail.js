@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import customAxios from "../services/api";
 import Slide from "../components/Slide"
 import {useSelector} from "react-redux";
@@ -8,6 +8,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const HouseDetail = () => {
+    const [apiDates, setApiDates] = useState([]);
+    const [selectedStartDate, setSelectedStartDate] = useState(null);
+    const [selectedEndDate, setSelectedEndDate] = useState(null);
+    const isCheckoutDisabled = !selectedStartDate;
     const [houseDTO, setHouseDTO] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -28,6 +32,7 @@ const HouseDetail = () => {
     });
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -304,41 +309,52 @@ const HouseDetail = () => {
 
 
     const handleOrderHouse = () => {
-        if (startDate >= endDate) {
+        if (!account) {
             Swal.fire({
                 icon: 'error',
-                title: 'Đăng ký thất bại',
-                text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
+
+                text: 'Bạn chưa đăng nhập',
+                showConfirmButton: false, // Ẩn nút "OK"
+                timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
-                .then(response => {
-                    if (response.data) {
-                        return saveBill();
-                    } else {
-                        throw new Error('Invalid date or time');
-                    }
-                })
-                .then(data => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thuê thành công!',
-                        text: 'Bạn đã thuê nhà thành công',
-                        showConfirmButton: false, // Ẩn nút "OK"
-                        timer: 1500, // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Thuê thất bại',
-                        text: 'Nhà này đã có người thuê rồi.',
-                        showConfirmButton: false, // Ẩn nút "OK"
-                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
-                    });
+            if (startDate >= endDate) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Đăng ký thất bại',
+                    text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
                 });
+            } else {
+                customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
+                    .then(response => {
+                        if (response.data) {
+                            return saveBill();
+                        } else {
+                            throw new Error('Invalid date or time');
+                        }
+                    })
+                    .then(data => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thuê thành công!',
+                            text: 'Bạn đã thuê nhà thành công',
+                            showConfirmButton: false, // Ẩn nút "OK"
+                            timer: 1500, // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thuê thất bại',
+                            text: 'Nhà này đã có người thuê rồi.',
+                            showConfirmButton: false, // Ẩn nút "OK"
+                            timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                        });
+                    });
+            }
         }
     };
 
@@ -501,7 +517,6 @@ const HouseDetail = () => {
                                                   }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                                 onClick={saveFeedback}>Review
-
                                         </button>
                                     </div>
                                 </div>

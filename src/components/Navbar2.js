@@ -332,23 +332,23 @@ export default function PrimarySearchAppBar() {
         setIsNotificationsOpen(true);
     };
 
-    useEffect(() => {
-        axios.get("http://localhost:8081/bills_vendor/" + account.id)
-            .then(function (res) {
-                setBill_vendor(res.data);
-            })
-            .catch(function (err) {
-                console.log(err)
-            })
-
-        axios.get("http://localhost:8081/api/feedback/findAllFeedbackByIdVendor/" + account.id)
-            .then(function (res) {
-                setFeedback_vendor(res.data);
-            })
-            .catch(function (err) {
-                console.log(err)
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:8081/bills_vendor/" + account.id)
+    //         .then(function (res) {
+    //             setBill_vendor(res.data);
+    //         })
+    //         .catch(function (err) {
+    //             console.log(err)
+    //         })
+    //
+    //     axios.get("http://localhost:8081/api/feedback/findAllFeedbackByIdVendor/" + account.id)
+    //         .then(function (res) {
+    //             setFeedback_vendor(res.data);
+    //         })
+    //         .catch(function (err) {
+    //             console.log(err)
+    //         })
+    // }, [])
 
     const notifications_Host = [
         <MenuItem></MenuItem>
