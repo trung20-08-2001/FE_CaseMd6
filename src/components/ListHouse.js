@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { findAllHouse } from '../services/houseService';
 import Loading from './Loading';
@@ -15,6 +15,18 @@ function ListHouse() {
         }
     }, [])
 
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const [itemsPerPage, setItemsPerPage] = useState(6); // Số mục trên mỗi trang
+    // Tổng số trang
+    const totalPages = Math.ceil(listHouse.length / itemsPerPage);
+    // Lấy mục trên trang hiện tại
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = listHouse.slice(indexOfFirstItem, indexOfLastItem);
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <>
             <div className="property-area pb-120">
@@ -30,8 +42,8 @@ function ListHouse() {
                         </div>
                     </div>
                     <div className="row">
-                        {listHouse.length !== 0 ?
-                            listHouse.map(item => {
+                        {currentItems.length !== 0 ?
+                            currentItems.map(item => {
                                 return (
                                     < div className="col-lg-4 mb-20" key={item.house.id}>
                                         <div className="single-property hover-effect-two">
@@ -78,6 +90,26 @@ function ListHouse() {
                             })
                             :<Loading></Loading>
                             }
+                        <div className="pagination-content text-center block fix col-12">
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                    (pageNumber) => (
+                                        <button
+                                            key={pageNumber}
+                                            onClick={() => handlePageChange(pageNumber)}
+                                            disabled={currentPage === pageNumber}
+                                            style={{
+                                                backgroundColor: currentPage === pageNumber ? 'yellowgreen' : 'snow',
+                                                color: currentPage === pageNumber ? 'white' : 'black',
+
+                                            }}
+                                        >
+                                            {pageNumber}
+                                        </button>
+                                    )
+                                )}
+                            </div>
+                        </div>
 
                     </div>
                 </div>

@@ -15,24 +15,6 @@ const UpRole2 = () => {
     let account = JSON.parse(localStorage.getItem('account'));
     const [img1,setImg1] = useState();
     const [img2,setImg2] = useState();
-    const fileToString = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                const result = reader.result;
-                resolve(result);
-            };
-
-            reader.onerror = (error) => {
-                reject(error);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    };
-
-
 
     const handlePreviewImg1 = e => {
         const file= e.target.files[0];
