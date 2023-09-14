@@ -3,7 +3,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
@@ -13,11 +13,11 @@ function VendorTransactionHistory() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [filter, setFilter] = useState(bills_vendor);
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 11; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     // end
 
@@ -37,7 +37,7 @@ function VendorTransactionHistory() {
             const dateCheckout = bill?.bill.dateCheckout || 'No Checkout';
             const houseName = bill?.house.name || 'No House Name';
             const userName = bill?.bill.user.username || 'No User Name';
-            const totalPrice =bill?.bill.totalPrice || 0;
+            const totalPrice = bill?.bill.totalPrice || 0;
             const status = bill?.bill.status.name || 'No Status';
 
             const handleBillClick = (billId) => {
@@ -97,7 +97,17 @@ function VendorTransactionHistory() {
                             const timeDifference = dateCheckout.getTime() - currentDate.getTime();
                             if (timeDifference >= 0) {
                                 const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-                                const updatedTotalPrice = totalPrice - (daysDifference * 0.7 * bill.house.price);
+                                let updatedTotalPrice = totalPrice - (daysDifference * 0.7 * bill.house.price);
+                                if (updatedTotalPrice < bill.house.price) {
+                                    updatedTotalPrice = updatedTotalPrice + 1000 - bill.house.price * 0.3
+                                    if (daysDifference === 1) {
+                                        updatedTotalPrice = 1000
+                                    }
+                                }
+                                console.log(timeDifference)
+                                console.log(daysDifference)
+                                console.log((daysDifference * 0.7 * bill.house.price))
+                                console.log(updatedTotalPrice)
                                 return {
                                     ...bill,
                                     bill: {
@@ -219,57 +229,57 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-    const handleSearch=() => {
-        if(nameHouse!=="" && startDate!==null && endDate!==null){
+    const handleSearch = () => {
+        if (nameHouse !== "" && startDate !== null && endDate !== null) {
 
         }
     }
 
     return (
         <>
-         <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
-                    <input
-                        name="nameHouse"
-                        type="text"
-                        placeholder="Name house..."
-                        onChange={e =>dispatch({type:"bill/findBillHistoryHost",payload:e.target.value}) }
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <input
-                        name="nameHouse"
-                        type="DATE"
-                        value={startDate}
-                        onChange={e => setStartDate(e.target.value)}
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <input
-                        name="nameHouse"
-                        type="DATE"
-                        value={endDate}
-                        onChange={e => setEndDate(e.target.value)}
-                        style={{flex: 2, marginRight: '10px'}}
-                    />
-                    <select
-                        name="select"
-                        value={selectValue}
-                        onChange={e => setSelectValue(parseInt(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
-                    >
-                        <option value={0}>All</option>
-                        <option value={5}>ORDERED</option>
-                        <option value={6}>USING</option>
-                        <option value={7}>CHECK_OUT</option>
-                        <option value={8}>CANCELED</option>
-                    </select>
-                    <button
-                        type="button"
-                        className="btn btn-outline-danger"
+            <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
+                <input
+                    name="nameHouse"
+                    type="text"
+                    placeholder="Name house..."
+                    onChange={e => dispatch({type: "bill/findBillHistoryHost", payload: e.target.value})}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <input
+                    name="nameHouse"
+                    type="DATE"
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <input
+                    name="nameHouse"
+                    type="DATE"
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    style={{flex: 2, marginRight: '10px'}}
+                />
+                <select
+                    name="select"
+                    value={selectValue}
+                    onChange={e => setSelectValue(parseInt(e.target.value))}
+                    style={{flex: 2, marginRight: '10px'}}
+                >
+                    <option value={0}>All</option>
+                    <option value={5}>ORDERED</option>
+                    <option value={6}>USING</option>
+                    <option value={7}>CHECK_OUT</option>
+                    <option value={8}>CANCELED</option>
+                </select>
+                <button
+                    type="button"
+                    className="btn btn-outline-danger"
 
-                        style={{flex: 1}}
-                    >
-                        Tìm kiếm
-                    </button>
-                </div>
+                    style={{flex: 1}}
+                >
+                    Tìm kiếm
+                </button>
+            </div>
 
             <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
                 <h4 className='text-center pb-20'>Renting a house</h4>
