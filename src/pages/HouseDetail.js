@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+
+import React, { useEffect, useState } from 'react';
 import customAxios from "../services/api";
 import Slide from "../components/Slide"
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import {useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HouseDetail = () => {
     const [houseDTO, setHouseDTO] = useState(null);
@@ -14,14 +15,15 @@ const HouseDetail = () => {
     const [listFeedback, setListFeedback] = useState([]);
     const account = useSelector(state => state.account.account);
     const today = new Date().toISOString().split('T')[0];
-    const {idHouse} = useParams()
-    const [myFeedback, setMyFeedback] = useState(null);
+    const { idHouse } = useParams()
+    const [myFeedback, setMyFeedback] = useState("");
     const [numberOfStars, setNumberOfStars] = useState
     ({
         start: 0,
         starts: [1, 2, 3, 4, 5]
     });
     const [comment, setComment] = useState('');
+    const navigate = useNavigate()
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -76,7 +78,7 @@ const HouseDetail = () => {
             .catch((err) => {
                 console.log(err)
             })
-        customAxios.get("/feedBack/findFeedbackByHouseAndUser/" + account.id + "/" + idHouse)
+        customAxios.get("/feedBack/findFeedbackByHouseAndUser/" + account?.id + "/" + idHouse)
             .then(response =>
                 setMyFeedback(response.data)
             )
@@ -159,61 +161,85 @@ const HouseDetail = () => {
     };
 
     const saveFeedback = () => {
-        if (myFeedback !== "") {
-            if (account.id === houseDTO.house.account.id) {
+        if (account) {
+            if (houseDTO.house.account.id === account.id) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Feedback thất bại',
-                    text: 'Bạn không thể đánh giá nhà của mình',
+                    title: 'Thuê thất bại',
+                    text: 'Bạn không thể thuê nhà của mình.',
+                    showConfirmButton: false, // Ẩn nút "OK"
+                    timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 });
-            } else if (myFeedback.status.id === 2) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Feedback thất bại',
-                    text: 'Bạn không thể đánh giá nhà khi bạn chưa sử dụng',
-                });
-            } else if (myFeedback.status.id === 7) {
-                customAxios.post("/feedBack/addFeedBack", {
-                    ...myFeedback,
-                    numberOfStars: numberOfStars.start,
-                    date: new Date(),
-                    comment: comment,
-                    status: {id: 1}
-                })
-                    .then(response => {
-                        setNumberOfStars({
-                            ...numberOfStars,
-                            start: 0
-                        });
-                        setComment('')
+            }else if (myFeedback !== "") {
+                if (account.id === houseDTO.house.account.id) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn không thể đánh giá nhà của mình',
+                    });
+                } else if (myFeedback.status.id === 2) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn không thể đánh giá nhà khi bạn chưa sử dụng',
+                    });
+                } else if (myFeedback.status.id === 7) {
+                    customAxios.post("/feedBack/addFeedBack", {
+                        ...myFeedback,
+                        numberOfStars: numberOfStars.start,
+                        date: new Date(),
+                        comment: comment,
+                        status: { id: 1 }
+                    })
+                        .then(response => {
+                                setNumberOfStars({
+                                    ...numberOfStars,
+                                    start: 0
+                                });
+                                setComment('')
+                                setMyFeedback("")
 
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Feedback thành công',
-                            })
-                        customAxios.get("/feedBack/showFeedback/" + idHouse)
-                            .then(res => {
-                                setListFeedback(res.data);
-                            })
-                            .catch((err) => {
-                                console.log(err)
-                            })
-                        }
-                    )
-                    .catch(error => console.log(error))
-            } else if (myFeedback.status.id === 1) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Feedback thành công',
+                                })
+                                customAxios.get("/feedBack/showFeedback/" + idHouse)
+                                    .then(res => {
+                                        setListFeedback(res.data);
+                                    })
+                                    .catch((err) => {
+                                        console.log(err)
+                                    })
+                            }
+                        )
+                        .catch(error => console.log(error))
+                } else if (myFeedback.status.id === 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Feedback thất bại',
+                        text: 'Bạn đã feedback rồi',
+                    });
+                }
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Feedback thất bại',
-                    text: 'Bạn đã feedback rồi',
+                    text: 'Bạn chưa thuê nhà này.',
                 });
             }
         } else {
             Swal.fire({
-                icon: 'error',
                 title: 'Feedback thất bại',
-                text: 'Bạn chưa thuê nhà này.',
-            });
+                icon: 'error',
+                text: 'You are not logged in.',
+                showCancelButton: true,
+                confirmButtonText: "LOGIN",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+
+            })
         }
     }
 
@@ -226,7 +252,7 @@ const HouseDetail = () => {
                 text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
+            customAxios.get("/order/" + idHouse)
                 .then(response => {
                     if (response.data) {
                         return saveBill();
@@ -275,42 +301,44 @@ const HouseDetail = () => {
                                     <div className="sidebar-widget-title mb-30">
                                         <h5>{houseDTO.house.name}</h5>
                                     </div>
-                                    <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
-                                        <div className="desc-info mb-37">
-                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8"/>
+                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50">
+                                        <div className=" mb-37">
+                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8" />
                                             <span> Bedroom {houseDTO.house.numberOfBedrooms}</span>
                                         </div>
-                                        <div className="desc-info mb-37">
+                                        <div className="mb-37">
                                             <img
                                                 src="../images/icons/g-shower.png"
                                                 alt=""
                                                 className="pr-8"
                                             />
-                                            <span>Bathroom {houseDTO.house.numberOfLivingRooms}</span>
+                                            <span>Livingrooms {houseDTO.house.numberOfLivingRooms}</span>
                                         </div>
 
-                                        <div className="desc-info mb-35">
-                                            <span className="price">Price:{houseDTO.house.price} VNĐ/DAY</span>
+                                        <div className=" mb-35">
+                                            <span className="price">Price: {houseDTO.house.price} VNĐ/DAY</span>
                                         </div>
-                                        <div className="desc-info">
-                                            <img src="../images/icons/g-map.png" alt="" className="pr-8"/>
+                                        <div className=" mb-35">
+                                            <img src="../images/icons/g-map.png" alt="" className="pr-8" />
                                             <span className="location">Address:
                                                 {houseDTO.house.address}
                                             </span>
-                                            <p>Stastus:{houseDTO.house.status.name}</p>
+                                        </div>
+                                        <div className=" mb-35">
+                                            <span className="location">Stastus: {houseDTO.house.status.name}</span>
                                         </div>
                                     </div>
-                                    <p>Nhận phòng:</p>
-                                    <input type="date" onChange={event => handleStartDateChange(event)} min={today}/>
-                                    <p>Trả phòng:</p>
-                                    <input type="date" onChange={event => handleEndDateChange(event)} min={today}/>
+                                    <h5>Nhận phòng:</h5>
+                                    <input className='mb-20' type="date" onChange={event => handleStartDateChange(event)} min={today} />
+                                    <h5>Trả phòng:</h5>
+                                    <input className='mb-20' type="date" onChange={event => handleEndDateChange(event)} min={today} />
                                     {numberOfDays > 0 && (
                                         <div>
-                                            <p style={{color: "red"}}><b>Số ngày thuê: {numberOfDays} ngày</b></p>
-                                            <p style={{color: "red"}}><b>Tổng tiền: {totalPrice} VNĐ</b></p>
+                                            <p style={{ color: "red" }}>Số ngày thuê: {numberOfDays} ngày</p>
+                                            <p style={{ color: "red" }}>Tổng tiền: {totalPrice} VNĐ</p>
                                         </div>
                                     )}
-                                    <button className="btn btn-primary" style={{marginLeft: "250px"}}
+                                    <button className="btn btn-primary" style={{ marginLeft: "250px" }}
                                             onClick={handleOrderHouse}>Thuê
                                     </button>
                                 </div>
@@ -318,7 +346,7 @@ const HouseDetail = () => {
                             <div className="col-lg-8 order-1">
                                 <div className="property-image mb-57">
                                     <Slide images={houseDTO.images}
-                                           styleImage={{width: "600px", height: "400px"}}></Slide>
+                                           styleImage={{ width: "600px", height: "400px" }}></Slide>
                                 </div>
                                 <div className="property-desc mb-56">
                                     <h4 className="details-title mb-22">Description</h4>
@@ -334,7 +362,7 @@ const HouseDetail = () => {
                                                 <div className="single-comment fix mb-18">
                                                     <div className="author-image pull_left mr-23">
                                                         <img alt="" src={f.account.avatar}
-                                                             style={{width: "70px", height: "70px"}}/>
+                                                             style={{ width: "70px", height: "70px" }} />
                                                     </div>
                                                     <div className="comment-text fix">
                                                         <div className="author-info">
@@ -347,7 +375,7 @@ const HouseDetail = () => {
                                                                          height="15" viewBox="0 0 16 16" key={item}
                                                                          onClick={() => changeStart(item)}>
                                                                         <polygon fill="yellow"
-                                                                                 points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0"/>
+                                                                                 points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0" />
                                                                     </svg>
                                                                 )
                                                                 else return (
@@ -357,7 +385,7 @@ const HouseDetail = () => {
                                                                          onClick={() => changeStart(item)}>
                                                                         <path
                                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-                                                                            fill="yellow"/>
+                                                                            fill="yellow" />
                                                                     </svg>
                                                                 )
                                                             })}
@@ -367,7 +395,6 @@ const HouseDetail = () => {
                                                 </div>
                                             </div>)
                                     })}
-                                {renderPagination()}
 
                                 <div className="new-comment-post mt-35">
                                     <h4 className="details-title pb-8 mb-27"> Review</h4>
@@ -377,7 +404,7 @@ const HouseDetail = () => {
                                                  height="30" viewBox="0 0 16 16" key={item}
                                                  onClick={() => changeStart(item)}>
                                                 <polygon fill="yellow"
-                                                         points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0"/>
+                                                         points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0" />
                                             </svg>
                                         )
                                         else return (
@@ -385,7 +412,7 @@ const HouseDetail = () => {
                                                  viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
                                                 <path
                                                     d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-                                                    fill="yellow"/>
+                                                    fill="yellow" />
                                             </svg>
                                         )
                                     })}

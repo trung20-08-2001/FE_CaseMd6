@@ -26,21 +26,21 @@ function Home() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Địa chỉ"
+                                            placeholder="Address"
                                         />
                                     </div>
                                     <div className="form-box mb-40 pl-15 pr-15">
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Số phòng ngủ"
+                                            placeholder="Number of bedrooms"
                                         />
                                     </div>
                                     <div className="form-box mb-40 pl-15 pr-15">
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Số phòng tắm"
+                                            placeholder="Number of bathrooms"
                                         />
                                     </div>
                                     <div className="form-box mb-40 pl-15 pr-15">

@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
@@ -24,7 +25,6 @@ const Search = (props) => {
                         account.id
                     )
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -33,7 +33,6 @@ const Search = (props) => {
                 axios
                     .get('http://localhost:8081/houses/getAllHouseByStatus/' + selectValue + '/' + account.id)
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -42,7 +41,6 @@ const Search = (props) => {
                 axios
                     .get('http://localhost:8081/houses/getAllHouseByName/' + nameHouse + '/' + account.id)
                     .then((res) => {
-                        console.log(res);
                         setHouses(res.data);
                     })
                     .catch((error) => console.log(error));
@@ -50,7 +48,6 @@ const Search = (props) => {
             if (nameHouse === '' && selectValue === 0) {
                 axios.get("http://localhost:8081/houses/findHouseByAccount/" + account.id)
                     .then(res => {
-                        console.log(res)
                         setHouses(res.data)
                     })
                     .catch((error) => console.log(error));
@@ -158,7 +155,6 @@ const Search = (props) => {
                                                     <div className="hover-item">
                                                         {/* <img className="mr-10" src="../images/icons/garage.png" alt="" /> */}
                                                         <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
-
                                                         <span>{item.house.numberOfHire}</span>
                                                     </div>
                                                 </div>

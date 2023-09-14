@@ -156,9 +156,9 @@ const EditHouse = () => {
       allowOutsideClick: true,
       willClose: (result) => {
         if (result.dismiss === Swal.DismissReason.backdrop) {
-          navigate("/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
+          navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
         } else {
-          navigate("/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
+          navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
         }
       }
     })
@@ -194,7 +194,7 @@ const EditHouse = () => {
       <div className="row">
         <div className="agency-container">
           <h2 className="text-center mb-15">Edit House</h2>
-          <div className='d-flex justify-content-center mb-50' >
+          <div className='d-flex justify-content-center mb-50 col-12' >
             <Slide images={house.images} styleImage={{ height: "200px", width: "500px" }}></Slide>
           </div>
           <Formik
