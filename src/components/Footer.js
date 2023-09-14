@@ -32,10 +32,12 @@ const Footer = () => {
                 id="scrollUp"
                 onClick={scrollToTop}
                 style={{ position: "fixed", zIndex: 2147483647, display: "inline", display: showBackToTop ? "block" : "none" }}
-                
+
             >
                 Scroll to top
             </a>
+
+            
             <div className="footer-widget-area bg-violet black-bg pb-58">
                 <div className="container">
                     <div className="row">

@@ -13,11 +13,9 @@ import "./css/util.css"
 import "./css/main.css"
 import { login } from "../../services/accountService"
 import { useDispatch, useSelector } from 'react-redux';
-import ReactModal from 'react-modal';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
-
 
 function Login() {
   const navigate = useNavigate();
@@ -26,6 +24,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+
+
   const handleLogin = async (event) => {
     event.preventDefault();
     // Kiểm tra các trường đăng nhập
@@ -33,12 +33,10 @@ function Login() {
       setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
       return;
     }
-
     const account = {
       username: username,
       password: password
     }
-
 
     customAxios.post("/api/login", account)
       .then(resp => {

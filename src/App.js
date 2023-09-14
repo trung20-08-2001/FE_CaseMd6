@@ -9,7 +9,7 @@ import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
-import MyHouses from "./pages/MyHouses";
+import MyHouses from "./pages/myhouse/MyHouses";
 import UpRole2 from "./pages/UpRole2";
 import Login from "./pages/login_register/Login";
 import Register from "./pages/login_register/Register";
@@ -21,6 +21,8 @@ import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 import UserTransactionHistory from "./components/UserTransactionHistory";
 import VendorTransactionHistory from "./components/VendorTransactionHistory";
 import SeeReviews from "./pages/SeeReviews";
+import Chat from "./components/chat/Chat";
+import Test from "./components/chat/Test";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -41,8 +43,9 @@ function App() {
                                         <Route path={'vendor/detail/:id'} element={<VendorDetail />}></Route>
                                         <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor />}></Route>
                                         <Route path="account_user" element={<ListUser />} />
-                                        <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
-                                        <Route path="vendor/upRole/:id" element={<UpRoleUserToVendor/>}></Route>
+                                        <Route path="see_reviews/:idHouse" element={<SeeReviews />}></Route>
+                                        <Route path="vendor/upRole/:id" element={<UpRoleUserToVendor />}></Route>
+                                       
                                     </>
                                 }
                                 {account.role.id === 2 &&
@@ -53,8 +56,9 @@ function App() {
                                         <Route path="income" element={<Income />}></Route>
                                         <Route path="create_house" element={<CreateHouse />}></Route>
                                         <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
-                                        <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
-                                        <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
+                                        <Route path='bills_vendor/:id' element={<VendorTransactionHistory />}></Route>
+                                        <Route path="see_reviews/:idHouse" element={<SeeReviews />}></Route>
+                                      
                                     </>
                                 }
                                 {account.role.id === 3 &&
@@ -63,11 +67,14 @@ function App() {
                                         <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
                                     </>
                                 }
+                                <Route path="chat" element={<Chat/>}></Route>
+                                <Route path="chat/:idSenderAccount" element={<Chat/>}></Route>
                             </Route>
                         </>
-                    }    
-                    
-                   <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
+                    }
+
+                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
+                    <Route path="test" element={<Test></Test>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />

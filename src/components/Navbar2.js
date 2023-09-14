@@ -29,7 +29,9 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
-
+import WebSocketConfig from "../config/configWebsocket";
+import { useEffect } from 'react';
+import Notification from "../components/Notification"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -78,6 +80,15 @@ export default function PrimarySearchAppBar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (account !== null) {
+            WebSocketConfig.connect(account)
+        }
+        return () => {
+            WebSocketConfig.disconnect();
+        };
+    }, []);
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -114,7 +125,7 @@ export default function PrimarySearchAppBar() {
         <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change password</MenuItem></Link>,
         <Link to="myaccount/host" onClick={() => setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>,
         <Link to="myaccount/create_house" onClick={() => setAnchorEl(null)}><MenuItem>Create houses</MenuItem></Link>,
-        <Link to={`myaccount/bills_vendor/${account?.id}`}  onClick={() => setAnchorEl(null)}><MenuItem>Renting a House</MenuItem></Link>,
+        <Link to={`myaccount/bills_vendor/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Renting a House</MenuItem></Link>,
         <Link to="myaccount/income" onClick={() => setAnchorEl(null)}><MenuItem>Revenue</MenuItem></Link>
 
     ]
@@ -126,14 +137,16 @@ export default function PrimarySearchAppBar() {
     ]
 
     const menuMobile = [
-        <MenuItem>
-            <IconButton size="large" aria-label="show 4 new mails" color="black">
-                <Badge badgeContent={0} color="error">
-                    <MailIcon />
-                </Badge>
-            </IconButton>
-            <p>Messages</p>
-        </MenuItem>,
+        <Link to={"myaccount/chat"} onClick={() => setMobileMoreAnchorEl(null)}>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="black">
+                    <Badge badgeContent={0} color="error">
+                        <MailIcon />
+                    </Badge>
+                </IconButton>
+                <p>Chat</p>
+            </MenuItem>
+        </Link>,
         <MenuItem>
             <IconButton
                 size="large"
@@ -191,7 +204,6 @@ export default function PrimarySearchAppBar() {
         </Link>
     ]
 
-
     const menuMobileAdmin = [
         <Link to="/myaccount/account_user">
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
@@ -223,7 +235,6 @@ export default function PrimarySearchAppBar() {
         </Link>
     ]
 
-
     const menuMobileHost = [
         <Link to="/myaccount/host">
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
@@ -254,19 +265,19 @@ export default function PrimarySearchAppBar() {
             </MenuItem>
         </Link>,
         <Link to={`/myaccount/bills_vendor/${account?.id}`}>
-        <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
-            <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-            >
-                <Badge badgeContent={0} color="error">
-                    <HistoryIcon />
-                </Badge>
-            </IconButton>
-            <p>Renting a House</p>
-        </MenuItem>
-    </Link>,
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <HistoryIcon />
+                    </Badge>
+                </IconButton>
+                <p>Renting a House</p>
+            </MenuItem>
+        </Link>,
         <Link to="/myaccount/income">
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -313,6 +324,7 @@ export default function PrimarySearchAppBar() {
             </MenuItem>
         </Link>
     ]
+
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -336,12 +348,10 @@ export default function PrimarySearchAppBar() {
             {account?.role?.id === 1 && menuAdmin.map(item => item)}
             {account?.role?.id === 2 && menuHost.map(item => item)}
             {account?.role?.id === 3 && menuUser.map(item => item)}
+            <Link to="myaccount/chat" onClick={() => setAnchorEl(null)}><MenuItem>Chat</MenuItem></Link>
             <MenuItem onClick={handleMenuClose} >Log out</MenuItem>
         </Menu>
     );
-
-
-
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -392,6 +402,7 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
+        <>
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" style={{ backgroundColor: "#fff" }}>
                 <Toolbar>
@@ -423,9 +434,11 @@ export default function PrimarySearchAppBar() {
                         <>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                    <Badge badgeContent={0} color="error">
-                                        <MailIcon />
-                                    </Badge>
+                                    <Link to="myaccount/chat">
+                                        <Badge badgeContent={0} color="error">
+                                            <MailIcon />
+                                        </Badge>
+                                    </Link>
                                 </IconButton>
                                 <IconButton
                                     size="large"
@@ -480,6 +493,9 @@ export default function PrimarySearchAppBar() {
             {renderMobileMenu}
             {renderMenu}
         </Box>
+        <Notification></Notification>
+        </>
+        
 
     );
 }

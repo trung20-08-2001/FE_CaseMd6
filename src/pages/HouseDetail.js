@@ -4,6 +4,7 @@ import Slide from "../components/Slide"
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const HouseDetail = () => {
     const [houseDTO, setHouseDTO] = useState(null);
@@ -32,6 +33,11 @@ const HouseDetail = () => {
     const displayedReviews = listFeedback.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
+
+    const handleClickChat=()=>{
+        if(account)navigate("/myaccount/chat")
+        else navigate("/login");
+    }
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -169,7 +175,7 @@ const HouseDetail = () => {
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 });
-            }else if (myFeedback !== "") {
+            } else if (myFeedback !== "") {
                 if (account.id === houseDTO.house.account.id) {
                     Swal.fire({
                         icon: 'error',
@@ -237,7 +243,6 @@ const HouseDetail = () => {
                 if (result.isConfirmed) {
                     navigate("/login");
                 }
-
             })
         }
     }
@@ -292,7 +297,7 @@ const HouseDetail = () => {
     return (
         <>
             {houseDTO !== null &&
-                <div className="property-area property-area-2 ptb-120">
+                <div className="property-area property-area-2 ptb-50">
                     <div className="container">
                         <div className="row property-details_wrap">
                             <div className="col-lg-4 pl-35 order-2">
@@ -351,7 +356,25 @@ const HouseDetail = () => {
                                     <h4 className="details-title mb-22">Description</h4>
                                     {houseDTO.house.description}
                                 </div>
-                                <h4 className="details-title pb-8 mb-27"> Feedback</h4>
+                                <hr></hr>
+                                <div className="property-desc mb-20 row">
+
+                                    <div className="pull_left col-2">
+                                        <img alt="" src={houseDTO.house.account.avatar}
+                                            style={{ width: "150px", height: "50px" }} />
+                                    </div>
+                                    <div className=" col-10">
+                                        <h3 >Host: {houseDTO.house.account.fullName}</h3> 
+                                            <div class="chat-icon" onClick={handleClickChat}>
+                                                <i class="fas fa-comment"></i>
+                                                <span>Chat</span>
+                                            </div>
+                                    </div>
+
+
+                                </div>
+                                <hr />
+                                <h4 className="details-title pb-8"> Feedback</h4>
                                 {
                                     displayedReviews.map((f) => {
 

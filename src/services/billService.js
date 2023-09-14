@@ -4,7 +4,7 @@ import customAxios from "./api";
 export const findBillHistoryHost = createAsyncThunk(
     "bill/billHistoryHost",
     async(idHost)=>{
-        const response=await customAxios("/bills_vendor/" + idHost)
+        const response=await customAxios.get("/bills_vendor/" + idHost)
         return response.data;
     }
 )

@@ -5,6 +5,7 @@ import imageSlice from "./slices/imageSlice";
 import accountSlice from "./slices/accountSlice";
 import revenueSlice from "./slices/revenueSlice";
 import billSlice from "./slices/billSlice";
+import messageSlice from "./slices/messageSlice";
 
 const store=configureStore({
     reducer:{
@@ -13,7 +14,8 @@ const store=configureStore({
         image:imageSlice,
         account:accountSlice,
         revenue:revenueSlice,
-        bill:billSlice
+        bill:billSlice,
+        message:messageSlice
     }
 })
 
