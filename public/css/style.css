@@ -1116,7 +1116,13 @@ button.close:hover {
 	opacity: 0.5;
 }
 
+.nav-link:hover {
+	color: #95c41f;
+}
 
+.nav-pills li .nav-link.active {
+	background-color: #95c41f;
+}
 
 
 

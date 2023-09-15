@@ -9,11 +9,9 @@ import { useSelector } from "react-redux";
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
     const {id} = useParams();
-    // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
-    // end
     const account=useSelector(state=>state.account.account)
 
     useEffect(() => {
@@ -59,7 +57,6 @@ function UserTransactionHistory() {
                 axios.get("http://localhost:8081/bills_user/" + id)
                 .then(function (res) {
                     setBills_User(res.data)
-                    
                 })
             })
             .catch((err) => {
@@ -76,7 +73,6 @@ function UserTransactionHistory() {
             });
     };
 
-    // da sua
     const displayBills_User = bills_User
         .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
@@ -119,7 +115,6 @@ function UserTransactionHistory() {
     const changePage = ({selected}) => {
         setPageNumber(selected);
     };
-    // end
 
 
     return (

@@ -15,11 +15,9 @@ function VendorTransactionHistory() {
     const [filter, setFilter] = useState(bills_vendor);
     const dispatch = useDispatch()
 
-    // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 11; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
-    // end
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_vendor/" + id)
@@ -28,7 +26,6 @@ function VendorTransactionHistory() {
             })
     }, []);
 
-    // da sua
     const displayBills_vendor = bills_vendor
         .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
@@ -51,6 +48,10 @@ function VendorTransactionHistory() {
 
                         const dateCheckout = new Date(bill.bill.dateCheckout);
                         const dateCheckin = new Date(bill.bill.dateCheckin);
+                        currentDate.setHours(0,0,0,0,)
+                        dateCheckout.setHours(0,0,0,0,)
+                        dateCheckin.setHours(0,0,0,0,)
+
                         if (bill.bill.status.id === 2) {
                             if (dateCheckin <= currentDate) {
                                 // Checkin is allowed
@@ -95,19 +96,18 @@ function VendorTransactionHistory() {
                             }
 
                             const timeDifference = dateCheckout.getTime() - currentDate.getTime();
+                            const timeDifference1 = dateCheckout.getTime() - dateCheckin.getTime();
                             if (timeDifference >= 0) {
                                 const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                                const daysDifference1 = Math.ceil(timeDifference1 / (1000 * 3600 * 24));
+
                                 let updatedTotalPrice = totalPrice - (daysDifference * 0.7 * bill.house.price);
-                                if (updatedTotalPrice < bill.house.price) {
-                                    updatedTotalPrice = updatedTotalPrice + 1000 - bill.house.price * 0.3
+                                if (dateCheckin.getTime() === currentDate.getTime()) {
+                                    updatedTotalPrice = (totalPrice - bill.house.price * daysDifference1) + (updatedTotalPrice + bill.house.price - bill.house.price * 0.3);
                                     if (daysDifference === 1) {
-                                        updatedTotalPrice = 1000
+                                        updatedTotalPrice = (totalPrice - bill.house.price * daysDifference1) + bill.house.price;
                                     }
                                 }
-                                console.log(timeDifference)
-                                console.log(daysDifference)
-                                console.log((daysDifference * 0.7 * bill.house.price))
-                                console.log(updatedTotalPrice)
                                 return {
                                     ...bill,
                                     bill: {
@@ -191,7 +191,6 @@ function VendorTransactionHistory() {
     const changePage = ({selected}) => {
         setPageNumber(selected);
     };
-    // end
 
 
     const updateStatus_billAndHouse = (billId, updatedBills) => {
@@ -277,7 +276,7 @@ function VendorTransactionHistory() {
 
                     style={{flex: 1}}
                 >
-                    Tìm kiếm
+                    Search
                 </button>
             </div>
 
