@@ -13,3 +13,31 @@ export const nameHouseSearch=createAsyncThunk(
         return name;
     }
 )
+
+export const filterPriceHouse=createAsyncThunk(
+    "house/filterPriceHouse",
+    async(priceHouse)=>{
+        return priceHouse
+    })
+
+export const  filterNameAddress=createAsyncThunk(
+    "house/filterNameAddress",
+    async(nameAddress)=>{
+        return nameAddress
+    }
+)
+
+export const filterBathroom=createAsyncThunk(
+    "house/filterBathroom",
+    async(bathroom)=>{
+        return bathroom
+    }
+)
+
+export const filterBedroom=createAsyncThunk(
+    "house/filterBedroom",
+    async(bedroom)=>{
+        return bedroom
+    })
+
+

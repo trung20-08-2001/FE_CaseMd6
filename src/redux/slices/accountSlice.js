@@ -1,9 +1,13 @@
-import { findListAccountUsers, login,changeStatusAccount } from "../../services/accountService"
+import { findListAccountUsers, login,changeStatusAccount, findAccountAdmin, findAccountsHost, findAccountsUserMessageToAccountHost, findAccountById } from "../../services/accountService"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initState={
     account:JSON.parse(localStorage.getItem("account")),
     listAccountUser:[],
+    listAccountsHost:[],
+    listAccountsUserMessageToAccountHost:[],
+    accountAdmin:{},
+    accountSenderCurrent:{}
 }
 
 const accountSlice=createSlice({
@@ -32,6 +36,42 @@ const accountSlice=createSlice({
                 }
             }
             state.listAccountUser=newListAccountUser;
+        })
+        build.addCase(findAccountAdmin.fulfilled,(state,action)=>{
+            state.accountAdmin=action.payload;
+        })
+        build.addCase(findAccountAdmin.pending,(state,action)=>{
+            state.accountAdmin={}
+        })
+        build.addCase(findAccountAdmin.rejected,(state,action)=>{
+            state.accountAdmin={}
+        })
+        build.addCase(findAccountsHost.fulfilled,(state,action)=>{
+            state.listAccountsHost=action.payload
+        })
+        build.addCase(findAccountsHost.pending,(state,action)=>{
+            state.listAccountsHost=[]
+        })
+        build.addCase(findAccountsHost.rejected,(state,action)=>{
+            state.listAccountsHost=[]
+        })
+        build.addCase(findAccountsUserMessageToAccountHost.fulfilled,(state,action)=>{
+            state.listAccountsUserMessageToAccountHost=action.payload;
+        })
+        build.addCase(findAccountsUserMessageToAccountHost.pending,(state,action)=>{
+            state.listAccountsUserMessageToAccountHost=[]
+        });
+        build.addCase(findAccountsUserMessageToAccountHost.rejected,(state,action)=>{
+            state.listAccountsUserMessageToAccountHost=[]
+        })
+        build.addCase(findAccountById.fulfilled,(state,action)=>{
+            state.accountSenderCurrent=action.payload;
+        })
+        build.addCase(findAccountById.pending,(state,action)=>{
+            state.accountSenderCurrent={}
+        });
+        build.addCase(findAccountById.rejected,(state,action)=>{
+            state.accountSenderCurrent={}
         })
     }
 })

@@ -13,11 +13,9 @@ import "./css/util.css"
 import "./css/main.css"
 import { login } from "../../services/accountService"
 import { useDispatch, useSelector } from 'react-redux';
-import ReactModal from 'react-modal';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
-
 
 function Login() {
   const navigate = useNavigate();
@@ -33,12 +31,10 @@ function Login() {
       setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
       return;
     }
-
     const account = {
       username: username,
       password: password
     }
-
 
     customAxios.post("/api/login", account)
       .then(resp => {
@@ -132,13 +128,11 @@ function Login() {
                 <span>Or Sign Up Using</span>
               </div>
               <div className="flex-c-m">
-                <a href="#" className="login100-social-item bg1">
+                <a className="login100-social-item bg1">
                   <i className="fa fa-facebook" />
                 </a>
-                <a href="#" className="login100-social-item bg2">
-                  <i className="fa fa-twitter" />
-                </a>
-                <a href="#" className="login100-social-item bg3">
+
+                <a className="login100-social-item bg3">
                   <i className="fa fa-google" />
                 </a>
               </div>
@@ -157,3 +151,5 @@ function Login() {
 }
 
 export default Login
+
+

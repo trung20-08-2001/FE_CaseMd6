@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Search from "../components/Search";
-import { getAllCategory } from '../services/categoryService';
-import { editHouse, findHouseByAccount } from '../services/houseService';
-import "./style2.css"
+import { getAllCategory } from '../../services/categoryService';
+import { editHouse, findHouseByAccount } from '../../services/houseService';
+import "./style.css"
 import Swal from 'sweetalert2';
-import customAxios from '../services/api';
-import { filterHouseByNameAndStatus } from '../redux/selector';
-import { nameHouseSearch, filterStatusHouse } from '../services/filterService';
+import customAxios from '../../services/api';
+import { filterHouseByNameAndStatus } from '../../redux/selector';
+import { nameHouseSearch, filterStatusHouse } from '../../services/filterService';
 
 function MyHouses() {
     const dispatch = useDispatch();
     const myHousesDTO = useSelector(filterHouseByNameAndStatus)
     const categories = useSelector(state => state.categories.categories);
-    const [isSearchChanged, setIsSearchChanged] = useState(false);
-    const [houses, setHouses] = useState([])
-    const [nameHouse, setNameHouse] = useState('');
-    const [selectValue, setSelectValue] = useState(0);
+   
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
@@ -29,13 +25,7 @@ function MyHouses() {
         }
     }, [])
 
-    const handleSearchChange = () => {
-        if (isSearchChanged) {
-            setIsSearchChanged(false)
-        } else {
-            setIsSearchChanged(true)
-        }
-    };
+   
 
     const handleUpdateStatus = (item, index) => {
         if (item.house.status.name === "USING" || item.house.status.name === "ORDERED") {

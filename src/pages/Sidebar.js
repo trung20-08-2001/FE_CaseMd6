@@ -17,7 +17,6 @@ import BackupIcon from '@mui/icons-material/Backup';
 function Sidebar() {
 
     const account = useSelector(state => state.account.account)
-    console.log(account)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

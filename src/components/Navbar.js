@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import Register from './Register';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../services/accountService';
@@ -281,7 +280,6 @@ const Navbar = () => {
                                                                 <a style={{cursor: "pointer"}}>Register</a>
                                                                 <div className="login-form">
                                                                     <h4>Sign Up</h4>
-                                                                    <Register/>
                                                                 </div>
                                                             </li>
                                                         </ul>
