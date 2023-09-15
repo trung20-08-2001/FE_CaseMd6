@@ -311,7 +311,6 @@ const HouseDetail = () => {
                 if (result.isConfirmed) {
                     navigate("/login");
                 }
-
             })
         }
     }

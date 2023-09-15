@@ -45,6 +45,7 @@ function Chat() {
         }
     }, [])
 
+
     useEffect(() => {
         if (idSenderAccount !== undefined) {
             setAccountReceiverCurrent(accountSenderCurrent)
@@ -68,7 +69,6 @@ function Chat() {
                     setNewMessage({ ...newMessage, message: "" })
                 })
                 .catch(err => console.log(err));
-
         }
     }
 
@@ -90,7 +90,11 @@ function Chat() {
         const day = currentDate.getDate();
         setAccountReceiverCurrent(accountReceiver);
         setNewMessage({ ...newMessage, senderAccount: account, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
-
+        customAxios.get("messages/findMessageByReceiverAccountAndSenderAccount/" + idSenderAccount + "/" + account.id)
+        .then((response) => {
+            setListMessages(response.data);
+        })
+        .catch(error => { console.log(error); })
     }
 
     return (
@@ -156,7 +160,7 @@ function Chat() {
                             ))
                             }
                             {listAccountsUserMessageToAccountHost.map((item) => (
-                                <li key={new Date().getTime()} onClick={() => handleFindMessageByAccount(item)} className={accountReceiverCurrent === item ? "active" : ""}>
+                                <li key={new Date().getTime()} className={accountReceiverCurrent === item ? "active" : ""}>
                                     <div className="d-flex bd-highlight" >
                                         <div className="img_cont">
                                             <img
