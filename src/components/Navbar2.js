@@ -440,6 +440,11 @@ export default function PrimarySearchAppBar() {
                             <>
                                 <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                                     <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                        <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
+                                            <SearchIcon />
+                                        </Badge> </Link>
+                                    </IconButton>
+                                    <IconButton size="large" aria-label="show 4 new mails" color="black">
                                         <Link to="myaccount/chat">
                                             <Badge badgeContent={0} color="error">
                                                 <MailIcon/>

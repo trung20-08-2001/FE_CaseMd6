@@ -7,6 +7,9 @@ import { addMessage, findMessageByReceiverAccountAndSenderAccount, receiveMessag
 import customAxios from '../../services/api';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -95,6 +98,7 @@ function Chat() {
             setListMessages(response.data);
         })
         .catch(error => { console.log(error); })
+
     }
 
     return (
@@ -234,7 +238,12 @@ function Chat() {
                             </div>
                         }
                         <span id="action_menu_btn">
-                            <i className="fas fa-ellipsis-v" />
+                            <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                        <Link to={"/"}><Badge badgeContent={0} color="error">
+                                            <div style={{fontSize:"30px" ,color:"white"}}><CloseIcon /></div>
+
+                                        </Badge> </Link>
+                                    </IconButton>
                         </span>
                         <div className="action_menu">
                             <ul>
