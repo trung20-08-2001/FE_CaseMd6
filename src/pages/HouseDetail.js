@@ -517,6 +517,7 @@ const HouseDetail = () => {
                                                   }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                                 onClick={saveFeedback}>Review
+                                            {renderPagination()}
                                         </button>
                                     </div>
                                 </div>

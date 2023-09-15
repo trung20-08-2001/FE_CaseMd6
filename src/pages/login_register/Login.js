@@ -23,13 +23,6 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Người dùng đã đăng nhập:", user);
-    } else {
-      console.log("Người dùng chưa đăng nhập");
-    }
-  });
 
   const handleLogin = async (event) => {
     event.preventDefault();
