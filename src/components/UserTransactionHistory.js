@@ -7,11 +7,9 @@ import Swal from "sweetalert2";
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
     const {id} = useParams();
-    // da sua
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
-    // end
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -73,7 +71,6 @@ function UserTransactionHistory() {
             });
     };
 
-    // da sua
     const displayBills_User = bills_User
         .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
@@ -116,7 +113,6 @@ function UserTransactionHistory() {
     const changePage = ({selected}) => {
         setPageNumber(selected);
     };
-    // end
 
 
     return (

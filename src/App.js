@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Route, Routes} from "react-router-dom";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
@@ -21,6 +21,7 @@ import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 import UserTransactionHistory from "./components/UserTransactionHistory";
 import VendorTransactionHistory from "./components/VendorTransactionHistory";
 import SeeReviews from "./pages/SeeReviews";
+import Profile from "./components/Profile";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -28,30 +29,32 @@ function App() {
     return (
         <>
             <Routes>
-                <Route path="" element={<Master />}>
-                    <Route index element={<Home />}></Route>
+                <Route path="" element={<Master/>}>
+                    <Route></Route>
+                    <Route index element={<Home/>}></Route>
                     {account &&
                         <>
-                            <Route path="myaccount" element={<SideBar />}>
+                            <Route path="myaccount" element={<SideBar/>}>
                                 <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
-                                <Route path={'edit_profile/:id'} element={<EditProfile />}></Route>
+                                <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
+                                <Route path={"profile/:id"} element={<Profile/>}></Route>
                                 {account.role.id === 1 &&
                                     <>
-                                        <Route path={'vendors'} element={<ShowVendor />}></Route>
-                                        <Route path={'vendor/detail/:id'} element={<VendorDetail />}></Route>
-                                        <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor />}></Route>
-                                        <Route path="account_user" element={<ListUser />} />
+                                        <Route path={'vendors'} element={<ShowVendor/>}></Route>
+                                        <Route path={'vendor/detail/:id'} element={<VendorDetail/>}></Route>
+                                        <Route path={'vendor/upRole/:id'} element={<UpRoleUserToVendor/>}></Route>
+                                        <Route path="account_user" element={<ListUser/>}/>
                                         <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
                                     </>
                                 }
                                 {account.role.id === 2 &&
                                     <>
-                                        <Route path="create_house" element={<CreateHouse />}></Route>
-                                        <Route path="host" element={<MyHouses />}></Route>
-                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
-                                        <Route path="income" element={<Income />}></Route>
-                                        <Route path="create_house" element={<CreateHouse />}></Route>
-                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
+                                        <Route path="create_house" element={<CreateHouse/>}></Route>
+                                        <Route path="host" element={<MyHouses/>}></Route>
+                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse/>}></Route>
+                                        <Route path="income" element={<Income/>}></Route>
+                                        <Route path="create_house" element={<CreateHouse/>}></Route>
+                                        <Route path="edit_house/:indexHouseEdit" element={<EditHouse/>}></Route>
                                         <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
                                         <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
 
@@ -59,19 +62,18 @@ function App() {
                                 }
                                 {account.role.id === 3 &&
                                     <>
-                                        <Route path={"user"} element={<UpRole2 />}></Route>
-                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
+                                        <Route path={"user"} element={<UpRole2/>}></Route>
+                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory/>}></Route>
                                     </>
                                 }
                             </Route>
                         </>
-                    }    
-
-                   <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
+                    }
+                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                 </Route>
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route path="*" element={<Page404 />} />
+                <Route path="login" element={<Login/>}/>
+                <Route path="register" element={<Register/>}/>
+                <Route path="*" element={<Page404/>}/>
             </Routes>
         </>
     );
