@@ -3,7 +3,7 @@ import WebSocketConfig from '../../config/configWebsocket';
 import "./style.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { findAccountAdmin, findAccountById, findAccountsHost, findAccountsUserMessageToAccountHost } from '../../services/accountService';
-import { findMessageByReceiverAccountAndSenderAccount, receiveMessage } from '../../services/messageService';
+import { addMessage, findMessageByReceiverAccountAndSenderAccount, receiveMessage } from '../../services/messageService';
 import customAxios from '../../services/api';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,8 @@ function Chat() {
     const listAccountsHost = useSelector(state => state.account.listAccountsHost);
     const listAccountsUserMessageToAccountHost = useSelector(state => state.account.listAccountsUserMessageToAccountHost)
     const account = useSelector(state => state.account.account)
-    const messages = useSelector(state => state.message.messages)
+    const message = useSelector(state => state.message.messages);
+    const [listMessage, setListMessages] = useState([])
     const [accountReceiverCurrent, setAccountReceiverCurrent] = useState({})
     const accountSenderCurrent = useSelector(state => state.account.accountSenderCurrent);
     const { idSenderAccount } = useParams()
@@ -26,22 +27,8 @@ function Chat() {
     useEffect(() => {
         const messageContainer = messageContainerRef.current;
         messageContainer.scrollTop = messageContainer.scrollHeight;
-    }, [messages]);
+    }, [listMessage]);
 
-    // useEffect(() => {
-
-    //     if (account.role.name === 'ROLE_USER' || account.role.id === 3) {
-    //         if (listAccountsHost.length === 0) {
-    //             dispatch(findAccountsHost());
-    //         }
-    //     }
-    //     if ((account.role.name === "ROLE_HOST" || account.role.id === 2) || (account.role.name === "ROLE_ADMIN" || account.role.id === 1)) {
-    //         if (idSenderAccount !== undefined) {
-    //             dispatch(findAccountById(idSenderAccount))
-    //         }
-    //         // dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: account.id, idSenderAccount: idSenderAccount }))
-    //     }
-    // }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -73,16 +60,26 @@ function Chat() {
 
     const sendMessage = () => {
         if (newMessage.message !== "") {
+            dispatch(addMessage( { ...newMessage, receiverAccount: { id: accountReceiverCurrent.id }, senderAccount: { id: account.id } }))
             WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage)
-            customAxios.post("/messages/save",{...newMessage,receiverAccount:{id:accountReceiverCurrent.id},senderAccount:{id:account.id},date:new Date()} )
+            customAxios.post("/messages/save", { ...newMessage, receiverAccount: { id: accountReceiverCurrent.id }, senderAccount: { id: account.id }, date: new Date() })
                 .then(() => {
-                    dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount:account.id , idSenderAccount: accountReceiverCurrent.id }))
+                    dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: account.id, idSenderAccount: accountReceiverCurrent.id }))
                     setNewMessage({ ...newMessage, message: "" })
                 })
                 .catch(err => console.log(err));
-           
+
         }
     }
+
+
+    useEffect(() => {
+        customAxios.get("messages/findMessageByReceiverAccountAndSenderAccount/" + idSenderAccount + "/" + account.id)
+            .then((response) => {
+                setListMessages(response.data);
+            })
+            .catch(error => { console.log(error); })
+    }, [message])
 
 
     const handleFindMessageByAccount = (accountReceiver) => {
@@ -253,12 +250,10 @@ function Chat() {
                         </div>
                     </div>
                     <div className="card-body msg_card_body" style={{ overflow: "auto" }} ref={messageContainerRef}>
-                        {messages.map(item => {
-                            if ((item.senderAccount.id === account.id && item.receiverAccount.id === accountSenderCurrent.id) ||
-                                (item.receiverAccount.id === account.id && item.senderAccount.id === accountSenderCurrent.id)) {
-                                if (item.senderAccount?.id !== account.id) {
+                        {listMessage.map(item => {
+                           if (item.senderAccount?.id !== account.id) {
                                     return (
-                                        <div className="d-flex justify-content-start mb-4" key={new Date().getTime()}>
+                                        <div className="d-flex justify-content-start mb-4" key={item.id}>
                                             <div className="img_cont_msg">
                                                 <img
                                                     src={accountSenderCurrent.avatar}
@@ -291,7 +286,7 @@ function Chat() {
                                 }
                             }
 
-                        })}
+                        )}
                     </div>
                     <div className="card-footer">
                         <div className="input-group">

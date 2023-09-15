@@ -499,6 +499,7 @@ export default function PrimarySearchAppBar() {
                 {renderMobileMenu}
                 {renderMenu}
             </Box>
+            <Notification></Notification>
         </>
     );
 }

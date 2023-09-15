@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "./api";
+import { async } from "q";
 
 export const findMessageByReceiverAccountAndSenderAccount = createAsyncThunk(
     "messages/findMessageByReceiverAccountAndSenderAccount",
@@ -9,9 +10,17 @@ export const findMessageByReceiverAccountAndSenderAccount = createAsyncThunk(
     }
 )
 
-export const receiveMessage = createAsyncThunk(
+export const addMessage = createAsyncThunk(
     'messages/receiveMessage',
     async (message) => {
         return message;
     }
 );
+
+
+export const addNotification = createAsyncThunk(
+    "messages/addNotification",
+    async(message)=>{
+        return message;
+    }
+)

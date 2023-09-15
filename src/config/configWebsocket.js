@@ -1,6 +1,6 @@
 import Stomp from 'stompjs';
 import store from "../redux/store"
-import { findMessageByReceiverAccountAndSenderAccount } from '../services/messageService';
+import { addMessage, addNotification } from '../services/messageService';
 
 const WebSocketConfig = {
     stompClient: null,
@@ -19,11 +19,11 @@ const WebSocketConfig = {
 
     onMessageReceived: (message) => {
         let newMessage = JSON.parse(message.body)
-        console.log(newMessage);
         if (newMessage.type === "MESSAGE") {
-            store.dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: newMessage.receiverAccount.id, idSenderAccount: newMessage.senderAccount.id }));
-        }
-       
+            store.dispatch(addMessage(newMessage));
+        }else if(newMessage.type==="NOTIFICATION"){
+            store.dispatch(addNotification(newMessage))
+        }      
     },
 
     sendMessage: (channel, message) => {
