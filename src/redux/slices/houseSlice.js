@@ -29,10 +29,10 @@ const houseSlice = createSlice({
             state.myHousesDTO = [action.payload, ...state.myHousesDTO];
         })
         build.addCase(saveHouse.rejected, (state, action) => {
-            state.myHousesDTO = state.myHousesDTO;
+            state.myHousesDTO = [];
         })
-        build.addCase(saveHouse.pending, (state, action) => {
-            state.myHousesDTO = state.myHousesDTO;
+        build.addCase(saveHouse.pending, (state, action) => {   
+            state.myHousesDTO = [];
         })
         build.addCase(editHouse.fulfilled, (state, action) => {
             let {house, images, indexHouseEdit} = action.payload;

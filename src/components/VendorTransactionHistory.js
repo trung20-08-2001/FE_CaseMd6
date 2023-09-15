@@ -10,8 +10,8 @@ function VendorTransactionHistory() {
     const {id} = useParams();
     const [nameHouse, setNameHouse] = useState('');
     const [selectValue, setSelectValue] = useState(0);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     const [filter, setFilter] = useState(bills_vendor);
     const dispatch = useDispatch()
 

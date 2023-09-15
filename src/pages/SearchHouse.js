@@ -25,22 +25,22 @@ const SearchHouse = () => {
     return (
         <>
             <div className="container">
-                <div className="row align-items-center">
+                <div className="row align-items-center mt-20" >
                     <div className="col">
                         <input type="text"
                                className="form-control"
-                               placeholder="Địa chỉ"
+                               placeholder="Address"
                                name="nameAddress"
                                onChange={e => dispatch(filterNameAddress(e.target.value))}
 
                         />
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" placeholder=" Phòng ngủ" name="bedroom"
+                        <input type="text" className="form-control" placeholder=" Bedroom" name="bedroom"
                                onChange={e => dispatch(filterBedroom(e.target.value))}/>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" placeholder="phòng tắm" name="bathroom"
+                        <input type="text" className="form-control" placeholder="Bathroom" name="bedroom"
                                onChange={e => dispatch(filterBathroom(e.target.value))}
                         />
                     </div>
@@ -48,10 +48,10 @@ const SearchHouse = () => {
                         <select name="priceHouse" className="form-control"
                                 onChange={e => dispatch(filterPriceHouse(e.target.value))}
                         >
-                            <option selected value="0" disabled>Giá</option>
-                            <option value="300000">Dưới 300.000VNĐ</option>
-                            <option value="500000">Dưới 500.000VNĐ</option>
-                            <option value="1000000">Dưới 1.000.000VNĐ</option>
+                            <option selected value="0" disabled>Price</option>
+                            <option value="300000">Below 300.000VNĐ</option>
+                            <option value="500000">Below 500.000VNĐ</option>
+                            <option value="1000000">Below 1.000.000VNĐ</option>
 
                         </select>
                     </div>

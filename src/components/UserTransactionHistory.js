@@ -3,6 +3,8 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
+import WebSocketConfig from "../config/configWebsocket";
+import { useSelector } from "react-redux";
 
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
@@ -12,6 +14,7 @@ function UserTransactionHistory() {
     const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     // end
+    const account=useSelector(state=>state.account.account)
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -38,25 +41,25 @@ function UserTransactionHistory() {
 
     const updateAfterCancel = (billID) => {
         const foundBill = bills_User.find((bill) => bill.bill.id === billID);
-
         const house = new FormData();
         house.append("idStatus", foundBill.house.status.id);
         const bill = new FormData();
         bill.append("idStatus", foundBill.bill.status.id);
-
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
+                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking"}
+                    WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',
                     title: 'You have cancelled!',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
-                console.log("Bill status updated successfully");
                 axios.get("http://localhost:8081/bills_user/" + id)
                 .then(function (res) {
                     setBills_User(res.data)
+                    
                 })
             })
             .catch((err) => {

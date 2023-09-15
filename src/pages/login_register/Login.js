@@ -31,12 +31,10 @@ function Login() {
       setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
       return;
     }
-
     const account = {
       username: username,
       password: password
     }
-
 
     customAxios.post("/api/login", account)
       .then(resp => {
@@ -131,11 +129,11 @@ function Login() {
               </div>
               <div className="flex-c-m">
                 <a className="login100-social-item bg1">
-                  <i className="fa fa-facebook"   />
+                  <i className="fa fa-facebook" />
                 </a>
 
                 <a className="login100-social-item bg3">
-                  <i className="fa fa-google"/>
+                  <i className="fa fa-google" />
                 </a>
               </div>
               <div className="flex-col-c p-t-10">

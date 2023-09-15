@@ -83,13 +83,13 @@ function Sidebar() {
                                     </li>
                                     <li className="nav-item mt-10">
                                         <Link to="/myaccount/create_house" className="nav-link text-truncate">
-                                            <AddBusinessIcon/>
+                                            <AddBusinessIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">Create houses</h5>
                                         </Link>
                                     </li>
                                     <li className="nav-item mt-10">
                                         <Link to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
-                                            <HistoryIcon/>
+                                            <HistoryIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">Renting a House</h5>
                                         </Link>
                                     </li>
@@ -103,7 +103,7 @@ function Sidebar() {
                             }
                             {account && account.role.id === 3 &&
                                 <>
-                                   
+
                                     <li className="nav-item mt-10">
                                         <Link to={`/myaccount/bills_user/${account.id}`} className="nav-link text-truncate">
                                             <HistoryIcon />
@@ -118,6 +118,13 @@ function Sidebar() {
                                     </li>
                                 </>
                             }
+                            <li className="nav-item mt-10">
+                                <Link to="/myaccount/chat" className="nav-link text-truncate">
+                                    <HistoryIcon />
+                                    <h5 className="ms-1 d-none d-sm-inline">Chat</h5>
+                                </Link>
+                            </li>
+
                             <li className="nav-item">
                                 <a className="nav-link text-truncate"
                                     onClick={handleLogout}
@@ -131,9 +138,9 @@ function Sidebar() {
                     </div>
                 </div>
                 <div className="container-fluid col-10">
-                    <div className="container">
+                    {/* <div className="container"> */}
                         <Outlet></Outlet>
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
 
