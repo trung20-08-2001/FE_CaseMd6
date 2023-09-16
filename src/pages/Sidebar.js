@@ -28,7 +28,7 @@ function Sidebar() {
 
     return (
         <>
-            <div className='row' style={{marginTop:"4%", marginBottom:"4%"}}>
+            <div className='row'>
                 <div className="col-2 offcanvas offcanvas-start w-25 " tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
                     <div className="offcanvas-body px-1">
                         <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">

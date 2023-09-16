@@ -1,43 +1,32 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus } from "../services/billService";
 import { filterBillHistoryHost } from "../redux/selector";
+import { Label } from "reactstrap";
 
 function VendorTransactionHistory() {
-    const [bills_vendor, setBills_vendor] = useState([]);
-    const {id} = useParams();
-    const [nameHouse, setNameHouse] = useState('');
-    const [selectValue, setSelectValue] = useState(0);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const bills_vendor = useSelector(filterBillHistoryHost)
+
+    const { id } = useParams();
     const dispatch = useDispatch()
-    const [nameHouseSearch, setNameHouseSearch] = useState("");
-    const [dateCheckin,setDateCheckin]=useState();
-    const [dateCheckout,setDateCheckout] = useState();
-    const [status,setStatus] = useState(0)
 
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
 
     useEffect(() => {
-        axios.get("http://localhost:8081/bills_vendor/" + id)
-            .then(function (res) {
-                setBills_vendor(res.data);
-            })
+        if (bills_vendor.length === 0) {
+            axios.get("http://localhost:8081/bills_vendor/" + id)
+                .then(function (res) {
+                    dispatch(addBillHistory(res.data))
+                })
+        }
     }, []);
 
-    const resultSearch=useSelector(filterBillHistoryHost)
-    console.log(resultSearch);
-
-
-    useEffect(()=>{
-        dispatch(addBillHistory(bills_vendor))
-    },[bills_vendor])
 
 
     const displayBills_vendor = bills_vendor
@@ -62,9 +51,9 @@ function VendorTransactionHistory() {
 
                         const dateCheckout = new Date(bill.bill.dateCheckout);
                         const dateCheckin = new Date(bill.bill.dateCheckin);
-                        currentDate.setHours(0,0,0,0,)
-                        dateCheckout.setHours(0,0,0,0,)
-                        dateCheckin.setHours(0,0,0,0,)
+                        currentDate.setHours(0, 0, 0, 0,)
+                        dateCheckout.setHours(0, 0, 0, 0,)
+                        dateCheckin.setHours(0, 0, 0, 0,)
 
                         if (bill.bill.status.id === 2) {
                             if (dateCheckin <= currentDate) {
@@ -171,26 +160,27 @@ function VendorTransactionHistory() {
 
                 updateStatus_billAndHouse(billId, updatedBills)
                     .then(() => {
-                        setBills_vendor(updatedBills);
+                        dispatch(addBillHistory(updatedBills))
+                        // setBills_vendor(updatedBills);
                     })
                     .catch((error) => {
                         console.log("Error updating bill and house status:", error);
                     });
             };
             return (
-                <tr key={bill.bill.id} style={{height: '60px'}}>
+                <tr key={bill.bill.id} style={{ height: '60px' }}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
                     <td>{status}</td>
                     <td>
-                        <button style={{width: "114px"}}
-                                className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
-                                ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
-                                ) : "btn btn-outline-secondary"}
-                                onClick={() => handleBillClick(bill?.bill.id)}
+                        <button style={{ width: "114px" }}
+                            className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
+                            ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
+                            ) : "btn btn-outline-secondary"}
+                            onClick={() => handleBillClick(bill?.bill.id)}
                         >{bill.bill.status.id === 2 ? (`Checkin`
                         ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
                         ) : `Checkout`}
@@ -202,7 +192,7 @@ function VendorTransactionHistory() {
 
     const pageCount = Math.ceil(bills_vendor.length / billsPerPage);
 
-    const changePage = ({selected}) => {
+    const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
 
@@ -242,78 +232,70 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-    const handleChangeInput=(event)=>{
-        let {value,name}=event.target;
-
-    }
-    const handleSearch = () => {
-        if (nameHouse !== "" && startDate !== null && endDate !== null) {
-            
-        }
-    }
-
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
-                <input
-                    name="nameHouse"
-                    type="text"
-                    placeholder="Name house..."
-                    onChange={e => dispatch(filterNameHouse(e.target.value))}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <input
-                    name="dateCheckin"
-                    type="DATE"
-                    value={startDate}
-                    onChange={e => dispatch(filterDateCheckin(e.target.value))}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <input
-                    name="dateCheckout"
-                    type="DATE"
-                    value={endDate}
-                    onChange={e => dispatch(filterDateCheckout(e.target.value))}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <select
-                    name="status"
-                    onChange={e => dispatch(filterStatus(e.target.value))}
-                    style={{flex: 2, marginRight: '10px'}}
-                >
-                    <option value="All">All</option>
-                    <option value="PENDING">PENDING</option>
-                    <option value="USING">USING</option>
-                    <option value="CHECK_OUT">CHECK_OUT</option>
-                    <option value="CANCELED">CANCELED</option>
-                </select>
-                <button
-                    type="button"
-                    className="btn btn-outline-danger"
+            <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
+                <div className="col-xl-3">
+                    <Label htmlFor="nameHouse">Name House</Label>
+                    <input
+                        id="nameHouse"
+                        type="text"
+                        placeholder="Name house..."
+                        onChange={e => dispatch(filterNameHouse(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3 ">
+                    <Label htmlFor="dateCheckin">Date Checkin</Label>
+                    <input
+                        id="dateCheckin"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckin(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="dateCheckout">Date Checkout</Label>
+                    <input
+                        id="dateCheckout"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckout(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="status">Status</Label>
+                    <select
+                        id="status"
+                        onChange={e => dispatch(filterStatus(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    >
+                        <option value="ALL">All</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="USING">USING</option>
+                        <option value="CHECKED_OUT">CHECKED_OUT</option>
+                        <option value="CANCELED">CANCELED</option>
+                    </select>
+                </div>
+            </div >
 
-                    style={{flex: 1}}
-                >
-                    Search
-                </button>
-            </div>
-
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+            <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
                 <h4 className='text-center pb-20'>Renting a house</h4>
 
                 <table className="table table-hover">
                     <thead>
-                    <tr>
-                        <th>Date CheckIN</th>
-                        <th>Date CheckOut</th>
-                        <th>Name House</th>
-                        <th>Customer</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>Date CheckIN</th>
+                            <th>Date CheckOut</th>
+                            <th>Name House</th>
+                            <th>Customer</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {displayBills_vendor}
+                        {displayBills_vendor}
                     </tbody>
                 </table>
                 {/* Phân trang */}

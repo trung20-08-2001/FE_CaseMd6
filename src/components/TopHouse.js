@@ -53,7 +53,8 @@ function TopHouse() {
                                                     </span>
                                                 </div>
                                                 <div className="fix pull_right">
-                                                    <h3>{item.house.price}VND/DAY</h3>
+                                                    <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VND/DAY</h3>
+                                                   
                                                 </div>
                                             </div>
                                             <div className="property-image">

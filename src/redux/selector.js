@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+import removeDiacritics from 'remove-diacritics';
 
 export const listMyHouseDTO = (state) => state.house.myHousesDTO;
 export const filterStatusHouse = (state) => state.house.statusHouse;
@@ -24,10 +25,10 @@ export const filterHouseByNameAndStatus = createSelector(
   (listHouseDTO, nameStatus, nameHouseSearch) => {
     return listHouseDTO.filter(houseDTO => {
       if (nameStatus === "ALL") {
-        return nameHouseSearch === "" ? houseDTO : houseDTO.house.name.toLowerCase().includes(nameHouseSearch.toLowerCase());
+        return nameHouseSearch === "" ? houseDTO : removeDiacritics(houseDTO.house.name).toLowerCase().includes(removeDiacritics(nameHouseSearch).toLowerCase());
       }
       return (
-        houseDTO.house.name.toLowerCase().includes(nameHouseSearch.toLowerCase()) &&
+        removeDiacritics(houseDTO.house.name).toLowerCase().includes(removeDiacritics(nameHouseSearch).toLowerCase()) &&
         houseDTO.house.status.name === nameStatus
       )
     });
@@ -41,13 +42,11 @@ export const filterSearchHouse = createSelector(
   filterBathroom,
   filterPriceHouse,
   (allHouse, nameAddress, bedroom, bathroom, priceHouse) => {
-    console.log(allHouse)
     return allHouse.filter(item => {
-      if (nameAddress === '' && bedroom === 0 && bathroom === 0 && priceHouse === 1000000) {
-        return allHouse;
-      }
-      return item.house.address.toLowerCase().includes(nameAddress.toLowerCase()) || item.house.numberOfBedrooms === bedroom ||
-        item.house.numberOfLivingRooms === bathroom || item.house.price <= priceHouse;
+      return (removeDiacritics(item.house.address).toLowerCase()).includes(removeDiacritics(nameAddress).toLowerCase())
+        && item.house.numberOfBedrooms==bedroom
+        && item.house.numberOfLivingRooms==bathroom
+        && parseInt(item.house.price)<=parseInt(priceHouse)
     })
   }
 )
@@ -60,14 +59,15 @@ export const filterBillHistoryHost = createSelector(
   filterdateCheckout,
   filterstatus,
   (allBill, nameHouse, dateCheckin, dateCheckout, status) => {
-    return allBill.filter(bill => {
+    return allBill.filter((bill) => {
+      const isNameHouseMatched = removeDiacritics(bill.house.name).toLowerCase().includes(removeDiacritics(nameHouse).toLowerCase());
+      const isDateCheckinMatched = new Date(bill.bill.dateCheckin).getTime() >= new Date(dateCheckin).getTime();
+      const isDateCheckoutMatched = new Date(bill.bill.dateCheckout).getTime() <= new Date(dateCheckout).getTime();
+      const isStatusMatched = bill.bill.status.name === status;
       if (status === "ALL") {
-        return bill
-      } else {
-        const isNameHouseMatched = bill.house.name.toLowerCase().includes(nameHouse.toLowerCase());
-        const isDateCheckinMatched = new Date(bill.bill.dateCheckin) === new Date(dateCheckin);
-        const isDateCheckoutMatched = new Date(bill.bill.dateCheckout) === new Date(dateCheckout);
         return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched
+      } else {
+        return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched && isStatusMatched
       }
     })
   }

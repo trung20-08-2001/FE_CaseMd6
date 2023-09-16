@@ -9,7 +9,6 @@ function Profile() {
     useEffect(() => {
         axios.get("http://localhost:8081/accounts/searchAccount/" + id)
             .then(function (res) {
-                console.log(res.data)
                 setAccount(res.data)
             })
             .catch(function (err) {

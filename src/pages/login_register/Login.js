@@ -48,7 +48,12 @@ function Login() {
         setErrorMessage('');
         setUsername('')
         setPassword('')
-        navigate("/")
+        if(resp.data.role.id===1 || resp.data.role.name==="ROLE_ADMIN"){
+          navigate("/myaccount")
+        }else{
+          navigate("/")
+        }
+        
       })
       .catch(function (err) {
         if (err.response && err.response.status === 401) {

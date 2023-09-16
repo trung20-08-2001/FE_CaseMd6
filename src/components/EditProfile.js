@@ -122,17 +122,6 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="banner-title text-center">
-                                        <h1 className="text-uppercase text-white">Edit Profile</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
                             <div className="row">

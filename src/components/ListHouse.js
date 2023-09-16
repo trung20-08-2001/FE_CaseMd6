@@ -33,7 +33,7 @@ function ListHouse() {
                         {listHouse.length !== 0 ?
                             listHouse.map(item => {
                                 return (
-                                    < div className="col-lg-4 mb-20 zoom" key={item.house.id}>
+                                    < div className="col-lg-4 mb-20" key={item.house.id}>
                                         <div className="single-property hover-effect-two">
                                             <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
                                                 <div className="title-left pull_left">
@@ -48,7 +48,7 @@ function ListHouse() {
                                                     </span>
                                                 </div>
                                                 <div className="fix pull_right">
-                                                    <h3>{item.house.price}VND/DAY</h3>
+                                                    <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VND/DAY</h3>
                                                 </div>
                                             </div>
                                             <div className="property-image">
