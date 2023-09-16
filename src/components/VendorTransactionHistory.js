@@ -27,7 +27,7 @@ function VendorTransactionHistory() {
     }, []);
 
     const displayBills_vendor = bills_vendor
-        .slice(pagesVisited, pagesVisited + billsPerPage)
+        .slice( pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
             const userId = bill?.bill.vendor.id || '';
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
@@ -80,11 +80,10 @@ function VendorTransactionHistory() {
                                     }
                                 };
                             } else {
-                                // Show error message when trying to checkin before the current date
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Cannot Checkin',
-                                    text: 'The Checkin date is in the future.',
+                                    text: 'The Checkin date is ' + bill.bill.dateCheckin,
                                     showConfirmButton: false,
                                     timer: 2000
                                 });
@@ -201,14 +200,14 @@ function VendorTransactionHistory() {
                 if (updatedStatus_bill.status.id === 6) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'You have Checked in!',
+                        title: 'You have checked in!',
                         showConfirmButton: false, // Ẩn nút "OK"
                         timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     })
                 } else if (updatedStatus_bill.status.id === 7) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'You have Checked out!',
+                        title: 'You have checked out!',
                         showConfirmButton: false, // Ẩn nút "OK"
                         timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     })

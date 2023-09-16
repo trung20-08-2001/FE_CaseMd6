@@ -49,9 +49,12 @@ const SearchHouse = () => {
                                 onChange={e => dispatch(filterPriceHouse(e.target.value))}
                         >
                             <option selected value="0" disabled>Price</option>
-                            <option value="300000">Below 300.000VNĐ</option>
                             <option value="500000">Below 500.000VNĐ</option>
                             <option value="1000000">Below 1.000.000VNĐ</option>
+                            <option value="2000000">Below 2.000.000VNĐ</option>
+                            <option value="3000000">Below 3.000.000VNĐ</option>
+                            <option value="4000000">Below 4.000.000VNĐ</option>
+                            <option value="5000000">Below 5.000.000VNĐ</option>
 
                         </select>
                     </div>
