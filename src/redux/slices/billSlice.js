@@ -1,8 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { findBillHistoryHost, updateBillsHost } from "../../services/billService"
+import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus, updateBillsHost } from "../../services/billService"
 
 const initialState = {
-    billHistoryHost: []
+    billHistoryHost: [],
+    nameHouseSearch:"",
+    dateCheckin:new Date().toISOString().split('T')[0],
+    dateCheckout:new Date().toISOString().split('T')[0],
+    status:"ALL"
 }
 
 const billSlice = createSlice({
@@ -10,14 +14,13 @@ const billSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(findBillHistoryHost.fulfilled, (state, action) => {
-            console.log(action.payload);
+        builder.addCase(addBillHistory.fulfilled, (state, action) => {
             state.billHistoryHost = action.payload
         })
-        builder.addCase(findBillHistoryHost.pending, (state, action) => {
+        builder.addCase(addBillHistory.pending, (state, action) => {
             state.billHistoryHost = []
         })
-        builder.addCase(findBillHistoryHost.rejected, (state, action) => {
+        builder.addCase(addBillHistory.rejected, (state, action) => {
             state.billHistoryHost = []
         })
         builder.addCase(updateBillsHost.fulfilled, (state, action) => {
@@ -28,6 +31,18 @@ const billSlice = createSlice({
         });
         builder.addCase(updateBillsHost.rejected, (state, action) => {
             state.billHistoryHost = []
+        }) 
+        builder.addCase(filterNameHouse.fulfilled, (state, action) => {
+            state.nameHouseSearch=action.payload
+        })   
+        builder.addCase(filterDateCheckin.fulfilled, (state, action) => {
+            state.dateCheckin=action.payload
+        })
+        builder.addCase(filterDateCheckout.fulfilled, (state, action) => {
+            state.dateCheckout=action.payload
+        })
+        builder.addCase(filterStatus.fulfilled, (state, action) => {
+            state.status=action.payload;
         })
     }
 })

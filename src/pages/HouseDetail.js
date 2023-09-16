@@ -175,6 +175,7 @@ const HouseDetail = () => {
         if (selectedDate >= today && selectedDate !== startDate) {
             setEndDate(selectedDate);
         }
+
     };
 
     const handleEndDateFocus = () => {
@@ -322,47 +323,49 @@ const HouseDetail = () => {
                 icon: 'error',
 
                 text: 'Bạn chưa đăng nhập',
-                showConfirmButton: false, // Ẩn nút "OK"
-                timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else if (account.role.id === 2) {
+            Swal.fire({
+                icon: 'error',
+                text: 'Là chủ nhà, bạn không thể thuê nhà của mình',
+            });
+        } else if (startDate >= endDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Đăng ký thất bại',
+                text: 'Ngày bắt đầu phải trước ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            if (startDate >= endDate) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Đăng ký thất bại',
-                    text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
-                });
-            } else {
-                customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
-                    .then(response => {
-                        if (response.data) {
-                            return saveBill();
-                        } else {
-                            throw new Error('Invalid date or time');
-                        }
-                    })
-                    .then(data => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thuê thành công!',
-                            text: 'Bạn đã thuê nhà thành công',
-                            showConfirmButton: false, // Ẩn nút "OK"
-                            timer: 1500, // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
-                        }).then(() => {
-                            window.location.reload();
-                        });
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Thuê thất bại',
-                            text: 'Nhà này đã có người thuê rồi.',
-                            showConfirmButton: false, // Ẩn nút "OK"
-                            timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
-                        });
+            customAxios.get(`/order/${startDate}/${endDate}/${idHouse}`)
+                .then(response => {
+                    if (response.data) {
+                        return saveBill();
+                    } else {
+                        throw new Error('Ngày hoặc thời gian không hợp lệ');
+                    }
+                })
+                .then(data => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thuê thành công!',
+                        text: 'Bạn đã thuê nhà thành công',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        window.location.reload();
                     });
-            }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thuê thất bại',
+                        text: 'Nhà này đã có người thuê rồi.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                });
         }
     };
 
@@ -407,7 +410,8 @@ const HouseDetail = () => {
                                         </div>
                                         <div className=" mb-35">
                                             <img src="../images/icons/g-map.png" alt="" className="pr-8" />
-                                            <span className="location">Address: {houseDTO.house.address}
+                                            <span className="location">Address:
+                                                {houseDTO.house.address}
                                             </span>
                                         </div>
                                         <div className=" mb-35">
@@ -550,6 +554,7 @@ const HouseDetail = () => {
                                             }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                             onClick={saveFeedback}>Review
+
                                             {renderPagination()}
                                         </button>
                                     </div>

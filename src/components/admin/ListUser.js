@@ -99,9 +99,12 @@ function ListUser() {
                         </a>
                     </li>
                     {pages.map(item => {
-                        return <li key={item}>
-                            <a onClick={() => setCurrentPage(item)} >{item}</a>
-                        </li>
+                        if (currentPage=== item) {
+                            return (
+                                <li key={item} >
+                                    <a onClick={() => setCurrentPage(item)} >{item}</a>
+                                </li>)
+                        }
                     })}
                     <li className="current">
                         <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>

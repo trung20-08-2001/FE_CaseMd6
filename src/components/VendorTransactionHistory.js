@@ -3,7 +3,9 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus } from "../services/billService";
+import { filterBillHistoryHost } from "../redux/selector";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
@@ -12,8 +14,11 @@ function VendorTransactionHistory() {
     const [selectValue, setSelectValue] = useState(0);
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    const [filter, setFilter] = useState(bills_vendor);
     const dispatch = useDispatch()
+    const [nameHouseSearch, setNameHouseSearch] = useState("");
+    const [dateCheckin,setDateCheckin]=useState();
+    const [dateCheckout,setDateCheckout] = useState();
+    const [status,setStatus] = useState(0)
 
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
@@ -25,6 +30,15 @@ function VendorTransactionHistory() {
                 setBills_vendor(res.data);
             })
     }, []);
+
+    const resultSearch=useSelector(filterBillHistoryHost)
+    console.log(resultSearch);
+
+
+    useEffect(()=>{
+        dispatch(addBillHistory(bills_vendor))
+    },[bills_vendor])
+
 
     const displayBills_vendor = bills_vendor
         .slice( pagesVisited, pagesVisited + billsPerPage)
@@ -227,9 +241,13 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
+    const handleChangeInput=(event)=>{
+        let {value,name}=event.target;
+
+    }
     const handleSearch = () => {
         if (nameHouse !== "" && startDate !== null && endDate !== null) {
-
+            
         }
     }
 
@@ -240,34 +258,33 @@ function VendorTransactionHistory() {
                     name="nameHouse"
                     type="text"
                     placeholder="Name house..."
-                    onChange={e => dispatch({type: "bill/findBillHistoryHost", payload: e.target.value})}
+                    onChange={e => dispatch(filterNameHouse(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
                 />
                 <input
-                    name="nameHouse"
+                    name="dateCheckin"
                     type="DATE"
                     value={startDate}
-                    onChange={e => setStartDate(e.target.value)}
+                    onChange={e => dispatch(filterDateCheckin(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
                 />
                 <input
-                    name="nameHouse"
+                    name="dateCheckout"
                     type="DATE"
                     value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
+                    onChange={e => dispatch(filterDateCheckout(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
                 />
                 <select
-                    name="select"
-                    value={selectValue}
-                    onChange={e => setSelectValue(parseInt(e.target.value))}
+                    name="status"
+                    onChange={e => dispatch(filterStatus(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
                 >
-                    <option value={0}>All</option>
-                    <option value={5}>ORDERED</option>
-                    <option value={6}>USING</option>
-                    <option value={7}>CHECK_OUT</option>
-                    <option value={8}>CANCELED</option>
+                    <option value="All">All</option>
+                    <option value="PENDING">PENDING</option>
+                    <option value="USING">USING</option>
+                    <option value="CHECK_OUT">CHECK_OUT</option>
+                    <option value="CANCELED">CANCELED</option>
                 </select>
                 <button
                     type="button"
