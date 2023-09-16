@@ -160,8 +160,10 @@ function VendorTransactionHistory() {
 
                 updateStatus_billAndHouse(billId, updatedBills)
                     .then(() => {
-                        dispatch(addBillHistory(updatedBills))
-                        // setBills_vendor(updatedBills);
+                        axios.get("http://localhost:8081/bills_vendor/" + id)
+                            .then(function (res) {
+                                dispatch(addBillHistory(res.data))
+                            })
                     })
                     .catch((error) => {
                         console.log("Error updating bill and house status:", error);
