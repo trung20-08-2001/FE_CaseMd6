@@ -158,10 +158,10 @@ const HouseDetail = () => {
                 maxDate.setDate(maxDate.getDate() - 1);
                 setEndDateCheckout(maxDate.toISOString().split('T')[0]);
             } else {
-                setEndDate(null);
                 setEndDateCheckout(null);
             }
-
+            setEndDate(null);
+            setSelectedEndDate(null);
             calculateBookingDetails();
         }
     };
@@ -311,18 +311,17 @@ const HouseDetail = () => {
                 if (result.isConfirmed) {
                     navigate("/login");
                 }
+
             })
         }
     }
-
-
-   
 
 
     const handleOrderHouse = () => {
         if (!account) {
             Swal.fire({
                 icon: 'error',
+
                 text: 'Bạn chưa đăng nhập',
                 showConfirmButton: false,
                 timer: 1500
@@ -406,7 +405,8 @@ const HouseDetail = () => {
                                         </div>
 
                                         <div className=" mb-35">
-                                            <span className="price">Price: {houseDTO.house.price} VNĐ/DAY</span>
+                                            <i className="fa fa-money"></i>
+                                            <span className="price">  Price: {new Intl.NumberFormat().format(houseDTO.house.price)} VNĐ/DAY</span>
                                         </div>
                                         <div className=" mb-35">
                                             <img src="../images/icons/g-map.png" alt="" className="pr-8" />
@@ -415,7 +415,8 @@ const HouseDetail = () => {
                                             </span>
                                         </div>
                                         <div className=" mb-35">
-                                            <span className="location">Stastus: {houseDTO.house.status.name}</span>
+                                            <i className={"fas fa-shield-alt"}></i>
+                                            <span className="location">  Stastus: {houseDTO.house.status.name}</span>
                                         </div>
                                     </div>
                                     <h5>Checkin</h5>
@@ -439,11 +440,13 @@ const HouseDetail = () => {
                                     />
                                     {numberOfDays > 0 && (
                                         <div>
-                                            <p style={{ color: "red" }}>Number of rental days: {numberOfDays} ngày</p>
-                                            <p style={{ color: "red" }}>Total amount: {totalPrice} VNĐ</p>
+                                            <p style={{ color: "#9ac438" }}>Day: <span style={{fontWeight: "bold"
+                                            }}>{numberOfDays}</span></p>
+                                            <p style={{ color: "#9ac438" }}>Total amount: <span style={{fontWeight: "bold"
+                                            }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</p>
                                         </div>
                                     )}
-                                    <button className="btn btn-primary" style={{ marginLeft: "250px" }}
+                                    <button className="btn lemon" style={{color:"white" ,marginLeft: "250px" }}
                                         onClick={handleOrderHouse}>Rent
                                     </button>
                                 </div>
@@ -460,15 +463,19 @@ const HouseDetail = () => {
                                 <hr></hr>
                                 <div className="property-desc mb-20 row">
 
-                                    <div className="pull_left col-2">
+                                    <div className="pull_left col-4">
                                         <img alt="" src={houseDTO.house.account.avatar}
-                                            style={{ width: "150px", height: "50px" }} />
+                                            style={{ width: "150px", height: "200px" }} />
                                     </div>
-                                    <div className=" col-10">
-                                        <h3 >Host: {houseDTO.house.account.fullName}</h3>
-                                        <div class="chat-icon" onClick={handleClickChat}>
+                                    <div className=" col-8">
+                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>
+                                        <div class="chat-icon" style={{cursor:"pointer"}} onClick={handleClickChat}>
                                             <i class="fas fa-comment"></i>
-                                            <span>Chat</span>
+                                            <span> Chat</span>
+                                        </div><br/>
+                                        <div className="phone-icon">
+                                            <i className="fas fa-phone"></i>
+                                            <span> {houseDTO.house.account.phone}</span>
                                         </div>
                                     </div>
 
@@ -547,7 +554,7 @@ const HouseDetail = () => {
                                             }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                             onClick={saveFeedback}>Review
-    
+
                                             {renderPagination()}
                                         </button>
                                     </div>

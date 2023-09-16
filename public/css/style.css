@@ -1122,9 +1122,35 @@ button.close:hover {
 
 .nav-pills li .nav-link.active {
 	background-color: #95c41f;
+	max-width: 100%;
+	max-height: 100%;
 }
 
+.nav-item {
+	height: 70px;
+	width: 100%;
+}
 
+.nav-pills li .nav-link {
+	line-height: 60px;
+	height: 100%;
+	width: 100%;
+}
+
+.nav-pills .nav-item .nav-link:hover {
+	color: white;
+	background-color: #95c41f;
+}
+
+.text-truncate {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.chat-icon span:hover {
+	color: #9ac438;
+}
 
 
 
