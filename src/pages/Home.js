@@ -8,7 +8,6 @@ function Home() {
         <>
             <div className="find-area pt-10 pb-10">
                 <div className="container">
-                    <Banner></Banner>
                 </div>
             </div>
             <div className="find-area pt-10 pb-10">
