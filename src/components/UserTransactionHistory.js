@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 import WebSocketConfig from "../config/configWebsocket";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
@@ -12,7 +12,7 @@ function UserTransactionHistory() {
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
-    const account=useSelector(state=>state.account.account)
+    const account = useSelector(state => state.account.account)
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -46,8 +46,11 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking " + res.data.house.name}
-                    WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
+                let notification = {
+                    type: "NOTIFICATION",
+                    content: account.username + " canceled the booking " + res.data.house.name
+                }
+                WebSocketConfig.sendMessage("/private/" + res.data.vendor.id, notification)
                 Swal.fire({
                     icon: 'success',
                     title: 'You have cancelled!',
@@ -55,9 +58,9 @@ function UserTransactionHistory() {
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
                 axios.get("http://localhost:8081/bills_user/" + id)
-                .then(function (res) {
-                    setBills_User(res.data)
-                })
+                    .then(function (res) {
+                        setBills_User(res.data)
+                    })
             })
             .catch((err) => {
                 console.log("Error updating bill status:", err);
@@ -82,8 +85,10 @@ function UserTransactionHistory() {
             const houseName = bill?.house.name || 'No Name';
             const totalPrice = bill?.bill.totalPrice || 0;
             const address = bill?.house.address || 'No Address';
-            const status = bill?.bill.status.name || 'No Status';
-
+            const status = bill?.bill.status.id === 2 ? "Pending" : bill?.bill.status.id === 6 ? "Using" :
+                bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
+            const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
+                bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
             // Tính toán thời gian đặt thuê
             const checkinDate = new Date(dateCheckin);
             const currentDate = new Date();
@@ -92,19 +97,24 @@ function UserTransactionHistory() {
 
             // Kiểm tra nếu thời gian đặt thuê lớn hơn 1 ngày, hiển thị nút "Cancel"
             const cancelButton = (diffInDays > 1 && bill.bill.status.id === 2) ? (
-                <button className="btn btn-outline-danger"
-                        onClick={() => handleCancelClick(bill?.bill.id)}
+                <button
+                    style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
+                    className="btn btn-outline-danger"
+                    onClick={() => handleCancelClick(bill?.bill.id)}
                 >Cancel</button>
             ) : null;
 
             return (
-                <tr key={bill.bill.id} style={{ height: '60px' }}>
+                <tr key={bill.bill.id} style={{height: '60px'}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
+                    <td><span style={{
+                        fontWeight: "bold"
+                    }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ
+                    </td>
                     <td>{address}</td>
-                    <td>{status}</td>
+                    <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>{cancelButton}</td>
                 </tr>
             );
@@ -120,10 +130,10 @@ function UserTransactionHistory() {
     return (
         <>
 
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h4 className='text-center pb-20'>Transaction history</h4>
+            <div className="container distanceBody">
+                <h4 className='text-center pb-20 headerInBody'>Transaction history</h4>
 
-                <table className="table table-hover">
+                <table className="table">
                     <thead>
                     <tr>
                         <th>Date CheckIN</th>

@@ -26,19 +26,21 @@ function ShowVendor() {
     const displayVendors = vendors
         .slice(pagesVisited, pagesVisited + vendorsPerPage)
         .map((vendor) => {
+            const statusColor = vendor.account.status.name === "ACTIVE" ? "backgroundColorStatusActive" : "backgroundColorStatusBlocked";
+            const statusName = vendor.account.status.name === "ACTIVE" ? "Active" : "Blocked";
             return (
                 <tr key={vendor.account.id}>
-                    <td >{vendor.account.fullName == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
-                    <td>{vendor.account.email == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.email}</p>}</td>
+                    <td >{vendor.account.fullName == null ? <p className="text-danger">Not update</p> : <p>{vendor.account.fullName}</p>}</td>
+                    <td>{vendor.account.email == null ? <p className="text-danger">Not update</p> : <p>{vendor.account.email}</p>}</td>
                     <td>{vendor.account.phone}</td>
-                    <td>${vendor.revenue}</td>
-                    <td>{vendor.countHouse}</td>
+                    <td><span>{new Intl.NumberFormat().format(vendor.revenue)}</span> VNĐ</td>
+                    <td className="text-center">{vendor.countHouse}</td>
                     <td>
-                        <Link to={`/myaccount/vendor/detail/${vendor.account.id}`}>
+                        <Link to={`/myaccount/vendor/detail/${vendor.account.id}`} className="seeDetails">
                             See Details
                         </Link>
                     </td>
-                    <td>{vendor.account.status.name}</td>
+                    <td className="statusCenter"><p className={statusColor}>{statusName}</p></td>
                     <td>
                         {vendor.account.status.id === 2 ? (
                             <div>
@@ -48,6 +50,7 @@ function ShowVendor() {
                             </div>
                         ) : (
                             <i
+                                style={{cursor:"pointer", fontSize: "30px", fontWeight:"bold"}}
                                 className={
                                     vendor.account.status.name === "ACTIVE"
                                         ? "fa fa-unlock"
@@ -191,10 +194,10 @@ function ShowVendor() {
     return (
         <>
 
-             <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
-                <h4 className='text-center pb-20'>List account Vendor</h4>
+             <div className="container distanceBody">
+                <h4 className='text-center pb-20 mt-20 headerInBody'>List account vendor</h4>
 
-                <table className="table table-hover">
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Name</th>

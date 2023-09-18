@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { changeStatusAccount, findListAccountUsers } from '../../services/accountService';
+import React, {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {changeStatusAccount, findListAccountUsers} from '../../services/accountService';
 import customAxios from '../../services/api';
+import {Link} from "react-router-dom";
 
 function ListUser() {
     const dispatch = useDispatch();
@@ -28,16 +29,18 @@ function ListUser() {
     }, [])
 
     const handleUnlockAccount = (account) => {
-        dispatch(changeStatusAccount({ ...account, status: { id: 1, name: "ACTIVE" } }))
+        dispatch(changeStatusAccount({...account, status: {id: 1, name: "ACTIVE"}}))
         customAxios.get("/admin/updateStatus/" + 1 + "/" + account.id)
-            .then((response) => { })
+            .then((response) => {
+            })
             .catch((error) => console.log(error));
     }
 
     const handleLockAccount = (account) => {
-        dispatch(changeStatusAccount({ ...account, status: { id: 3, name: "BLOCKED" } }))
+        dispatch(changeStatusAccount({...account, status: {id: 3, name: "BLOCKED"}}))
         customAxios.get("/admin/updateStatus/" + 3 + "/" + account.id)
-            .then((response) => { })
+            .then((response) => {
+            })
             .catch((error) => console.log(error));
     }
 
@@ -52,63 +55,65 @@ function ListUser() {
 
     return (
         <>
-            <h4 className='text-center pb-20 mt-50'>List account user</h4>
-            <table className="table table-bordered table-hover text-center">
-                <thead>
+            <div className="container distanceBody">
+
+                <h4 className='text-center pb-20 mt-20 headerInBody'>List account user</h4>
+                <table className="table">
+                    <thead>
                     <tr>
-                        <th className="text-center">FullName</th>
-                        <th className="text-center">Phone</th>
-                        <th className="text-center">Status</th>
-                        <th className="text-center">Action</th>
-                        <th className="text-center">Detail</th>
+                        <th className="col-3">FullName</th>
+                        <th className="col-3">Phone</th>
+                        <th className="col-2">Detail</th>
+                        <th className="col-2">Status</th>
+                        <th className="col-2">Action</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {pageAccountUser.map((item, index) => (
                         <tr key={item.id}>
-                            <td>{item.fullName ? item.fullName : "NOT UPDATE"}</td>
+                            <td>{item.fullName ? item.fullName : <p className="text-danger">Not update</p>}</td>
                             <td className='text-muted'>{item.phone}</td>
+                            <td className='text-primary' data-toggle="modal" data-target="#exampleModalCenter"
+                                onClick={() => setUserDetail(item)}><Link className="seeDetails">See Details</Link></td>
                             {
                                 item.status.name === "ACTIVE" ?
-                                    <td className='text-success'>{item.status.name}</td> :
-                                    <td className='text-danger'>{item.status.name}</td>
+                                    <td><p className='backgroundColorStatusActive'>Active</p></td> :
+                                    <td><p className='backgroundColorStatusBlocked'>Blocked</p></td>
                             }
                             <td onClick={() => handleChangeStatusAccount(item)}>
                                 {
                                     item.status.name === "BLOCKED" ?
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-unlock" viewBox="0 0 16 16">
-                                            <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z" />
-                                        </svg>
+                                        <i className="fa fa-lock"
+                                           style={{cursor: "pointer", fontSize: "30px", fontWeight: "bold"}}></i>
                                         :
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-lock" viewBox="0 0 16 16">
-                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
-                                        </svg>
+                                        <i className="fa fa-unlock"
+                                           style={{cursor: "pointer", fontSize: "30px", fontWeight: "bold"}}></i>
                                 }
                             </td>
-                            <td className='text-primary' data-toggle="modal" data-target="#exampleModalCenter" onClick={() => setUserDetail(item)}>DETAIL</td>
                         </tr>
                     ))}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <br></br>
             <div className="pagination-content text-center block top-margin">
                 <ul className="pagination fix mt-10 mb-0">
                     <li>
                         <a onClick={() => (currentPage > 1) && setCurrentPage(currentPage - 1)}>
-                            <i className="zmdi zmdi-long-arrow-left" />
+                            <i className="zmdi zmdi-long-arrow-left"/>
                         </a>
                     </li>
                     {pages.map(item => {
-                        if (currentPage=== item) {
+                        if (currentPage === item) {
                             return (
-                                <li key={item} >
-                                    <a onClick={() => setCurrentPage(item)} >{item}</a>
+                                <li key={item}>
+                                    <a onClick={() => setCurrentPage(item)}>{item}</a>
                                 </li>)
                         }
                     })}
                     <li className="current">
                         <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>
-                            <i className="zmdi zmdi-long-arrow-right" />
+                            <i className="zmdi zmdi-long-arrow-right"/>
                         </a>
                     </li>
                 </ul>
@@ -122,46 +127,63 @@ function ListUser() {
                 aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="text-center">User Detail</h5>
+                            <h5 className="text-center distanceBody headerInBody" style={{marginTop:"-6%"}}><i className="fa fa-info-circle"></i> Information</h5>
                             <button
                                 type="button"
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
+                                style={{ border: "1px solid black"}}
                             >
-                                <span aria-hidden="true">×</span>
+                                <span aria-hidden="true" className="fa fa-remove" style={{color:"black", borderRadius:"50%"}}></span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <img className="card-img-top" src={userDetail.avatar} alt="Avatar" style={{ width: "150px", height: "150px" }} />
+                            <img className="card-img-top" src={userDetail.avatar} alt="Avatar"
+                                 style={{width: "150px", height: "150px"}}/>
                             <div className="card-body a ">
-                                <h5 className="card-title">Username: {userDetail.username}</h5>
-                                <h5 className="card-title">FullName: {userDetail.fullName === null ? "NOT UPPDATE" : userDetail.fullName}</h5>
-                                <h5 className="card-title">Phone: {userDetail.phone}</h5>
-                                <h5 className="card-title">Status: {userDetail.status !== undefined && userDetail.status.name}</h5>
-                                <h5 className="card-title">Total Money: {userDetail.totalAllBill}</h5>
-                                <h5 className="card-title">Rental history: {userDetail.bills && userDetail.bills.length === 0 && "Not rental history"}</h5>
+                                <tr>
+                                    <th style={{width:"65%"}}>Username:</th>
+                                    <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.username}</td>
+                                </tr>
+                                <tr>
+                                    <th >FullName:</th>
+                                    <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.fullName === null ? <p className="text-danger">Not update</p> : userDetail.fullName}</td>
+                                </tr>
+                                <tr>
+                                <th >Phone:</th>
+                                <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.phone}</td>
+                                </tr><tr>
+                                <th >Status:</th>
+                                <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.status !== undefined && userDetail.status.name}</td>
+                            </tr><tr>
+                                <th >Total Money:</th>
+                                <td style={{color:"#95c41f", fontWeight:"bold"}}><span>{new Intl.NumberFormat().format(userDetail.totalAllBill)}</span> VNĐ</td>
+                            </tr>
+                                <br/>
+                                <h5 >Rental
+                                    history: {userDetail.bills && userDetail.bills.length === 0 && "Not rental history"}</h5>
                             </div>
                             {userDetail.bills && userDetail.bills.length !== 0 &&
-                                <table className="table table-bordered table-hover text-center">
+                                <table className="table text-center">
                                     <thead>
-                                        <tr>
-                                            <th>Date Checkin</th>
-                                            <th>Date Checkout</th>
-                                            <th>Total price</th>
-                                        </tr>
+                                    <tr>
+                                        <th className="text-center">Date Checkin</th>
+                                        <th className="text-center">Date Checkout</th>
+                                        <th className="text-center">Total price</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {userDetail.bills && userDetail.bills.map((item, index) => (
-                                            <tr key={item.id}>
-                                                <td className='text-success'>{item.dateCheckin}</td>
-                                                <td className='text-danger'>{item.dateCheckout}</td>
-                                                <td>{item.totalPrice}</td>
-                                            </tr>
-                                        ))}
+                                    {userDetail.bills && userDetail.bills.map((item, index) => (
+                                        <tr key={item.id}>
+                                            <td>{item.dateCheckin}</td>
+                                            <td>{item.dateCheckout}</td>
+                                            <td><span style={{fontWeight:"bold"}}>{new Intl.NumberFormat().format(item.totalPrice)}</span> VNĐ</td>
+                                        </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                             }
@@ -173,4 +195,5 @@ function ListUser() {
         </>
     )
 }
+
 export default ListUser;

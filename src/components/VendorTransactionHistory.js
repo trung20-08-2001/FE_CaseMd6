@@ -4,8 +4,14 @@ import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import {useDispatch, useSelector} from "react-redux";
-import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus } from "../services/billService";
-import { filterBillHistoryHost } from "../redux/selector";
+import {
+    addBillHistory,
+    filterDateCheckin,
+    filterDateCheckout,
+    filterNameHouse,
+    filterStatus
+} from "../services/billService";
+import {filterBillHistoryHost} from "../redux/selector";
 
 function VendorTransactionHistory() {
     const [bills_vendor, setBills_vendor] = useState([]);
@@ -16,9 +22,9 @@ function VendorTransactionHistory() {
     const [endDate, setEndDate] = useState();
     const dispatch = useDispatch()
     const [nameHouseSearch, setNameHouseSearch] = useState("");
-    const [dateCheckin,setDateCheckin]=useState();
-    const [dateCheckout,setDateCheckout] = useState();
-    const [status,setStatus] = useState(0)
+    const [dateCheckin, setDateCheckin] = useState();
+    const [dateCheckout, setDateCheckout] = useState();
+    const [status, setStatus] = useState(0)
 
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
@@ -31,17 +37,17 @@ function VendorTransactionHistory() {
             })
     }, []);
 
-    const resultSearch=useSelector(filterBillHistoryHost)
+    const resultSearch = useSelector(filterBillHistoryHost)
     console.log(resultSearch);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(addBillHistory(bills_vendor))
-    },[bills_vendor])
+    }, [bills_vendor])
 
 
     const displayBills_vendor = bills_vendor
-        .slice( pagesVisited, pagesVisited + billsPerPage)
+        .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
             const userId = bill?.bill.vendor.id || '';
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
@@ -49,7 +55,10 @@ function VendorTransactionHistory() {
             const houseName = bill?.house.name || 'No House Name';
             const userName = bill?.bill.user.username || 'No User Name';
             const totalPrice = bill?.bill.totalPrice || 0;
-            const status = bill?.bill.status.name || 'No Status';
+            const status = bill?.bill.status.id === 2 ? "Pending" : bill?.bill.status.id === 6 ? "Using" :
+                bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
+            const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
+                bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
 
             const handleBillClick = (billId) => {
                 const updatedBills = bills_vendor.map((bill) => {
@@ -62,9 +71,9 @@ function VendorTransactionHistory() {
 
                         const dateCheckout = new Date(bill.bill.dateCheckout);
                         const dateCheckin = new Date(bill.bill.dateCheckin);
-                        currentDate.setHours(0,0,0,0,)
-                        dateCheckout.setHours(0,0,0,0,)
-                        dateCheckin.setHours(0,0,0,0,)
+                        currentDate.setHours(0, 0, 0, 0,)
+                        dateCheckout.setHours(0, 0, 0, 0,)
+                        dateCheckin.setHours(0, 0, 0, 0,)
 
                         if (bill.bill.status.id === 2) {
                             if (dateCheckin <= currentDate) {
@@ -177,15 +186,17 @@ function VendorTransactionHistory() {
                     });
             };
             return (
-                <tr key={bill.bill.id} style={{height: '60px'}}>
+                <tr key={bill.bill.id} style={{height: "1%"}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
-                    <td>{status}</td>
+                    <td><span style={{
+                        fontWeight: "bold"
+                    }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</td>
+                    <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>
-                        <button style={{width: "114px"}}
+                        <button style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
                                 className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
                                 ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
                                 ) : "btn btn-outline-secondary"}
@@ -241,13 +252,13 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-    const handleChangeInput=(event)=>{
-        let {value,name}=event.target;
+    const handleChangeInput = (event) => {
+        let {value, name} = event.target;
 
     }
     const handleSearch = () => {
         if (nameHouse !== "" && startDate !== null && endDate !== null) {
-            
+
         }
     }
 
@@ -263,14 +274,14 @@ function VendorTransactionHistory() {
                 />
                 <input
                     name="dateCheckin"
-                    type="DATE"
+                    type="date"
                     value={startDate}
                     onChange={e => dispatch(filterDateCheckin(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
                 />
                 <input
                     name="dateCheckout"
-                    type="DATE"
+                    type="date"
                     value={endDate}
                     onChange={e => dispatch(filterDateCheckout(e.target.value))}
                     style={{flex: 2, marginRight: '10px'}}
@@ -296,19 +307,18 @@ function VendorTransactionHistory() {
                 </button>
             </div>
 
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h4 className='text-center pb-20'>Renting a house</h4>
-
-                <table className="table table-hover">
+            <div className="container distanceBody">
+                <h4 className='text-center pb-20 headerInBody'>Renting a house</h4>
+                <table className="table">
                     <thead>
                     <tr>
-                        <th>Date CheckIN</th>
-                        <th>Date CheckOut</th>
-                        <th>Name House</th>
-                        <th>Customer</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th className="col-2">Date CheckIN</th>
+                        <th className="col-2">Date CheckOut</th>
+                        <th className="col-2">Name House</th>
+                        <th className="col-1">Customer</th>
+                        <th className="col-2">Total Price</th>
+                        <th className="col-2">Status</th>
+                        <th className="col-1">Action</th>
                     </tr>
                     </thead>
                     <tbody>
