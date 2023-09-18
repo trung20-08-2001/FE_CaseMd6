@@ -8,6 +8,7 @@ import {
 } from "../services/filterService";
 import {filterSearchHouse} from "../redux/selector";
 import {findAllHouse} from "../services/houseService";
+import {Link} from "react-router-dom";
 
 const SearchHouse = () => {
     const  dispatch = useDispatch();
@@ -36,11 +37,11 @@ const SearchHouse = () => {
                         />
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" placeholder=" Bedroom" name="bedroom"
+                        <input type="number" min={0} className="form-control" placeholder=" Bedroom" name="bedroom"
                                onChange={e => dispatch(filterBedroom(e.target.value))}/>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" placeholder="Bathroom" name="bedroom"
+                        <input type="number" min={0} className="form-control" placeholder="Bathroom" name="bedroom"
                                onChange={e => dispatch(filterBathroom(e.target.value))}
                         />
                     </div>
@@ -82,13 +83,14 @@ const SearchHouse = () => {
                                                 </div>
                                             </div>
                                             <div className="property-image">
+                                                {/*<Link to={"houseDetail/"+item.house.id}><img src={item.images[0].url} alt="" style={{width:"100%",height:"300px"}} /></Link>*/}
 
                                                 {item.images[0].url === undefined ?
                                                     <img src={item.images[0]} alt="Image house"
                                                          style={{ width: "100%", height: "250px" }} />
                                                     : <img src={item.images[0].url} alt="Image house"
                                                            style={{ width: "100%", height: "250px" }} />}
-                                                <span className="p-tag bg-lemon">FOR SALE</span>
+
 
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">

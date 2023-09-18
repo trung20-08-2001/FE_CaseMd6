@@ -379,11 +379,30 @@ const HouseDetail = () => {
         if (!account) {
             Swal.fire({
                 icon: 'error',
-                text: 'Bạn chưa đăng nhập',
-                showConfirmButton: false,
-                timer: 1500
+                text: 'Bạn cần phải đăng nhập ',
+                showConfirmButton: true,
+                confirmButtonText: "Login",
+                willClose: (result) => {
+                    if (result.isConfirmed) {
+                        // Chuyển trang khi nhấn nút "OK" trong Swal
+                        navigate("/login");
+                    }
+                }
             });
-        } else if (account.role.id === 2) {
+
+            Swal.fire({
+                icon: 'error',
+                text: 'Bạn cần phải đăng nhập ',
+                showConfirmButton: true,
+                confirmButtonText: "Login",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+            })
+
+
+        } else if (account.id === houseDTO.house.account.id) {
             Swal.fire({
                 icon: 'error',
                 text: 'Là chủ nhà, bạn không thể thuê nhà của mình',
