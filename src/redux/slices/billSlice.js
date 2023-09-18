@@ -4,8 +4,8 @@ import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse,
 const initialState = {
     billHistoryHost: [],
     nameHouseSearch:"",
-    dateCheckin:new Date().toISOString().split('T')[0],
-    dateCheckout:new Date().toISOString().split('T')[0],
+    dateCheckin:new Date("1990-1-1").toISOString().split('T')[0],
+    dateCheckout:new Date("2999-12-31").toISOString().split('T')[0],
     status:"ALL"
 }
 

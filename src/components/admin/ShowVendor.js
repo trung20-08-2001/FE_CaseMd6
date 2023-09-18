@@ -33,8 +33,13 @@ function ShowVendor() {
                     <td >{vendor.account.fullName == null ? <p className="text-danger">Not update</p> : <p>{vendor.account.fullName}</p>}</td>
                     <td>{vendor.account.email == null ? <p className="text-danger">Not update</p> : <p>{vendor.account.email}</p>}</td>
                     <td>{vendor.account.phone}</td>
+<<<<<<< HEAD
                     <td><span>{new Intl.NumberFormat().format(vendor.revenue)}</span> VNĐ</td>
                     <td className="text-center">{vendor.countHouse}</td>
+=======
+                    <td>{vendor.revenue} VNĐ</td>
+                    <td>{vendor.countHouse}</td>
+>>>>>>> f2c755f60eea44565a4e59164f05a53c3a74d09b
                     <td>
                         <Link to={`/myaccount/vendor/detail/${vendor.account.id}`} className="seeDetails">
                             See Details

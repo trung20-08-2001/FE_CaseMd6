@@ -55,11 +55,17 @@ function ListUser() {
 
     return (
         <>
+<<<<<<< HEAD
             <div className="container distanceBody">
 
                 <h4 className='text-center pb-20 mt-20 headerInBody'>List account user</h4>
                 <table className="table">
                     <thead>
+=======
+            <h4 className='text-center pb-20 mt-10'>List account user</h4>
+            <table className="table table-bordered table-hover text-center">
+                <thead>
+>>>>>>> f2c755f60eea44565a4e59164f05a53c3a74d09b
                     <tr>
                         <th className="col-3">FullName</th>
                         <th className="col-3">Phone</th>

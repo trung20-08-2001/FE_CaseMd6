@@ -109,10 +109,14 @@ function UserTransactionHistory() {
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
+<<<<<<< HEAD
                     <td><span style={{
                         fontWeight: "bold"
                     }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ
                     </td>
+=======
+                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
+>>>>>>> f2c755f60eea44565a4e59164f05a53c3a74d09b
                     <td>{address}</td>
                     <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>{cancelButton}</td>

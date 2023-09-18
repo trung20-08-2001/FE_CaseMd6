@@ -122,6 +122,7 @@ function EditProfile() {
                 }}
             >
                 <Form>
+<<<<<<< HEAD
                     {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
                         <div className="container">
                             <div className="row">
@@ -134,6 +135,9 @@ function EditProfile() {
                         </div>
                     </div> */}
                     <div className="create-agency-area pt-30 pb-50">
+=======
+                    <div className="create-agency-area pt-15 pb-120">
+>>>>>>> f2c755f60eea44565a4e59164f05a53c3a74d09b
                         <div className="container">
                             <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
                             <div className="row table distanceBody">

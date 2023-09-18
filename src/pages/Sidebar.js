@@ -28,6 +28,7 @@ function Sidebar() {
 
     return (
         <>
+
             <div className='row' >
                 <div className="col-3 offcanvas offcanvas-start w-25" style={{backgroundColor:"#F5F5F5", maxWidth:"20%", padding:"0px",boxShadow: "2px 0px 2px rgba(0, 0, 0, 0.2)"}} tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
                     <div className="offcanvas-body" style={{padding:"0px"}}>

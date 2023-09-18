@@ -31,7 +31,6 @@ export const filterDateCheckin=createAsyncThunk(
 export const filterDateCheckout=createAsyncThunk(
     "bill/filterDateCheckout",
     async(dateCheckout)=>{
-        console.log(dateCheckout);
         return dateCheckout;
     }
 )
@@ -39,7 +38,6 @@ export const filterDateCheckout=createAsyncThunk(
 export const filterStatus=createAsyncThunk(
     "bill/filterStatus",
     async(status)=>{
-        console.log(status);
         return status;
     }
 )
