@@ -124,10 +124,10 @@ function EditProfile() {
                 <Form>
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
-                            <div className="row">
+                            <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
+                            <div className="row table distanceBody">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
-                                        <h2 className="details-title text-center mb-43" >Edit Profile</h2>
                                         <div className="row">
                                             <div className="col-lg-6">
 
@@ -178,8 +178,8 @@ function EditProfile() {
 
                                             </div>
                                         </div>
-                                        <button style={{cursor: 'pointer'}} type={"button"} onClick={edit}
-                                                className="register-btn button lemon pull-left">
+                                        <button style={{cursor: 'pointer', marginLeft:"36%", width:"30%"}} type={"button"} onClick={edit}
+                                                className="button buttonShadow">
                                             Update
                                         </button>
                                     </div>

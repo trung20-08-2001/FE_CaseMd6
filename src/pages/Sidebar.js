@@ -30,7 +30,7 @@ function Sidebar() {
         <>
 
             <div className='row' >
-                <div className="col-3 offcanvas offcanvas-start w-25" style={{backgroundColor:"#F5F5F5", maxWidth:"20%", padding:"0px",boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)"}} tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+                <div className="col-3 offcanvas offcanvas-start w-25" style={{backgroundColor:"#F5F5F5", maxWidth:"20%", padding:"0px",boxShadow: "2px 0px 2px rgba(0, 0, 0, 0.2)"}} tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
                     <div className="offcanvas-body" style={{padding:"0px"}}>
                         <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu" style={{padding:"0px",maxHeight:"100%", maxWidth:"100%", textIndent: "30px"}}>
                             <li className="nav-item">

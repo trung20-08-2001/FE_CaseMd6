@@ -13,7 +13,10 @@ function MyHouses() {
     const dispatch = useDispatch();
     const myHousesDTO = useSelector(filterHouseByNameAndStatus)
     const categories = useSelector(state => state.categories.categories);
-   
+    const [isSearchChanged, setIsSearchChanged] = useState(false);
+    const [houses, setHouses] = useState([])
+    const [nameHouse, setNameHouse] = useState('');
+    const [selectValue, setSelectValue] = useState(0);
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
@@ -25,7 +28,25 @@ function MyHouses() {
         }
     }, [])
 
-   
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const [itemsPerPage, setItemsPerPage] = useState(6); // Số mục trên mỗi trang
+    // Tổng số trang
+    const totalPages = Math.ceil(myHousesDTO.length / itemsPerPage);
+    // Lấy mục trên trang hiện tại
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = myHousesDTO.slice(indexOfFirstItem, indexOfLastItem);
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleSearchChange = () => {
+        if (isSearchChanged) {
+            setIsSearchChanged(false)
+        } else {
+            setIsSearchChanged(true)
+        }
+    };
 
     const handleUpdateStatus = (item, index) => {
         if (item.house.status.name === "USING" || item.house.status.name === "ORDERED") {
@@ -110,7 +131,7 @@ function MyHouses() {
                 :
                 <>
                     <div className='row mt-20'>
-                        {myHousesDTO.length !== 0 && myHousesDTO.map((item, index) => {
+                        {currentItems.length !== 0 && currentItems.map((item, index) => {
                             return (
                                 <div className="col-md-6  card_house mb-40 " key={item.house.id}>
                                     <div className="single-property hover-effect-two bg-violet">
@@ -170,8 +191,30 @@ function MyHouses() {
                                         </div>
                                     </div>
                                 </div>
+
                             )
                         })}
+                        <div className="pagination-content text-center block fix col-12">
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                    (pageNumber) => (
+                                        <button
+                                            key={pageNumber}
+                                            onClick={() => handlePageChange(pageNumber)}
+                                            disabled={currentPage === pageNumber}
+                                            style={{
+                                                backgroundColor: currentPage === pageNumber ? 'yellowgreen' : 'snow',
+                                                color: currentPage === pageNumber ? 'white' : 'black',
+
+                                            }}
+                                        >
+                                            {pageNumber}
+                                        </button>
+                                    )
+                                )}
+                            </div>
+                            <br/>
+                        </div>
                     </div>
                 </>
             }

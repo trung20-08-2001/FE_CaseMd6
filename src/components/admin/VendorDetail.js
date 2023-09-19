@@ -17,9 +17,9 @@ function VendorDetail() {
     }, [])
     return (
         <>
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h2>Information</h2>
-                <table className="table table-borderless">
+            <div className="container distanceBody">
+                <h2 className="headerInBody text-center mt-10 mb-20"><i className="fa fa-info-circle"></i> Information</h2>
+                <table className="table">
                     <tr>
                         <th>Avatar</th>
                         <td>
@@ -61,7 +61,7 @@ function VendorDetail() {
 
                 </table>
                 <Link to={"/myaccount/vendors"}>
-                    <button className="btn btn-info">Back</button>
+                    <button className="btn btn-info buttonShadow" style={{width:"20%"}}><i className="bi bi-back"></i> Back</button>
                 </Link>
             </div>
         </>

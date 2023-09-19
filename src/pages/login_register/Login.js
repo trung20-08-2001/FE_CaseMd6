@@ -16,13 +16,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
+import axios from "axios";
+import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
+
 
 function Login() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [account, setAccount] = useState({username: '', avatar: '', email: '', password: '', fullName: ''});
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -53,7 +57,7 @@ function Login() {
         }else{
           navigate("/")
         }
-        
+
       })
       .catch(function (err) {
         if (err.response && err.response.status === 401) {
@@ -74,85 +78,139 @@ function Login() {
     return regex.test(input);
   };
 
-  return (
-    <>
-      <div className="limiter">
-        <div
-          className="container-login100"
-          style={{ backgroundImage: 'url("../images/bg/bg-01.jpg")' }}
-        >
-          <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            <form className="login100-form validate-form">
-              <span className="login100-form-title p-b-49">Login</span>
-              <div
-                className="wrap-input100 validate-input m-b-23"
-                data-validate="Username is reauired"
-              >
-                <span className="label-input100">Username</span>
-                <input
-                  className="input100"
-                  type="text"
-                  name="username"
-                  placeholder="Type your username"
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                />
-                <span className="focus-input100" data-symbol="&#xf206;" />
-              </div>
-              <div
-                className="wrap-input100 validate-input"
-                data-validate="Password is required"
-              >
-                <span className="label-input100">Password</span>
-                <input
-                  className="input100"
-                  type="password"
-                  name="pass"
-                  placeholder="Type your password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                <span className="focus-input100" data-symbol="&#xf190;" />
-              </div>
-              {errorMessage && (
-                <p style={{ color: "red" }}
-                  className="error-message">
-                  {errorMessage}
-                </p>
-              )}
-              <div className="text-right p-t-8 p-b-31">
-                <a >Forgot password?</a>
-              </div>
-              <div className="container-login100-form-btn">
-                <div className="wrap-login100-form-btn">
-                  <div className="login100-form-bgbtn" />
-                  <button className="login100-form-btn" onClick={handleLogin}>Login</button>
-                </div>
-              </div>
-              <div className="txt1 text-center p-t-54 p-b-20">
-                <span>Or Sign Up Using</span>
-              </div>
-              <div className="flex-c-m">
-                <a className="login100-social-item bg1">
-                  <i className="fa fa-facebook" />
-                </a>
+    const handleLoginSuccess1 = (data) => {
+        console.log(data)
+        let a1 = {
+            ...account,
+            username: data.short_name,
+            avatar: data.picture.data.url,
+            email: data.email,
+            password: data.id,
+            fullName: data.name
+        };
+        console.log(a1)
+        sendUserInfoToBackend(a1)
+    }
+    const handleLoginSuccess2 = (data) => {
+        let a2 = {
+            ...account,
+            username: data.given_name,
+            avatar: data.picture,
+            email: data.email,
+            password: data.sub,
+            fullName: data.name
+        };
+        sendUserInfoToBackend(a2)
+    }
+    const sendUserInfoToBackend=(userData)=>{
+        // Gửi thông tin người dùng đến backend
+        axios.post("http://localhost:8081/loginBySocialNetwork", userData)
+            .then((response) => {
+                // Xử lý phản hồi từ backend
+                localStorage.setItem("account", JSON.stringify(response.data));
+                dispatch(login(response.data));
+                navigate("/");
+            })
+            .catch((error) => {
+                // Xử lý lỗi
+                console.log(error);
+            });
+    };
 
-                <a className="login100-social-item bg3">
-                  <i className="fa fa-google" />
-                </a>
-              </div>
-              <div className="flex-col-c p-t-10">
-                <span className="txt1 p-b-17">Do not have an account?</span>
-                <Link to="/register" className="txt2">
-                  Sign Up
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+    const handleLoginFailure = (error) => {
+        // Xử lý lỗi đăng nhập
+        console.log(error);
+    };
+
+    return (
+        <>
+            <div className="limiter">
+                <div
+                    className="container-login100"
+                    style={{backgroundImage: 'url("../images/bg/bg-01.jpg")'}}
+                >
+                    <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                        <form className="login100-form validate-form">
+                            <span className="login100-form-title p-b-49">Login</span>
+                            <div
+                                className="wrap-input100 validate-input m-b-23"
+                                data-validate="Username is reauired"
+                            >
+                                <span className="label-input100">Username</span>
+                                <input
+                                    className="input100"
+                                    type="text"
+                                    name="username"
+                                    placeholder="Type your username"
+                                    value={username}
+                                    onChange={(event) => setUsername(event.target.value)}
+                                />
+                                <span className="focus-input100" data-symbol="&#xf206;"/>
+                            </div>
+                            <div
+                                className="wrap-input100 validate-input"
+                                data-validate="Password is required"
+                            >
+                                <span className="label-input100">Password</span>
+                                <input
+                                    className="input100"
+                                    type="password"
+                                    name="pass"
+                                    placeholder="Type your password"
+                                    value={password}
+                                    onChange={(event) => setPassword(event.target.value)}
+                                />
+                                <span className="focus-input100" data-symbol="&#xf190;"/>
+                            </div>
+                            {errorMessage && (
+                                <p style={{color: "red"}}
+                                   className="error-message">
+                                    {errorMessage}
+                                </p>
+                            )}
+                            <div className="text-right p-t-8 p-b-31">
+                                <a>Forgot password?</a>
+                            </div>
+                            <div className="container-login100-form-btn">
+                                <div className="wrap-login100-form-btn">
+                                    <div className="login100-form-bgbtn"/>
+                                    <button className="login100-form-btn" onClick={handleLogin}>Login</button>
+                                </div>
+                            </div>
+                            <div className="txt1 text-center p-t-54 p-b-20">
+                                <span>Or Sign Up Using</span>
+                            </div>
+                            <div className="flex-c-m">
+                                <LoginSocialFacebook
+                                    appId={"1034030891357735"}
+                                    onReject={handleLoginFailure}
+                                    onResolve={({provider, data}) => handleLoginSuccess1(data)}>
+                                    <a className="login100-social-item bg1">
+                                        <i className="fa fa-facebook"/>
+                                    </a>
+                                </LoginSocialFacebook>
+
+                                <LoginSocialGoogle
+                                    client_id={"584666386792-6sjtfu9j1efsat5pqml02tevg66k3s4e.apps.googleusercontent.com"}
+                                    onReject={handleLoginFailure}
+                                    onResolve={({provider, data}) => handleLoginSuccess2(data)}>
+                                    <a className="login100-social-item bg3">
+                                        <i className="fa fa-google"/>
+                                    </a>
+                                </LoginSocialGoogle>
+                            </div>
+                            <div className="flex-col-c p-t-10">
+                                <span className="txt1 p-b-17">Do not have an account?</span>
+                                <Link to="/register" className="txt2">
+                                    Sign Up
+                                </Link>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default Login

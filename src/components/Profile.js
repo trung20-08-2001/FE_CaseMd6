@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 
@@ -18,9 +18,10 @@ function Profile() {
 
     return (
         <>
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
-                <h2>Profile</h2><br/>
-                <table className="table table-borderless">
+            <div className="container distanceBody profile">
+                <h4 className="details-title text-center mb-43 headerInBody" ><i className="fas fa-user"></i> Profile</h4>
+
+                    <table className="table">
                     <tr>
                         <th>Avatar</th>
                         <td>{account?.avatar == null ?
@@ -68,7 +69,7 @@ function Profile() {
                         <td>{account?.role == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.role.id === 1? 'Admin': account?.role.id ===2? 'Vendor' : 'Customer'}</p>}</td>
                     </tr>
-                </table>
+                    </table>
             </div>
         </>
     )

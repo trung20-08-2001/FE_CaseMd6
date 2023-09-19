@@ -15,24 +15,6 @@ const UpRole2 = () => {
     let account = JSON.parse(localStorage.getItem('account'));
     const [img1,setImg1] = useState();
     const [img2,setImg2] = useState();
-    const fileToString = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                const result = reader.result;
-                resolve(result);
-            };
-
-            reader.onerror = (error) => {
-                reject(error);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    };
-
-
 
     const handlePreviewImg1 = e => {
         const file= e.target.files[0];
@@ -90,10 +72,11 @@ const UpRole2 = () => {
                                 {({isSubmitting}) => (
 
                                     <Form action="#" method="post">
-
-                                        <h4 className="details-title text-center mb-43 headerInBody" >
+                                        <br/>
+                                        <br/>
+                                        <h2 className="text-center mb-43">
                                             Register to become a landlord
-                                        </h4>
+                                        </h2>
                                         <h4 className="details-title text-medium mb-23 pt-24">
                                             Provide more information
                                         </h4>
