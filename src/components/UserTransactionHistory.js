@@ -46,11 +46,8 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification = {
-                    type: "NOTIFICATION",
-                    content: account.username + " canceled the booking " + res.data.house.name
-                }
-                WebSocketConfig.sendMessage("/private/" + res.data.vendor.id, notification)
+                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking " + res.data.house.name}
+                    WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',
                     title: 'You have cancelled!',
@@ -58,9 +55,9 @@ function UserTransactionHistory() {
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
                 axios.get("http://localhost:8081/bills_user/" + id)
-                    .then(function (res) {
-                        setBills_User(res.data)
-                    })
+                .then(function (res) {
+                    setBills_User(res.data)
+                })
             })
             .catch((err) => {
                 console.log("Error updating bill status:", err);
@@ -89,6 +86,7 @@ function UserTransactionHistory() {
                 bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
             const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
                 bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
+
             // Tính toán thời gian đặt thuê
             const checkinDate = new Date(dateCheckin);
             const currentDate = new Date();
@@ -109,14 +107,10 @@ function UserTransactionHistory() {
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
-<<<<<<< HEAD
                     <td><span style={{
                         fontWeight: "bold"
-                    }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ
+                    }}>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')}</span> VNĐ
                     </td>
-=======
-                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
->>>>>>> f2c755f60eea44565a4e59164f05a53c3a74d09b
                     <td>{address}</td>
                     <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>{cancelButton}</td>
