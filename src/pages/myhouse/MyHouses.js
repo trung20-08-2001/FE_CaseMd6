@@ -109,7 +109,7 @@ function MyHouses() {
                 <input
                     name="nameHouse"
                     type="text"
-                    placeholder="Tên nhà..."
+                    placeholder="Address"
 
                     onChange={e => dispatch(nameHouseSearch(e.target.value))}
                     style={{ flex: 2, marginRight: '10px' }}
@@ -158,7 +158,6 @@ function MyHouses() {
                                                     style={{ width: "100%", height: "250px" }} />
                                                 : <img src={item.images[0].url} alt="Image house"
                                                     style={{ width: "100%", height: "250px" }} />}
-                                            <span className="p-tag bg-lemon">FOR SALE</span>
 
                                             <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                 <div className="hover-item">

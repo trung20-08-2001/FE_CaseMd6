@@ -38,22 +38,22 @@ const Footer = () => {
             </a>
 
             
-            <div className="footer-widget-area bg-violet black-bg pb-58">
+            <div className="footer-widget-area bg-violet black-bg pb-58" style={{backgroundColor:"rgb(30, 126, 52)", color:"white"}}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="social-links mt-25 mb-80">
-                                <a href="#">
-                                    <i className="fa fa-facebook" />
+                                <a>
+                                    <i className="fa fa-facebook text-white" />
                                 </a>
-                                <a href="#">
-                                    <i className="fa fa-twitter" />
+                                <a>
+                                    <i className="fa fa-twitter text-white" />
                                 </a>
-                                <a href="#">
-                                    <i className="fa fa-linkedin" />
+                                <a>
+                                    <i className="fa fa-linkedin text-white" />
                                 </a>
-                                <a href="#">
-                                    <i className="fa fa-google-plus" />
+                                <a>
+                                    <i className="fa fa-google-plus text-white" />
                                 </a>
                             </div>
                         </div>
@@ -61,8 +61,8 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-xl-3 col-md-4">
                             <div className="single-footer-widget">
-                                <h3 className="text-white text-uppercase mb-21">About Us</h3>
-                                <p className="pb-19">
+                                <h3 className="text-white text-uppercase mb-18">About Us</h3>
+                                <p className="pb-19" style={{color:"whitesmoke"}}>
                                     House rental website is a convenient online platform that helps you easily search and rent apartments, serviced apartments, or private homes that suit your needs. With a diverse database of housing types and locations around the world, this website helps you find the best place to stay for your family or your travels.
                                 </p>
                                 {/* mailchimp-alerts Start */}
@@ -78,7 +78,7 @@ const Footer = () => {
                             </div>
                         </div>
                         <div className="col-xl-3 col-md-4 pl-80">
-                            <div className="single-footer-widget">
+                            <div className="single-footer-widget" style={{color:"whitesmoke"}}>
                                 <h3 className="text-white text-uppercase mb-28">REGULATIONS</h3>
                                 <div className="footer-widget-content">
                                     <h5 className="mb-8">Duplex Villa Design</h5>
@@ -99,7 +99,7 @@ const Footer = () => {
                             </div>
                         </div>
                         <div className="col-xl-3 d-lg-none d-none d-xl-block pl-80">
-                            <div className="single-footer-widget">
+                            <div className="single-footer-widget" style={{color:"whitesmoke"}}>
                                 <h3 className="text-white text-uppercase mb-17"> INSTRUCT</h3>
                                 <ul className="footer-list">
                                     <li>
@@ -112,20 +112,20 @@ const Footer = () => {
                                         <a>INSTRUCT</a>
                                     </li>
                                     <li>
-                                        <a href="#">SUPPORT</a>
+                                        <a>SUPPORT</a>
                                     </li>
                                     <li>
                                         <a>RECRUITMENTg</a>
                                     </li>
                                     <li>
-                                        <a href="#">CONTACT</a>
+                                        <a>CONTACT</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div className="col-xl-3 col-md-4">
-                            <div className="single-footer-widget pull_right">
-                                <h3 className="text-white text-uppercase mb-21">CONTACT US</h3>
+                            <div className="single-footer-widget pull_right" style={{color:"whitesmoke"}}>
+                                <h3 className="text-white text-uppercase mb-21" style={{color:"white"}}>CONTACT US</h3>
                                 <div className="footer-contact-info mb-24">
                                     <img src="images/icons/f-map.png" alt="" />
                                     <span className="pl-40 block">

@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Link, useNavigate} from "react-router-dom"
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
 import "./vendor/bootstrap/css/bootstrap.min.css"
 import "./fonts/font-awesome-4.7.0/css/font-awesome.min.css"
 import "./fonts/iconic/css/material-design-iconic-font.min.css"
@@ -11,8 +11,8 @@ import "./vendor/select2/select2.min.css"
 import "./vendor/daterangepicker/daterangepicker.css"
 import "./css/util.css"
 import "./css/main.css"
-import {login} from "../../services/accountService"
-import {useDispatch} from 'react-redux';
+import { login } from "../../services/accountService"
+import { useDispatch, useSelector } from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
@@ -28,56 +28,55 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const [account, setAccount] = useState({username: '', avatar: '', email: '', password: '', fullName: ''});
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
-        // Kiểm tra các trường đăng nhập
-        if (!isValidInput(username) || !isValidInput(password)) {
-            setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
-            return;
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    // Kiểm tra các trường đăng nhập
+    if (!isValidInput(username) || !isValidInput(password)) {
+      setErrorMessage('Username and password must only contain letters and numbers.');
+      return;
+    }
+    const account = {
+      username: username,
+      password: password
+    }
+
+    customAxios.post("/api/login", account)
+      .then(resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged in successfully!',
+          text: 'You have successfully logged into your account.',
+        });
+        localStorage.setItem("account", JSON.stringify(resp.data));
+        dispatch(login(resp.data))
+        setErrorMessage('');
+        setUsername('')
+        setPassword('')
+        if(resp.data.role.id===1 || resp.data.role.name==="ROLE_ADMIN"){
+          navigate("/myaccount")
+        }else{
+          navigate("/")
         }
 
-        const account = {
-            username: username,
-            password: password
+      })
+      .catch(function (err) {
+        if (err.response && err.response.status === 401) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Login failed!',
+            text: "Your account has been locked",
+          });
+        } else {
+          console.log(err)
+          setErrorMessage('Username or password incorrect.');
         }
+      })
 
-        customAxios.post("/api/login", account)
-            .then(resp => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Đăng nhập thành công!',
-                    text: 'Bạn đã đăng nhập thành công tài khoản.',
-                });
-                localStorage.setItem("account", JSON.stringify(resp.data));
-                dispatch(login(resp.data))
-                setErrorMessage('');
-                setUsername('')
-                setPassword('')
-                if (resp.data.role.id === 1 || resp.data.role.name === "ROLE_ADMIN") {
-                    navigate("/myaccount")
-                } else {
-                    navigate("/")
-                }
-
-            })
-            .catch(function (err) {
-                if (err.response && err.response.status === 401) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Đăng nhập thất bại!',
-                        text: "Tài khoản của bạn đã bị khóa",
-                    });
-                } else {
-                    console.log(err)
-                    setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
-                }
-            })
-
-    };
-    const isValidInput = (input) => {
-        const regex = /^[a-zA-Z0-9]+$/;
-        return regex.test(input);
-    };
+  };
+  const isValidInput = (input) => {
+    const regex = /^[a-zA-Z0-9]+$/;
+    return regex.test(input);
+  };
 
     const handleLoginSuccess1 = (data) => {
         console.log(data)
@@ -215,3 +214,5 @@ function Login() {
 }
 
 export default Login
+
+

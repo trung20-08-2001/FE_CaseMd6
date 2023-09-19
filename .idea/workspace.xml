@@ -5,16 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f8cb61f-7ee9-40e4-892c-156ddbc359e2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/shortcode/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/shortcode/default.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ListHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/dataDisplay.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/dataDisplay.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditProfile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ChangePassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ChangePassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/CreateHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CreateHouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/DataDisplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/NoResult.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/HouseDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HouseDetail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/SearchHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SearchHouse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/UpRole2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UpRole2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/vendor/bootstrap/css/bootstrap-reboot.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/vendor/bootstrap/css/bootstrap-reboot.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/myhouse/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myhouse/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +135,8 @@
       <workItem from="1694654493498" duration="27159000" />
       <workItem from="1694725345300" duration="1621000" />
       <workItem from="1694847243181" duration="13342000" />
+      <workItem from="1694959791375" duration="9479000" />
+      <workItem from="1695000684246" duration="28301000" />
     </task>
     <servers />
   </component>

@@ -21,10 +21,10 @@ function UpRoleUserToVendor() {
                 let newRoleId = user.role.id;
                 let newStatusId = user.status.id;
 
-                if (action === "ACCEPT") {
+                if (action === "Accept") {
                     newRoleId = 2;
                     newStatusId = 1;
-                } else if (action === "REJECT") {
+                } else if (action === "Reject") {
                     newRoleId = 3;
                     newStatusId = 1;
                 }
@@ -52,10 +52,10 @@ function UpRoleUserToVendor() {
         let newRoleId = user?.role.id;
         let newStatusId = user?.status.id;
 
-        if (action === "ACCEPT") {
+        if (action === "Accept") {
             newRoleId = 2;
             newStatusId = 1;
-        } else if (action === "REJECT") {
+        } else if (action === "Reject") {
             newRoleId = 3;
             newStatusId = 1;
         }
@@ -77,10 +77,10 @@ function UpRoleUserToVendor() {
 
     return (
         <>
-            <h2>Up Role</h2>
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+            <div className="container distanceBody" style={{marginBottom:"4%"}}>
+                <h2 className="headerInBody text-center mt-10 mb-20"><i className="bi bi-arrow-up-circle-fill"></i> Up Role</h2>
 
-                <table className="table table-borderless">
+                <table className="table">
                     <tr>
                         <th>Username</th>
                         <td><p>{user?.username}</p></td>
@@ -115,23 +115,27 @@ function UpRoleUserToVendor() {
                         <td>{user?.img2 == null ? <p className="text-danger">Image Card Back</p> :
                             <img src={user?.img2} alt="Card Back" width={150}/>}</td>
                     </tr>
+                    <tr>
+                        <th>Action</th>
+                        <td>
+                            <button
+                                className="btn btn-outline-success buttonShadow"
+                                onClick={() => handleUpRoleClick(user?.id, "Accept")}
+                            >
+                                Accept
+                            </button>
+                            <button style={{marginLeft:"10px"}}
+                                    className="btn btn-outline-danger buttonShadow"
+                                    onClick={() => handleUpRoleClick(user?.id, "Reject")}
+                            >
+                                Reject
+                            </button>
+                        </td>
+                    </tr>
                 </table>
-                <button
-                    className="btn btn-outline-success"
-                    onClick={() => handleUpRoleClick(user?.id, "ACCEPT")}
-                >
-                    ACCEPT
-                </button>
-                <button style={{marginLeft:"10px"}}
-                    className="btn btn-outline-danger"
-                    onClick={() => handleUpRoleClick(user?.id, "REJECT")}
-                >
-                    Reject
-                </button><br/>
-                <p style={{marginTop: "50px"}}>
-                <Link to={"/myaccount/vendors"}>
-                    <button className="btn btn-info">Back</button>
-                </Link></p>
+                <Link to={"/myaccount/vendors"} >
+                    <button className="button btn-info buttonShadow" style={{width:"20%"}}><i className="bi bi-back"></i>Back</button>
+                </Link>
             </div>
 
         </>

@@ -8,16 +8,7 @@ function Home() {
         <>
             <div className="find-area pt-10 pb-10">
                 <div className="container">
-                </div>
-            </div>
-            <div className="find-area pt-10 pb-10">
-                <div className="container">
                     <div className="row">
-                        <div className="col-lg-12">
-                            <div className="section-title text-center mb-55">
-                                <h2 className="uppercase"> Search house </h2>
-                            </div>
-                        </div>
                         <div className="col-lg-12">
                             <div className="row">
                                 <form action="#" className="form-area">
@@ -64,7 +55,7 @@ function Home() {
                                             className="button search_price lemon pull_right ml-30 mr-6"
                                         >
                                             <span>
-                                                <span>SEARCH PROPERTY</span>
+                                                <span >SEARCH PROPERTY</span>
                                             </span>
                                         </button>
                                     </div>

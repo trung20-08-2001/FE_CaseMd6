@@ -106,14 +106,14 @@ function EditProfile() {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
-                                title: 'Cập nhật thành công!',
-                                text: 'Bạn đã cập nhật thành công',
+                                title: 'Update successful!',
+                                text: 'You have successfully updated',
                             });
                         } else {
                             await Swal.fire({
                                 icon: 'error',
-                                title: 'Cập nhật thất bại',
-                                text: 'Bạn đã cập nhật không thành công.',
+                                title: 'Update failed',
+                                text: 'You have failed to update.',
                             });
                         }
                     } catch (error) {
@@ -124,10 +124,10 @@ function EditProfile() {
                 <Form>
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
-                            <div className="row">
+                            <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
+                            <div className="row table distanceBody">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
-                                        <h4 className="details-title text-center mb-43">Edit</h4>
                                         <div className="row">
                                             <div className="col-lg-6">
 
@@ -178,8 +178,8 @@ function EditProfile() {
 
                                             </div>
                                         </div>
-                                        <button style={{cursor: 'pointer'}} type={"button"} onClick={edit}
-                                                className="register-btn button lemon pull-left">
+                                        <button style={{cursor: 'pointer', marginLeft:"36%", width:"30%"}} type={"button"} onClick={edit}
+                                                className="button buttonShadow">
                                             Update
                                         </button>
                                     </div>
