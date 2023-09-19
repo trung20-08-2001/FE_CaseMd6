@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import customAxios from "./api";
 
-export const findBillHistoryHost = createAsyncThunk(
+export const addBillHistory = createAsyncThunk(
     "bill/billHistoryHost",
-    async(idHost)=>{
-        const response=await customAxios("/bills_vendor/" + idHost)
-        return response.data;
+    async(bills_vendor)=>{
+        return bills_vendor;
     }
 )
 
@@ -13,5 +11,33 @@ export const updateBillsHost=createAsyncThunk(
     "bill/updateBillsHost",
     async(updateBills)=>{
         return updateBills;
+    }
+)
+
+export const filterNameHouse=createAsyncThunk(
+    "bill/filterNameHouse",
+    async(nameHouse)=>{
+        return nameHouse
+    }
+)
+
+export const filterDateCheckin=createAsyncThunk(
+    "bill/filterDateCheckin",
+    async(dateCheckin)=>{
+        return dateCheckin
+    }
+)
+
+export const filterDateCheckout=createAsyncThunk(
+    "bill/filterDateCheckout",
+    async(dateCheckout)=>{
+        return dateCheckout;
+    }
+)
+
+export const filterStatus=createAsyncThunk(
+    "bill/filterStatus",
+    async(status)=>{
+        return status;
     }
 )

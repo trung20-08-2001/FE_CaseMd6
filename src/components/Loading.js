@@ -1,24 +1,27 @@
-import React from 'react'
-import CSpinner from "react-spinners/ClipLoader";
+import * as React from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 
+export default function SimpleBackdrop() {
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-
-function Loading() {
-    return (
-        <>
-        <div className="d-flex justify-content-center">
-            Loading...
-            <CSpinner color="primary" />
-            <CSpinner color="secondary" />
-            <CSpinner color="success" />
-            <CSpinner color="danger" />
-            <CSpinner color="warning" />
-            <CSpinner color="info" />
-            <CSpinner color="light" />
-            <CSpinner color="dark" />
-            </div>
-        </>
-    )
+  return (
+    <div>
+      <Button onClick={handleOpen}>Show backdrop</Button>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer  }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
 }
-
-export default Loading

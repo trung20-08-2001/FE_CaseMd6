@@ -4,11 +4,22 @@ import Slide from "../components/Slide"
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom';
+import WebSocketConfig from '../config/configWebsocket';
 
 const HouseDetail = () => {
+    const [apiDates, setApiDates] = useState([]);
+    const [selectedStartDate, setSelectedStartDate] = useState(null);
+    const [selectedEndDate, setSelectedEndDate] = useState(null);
+    const isCheckoutDisabled = !selectedStartDate;
     const [houseDTO, setHouseDTO] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [availableDates, setAvailableDates] = useState([]);
+    const [startDateCheckout, setStartDateCheckout] = useState(null);
+    const [endDateCheckout, setEndDateCheckout] = useState(null);
     const [totalPrice, setTotalPrice] = useState(0);
     const [numberOfDays, setNumberOfDays] = useState(0);
     const [listFeedback, setListFeedback] = useState([]);
@@ -24,6 +35,7 @@ const HouseDetail = () => {
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
 
+
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
 
@@ -32,6 +44,11 @@ const HouseDetail = () => {
     const displayedReviews = listFeedback.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
+
+    const handleClickChat = () => {
+        if (account) navigate("/myaccount/chat")
+        else navigate("/login");
+    }
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -54,13 +71,15 @@ const HouseDetail = () => {
         return (
             <div className="pagination">
                 {currentPage > 1 && (
-                    <button className="arrow-button" onClick={() => handlePageChange(currentPage - 1)} style={{ backgroundColor: "blue" }}>
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage - 1)}
+                        style={{ backgroundColor: "blue" }}>
                         &lt; Back
                     </button>
                 )}
                 {pages}
                 {currentPage < totalPages && (
-                    <button className="arrow-button" onClick={() => handlePageChange(currentPage + 1)} style={{ backgroundColor: "blue" }}>
+                    <button className="arrow-button" onClick={() => handlePageChange(currentPage + 1)}
+                        style={{ backgroundColor: "blue" }}>
                         Next &gt;
                     </button>
                 )}
@@ -68,6 +87,19 @@ const HouseDetail = () => {
         );
     };
 
+    useEffect(() => {
+        customAxios.get(`order/${idHouse}`)
+            .then(response => {
+                const data = response.data;
+                console.log(data)
+                setAvailableDates(data);
+                const dates = data.map(item => new Date(item)); // Chuyển đổi các ngày từ dạng string sang đối tượng Date
+                setApiDates(dates);
+            })
+            .catch(error => {
+                console.error('Error fetching available dates:', error);
+            });
+    }, [idHouse]);
 
     useEffect(() => {
         customAxios.get("/feedBack/showFeedback/" + idHouse)
@@ -97,25 +129,62 @@ const HouseDetail = () => {
         }
     };
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        const formattedDate = `${year}-${month}-${day}`;
+        return formattedDate;
+    }
 
     const handleStartDateChange = (event) => {
-        const selectedDate = event.target.value;
+        const selectedDate = formatDate(event);
+        setSelectedStartDate(event);
+
         if (selectedDate >= today) {
             setStartDate(selectedDate);
-            if (endDate <= selectedDate) {
-                setEndDate(null);
+            const nextDay = new Date(selectedDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            setStartDateCheckout(nextDay.toISOString().split('T')[0]);
+
+            const selectedDateObj = new Date(selectedDate);
+            const filteredDates = apiDates.filter((date) => date > selectedDateObj);
+            const minDate = filteredDates.length > 0 ? filteredDates[0] : null;
+            if (minDate) {
+                const maxDate = new Date(minDate);
+                maxDate.setDate(maxDate.getDate() - 1);
+                setEndDateCheckout(maxDate.toISOString().split('T')[0]);
+            } else {
+                setEndDateCheckout(null);
             }
-            calculateBookingDetails()
+            setEndDate(null);
+            setSelectedEndDate(null);
+            calculateBookingDetails();
         }
     };
 
     const handleEndDateChange = (event) => {
-        const selectedDate = event.target.value;
-        if (selectedDate >= today) {
+        if (!selectedStartDate) {
+            return; // Nếu chưa chọn ngày "Nhận phòng", không thực hiện hành động tiếp theo
+        }
+        const selectedDate = formatDate(event);
+        setSelectedEndDate(event)
+        if (selectedDate >= today && selectedDate !== startDate) {
             setEndDate(selectedDate);
         }
 
     };
+
+    const handleEndDateFocus = () => {
+        if (endDate === startDate) {
+            setEndDate(null);
+        }
+    };
+
+    const disabledDates = availableDates.map(date => new Date(date));
 
     useEffect(() => {
         customAxios.get("/houses/searchhouse/" + idHouse)
@@ -152,7 +221,9 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                return response.data;
+                let notification={content:account.username + " has booked a house "+ houseDTO.house.name,type:"NOTIFICATION"}
+                WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
+                return response.data
             })
             .catch((error) => {
                 throw error;
@@ -164,23 +235,23 @@ const HouseDetail = () => {
             if (houseDTO.house.account.id === account.id) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Thuê thất bại',
-                    text: 'Bạn không thể thuê nhà của mình.',
+                    title: 'Failure',
+                    text: 'You cannot rent house.',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 });
-            }else if (myFeedback !== "") {
+            } else if (myFeedback !== "") {
                 if (account.id === houseDTO.house.account.id) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Feedback thất bại',
-                        text: 'Bạn không thể đánh giá nhà của mình',
+                        title: 'Feedback Fail',
+                        text: 'You cannot value house',
                     });
                 } else if (myFeedback.status.id === 2) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Feedback thất bại',
-                        text: 'Bạn không thể đánh giá nhà khi bạn chưa sử dụng',
+                        title: 'Feedback Fail',
+                        text: 'You can\'t evaluate a house when you haven\'t used it yet',
                     });
                 } else if (myFeedback.status.id === 7) {
                     customAxios.post("/feedBack/addFeedBack", {
@@ -191,6 +262,8 @@ const HouseDetail = () => {
                         status: { id: 1 }
                     })
                         .then(response => {
+                            let notification={content:account.username + " just evaluated the house "+ houseDTO.house.name,type:"NOTIFICATION"}
+                            WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
                             setNumberOfStars({
                                 ...numberOfStars,
                                 start: 0
@@ -200,7 +273,7 @@ const HouseDetail = () => {
 
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Feedback thành công',
+                                title: 'Feedback Success',
                             })
                             customAxios.get("/feedBack/showFeedback/" + idHouse)
                                 .then(res => {
@@ -209,28 +282,29 @@ const HouseDetail = () => {
                                 .catch((err) => {
                                     console.log(err)
                                 })
+
                         }
                         )
                         .catch(error => console.log(error))
                 } else if (myFeedback.status.id === 1) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Feedback thất bại',
-                        text: 'Bạn đã feedback rồi',
+                        title: 'Feedback Fail',
+                        text: 'You have already given feedback',
                     });
                 }
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Feedback thất bại',
-                    text: 'Bạn chưa thuê nhà này.',
+                    title: 'Feedback Fail',
+                    text: 'You have not rented this house yet',
                 });
             }
         } else {
             Swal.fire({
-                title: 'Feedback thất bại',
+                title: 'Feedback Fail',
                 icon: 'error',
-                text: 'You are not logged in.',
+                text: 'You are not logged in',
                 showCancelButton: true,
                 confirmButtonText: "LOGIN",
             }).then((result) => {
@@ -244,30 +318,43 @@ const HouseDetail = () => {
 
 
     const handleOrderHouse = () => {
-        if (startDate >= endDate) {
+        if (!account) {
+            Swal.fire({
+                icon: 'error',
+
+                text: 'Bạn chưa đăng nhập',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else if (account.role.id === 2) {
+            Swal.fire({
+                icon: 'error',
+                text: 'Là chủ nhà, bạn không thể thuê nhà của mình',
+            });
+        } else if (startDate >= endDate) {
             Swal.fire({
                 icon: 'error',
                 title: 'Đăng ký thất bại',
-                text: 'Ngày bắt đầu phải cách ngày kết thúc ít nhất 1 ngày',
+                text: 'Ngày bắt đầu phải trước ngày kết thúc ít nhất 1 ngày',
             });
         } else {
-            customAxios.get("/order/" + startDate + "/" + endDate + "/" + idHouse)
+            customAxios.get(`/order/${startDate}/${endDate}/${idHouse}`)
                 .then(response => {
                     if (response.data) {
                         return saveBill();
                     } else {
-                        throw new Error('Invalid date or time');
+                        throw new Error('Ngày hoặc thời gian không hợp lệ');
                     }
                 })
                 .then(data => {
-                    setStartDate(today)
-                    setEndDate(today)
                     Swal.fire({
                         icon: 'success',
                         title: 'Thuê thành công!',
                         text: 'Bạn đã thuê nhà thành công',
-                        showConfirmButton: false, // Ẩn nút "OK"
-                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        window.location.reload();
                     });
                 })
                 .catch(error => {
@@ -275,8 +362,8 @@ const HouseDetail = () => {
                         icon: 'error',
                         title: 'Thuê thất bại',
                         text: 'Nhà này đã có người thuê rồi.',
-                        showConfirmButton: false, // Ẩn nút "OK"
-                        timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                 });
         }
@@ -289,10 +376,13 @@ const HouseDetail = () => {
             start: start
         });
     }
+
+    const maxDateValue = endDateCheckout ? new Date(endDateCheckout) : undefined;
+
     return (
         <>
             {houseDTO !== null &&
-                <div className="property-area property-area-2 ptb-120">
+                <div className="property-area property-area-2 ptb-50">
                     <div className="container">
                         <div className="row property-details_wrap">
                             <div className="col-lg-4 pl-35 order-2">
@@ -315,7 +405,8 @@ const HouseDetail = () => {
                                         </div>
 
                                         <div className=" mb-35">
-                                            <span className="price">Price: {houseDTO.house.price} VNĐ/DAY</span>
+                                            <i className="fa fa-money"></i>
+                                            <span className="price">  Price: {new Intl.NumberFormat().format(houseDTO.house.price)} VNĐ/DAY</span>
                                         </div>
                                         <div className=" mb-35">
                                             <img src="../images/icons/g-map.png" alt="" className="pr-8" />
@@ -324,21 +415,39 @@ const HouseDetail = () => {
                                             </span>
                                         </div>
                                         <div className=" mb-35">
-                                            <span className="location">Stastus: {houseDTO.house.status.name}</span>
+                                            <i className={"fas fa-shield-alt"}></i>
+                                            <span className="location">  Stastus: {houseDTO.house.status.name}</span>
                                         </div>
                                     </div>
-                                    <h5>Nhận phòng:</h5>
-                                    <input className='mb-20' type="date" onChange={event => handleStartDateChange(event)} min={today} />
-                                    <h5>Trả phòng:</h5>
-                                    <input className='mb-20' type="date" onChange={event => handleEndDateChange(event)} min={today} />
+                                    <h5>Checkin</h5>
+                                    <DatePicker
+                                        selected={selectedStartDate}
+                                        onChange={event => handleStartDateChange(event)} min={today}
+                                        excludeDates={disabledDates}
+                                        minDate={new Date(today)}
+                                        dateFormat="yyyy-MM-dd"
+                                    />
+                                    <h5>Checkout</h5>
+                                    <DatePicker
+                                        className={`mb-20 ${isCheckoutDisabled ? 'disabled' : ''}`}
+                                        selected={selectedEndDate}
+                                        onChange={event => handleEndDateChange(event)} min={startDateCheckout}
+                                        value={endDate || ''} onFocus={handleEndDateFocus}
+                                        excludeDates={disabledDates}
+                                        minDate={new Date(startDateCheckout)}
+                                        maxDate={maxDateValue}
+                                        dateFormat="yyyy-MM-dd"
+                                    />
                                     {numberOfDays > 0 && (
                                         <div>
-                                            <p style={{ color: "red" }}>Số ngày thuê: {numberOfDays} ngày</p>
-                                            <p style={{ color: "red" }}>Tổng tiền: {totalPrice} VNĐ</p>
+                                            <p style={{ color: "#9ac438" }}>Day: <span style={{fontWeight: "bold"
+                                            }}>{numberOfDays}</span></p>
+                                            <p style={{ color: "#9ac438" }}>Total amount: <span style={{fontWeight: "bold"
+                                            }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</p>
                                         </div>
                                     )}
-                                    <button className="btn btn-primary" style={{ marginLeft: "250px" }}
-                                        onClick={handleOrderHouse}>Thuê
+                                    <button className="btn lemon" style={{color:"white" ,marginLeft: "250px" }}
+                                        onClick={handleOrderHouse}>Rent
                                     </button>
                                 </div>
                             </div>
@@ -351,7 +460,29 @@ const HouseDetail = () => {
                                     <h4 className="details-title mb-22">Description</h4>
                                     {houseDTO.house.description}
                                 </div>
-                                <h4 className="details-title pb-8 mb-27"> Feedback</h4>
+                                <hr></hr>
+                                <div className="property-desc mb-20 row">
+
+                                    <div className="pull_left col-4">
+                                        <img alt="" src={houseDTO.house.account.avatar}
+                                            style={{ width: "150px", height: "200px" }} />
+                                    </div>
+                                    <div className=" col-8">
+                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>
+                                        <div class="chat-icon" style={{cursor:"pointer"}} onClick={handleClickChat}>
+                                            <i class="fas fa-comment"></i>
+                                            <span> Chat</span>
+                                        </div><br/>
+                                        <div className="phone-icon">
+                                            <i className="fas fa-phone"></i>
+                                            <span> {houseDTO.house.account.phone}</span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <hr />
+                                <h4 className="details-title pb-8"> Feedback</h4>
                                 {
                                     displayedReviews.map((f) => {
 
@@ -422,7 +553,9 @@ const HouseDetail = () => {
                                                 setComment(event.target.value)
                                             }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
-                                            onClick={saveFeedback}>Submit review
+                                            onClick={saveFeedback}>Review
+
+                                            {renderPagination()}
                                         </button>
                                     </div>
                                 </div>

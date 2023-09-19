@@ -12,14 +12,12 @@ import "./vendor/daterangepicker/daterangepicker.css"
 import "./css/util.css"
 import "./css/main.css"
 import {login} from "../../services/accountService"
-import {useDispatch, useSelector} from 'react-redux';
-import ReactModal from 'react-modal';
+import {useDispatch} from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
-import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
-import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
 import axios from "axios";
+import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
 
 
 function Login() {
@@ -28,7 +26,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [account, setAccount] = useState({username: '', avatar: ''});
+    const [account, setAccount] = useState({username: '', avatar: '', email: '', password: '', fullName: ''});
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -43,7 +41,6 @@ function Login() {
             password: password
         }
 
-
         customAxios.post("/api/login", account)
             .then(resp => {
                 Swal.fire({
@@ -56,12 +53,17 @@ function Login() {
                 setErrorMessage('');
                 setUsername('')
                 setPassword('')
-                navigate("/")
+                if (resp.data.role.id === 1 || resp.data.role.name === "ROLE_ADMIN") {
+                    navigate("/myaccount")
+                } else {
+                    navigate("/")
+                }
+
             })
             .catch(function (err) {
                 if (err.response && err.response.status === 401) {
                     Swal.fire({
-                        icon: 'success',
+                        icon: 'error',
                         title: 'Đăng nhập thất bại!',
                         text: "Tài khoản của bạn đã bị khóa",
                     });
@@ -76,26 +78,44 @@ function Login() {
         const regex = /^[a-zA-Z0-9]+$/;
         return regex.test(input);
     };
-    const handleLoginSuccess = (data) => {
-        console.log(1)
+
+    const handleLoginSuccess1 = (data) => {
         console.log(data)
-        console.log(data.name)
-        setAccount(data.name,data.picture)
-        console.log(account)
-        let a = { ...account, username: data.name, avatar: data.picture };
+        let a1 = {
+            ...account,
+            username: data.short_name,
+            avatar: data.picture.data.url,
+            email: data.email,
+            password: data.id,
+            fullName: data.name
+        };
+        console.log(a1)
+        sendUserInfoToBackend(a1)
+    }
+    const handleLoginSuccess2 = (data) => {
+        let a2 = {
+            ...account,
+            username: data.given_name,
+            avatar: data.picture,
+            email: data.email,
+            password: data.sub,
+            fullName: data.name
+        };
+        sendUserInfoToBackend(a2)
+    }
+    const sendUserInfoToBackend=(userData)=>{
         // Gửi thông tin người dùng đến backend
-        axios.post("http://localhost:8081/loginByGoogle", a)
+        axios.post("http://localhost:8081/loginBySocialNetwork", userData)
             .then((response) => {
                 // Xử lý phản hồi từ backend
                 localStorage.setItem("account", JSON.stringify(response.data));
-                dispatch(login(response.data))
-                navigate("/")
+                dispatch(login(response.data));
+                navigate("/");
             })
             .catch((error) => {
                 // Xử lý lỗi
                 console.log(error);
             });
-
     };
 
     const handleLoginFailure = (error) => {
@@ -162,21 +182,19 @@ function Login() {
                                 <span>Or Sign Up Using</span>
                             </div>
                             <div className="flex-c-m">
-
-                                <LoginSocialFacebook appId={"856472012676894"} onReject={handleLoginFailure} onResolve={response=>{
-                                    console.log(response)}}>
-                                    {/*<a className="login100-social-item bg1">*/}
-                                    {/*    <i className="fa fa-facebook"/>*/}
-                                    {/*</a>*/}
-                                    <FacebookLoginButton/>
+                                <LoginSocialFacebook
+                                    appId={"1034030891357735"}
+                                    onReject={handleLoginFailure}
+                                    onResolve={({provider, data}) => handleLoginSuccess1(data)}>
+                                    <a className="login100-social-item bg1">
+                                        <i className="fa fa-facebook"/>
+                                    </a>
                                 </LoginSocialFacebook>
 
                                 <LoginSocialGoogle
                                     client_id={"584666386792-6sjtfu9j1efsat5pqml02tevg66k3s4e.apps.googleusercontent.com"}
                                     onReject={handleLoginFailure}
-                                    onResolve={({provider, data}) => handleLoginSuccess(data)}
-
-                                >
+                                    onResolve={({provider, data}) => handleLoginSuccess2(data)}>
                                     <a className="login100-social-item bg3">
                                         <i className="fa fa-google"/>
                                     </a>

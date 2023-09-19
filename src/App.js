@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Route, Routes} from "react-router-dom";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
@@ -9,7 +9,7 @@ import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
 import EditHouse from "./pages/EditHouse";
 import Home from "./pages/Home";
-import MyHouses from "./pages/MyHouses";
+import MyHouses from "./pages/myhouse/MyHouses";
 import UpRole2 from "./pages/UpRole2";
 import Login from "./pages/login_register/Login";
 import Register from "./pages/login_register/Register";
@@ -21,6 +21,10 @@ import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 import UserTransactionHistory from "./components/UserTransactionHistory";
 import VendorTransactionHistory from "./components/VendorTransactionHistory";
 import SeeReviews from "./pages/SeeReviews";
+import Chat from "./components/chat/Chat";
+import SearchHouse from "./pages/SearchHouse";
+import DataDisplay from "./pages/DataDisplay";
+import Profile from "./components/Profile";
 
 function App() {
     let account = useSelector(state => state.account.account);
@@ -34,7 +38,8 @@ function App() {
                         <>
                             <Route path="myaccount" element={<SideBar />}>
                                 <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
-                                <Route path={'edit_profile/:id'} element={<EditProfile />}></Route>
+                                <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
+                                <Route path={"profile/:id"} element={<Profile/>}></Route>
                                 {account.role.id === 1 &&
                                     <>
                                         <Route path={'vendors'} element={<ShowVendor />}></Route>
@@ -63,11 +68,14 @@ function App() {
                                         <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
                                     </>
                                 }
+                                <Route path="chat" element={<Chat/>}></Route>
+                                <Route path="chat/:idSenderAccount" element={<Chat/>}></Route>
                             </Route>
                         </>
-                    }    
-
-                   <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
+                    }
+                    <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
+                    <Route path={"searchHouse"} element={<SearchHouse></SearchHouse>}></Route>
+                    <Route path={"loadData"} element={<DataDisplay></DataDisplay>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />

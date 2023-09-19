@@ -52,7 +52,7 @@ function ListUser() {
 
     return (
         <>
-            <h4 className='text-center pb-20 mt-50'>List account user</h4>
+            <h4 className='text-center pb-20 mt-10'>List account user</h4>
             <table className="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
@@ -99,9 +99,12 @@ function ListUser() {
                         </a>
                     </li>
                     {pages.map(item => {
-                        return <li key={item}>
-                            <a onClick={() => setCurrentPage(item)} >{item}</a>
-                        </li>
+                        if (currentPage=== item) {
+                            return (
+                                <li key={item} >
+                                    <a onClick={() => setCurrentPage(item)} >{item}</a>
+                                </li>)
+                        }
                     })}
                     <li className="current">
                         <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>

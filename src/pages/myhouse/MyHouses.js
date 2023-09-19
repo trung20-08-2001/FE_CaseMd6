@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Search from "../components/Search";
-import { getAllCategory } from '../services/categoryService';
-import { editHouse, findHouseByAccount } from '../services/houseService';
-import "./style2.css"
+import { getAllCategory } from '../../services/categoryService';
+import { editHouse, findHouseByAccount } from '../../services/houseService';
+import "./style.css"
 import Swal from 'sweetalert2';
-import customAxios from '../services/api';
-import { filterHouseByNameAndStatus } from '../redux/selector';
-import { nameHouseSearch, filterStatusHouse } from '../services/filterService';
+import customAxios from '../../services/api';
+import { filterHouseByNameAndStatus } from '../../redux/selector';
+import { nameHouseSearch, filterStatusHouse } from '../../services/filterService';
 
 function MyHouses() {
     const dispatch = useDispatch();
@@ -127,7 +126,7 @@ function MyHouses() {
                     <option value={"BLOCKED"}>BLOCK</option>
                 </select>
             </div>
-            {currentItems.length === 0 ?
+            {myHousesDTO.length === 0 ?
                 <h1 className='text-center' style={{ color: "red" }}>You don't have any house to rent yet</h1>
                 :
                 <>

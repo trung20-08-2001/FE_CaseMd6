@@ -46,11 +46,11 @@ function Home() {
                                         <div className="select">
                                             <select name="max-sqft" defaultValue={"0"}>
                                                 <option value={0} disabled>
-                                                    Giá
+                                                    Price
                                                 </option>
-                                                <option>Dưới 300$</option>
-                                                <option>Dưới 500$</option>
-                                                <option>Dưới 1000$</option>
+                                                <option>Below 300$</option>
+                                                <option>Below 500$</option>
+                                                <option>Below 1000$</option>
                                             </select>
                                         </div>
                                     </div>

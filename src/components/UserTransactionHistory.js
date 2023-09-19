@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
+import WebSocketConfig from "../config/configWebsocket";
+import { useSelector } from "react-redux";
 
 function UserTransactionHistory() {
     const [bills_User, setBills_User] = useState([]);
-    const { id } = useParams();
-    
-    // da sua
+    const {id} = useParams();
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
-    const billsPerPage = 5; // Số bill hiển thị trên mỗi trang
+    const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
-    // end
+    const account=useSelector(state=>state.account.account)
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -25,7 +25,7 @@ function UserTransactionHistory() {
         const updatedBills = bills_User.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-                const updatedBill = { ...bill };
+                const updatedBill = {...bill};
                 updatedBill.bill.status.id = 8; // CANCELED
                 updatedBill.bill.status.name = newStatus;
                 updatedBill.house.status.id = 4; // READY
@@ -39,22 +39,21 @@ function UserTransactionHistory() {
 
     const updateAfterCancel = (billID) => {
         const foundBill = bills_User.find((bill) => bill.bill.id === billID);
-
         const house = new FormData();
         house.append("idStatus", foundBill.house.status.id);
         const bill = new FormData();
         bill.append("idStatus", foundBill.bill.status.id);
-
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
+                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking " + res.data.house.name}
+                    WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',
-                    title: 'You have Cancelled!',
+                    title: 'You have cancelled!',
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
-                console.log("Bill status updated successfully");
                 axios.get("http://localhost:8081/bills_user/" + id)
                 .then(function (res) {
                     setBills_User(res.data)
@@ -74,7 +73,6 @@ function UserTransactionHistory() {
             });
     };
 
-    // da sua
     const displayBills_User = bills_User
         .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
@@ -95,7 +93,7 @@ function UserTransactionHistory() {
             // Kiểm tra nếu thời gian đặt thuê lớn hơn 1 ngày, hiển thị nút "Cancel"
             const cancelButton = (diffInDays > 1 && bill.bill.status.id === 2) ? (
                 <button className="btn btn-outline-danger"
-                    onClick={() => handleCancelClick(bill?.bill.id)}
+                        onClick={() => handleCancelClick(bill?.bill.id)}
                 >Cancel</button>
             ) : null;
 
@@ -104,7 +102,7 @@ function UserTransactionHistory() {
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
                     <td>{address}</td>
                     <td>{status}</td>
                     <td>{cancelButton}</td>
@@ -114,32 +112,31 @@ function UserTransactionHistory() {
 
     const pageCount = Math.ceil(bills_User.length / billsPerPage);
 
-    const changePage = ({ selected }) => {
+    const changePage = ({selected}) => {
         setPageNumber(selected);
     };
-    // end
 
 
     return (
         <>
 
-            <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
-                <h4 className='text-center pb-20'>Transaction History</h4>
+            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+                <h4 className='text-center pb-20'>Transaction history</h4>
 
                 <table className="table table-hover">
                     <thead>
-                        <tr>
-                            <th>Date CheckIN</th>
-                            <th>Date CheckOut</th>
-                            <th>Name House</th>
-                            <th>Total Price</th>
-                            <th>Address</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                    <tr>
+                        <th>Date CheckIN</th>
+                        <th>Date CheckOut</th>
+                        <th>Name House</th>
+                        <th>Total Price</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {displayBills_User}
+                    {displayBills_User}
                     </tbody>
                 </table>
                 {/* Phân trang */}

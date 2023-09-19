@@ -67,6 +67,14 @@ const ChangePassword = () => {
                 }}
             >
                 <Form style={{ marginLeft: "300px" }}>
+                    <br/>
+                    <br/>
+                    <h2 className="text-medium">
+                        Change Password
+                    </h2>
+                    <br/>
+                    <br/>
+                    <br/>
                     <label>Old Password</label>
                     <div className="input-box mb-40" style={{ width: "400px" }}>
 
@@ -101,6 +109,7 @@ const ChangePassword = () => {
                     <div>
                         <button type="submit" className="btn btn-success" style={{ marginLeft: "160px" }}>OK</button>
                     </div>
+                    <br/>
                 </Form>
             </Formik>
         </>

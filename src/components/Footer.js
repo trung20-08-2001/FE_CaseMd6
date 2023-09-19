@@ -32,10 +32,12 @@ const Footer = () => {
                 id="scrollUp"
                 onClick={scrollToTop}
                 style={{ position: "fixed", zIndex: 2147483647, display: "inline", display: showBackToTop ? "block" : "none" }}
-                
+
             >
                 Scroll to top
             </a>
+
+            
             <div className="footer-widget-area bg-violet black-bg pb-58">
                 <div className="container">
                     <div className="row">
@@ -61,23 +63,8 @@ const Footer = () => {
                             <div className="single-footer-widget">
                                 <h3 className="text-white text-uppercase mb-21">About Us</h3>
                                 <p className="pb-19">
-                                    Lorem must explain to you how all this mistaolt cing pleasure and
-                                    praising ain wasnad I will give you a complete pain was prexplain to
-                                    you lorem
+                                    House rental website is a convenient online platform that helps you easily search and rent apartments, serviced apartments, or private homes that suit your needs. With a diverse database of housing types and locations around the world, this website helps you find the best place to stay for your family or your travels.
                                 </p>
-                                <form action="#" id="mc-form" className="mc-form fix">
-                                    <div className="subscribe-form">
-                                        <input
-                                            id="mc-email"
-                                            type="email"
-                                            name="email"
-                                            placeholder="Email for Newsletter"
-                                        />
-                                        <button id="mc-submit" type="submit">
-                                            <i className="fa fa-send" />
-                                        </button>
-                                    </div>
-                                </form>
                                 {/* mailchimp-alerts Start */}
                                 <div className="mailchimp-alerts text-centre fix text-small">
                                     <div className="mailchimp-submitting" />
@@ -92,7 +79,7 @@ const Footer = () => {
                         </div>
                         <div className="col-xl-3 col-md-4 pl-80">
                             <div className="single-footer-widget">
-                                <h3 className="text-white text-uppercase mb-28">POPULAR POST</h3>
+                                <h3 className="text-white text-uppercase mb-28">REGULATIONS</h3>
                                 <div className="footer-widget-content">
                                     <h5 className="mb-8">Duplex Villa Design</h5>
                                     <span className="mb-27 block">
@@ -113,25 +100,25 @@ const Footer = () => {
                         </div>
                         <div className="col-xl-3 d-lg-none d-none d-xl-block pl-80">
                             <div className="single-footer-widget">
-                                <h3 className="text-white text-uppercase mb-17">QUICK LINK</h3>
+                                <h3 className="text-white text-uppercase mb-17"> INSTRUCT</h3>
                                 <ul className="footer-list">
                                     <li>
-                                        <a href="#">Services</a>
+                                        <a>INTRODUCE</a>
                                     </li>
                                     <li>
-                                        <a href="#">Agent</a>
+                                        <a >QUOTE</a>
                                     </li>
                                     <li>
-                                        <a href="#">Properties</a>
+                                        <a>INSTRUCT</a>
                                     </li>
                                     <li>
-                                        <a href="#">Features</a>
+                                        <a href="#">SUPPORT</a>
                                     </li>
                                     <li>
-                                        <a href="#">From Blog</a>
+                                        <a>RECRUITMENTg</a>
                                     </li>
                                     <li>
-                                        <a href="#">Contact</a>
+                                        <a href="#">CONTACT</a>
                                     </li>
                                 </ul>
                             </div>
@@ -142,25 +129,22 @@ const Footer = () => {
                                 <div className="footer-contact-info mb-24">
                                     <img src="images/icons/f-map.png" alt="" />
                                     <span className="pl-40 block">
-                                        256, 1st AVE, Manchester
-                                        <br />
-                                        125 , Noth England
+                                        11,P.Duy Tân,Dich Vọng Hậu,Cầu Giấy,Hà Nội,Việt Nam
+
                                     </span>
                                 </div>
                                 <div className="footer-contact-info mb-24">
                                     <img src="images/icons/f-phone.png" alt="" />
                                     <span className="pl-40 block">
-                                        Telephone : +012 345 678 102
-                                        <br />
-                                        Telephone : +013 445 678 155
+                                        Telephone : +099999999
                                     </span>
                                 </div>
                                 <div className="footer-contact-info">
                                     <img src="images/icons/f-globe.png" alt="" />
                                     <span className="pl-40 block">
-                                        Email : info@example.com
+                                        Email : hoilamgi@gmail.com
                                         <br />
-                                        Web : www.example.com
+                                        Web : webthuenha.com.vn
                                     </span>
                                 </div>
                             </div>
