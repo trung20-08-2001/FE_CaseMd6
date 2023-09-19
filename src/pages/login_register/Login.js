@@ -79,7 +79,6 @@ function Login() {
   };
 
     const handleLoginSuccess1 = (data) => {
-        console.log(data)
         let a1 = {
             ...account,
             username: data.short_name,
@@ -191,6 +190,7 @@ function Login() {
                                 </LoginSocialFacebook>
 
                                 <LoginSocialGoogle
+                                    scope="email"
                                     client_id={"584666386792-6sjtfu9j1efsat5pqml02tevg66k3s4e.apps.googleusercontent.com"}
                                     onReject={handleLoginFailure}
                                     onResolve={({provider, data}) => handleLoginSuccess2(data)}>

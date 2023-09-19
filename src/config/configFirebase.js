@@ -18,3 +18,4 @@ const googleProvider=new GoogleAuthProvider();
 const facebookProvider=new FacebookAuthProvider();
 
 export {storage,auth,googleProvider,facebookProvider};
+export const imageDb = getStorage(app)
