@@ -31,7 +31,8 @@ import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
 import Notification from "../components/Notification"
-
+import HomeIcon from "@mui/icons-material/Home";
+import {Houseboat, HouseOutlined, LoginOutlined, LoginRounded} from "@mui/icons-material";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -352,7 +353,8 @@ export default function PrimarySearchAppBar() {
                 handleMobileMenuClose();
             }}
         >
-            <Link to={`/myaccount/profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>My profile</MenuItem></Link>
+            <Link to={`/myaccount/profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>My
+                profile</MenuItem></Link>
             {account?.role?.id === 1 && menuAdmin.map(item => item)}
             {account?.role?.id === 2 && menuHost.map(item => item)}
             {account?.role?.id === 3 && menuUser.map(item => item)}
@@ -411,9 +413,9 @@ export default function PrimarySearchAppBar() {
 
     return (
         <>
-            <Box sx={{flexGrow: 1}} style={{zIndex:"99999"}}>
-                <AppBar position="static" style={{backgroundColor: "#1e7e34", height:"100px", paddingTop:"20px"}}>
-                    <Toolbar style={{paddingLeft:"70px", paddingRight:"70px"}}>
+            <Box sx={{flexGrow: 1}} style={{zIndex: "99999"}}>
+                <AppBar position="static" style={{backgroundColor: "#1e7e34", height: "100px", paddingTop: "20px"}}>
+                    <Toolbar style={{paddingLeft: "7%", paddingRight: "4%"}}>
                         <Link to="">
                             <Typography
                                 variant="h6"
@@ -422,9 +424,9 @@ export default function PrimarySearchAppBar() {
                                 aria-label="open drawer"
                                 color={"white"}
                                 sx={{display: {xs: 'block', sm: 'block'}}}
-                                style={{fontWeight:"bold"}}
+                                style={{textShadow: "0px 0px 10px #ffc107"}}
                             >
-                                BOOKING HOUSE
+                                <HouseOutlined style={{color:"gold"}}/>BOOKING HOUSE
                             </Typography>
                         </Link>
                         {/* <Search>
@@ -471,7 +473,19 @@ export default function PrimarySearchAppBar() {
                                         aria-haspopup="true"
                                         onClick={handleProfileMenuOpen}
                                         color="inherit"
+                                        style={{backgroundColor: "#1c7430", boxShadow: "0px 0px 4px #ffc107", borderRadius:"15px"}}
                                     >
+                                        <Typography
+                                            variant="h6"
+                                            noWrap
+                                            component="div"
+                                            aria-label="open drawer"
+                                            color={"white"}
+                                            sx={{display: {xs: 'block', sm: 'block'}}}
+                                            style={{fontSize: "15px",color: "#ffc107"}}
+                                        >
+                                            {account.fullName != null ? account.fullName : account.username}
+                                        </Typography>
                                         <Avatar alt={account.username} src={account.avatar}/>
                                     </IconButton>
                                 </Box>
@@ -497,8 +511,9 @@ export default function PrimarySearchAppBar() {
                                     aria-label="open drawer"
                                     color={"white"}
                                     sx={{display: {xs: 'block', sm: 'block'}}}
+                                    style={{textShadow: "0px 0px 10px #ffc107"}}
                                 >
-                                    LOGIN
+                                    Login<LoginRounded/>
                                 </Typography>
                             </Link>
                         }
