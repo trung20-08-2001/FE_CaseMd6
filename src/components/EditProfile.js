@@ -106,14 +106,14 @@ function EditProfile() {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
-                                title: 'Cập nhật thành công!',
-                                text: 'Bạn đã cập nhật thành công',
+                                title: 'Update successful!',
+                                text: 'You have successfully updated',
                             });
                         } else {
                             await Swal.fire({
                                 icon: 'error',
-                                title: 'Cập nhật thất bại',
-                                text: 'Bạn đã cập nhật không thành công.',
+                                title: 'Update failed',
+                                text: 'You have failed to update.',
                             });
                         }
                     } catch (error) {
@@ -122,17 +122,6 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="banner-title text-center">
-                                        <h1 className="text-uppercase text-white">Edit Profile</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
                             <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
@@ -179,10 +168,14 @@ function EditProfile() {
                                                               className="error-message"/>
                                             </div>
                                             <div className="col-lg-6">
-                                                    <input type="file" name="avatar" placeholder="Ảnh" accept=".jpeg, .jpg, .png" onChange={(event) => handleChangeImage(event)}/>
-                                                    {previewImage && (
-                                                        <img src={previewImage} alt="Image" className="preview-image"/>
-                                                    )}
+                                                <input type="file" name="avatar" className="mb-28"
+                                                       accept=".jpeg, .jpg, .png"
+                                                       onChange={(event) => handleChangeImage(event)}/>
+
+                                                {previewImage && (
+                                                    <img src={previewImage} alt="Image" height="200" width="200"/>
+                                                )}
+
                                             </div>
                                         </div>
                                         <button style={{cursor: 'pointer', marginLeft:"36%", width:"30%"}} type={"button"} onClick={edit}

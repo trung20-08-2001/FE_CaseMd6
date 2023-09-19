@@ -50,19 +50,18 @@ function Register() {
                             axios.post("http://localhost:8081/accounts/createAccount", account);
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Đăng ký thành công!',
-                                text: 'Bạn đã đăng ký thành công tài khoản.',
+                                title: 'Sign Up Success!',
+                                text: 'You have successfully registered an account',
                             });
                         } else {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Đăng ký thất bại',
-                                text: 'Đăng ký tài khoản không thành công. Username hoặc phone đã tồn tại',
+                                title: 'Registration Failed',
+                                text: 'Account registration failed. Username or phone already exists',
                             });
                         }
                     } catch (error) {
                         console.error(error);
-                        // alert("Đăng ký thất bại");
                     }
                 }}
 

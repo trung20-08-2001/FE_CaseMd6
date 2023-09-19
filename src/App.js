@@ -23,7 +23,7 @@ import VendorTransactionHistory from "./components/VendorTransactionHistory";
 import SeeReviews from "./pages/SeeReviews";
 import Chat from "./components/chat/Chat";
 import SearchHouse from "./pages/SearchHouse";
-import DataDisplay from "./pages/DataDisplay";
+import NoResult from "./pages/NoResult";
 import Profile from "./components/Profile";
 
 function App() {
@@ -75,7 +75,7 @@ function App() {
                     }
                     <Route path={"houseDetail/:idHouse"} element={<HouseDetail></HouseDetail>}></Route>
                     <Route path={"searchHouse"} element={<SearchHouse></SearchHouse>}></Route>
-                    <Route path={"loadData"} element={<DataDisplay></DataDisplay>}></Route>
+                    <Route path={"loadData"} element={<NoResult></NoResult>}></Route>
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
