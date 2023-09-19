@@ -401,7 +401,7 @@ const HouseDetail = () => {
                             <div className="col-lg-4 pl-35 order-2">
                                 <div className="single-sidebar-widget fix mb-40">
 
-                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50">
+                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50" style={{borderRadius:"15%"}}>
                                         <div className=" mb-37 pr-8" style={{marginLeft:"-9%",marginBottom:"5%"}} >
                                             <MenuItem>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
