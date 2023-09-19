@@ -124,7 +124,7 @@ function EditProfile() {
                 <Form>
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
-                            <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
+                            <h4 className="details-title text-center mt-20 mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
                             <div className="row table distanceBody">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">

@@ -492,7 +492,7 @@ const HouseDetail = () => {
                                 </div>
                             </div>
                             <div className="col-lg-8 order-1">
-                                <div className="property-image mb-57">
+                                <div className="property-image mb-57" >
                                     <Slide images={houseDTO.images}
                                         styleImage={{ width: "600px", height: "400px" }}></Slide>
                                 </div>
