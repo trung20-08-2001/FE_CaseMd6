@@ -3,7 +3,6 @@ import {Route, Routes} from "react-router-dom";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
-import Page404 from "./pages/404";
 import ChangePassword from "./pages/ChangePassword";
 import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
@@ -69,7 +68,7 @@ function App() {
                                     </>
                                 }
                                 <Route path="chat" element={<Chat/>}></Route>
-                                <Route path="chat/:idSenderAccount" element={<Chat/>}></Route>
+                                <Route path="chat/:idReceiverAccount" element={<Chat/>}></Route>
                             </Route>
                         </>
                     }
@@ -79,7 +78,6 @@ function App() {
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="*" element={<Page404 />} />
             </Routes>
         </>
     );

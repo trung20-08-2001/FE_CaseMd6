@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {styled, alpha} from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -17,10 +17,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import {Link, useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
-import {login} from '../services/accountService';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { findAccountById, login } from '../services/accountService';
 import EditIcon from '@mui/icons-material/Edit';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
@@ -31,8 +31,9 @@ import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
 import Notification from "../components/Notification"
+import { findNotificationByIdAccount, updateStatus } from '../services/notificationService';
 
-const Search = styled('div')(({theme}) => ({
+const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -48,7 +49,7 @@ const Search = styled('div')(({theme}) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({theme}) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -58,7 +59,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -72,15 +73,35 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     },
 }));
 
+const formatter = new Intl.DateTimeFormat('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
+
 export default function PrimarySearchAppBar() {
     const account = useSelector(state => state.account.account)
     const [anchorEl, setAnchorEl] = useState(null);
+    const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const notifications = useSelector(state => state.notification.notifications)
+    const [numberOfNotificationNotSeen, setNumberOfNotificationNotSeen] = useState(0);
+
+    useEffect(() => {
+        const count = notifications.filter(item => item.seen === false).length;
+        setNumberOfNotificationNotSeen(count)
+    }, [notifications])
 
     useEffect(() => {
         if (account !== null) {
+            if (notifications.length === 0) {
+                dispatch(findNotificationByIdAccount(account.id))
+            }
             WebSocketConfig.connect(account)
         }
         return () => {
@@ -89,10 +110,19 @@ export default function PrimarySearchAppBar() {
     }, []);
 
     const isMenuOpen = Boolean(anchorEl);
+    const isNotificationOpen = Boolean(notificationsAnchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    const handleNotificationsOpen = (event) => {
+        setNotificationsAnchorEl(event.currentTarget);
+        if (numberOfNotificationNotSeen !== 0) {
+            dispatch(updateStatus(notifications))
+        }
+
+    };
+
     const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.target);
+        setAnchorEl(event.currentTarget);
     };
 
     const handleMobileMenuClose = () => {
@@ -112,6 +142,13 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.target);
     };
+
+    const handleNotifictionMessage =(idAccount)=>{
+        setNotificationsAnchorEl(null);
+        dispatch(findAccountById(idAccount))
+    }
+
+
 
     const menuId = 'primary-search-account-menu';
     const menuAdmin = [
@@ -147,7 +184,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="black">
                     <Badge badgeContent={0} color="error">
-                        <MailIcon/>
+                        <MailIcon />
                     </Badge>
                 </IconButton>
                 <p>Chat</p>
@@ -160,7 +197,7 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
             >
                 <Badge badgeContent={0} color="error">
-                    <NotificationsIcon/>
+                    <NotificationsIcon />
 
                 </Badge>
             </IconButton>
@@ -174,7 +211,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <AccountCircle/>
+                        <AccountCircle />
                     </Badge>
                 </IconButton>
                 <p>My profile</p>
@@ -188,7 +225,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <EditIcon/>
+                        <EditIcon />
                     </Badge>
                 </IconButton>
                 <p>Edit profile</p>
@@ -202,7 +239,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <ChangeCircleIcon/>
+                        <ChangeCircleIcon />
                     </Badge>
                 </IconButton>
                 <p>Change password</p>
@@ -219,7 +256,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <PeopleIcon/>
+                        <PeopleIcon />
                     </Badge>
                 </IconButton>
                 <p>Accounts user</p>
@@ -233,14 +270,13 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <PeopleIcon/>
+                        <PeopleIcon />
                     </Badge>
                 </IconButton>
                 <p>Accounts host</p>
             </MenuItem>
         </Link>
     ]
-
 
     const menuMobileHost = [
         <Link to="/myaccount/host">
@@ -251,7 +287,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HolidayVillageIcon/>
+                        <HolidayVillageIcon />
                     </Badge>
                 </IconButton>
                 <p>My houses</p>
@@ -265,7 +301,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <AddBusinessIcon/>
+                        <AddBusinessIcon />
                     </Badge>
                 </IconButton>
                 <p>Create houses</p>
@@ -279,7 +315,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HistoryIcon/>
+                        <HistoryIcon />
                     </Badge>
                 </IconButton>
                 <p>Renting a House</p>
@@ -293,7 +329,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <BarChartIcon/>
+                        <BarChartIcon />
                     </Badge>
                 </IconButton>
                 <p>Revenue</p>
@@ -310,7 +346,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <HistoryIcon/>
+                        <HistoryIcon />
                     </Badge>
                 </IconButton>
                 <p>Transaction history</p>
@@ -324,13 +360,48 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <BackupIcon/>
+                        <BackupIcon />
                     </Badge>
                 </IconButton>
                 <p>Become a host</p>
             </MenuItem>
         </Link>
     ]
+
+    const renderNotifications = (
+        <Menu
+            anchorEl={notificationsAnchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            // id={menuId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={isNotificationOpen}
+            onClose={() => {
+                setNotificationsAnchorEl(null);
+            }}
+            PaperProps={{
+                style: {
+                    maxHeight: 200, // Giới hạn chiều cao của menu
+                    maxWidth: 500, // Giới hạn chiều rộng của menu
+                    overflowY: 'auto', // Hiển thị thanh cuộn nếu nội dung quá dài
+                },
+            }}
+        >
+            {notifications.length !== 0 ?
+                notifications.map(item => {
+                    return (
+                        <Link to={item.url} onClick={() => setNotificationsAnchorEl(null)}><MenuItem>{formatter.format(new Date(item.time))}: {item.content}</MenuItem></Link>
+                    )
+                })
+                :<MenuItem onClick={() => setNotificationsAnchorEl(null)}>You don't have any notifications yet</MenuItem>}
+        </Menu>
+    )
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -386,32 +457,19 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={0} color="error">
-                        <i className="fs-20 bi-box-arrow-left"/>
+                        <i className="fs-20 bi-box-arrow-left" />
                     </Badge>
                 </IconButton>
                 <p onClick={handleMenuClose}>Log out</p>
             </MenuItem>
-
-            {/* <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>My account</p>
-            </MenuItem> */}
         </Menu>
     );
 
     return (
         <>
-            <Box sx={{flexGrow: 1}} style={{zIndex:"99999"}}>
-                <AppBar position="static" style={{backgroundColor: "#1e7e34", height:"100px", paddingTop:"20px"}}>
-                    <Toolbar style={{paddingLeft:"70px", paddingRight:"70px"}}>
+            <Box sx={{ flexGrow: 1 }} style={{ zIndex: "99999" }}>
+                <AppBar position="static" style={{ backgroundColor: "#1e7e34", height: "100px", paddingTop: "20px" }}>
+                    <Toolbar style={{ paddingLeft: "70px", paddingRight: "70px" }}>
                         <Link to="">
                             <Typography
                                 variant="h6"
@@ -419,35 +477,24 @@ export default function PrimarySearchAppBar() {
                                 component="div"
                                 aria-label="open drawer"
                                 color={"white"}
-                                sx={{display: {xs: 'block', sm: 'block'}}}
+                                sx={{ display: { xs: 'block', sm: 'block' } }}
                             >
                                 BOOKING HOUSE
                             </Typography>
                         </Link>
-                        {/* <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            type='text'
-                            placeholder="Address..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    */}
-                        <Box sx={{flexGrow: 1}}/>
+                        <Box sx={{ flexGrow: 1 }} />
                         {account ?
                             <>
-                                <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                                {/* <Box sx={{ display: { xs: 'flex', md: 'flex' } }}> */}
                                     <IconButton size="large" aria-label="show 4 new mails" color="black">
                                         <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
-                                            <SearchIcon style={{color: "white"}}/>
+                                            <SearchIcon style={{ color: "white" }} />
                                         </Badge> </Link>
                                     </IconButton>
                                     <IconButton size="large" aria-label="show 4 new mails" color="black">
                                         <Link to="myaccount/chat">
                                             <Badge badgeContent={0} color="error">
-                                                <MailIcon style={{color: "white"}}/>
+                                                <MailIcon style={{ color: "white" }} />
                                             </Badge>
                                         </Link>
                                     </IconButton>
@@ -455,10 +502,18 @@ export default function PrimarySearchAppBar() {
                                         size="large"
                                         aria-label="show 17 new notifications"
                                         color="black"
+                                        aria-haspopup="true"
+                                        onClick={handleNotificationsOpen}
                                     >
-                                        <Badge badgeContent={0} color="error">
-                                            <NotificationsIcon style={{color: "white"}}/>
-                                        </Badge>
+                                        {numberOfNotificationNotSeen === 0 ?
+                                            <Badge badgeContent={0} color="error">
+                                                <NotificationsIcon style={{ color: "white" }} />
+                                            </Badge>
+                                            :
+                                            <Badge badgeContent={numberOfNotificationNotSeen} color="error">
+                                                <NotificationsIcon style={{ color: "white" }} />
+                                            </Badge>
+                                        }
                                     </IconButton>
                                     <IconButton
                                         size="large"
@@ -469,10 +524,10 @@ export default function PrimarySearchAppBar() {
                                         onClick={handleProfileMenuOpen}
                                         color="inherit"
                                     >
-                                        <Avatar alt={account.username} src={account.avatar}/>
+                                        <Avatar alt={account.username} src={account.avatar} />
                                     </IconButton>
-                                </Box>
-                                <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+                                {/* </Box> */}
+                                {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                                     <IconButton
                                         size="large"
                                         aria-label="show more"
@@ -481,9 +536,9 @@ export default function PrimarySearchAppBar() {
                                         onClick={handleMobileMenuOpen}
                                         color="black"
                                     >
-                                        <MoreIcon/>
+                                        <MoreIcon />
                                     </IconButton>
-                                </Box>
+                                </Box> */}
                             </>
                             :
                             <Link to="login">
@@ -493,7 +548,7 @@ export default function PrimarySearchAppBar() {
                                     component="div"
                                     aria-label="open drawer"
                                     color={"white"}
-                                    sx={{display: {xs: 'block', sm: 'block'}}}
+                                    sx={{ display: { xs: 'block', sm: 'block' } }}
                                 >
                                     LOGIN
                                 </Typography>
@@ -503,8 +558,8 @@ export default function PrimarySearchAppBar() {
                 </AppBar>
                 {renderMobileMenu}
                 {renderMenu}
+                {renderNotifications}
             </Box>
-            <Notification></Notification>
         </>
     );
 }

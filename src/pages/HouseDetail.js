@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import customAxios from "../services/api";
 import Slide from "../components/Slide"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
 import WebSocketConfig from '../config/configWebsocket';
+import { addAccountYouMessaged } from '../services/messageService';
 
 const HouseDetail = () => {
     const [apiDates, setApiDates] = useState([]);
@@ -34,7 +35,7 @@ const HouseDetail = () => {
         });
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
-
+    const dispatch =useDispatch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -46,7 +47,11 @@ const HouseDetail = () => {
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
 
     const handleClickChat = () => {
-        if (account) navigate("/myaccount/chat")
+        if (account){
+            navigate("/myaccount/chat/"+houseDTO.house.account.id)
+            dispatch(addAccountYouMessaged(houseDTO.house.account))
+        }
+        
         else navigate("/login");
     }
 
@@ -91,7 +96,6 @@ const HouseDetail = () => {
         customAxios.get(`order/${idHouse}`)
             .then(response => {
                 const data = response.data;
-                console.log(data)
                 setAvailableDates(data);
                 const dates = data.map(item => new Date(item)); // Chuyển đổi các ngày từ dạng string sang đối tượng Date
                 setApiDates(dates);
@@ -221,11 +225,11 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                let notification={content:account.username + " has booked a house "+ houseDTO.house.name,type:"NOTIFICATION"}
-                WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
+                let notification = { content: account.username + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`, account: { id: houseDTO.house.account.id } }
+                WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                 return response.data
             })
-            .catch((error) => {
+            .catch((error) => { 
                 throw error;
             });
     };
@@ -262,8 +266,8 @@ const HouseDetail = () => {
                         status: { id: 1 }
                     })
                         .then(response => {
-                            let notification={content:account.username + " just evaluated the house "+ houseDTO.house.name,type:"NOTIFICATION"}
-                            WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
+                            let notification = { content: account.username + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION",url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
+                            WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                             setNumberOfStars({
                                 ...numberOfStars,
                                 start: 0
@@ -354,7 +358,19 @@ const HouseDetail = () => {
                         showConfirmButton: false,
                         timer: 1500,
                     }).then(() => {
-                        window.location.reload();
+                        customAxios.get(`order/${idHouse}`)
+                        .then(response => {
+                            const data = response.data;
+                            setAvailableDates(data);
+                            const dates = data.map(item => new Date(item)); // Chuyển đổi các ngày từ dạng string sang đối tượng Date
+                            setApiDates(dates);
+                            setSelectedEndDate(null)
+                            setSelectedStartDate(null)
+                            
+                        })
+                        .catch(error => {
+                            console.error('Error fetching available dates:', error);
+                        });
                     });
                 })
                 .catch(error => {
@@ -440,13 +456,15 @@ const HouseDetail = () => {
                                     />
                                     {numberOfDays > 0 && (
                                         <div>
-                                            <p style={{ color: "#9ac438" }}>Day: <span style={{fontWeight: "bold"
+                                            <p style={{ color: "#9ac438" }}>Day: <span style={{
+                                                fontWeight: "bold"
                                             }}>{numberOfDays}</span></p>
-                                            <p style={{ color: "#9ac438" }}>Total amount: <span style={{fontWeight: "bold"
+                                            <p style={{ color: "#9ac438" }}>Total amount: <span style={{
+                                                fontWeight: "bold"
                                             }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</p>
                                         </div>
                                     )}
-                                    <button className="btn lemon" style={{color:"white" ,marginLeft: "250px" }}
+                                    <button className="btn lemon" style={{ color: "white", marginLeft: "250px" }}
                                         onClick={handleOrderHouse}>Rent
                                     </button>
                                 </div>
@@ -468,11 +486,11 @@ const HouseDetail = () => {
                                             style={{ width: "150px", height: "200px" }} />
                                     </div>
                                     <div className=" col-8">
-                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>
-                                        <div class="chat-icon" style={{cursor:"pointer"}} onClick={handleClickChat}>
-                                            <i class="fas fa-comment"></i>
+                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br />
+                                        <div className="chat-icon" style={{ cursor: "pointer" }} onClick={handleClickChat}>
+                                            <i className="fas fa-comment"></i>
                                             <span> Chat</span>
-                                        </div><br/>
+                                        </div><br />
                                         <div className="phone-icon">
                                             <i className="fas fa-phone"></i>
                                             <span> {houseDTO.house.account.phone}</span>

@@ -35,7 +35,7 @@ function TopHouse() {
                         </div>
                     </div>
                     <div className="row">
-                        {topHouse.length !==0 ?
+                        {topHouse.length !== 0 ?
                             topHouse.map(item => {
                                 return (
                                     <div className="col-lg-4 mb-20" key={item.house.id} style={hoverEffectStyle}>
@@ -43,7 +43,10 @@ function TopHouse() {
                                             <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
                                                 <div className="title-left pull_left">
                                                     <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">{item.house.name}</a>
+                                                        <a>
+                                                            {item.house.name.slice(0, 15)}
+                                                            {item.house.name.length > 15 && " ..."}
+                                                        </a>
                                                     </h4>
                                                     <span>
                                                         <span className="mr-10">
@@ -54,11 +57,11 @@ function TopHouse() {
                                                 </div>
                                                 <div className="fix pull_right">
                                                     <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VND/DAY</h3>
-                                                   
+
                                                 </div>
                                             </div>
                                             <div className="property-image">
-                                                <img src={item.images.length!==0?item.images[0].url:""} alt="" style={{width:"100%",height:"300px"}} />
+                                                <img src={item.images.length !== 0 ? item.images[0].url : ""} alt="" style={{ width: "100%", height: "300px" }} />
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
                                                         <span>{item.house.status.name}</span>

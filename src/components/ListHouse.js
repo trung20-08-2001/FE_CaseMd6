@@ -38,7 +38,10 @@ function ListHouse() {
                                             <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
                                                 <div className="title-left pull_left">
                                                     <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">{item.house.name}</a>
+                                                        <a>
+                                                            {item.house.name.slice(0, 15)}
+                                                            {item.house.name.length > 15 && "..."}
+                                                        </a>
                                                     </h4>
                                                     <span>
                                                         <span className="mr-10">
@@ -48,10 +51,10 @@ function ListHouse() {
                                                     </span>
                                                 </div>
                                                 <div className="fix pull_right">
-                                                    <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VND/DAY</h3>                                                </div>
+                                                    <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VNĐ/DAY</h3>                                                </div>
                                             </div>
                                             <div className="property-image">
-                                                <Link to={"houseDetail/"+item.house.id}><img src={item.images[0].url} alt="" style={{width:"100%",height:"300px"}} /></Link>
+                                                <Link to={"houseDetail/" + item.house.id}><img src={item.images[0].url} alt="" style={{ width: "100%", height: "300px" }} /></Link>
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
                                                         <span>{item.house.status.name}</span>
@@ -66,7 +69,7 @@ function ListHouse() {
                                                     </div>
                                                     <div className="hover-item">
                                                         <i className='fa fa-heart mr-10' style={{ color: "red" }}></i>
-                                                       
+
                                                         <span>{item.house.numberOfHire}</span>
                                                     </div>
                                                 </div>
@@ -75,8 +78,8 @@ function ListHouse() {
                                     </div >
                                 )
                             })
-                            :<Loading></Loading>
-                            }
+                            : <Loading></Loading>
+                        }
 
                     </div>
                 </div>

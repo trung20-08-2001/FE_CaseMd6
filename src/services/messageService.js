@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "./api";
-import { async } from "q";
 
 export const findMessageByReceiverAccountAndSenderAccount = createAsyncThunk(
     "messages/findMessageByReceiverAccountAndSenderAccount",
@@ -10,17 +9,39 @@ export const findMessageByReceiverAccountAndSenderAccount = createAsyncThunk(
     }
 )
 
-export const addMessage = createAsyncThunk(
+export const saveMessage = createAsyncThunk(
     'messages/receiveMessage',
     async (message) => {
-        return message;
+        const response=await customAxios.post("/messages/save",message);
+        return response.data;
     }
 );
 
-
-export const addNotification = createAsyncThunk(
-    "messages/addNotification",
-    async(message)=>{
-        return message;
+export const findListAccountYouMessaged=createAsyncThunk(
+    "messages/findListAccountYouMessaged",
+    async(idAccount)=>{
+        const response=await customAxios.get("accounts/findAccountsYouMessaged/"+idAccount)
+        return response.data;
     }
 )
+export const addAccountYouMessaged=createAsyncThunk(
+    "messages/addAccountYouMessaged",
+    async(account)=>{
+        return account;
+    }
+)
+export const send=createAsyncThunk(
+    "messages/sendMessage",
+    async(newMessage) => {
+        return newMessage
+    }
+)
+
+export const findAccountHostByUsername=createAsyncThunk(
+    "messages/findAccountHost",
+    async(username)=>{
+        const reponse=await customAxios.get("/accounts/findAccountHost/"+username)
+        return reponse.data;
+    }
+)
+
