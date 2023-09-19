@@ -48,7 +48,7 @@ function ListHouse() {
                                                     </span>
                                                 </div>
                                                 <div className="fix pull_right">
-                                                    <h3>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}VND/DAY</h3>                                                </div>
+                                                    <p style={{color:"whitesmoke"}}><strong style={{color:"#95c41f", fontSize:"15px"}}>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}</strong> VND/DAY</p>                                                </div>
                                             </div>
                                             <div className="property-image">
                                                 <Link to={"houseDetail/"+item.house.id}><img src={item.images[0].url} alt="" style={{width:"100%",height:"300px"}} /></Link>

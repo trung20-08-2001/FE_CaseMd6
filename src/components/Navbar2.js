@@ -469,7 +469,19 @@ export default function PrimarySearchAppBar() {
                                         aria-haspopup="true"
                                         onClick={handleProfileMenuOpen}
                                         color="inherit"
+                                        style={{boxShadow: "0 0 4px rgba(0,0,0,0.5)", backgroundColor:"#1c7430"}}
                                     >
+                                        <Typography
+                                            variant="p"
+                                            noWrap
+                                            component="div"
+                                            aria-label="open drawer"
+                                            color={"white"}
+                                            sx={{display: {xs: 'block', sm: 'block'}}}
+                                            style={{fontSize:"15px"}}
+                                        >
+                                            {account.fullName == null ? account.username: account.fullName}
+                                        </Typography>
                                         <Avatar alt={account.username} src={account.avatar}/>
                                     </IconButton>
                                 </Box>
