@@ -28,7 +28,7 @@ function Login() {
     event.preventDefault();
     // Kiểm tra các trường đăng nhập
     if (!isValidInput(username) || !isValidInput(password)) {
-      setErrorMessage('Tên đăng nhập và mật khẩu chỉ được chứa chữ cái và số.');
+      setErrorMessage('Username and password must only contain letters and numbers.');
       return;
     }
     const account = {
@@ -40,26 +40,31 @@ function Login() {
       .then(resp => {
         Swal.fire({
           icon: 'success',
-          title: 'Đăng nhập thành công!',
-          text: 'Bạn đã đăng nhập thành công tài khoản.',
+          title: 'Logged in successfully!',
+          text: 'You have successfully logged into your account.',
         });
         localStorage.setItem("account", JSON.stringify(resp.data));
         dispatch(login(resp.data))
         setErrorMessage('');
         setUsername('')
         setPassword('')
-        navigate("/")
+        if(resp.data.role.id===1 || resp.data.role.name==="ROLE_ADMIN"){
+          navigate("/myaccount")
+        }else{
+          navigate("/")
+        }
+        
       })
       .catch(function (err) {
         if (err.response && err.response.status === 401) {
           Swal.fire({
             icon: 'success',
-            title: 'Đăng nhập thất bại!',
-            text: "Tài khoản của bạn đã bị khóa",
+            title: 'Login failed!',
+            text: "Your account has been locked",
           });
         } else {
           console.log(err)
-          setErrorMessage('Tên đăng nhập hoặc mật khẩu không chính xác.');
+          setErrorMessage('Username or password incorrect.');
         }
       })
 

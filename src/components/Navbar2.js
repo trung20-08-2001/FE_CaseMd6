@@ -32,6 +32,8 @@ import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
 import Notification from "../components/Notification"
 
+
+
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -409,16 +411,16 @@ export default function PrimarySearchAppBar() {
 
     return (
         <>
-            <Box sx={{flexGrow: 1}}>
-                <AppBar position="static" style={{backgroundColor: "#fff"}}>
-                    <Toolbar>
+            <Box sx={{flexGrow: 1}} style={{zIndex:"99999"}}>
+                <AppBar position="static" style={{backgroundColor: "#1e7e34", height:"100px", paddingTop:"20px"}}>
+                    <Toolbar style={{paddingLeft:"70px", paddingRight:"70px"}}>
                         <Link to="">
                             <Typography
                                 variant="h6"
                                 noWrap
                                 component="div"
                                 aria-label="open drawer"
-                                color={"primary"}
+                                color={"white"}
                                 sx={{display: {xs: 'block', sm: 'block'}}}
                             >
                                 BOOKING HOUSE
@@ -441,13 +443,13 @@ export default function PrimarySearchAppBar() {
                                 <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                                     <IconButton size="large" aria-label="show 4 new mails" color="black">
                                         <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
-                                            <SearchIcon />
+                                            <SearchIcon style={{color: "white"}}/>
                                         </Badge> </Link>
                                     </IconButton>
                                     <IconButton size="large" aria-label="show 4 new mails" color="black">
                                         <Link to="myaccount/chat">
                                             <Badge badgeContent={0} color="error">
-                                                <MailIcon/>
+                                                <MailIcon style={{color: "white"}}/>
                                             </Badge>
                                         </Link>
                                     </IconButton>
@@ -457,7 +459,7 @@ export default function PrimarySearchAppBar() {
                                         color="black"
                                     >
                                         <Badge badgeContent={0} color="error">
-                                            <NotificationsIcon/>
+                                            <NotificationsIcon style={{color: "white"}}/>
                                         </Badge>
                                     </IconButton>
                                     <IconButton
@@ -492,7 +494,7 @@ export default function PrimarySearchAppBar() {
                                     noWrap
                                     component="div"
                                     aria-label="open drawer"
-                                    color={"black"}
+                                    color={"white"}
                                     sx={{display: {xs: 'block', sm: 'block'}}}
                                 >
                                     LOGIN

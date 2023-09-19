@@ -2,31 +2,22 @@ import React, { useEffect, useState } from 'react';
 import '../assets/dataDisplay.css'; // Import CSS tùy chỉnh
 import {BounceLoader} from "react-spinners"; // Import BounceLoader từ react-loading
 
-const DataDisplay = () => {
+const NoResult = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Hàm mô phỏng việc tải dữ liệu (thay thế bằng logic thực tế)
-    const fetchData = () => {
-        setTimeout(() => {
-            setData([
-                // Dữ liệu mẫu ở đây
-            ]);
-            setLoading(false);
-        }, 2000); // Mô phỏng độ trễ 2 giây
-    };
+
 
     // Gọi fetchData khi thành phần được tạo (hoặc bất kỳ khi nào bạn muốn)
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     return (
         <div className="loading-container">
             {loading ? (
                 <div className="loading">
-                    <BounceLoader color={'#123abc'} loading={loading} />
-                    <p className="loading-text">Đang tải dữ liệu...</p>
+                    <p className="loading-text">
+                        <img src="https://nhaphoc.ueh.edu.vn/wp-content/uploads/2022/09/Picture1.png"></img>
+                        <p>There are no results please re-enter</p>
+                    </p>
                 </div>
             ) : (
                 <ul>
@@ -39,4 +30,4 @@ const DataDisplay = () => {
     );
 };
 
-export default DataDisplay;
+export default NoResult;

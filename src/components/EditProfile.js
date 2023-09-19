@@ -106,14 +106,14 @@ function EditProfile() {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
-                                title: 'Cập nhật thành công!',
-                                text: 'Bạn đã cập nhật thành công',
+                                title: 'Update successful!',
+                                text: 'You have successfully updated',
                             });
                         } else {
                             await Swal.fire({
                                 icon: 'error',
-                                title: 'Cập nhật thất bại',
-                                text: 'Bạn đã cập nhật không thành công.',
+                                title: 'Update failed',
+                                text: 'You have failed to update.',
                             });
                         }
                     } catch (error) {
@@ -122,23 +122,12 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="banner-title text-center">
-                                        <h1 className="text-uppercase text-white">Edit Profile</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="create-agency-area pt-15 pb-120">
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
-                                        <h4 className="details-title text-center mb-43">Edit</h4>
+                                        <h2 className="details-title text-center mb-43" >Edit Profile</h2>
                                         <div className="row">
                                             <div className="col-lg-6">
 

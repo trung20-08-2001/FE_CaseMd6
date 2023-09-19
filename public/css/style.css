@@ -596,7 +596,7 @@ span.text-dark{font-family: "montserratregular";}
     height: 3px;
     left: 0;
     position: absolute;
-    width: 50px;
+    width: 100%;
 }
 .single-sidebar-widget .form-box.large{width: 100%}
 .single-sidebar-widget .price_filter {width: 75%;}
@@ -671,7 +671,7 @@ span.text-dark{font-family: "montserratregular";}
     font-size: 12px;
     height: 36px;
     padding: 0 15px;
-	background: #FBFBFB
+	background: #F5F5F5;
 }
 .comment-form textarea, .single-post-area textarea {height: 200px; resize: none;padding: 12px 15px}
 iframe {width: 100%; border: 0}
@@ -1122,9 +1122,35 @@ button.close:hover {
 
 .nav-pills li .nav-link.active {
 	background-color: #95c41f;
+	max-width: 100%;
+	max-height: 100%;
 }
 
+.nav-item {
+	height: 70px;
+	width: 100%;
+}
 
+.nav-pills li .nav-link {
+	line-height: 60px;
+	height: 100%;
+	width: 100%;
+}
+
+.nav-pills .nav-item .nav-link:hover {
+	color: white;
+	background-color: #95c41f;
+}
+
+.text-truncate {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.chat-icon span:hover {
+	color: #9ac438;
+}
 
 
 

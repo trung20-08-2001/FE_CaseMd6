@@ -8,7 +8,6 @@ import customAxios from '../../services/api';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Badge from "@mui/material/Badge";
-import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -49,6 +48,7 @@ function Chat() {
         }
     }, [])
 
+
     useEffect(() => {
         if (idSenderAccount !== undefined) {
             setAccountReceiverCurrent(accountSenderCurrent)
@@ -72,7 +72,6 @@ function Chat() {
                     setNewMessage({ ...newMessage, message: "" })
                 })
                 .catch(err => console.log(err));
-
         }
     }
 
@@ -95,10 +94,11 @@ function Chat() {
         setAccountReceiverCurrent(accountReceiver);
         setNewMessage({ ...newMessage, senderAccount: account, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
         customAxios.get("messages/findMessageByReceiverAccountAndSenderAccount/" + idSenderAccount + "/" + account.id)
-            .then((response) => {
-                setListMessages(response.data);
-            })
-            .catch(error => { console.log(error); })
+        .then((response) => {
+            setListMessages(response.data);
+        })
+        .catch(error => { console.log(error); })
+
     }
 
     return (
@@ -164,7 +164,7 @@ function Chat() {
                             ))
                             }
                             {listAccountsUserMessageToAccountHost.map((item) => (
-                                <li key={new Date().getTime()} onClick={() => handleFindMessageByAccount(item)} className={accountReceiverCurrent === item ? "active" : ""}>
+                                <li key={new Date().getTime()} className={accountReceiverCurrent === item ? "active" : ""}>
                                     <div className="d-flex bd-highlight" >
                                         <div className="img_cont">
                                             <img

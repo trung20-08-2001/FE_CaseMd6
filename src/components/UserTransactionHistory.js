@@ -46,7 +46,7 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking"}
+                let notification={type:"NOTIFICATION",content:account.username + " canceled the booking " + res.data.house.name}
                     WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',
@@ -102,7 +102,7 @@ function UserTransactionHistory() {
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
                     <td>{address}</td>
                     <td>{status}</td>
                     <td>{cancelButton}</td>

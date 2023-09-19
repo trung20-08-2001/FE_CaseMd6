@@ -31,7 +31,7 @@ function ShowVendor() {
                     <td >{vendor.account.fullName == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.fullName}</p>}</td>
                     <td>{vendor.account.email == null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account.email}</p>}</td>
                     <td>{vendor.account.phone}</td>
-                    <td>${vendor.revenue}</td>
+                    <td>{vendor.revenue} VNĐ</td>
                     <td>{vendor.countHouse}</td>
                     <td>
                         <Link to={`/myaccount/vendor/detail/${vendor.account.id}`}>

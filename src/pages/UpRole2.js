@@ -91,7 +91,7 @@ const UpRole2 = () => {
 
                                     <Form action="#" method="post">
 
-                                        <h4 className="details-title text-center mb-43">
+                                        <h4 className="details-title text-center mb-43 headerInBody" >
                                             Register to become a landlord
                                         </h4>
                                         <h4 className="details-title text-medium mb-23 pt-24">

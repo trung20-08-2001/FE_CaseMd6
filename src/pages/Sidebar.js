@@ -28,29 +28,30 @@ function Sidebar() {
 
     return (
         <>
-            <div className='row' style={{marginTop:"4%", marginBottom:"4%"}}>
-                <div className="col-2 offcanvas offcanvas-start w-25 " tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
-                    <div className="offcanvas-body px-1">
-                        <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
-                            <li className="nav-item mt-10">
+
+            <div className='row' >
+                <div className="col-3 offcanvas offcanvas-start w-25" style={{backgroundColor:"#F5F5F5", maxWidth:"20%", padding:"0px",boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)"}} tabIndex={-1} id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+                    <div className="offcanvas-body" style={{padding:"0px"}}>
+                        <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu" style={{padding:"0px",maxHeight:"100%", maxWidth:"100%", textIndent: "30px"}}>
+                            <li className="nav-item">
                                 <NavLink to="/" className="nav-link text-truncate">
                                     <HomeIcon />
                                     <h5 className="ms-1 d-none d-sm-inline">Home</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item mt-10">
+                            <li className="nav-item">
                                 <NavLink to={`/myaccount/profile/${account.id}`} className="nav-link text-truncate">
                                     <AccountCircle />
                                     <h5 className="ms-1 d-none d-sm-inline">My profile</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item mt-10">
+                            <li className="nav-item">
                                 <NavLink to={`/myaccount/edit_profile/${account.id}`} className="nav-link text-truncate">
                                     <EditIcon />
                                     <h5 className="ms-1 d-none d-sm-inline">Edit profile</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item mt-10">
+                            <li className="nav-item">
                                 <NavLink to={"/myaccount/changePassword"} className="nav-link text-truncate">
                                     <ChangeCircleIcon />
                                     <h5 className="ms-1 d-none d-sm-inline">Change password</h5>
@@ -75,25 +76,25 @@ function Sidebar() {
                             }
                             {account && account.role.id === 2 &&
                                 <>
-                                    <li className="nav-item mt-10">
+                                    <li className="nav-item">
                                         <NavLink to="/myaccount/host" className="nav-link text-truncate">
                                             <HolidayVillageIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">My houses</h5>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item mt-10">
+                                    <li className="nav-item">
                                         <NavLink to="/myaccount/create_house" className="nav-link text-truncate">
                                             <AddBusinessIcon/>
                                             <h5 className="ms-1 d-none d-sm-inline">Create houses</h5>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item mt-10">
+                                    <li className="nav-item">
                                         <NavLink to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
                                             <HistoryIcon/>
                                             <h5 className="ms-1 d-none d-sm-inline">Renting a House</h5>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item mt-10">
+                                    <li className="nav-item">
                                         <NavLink to="/myaccount/income" className="nav-link text-truncate">
                                             <BarChartIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">Revenue</h5>
@@ -118,19 +119,19 @@ function Sidebar() {
                                     </li>
                                 </>
                             }
-                            <li className="nav-item mt-10">
-                                <Link className="nav-link text-truncate"
+                            <li className="nav-item" style={{textIndent: "15px", cursor:"pointer"}}>
+                                <a className="nav-link text-truncate"
                                     onClick={handleLogout}
                                 >
                                     <i className="fs-20 bi-box-arrow-left" />
-                                    <h5 className="ms-1 d-none d-sm-inline" style={{cursor: "pointer"}}>Log out</h5>
-                                </Link>
+                                    <h5 className="ms-1 d-none d-sm-inline">Log out</h5>
+                                </a>
                             </li>
 
                         </ul>
                     </div>
                 </div>
-                <div className="container-fluid col-10">
+                <div className="container-fluid col-9">
                     <div className="container">
                         <Outlet></Outlet>
                     </div>

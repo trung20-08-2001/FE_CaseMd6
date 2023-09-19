@@ -1,18 +1,17 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus } from "../services/billService";
+import { filterBillHistoryHost } from "../redux/selector";
+import { Label } from "reactstrap";
 
 function VendorTransactionHistory() {
-    const [bills_vendor, setBills_vendor] = useState([]);
-    const {id} = useParams();
-    const [nameHouse, setNameHouse] = useState('');
-    const [selectValue, setSelectValue] = useState(0);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [filter, setFilter] = useState(bills_vendor);
+    const bills_vendor = useSelector(filterBillHistoryHost)
+
+    const { id } = useParams();
     const dispatch = useDispatch()
 
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
@@ -20,14 +19,18 @@ function VendorTransactionHistory() {
     const pagesVisited = pageNumber * billsPerPage;
 
     useEffect(() => {
-        axios.get("http://localhost:8081/bills_vendor/" + id)
-            .then(function (res) {
-                setBills_vendor(res.data);
-            })
+        if (bills_vendor.length === 0) {
+            axios.get("http://localhost:8081/bills_vendor/" + id)
+                .then(function (res) {
+                    dispatch(addBillHistory(res.data))
+                })
+        }
     }, []);
 
+
+
     const displayBills_vendor = bills_vendor
-        .slice(pagesVisited, pagesVisited + billsPerPage)
+        .slice( pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
             const userId = bill?.bill.vendor.id || '';
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
@@ -48,9 +51,9 @@ function VendorTransactionHistory() {
 
                         const dateCheckout = new Date(bill.bill.dateCheckout);
                         const dateCheckin = new Date(bill.bill.dateCheckin);
-                        currentDate.setHours(0,0,0,0,)
-                        dateCheckout.setHours(0,0,0,0,)
-                        dateCheckin.setHours(0,0,0,0,)
+                        currentDate.setHours(0, 0, 0, 0,)
+                        dateCheckout.setHours(0, 0, 0, 0,)
+                        dateCheckin.setHours(0, 0, 0, 0,)
 
                         if (bill.bill.status.id === 2) {
                             if (dateCheckin <= currentDate) {
@@ -80,11 +83,10 @@ function VendorTransactionHistory() {
                                     }
                                 };
                             } else {
-                                // Show error message when trying to checkin before the current date
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Cannot Checkin',
-                                    text: 'The Checkin date is in the future.',
+                                    text: 'The Checkin date is ' + bill.bill.dateCheckin,
                                     showConfirmButton: false,
                                     timer: 2000
                                 });
@@ -157,26 +159,29 @@ function VendorTransactionHistory() {
 
                 updateStatus_billAndHouse(billId, updatedBills)
                     .then(() => {
-                        setBills_vendor(updatedBills);
+                        axios.get("http://localhost:8081/bills_vendor/" + id)
+                            .then(function (res) {
+                                dispatch(addBillHistory(res.data))
+                            })
                     })
                     .catch((error) => {
                         console.log("Error updating bill and house status:", error);
                     });
             };
             return (
-                <tr key={bill.bill.id} style={{height: '60px'}}>
+                <tr key={bill.bill.id} style={{ height: '60px' }}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice)} VNĐ</td>
+                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
                     <td>{status}</td>
                     <td>
-                        <button style={{width: "114px"}}
-                                className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
-                                ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
-                                ) : "btn btn-outline-secondary"}
-                                onClick={() => handleBillClick(bill?.bill.id)}
+                        <button style={{ width: "114px" }}
+                            className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
+                            ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
+                            ) : "btn btn-outline-secondary"}
+                            onClick={() => handleBillClick(bill?.bill.id)}
                         >{bill.bill.status.id === 2 ? (`Checkin`
                         ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
                         ) : `Checkout`}
@@ -188,7 +193,7 @@ function VendorTransactionHistory() {
 
     const pageCount = Math.ceil(bills_vendor.length / billsPerPage);
 
-    const changePage = ({selected}) => {
+    const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
 
@@ -201,14 +206,14 @@ function VendorTransactionHistory() {
                 if (updatedStatus_bill.status.id === 6) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'You have Checked in!',
+                        title: 'You have checked in!',
                         showConfirmButton: false, // Ẩn nút "OK"
                         timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     })
                 } else if (updatedStatus_bill.status.id === 7) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'You have Checked out!',
+                        title: 'You have checked out!',
                         showConfirmButton: false, // Ẩn nút "OK"
                         timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                     })
@@ -228,75 +233,70 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-    const handleSearch = () => {
-        if (nameHouse !== "" && startDate !== null && endDate !== null) {
-
-        }
-    }
-
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center'}} className="mt-30">
-                <input
-                    name="nameHouse"
-                    type="text"
-                    placeholder="Name house..."
-                    onChange={e => dispatch({type: "bill/findBillHistoryHost", payload: e.target.value})}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <input
-                    name="nameHouse"
-                    type="DATE"
-                    value={startDate}
-                    onChange={e => setStartDate(e.target.value)}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <input
-                    name="nameHouse"
-                    type="DATE"
-                    value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
-                    style={{flex: 2, marginRight: '10px'}}
-                />
-                <select
-                    name="select"
-                    value={selectValue}
-                    onChange={e => setSelectValue(parseInt(e.target.value))}
-                    style={{flex: 2, marginRight: '10px'}}
-                >
-                    <option value={0}>All</option>
-                    <option value={5}>ORDERED</option>
-                    <option value={6}>USING</option>
-                    <option value={7}>CHECK_OUT</option>
-                    <option value={8}>CANCELED</option>
-                </select>
-                <button
-                    type="button"
-                    className="btn btn-outline-danger"
+            <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
+                <div className="col-xl-3">
+                    <Label htmlFor="nameHouse">Name House</Label>
+                    <input
+                        id="nameHouse"
+                        type="text"
+                        placeholder="Name house..."
+                        onChange={e => dispatch(filterNameHouse(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3 ">
+                    <Label htmlFor="dateCheckin">Date Checkin</Label>
+                    <input
+                        id="dateCheckin"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckin(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="dateCheckout">Date Checkout</Label>
+                    <input
+                        id="dateCheckout"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckout(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="status">Status</Label>
+                    <select
+                        id="status"
+                        onChange={e => dispatch(filterStatus(e.target.value))}
+                        style={{ flex: 2, marginRight: '10px' }}
+                    >
+                        <option value="ALL">All</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="USING">USING</option>
+                        <option value="CHECKED_OUT">CHECKED_OUT</option>
+                        <option value="CANCELED">CANCELED</option>
+                    </select>
+                </div>
+            </div >
 
-                    style={{flex: 1}}
-                >
-                    Search
-                </button>
-            </div>
-
-            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+            <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
                 <h4 className='text-center pb-20'>Renting a house</h4>
 
                 <table className="table table-hover">
                     <thead>
-                    <tr>
-                        <th>Date CheckIN</th>
-                        <th>Date CheckOut</th>
-                        <th>Name House</th>
-                        <th>Customer</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>Date CheckIN</th>
+                            <th>Date CheckOut</th>
+                            <th>Name House</th>
+                            <th>Customer</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {displayBills_vendor}
+                        {displayBills_vendor}
                     </tbody>
                 </table>
                 {/* Phân trang */}

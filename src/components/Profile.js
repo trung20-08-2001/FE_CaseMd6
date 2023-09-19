@@ -9,7 +9,6 @@ function Profile() {
     useEffect(() => {
         axios.get("http://localhost:8081/accounts/searchAccount/" + id)
             .then(function (res) {
-                console.log(res.data)
                 setAccount(res.data)
             })
             .catch(function (err) {
@@ -31,42 +30,42 @@ function Profile() {
                     </tr>
                     <tr>
                         <th>Username</th>
-                        <td>{account?.username == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.username == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.username}</p>}</td>
                     </tr>
                     <tr>
                         <th>Email</th>
-                        <td>{account?.email == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.email == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.email}</p>}</td>
                     </tr>
                     <tr>
                         <th>Full Name</th>
-                        <td>{account?.fullName == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.fullName == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.fullName}</p>}</td>
                     </tr>
                     <tr>
                         <th>Phone Number</th>
-                        <td>{account?.phone == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.phone == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.phone}</p>}</td>
                     </tr>
                     <tr>
                         <th>Address</th>
-                        <td>{account?.address == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.address == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.address}</p>}</td>
                     </tr>
                     <tr>
                         <th>Front Of The Citizen Card</th>
-                        <td>{account?.img1 == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.img1 == null ? <p className="text-danger">Not Update</p> :
                             <img src={account?.img1} alt="img" width={"150px"} height={"250px"}/>}</td>
                     </tr>
                     <tr>
                         <th>Back Of The Citizen Card</th>
-                        <td>{account?.img2 == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.img2 == null ? <p className="text-danger">Not Update</p> :
                             <img src={account?.img2} alt="img" width={"150px"} height={"250px"}/>}</td>
                     </tr>
                     <tr>
                         <th>Role</th>
-                        <td>{account?.role == null ? <p className="text-danger">Chưa cập nhật</p> :
+                        <td>{account?.role == null ? <p className="text-danger">Not Update</p> :
                             <p>{account?.role.id === 1? 'Admin': account?.role.id ===2? 'Vendor' : 'Customer'}</p>}</td>
                     </tr>
                 </table>
