@@ -285,7 +285,7 @@ const EditHouse = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="file-upload-btn" type="submit"><h3>Save</h3></button>
+                  <button className="file-upload-btn" type="submit"  style={{width:"10%",marginLeft:"40%",borderRadius:"50%"}}><h3>Save</h3></button>
                 </div>
               </Form>
             )}

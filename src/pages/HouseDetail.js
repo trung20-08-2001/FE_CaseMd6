@@ -56,6 +56,7 @@ const HouseDetail = () => {
         else navigate("/login");
     }
 
+
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
@@ -108,6 +109,7 @@ const HouseDetail = () => {
     }, [idHouse]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
                 setListFeedback(res.data);
@@ -446,11 +448,9 @@ const HouseDetail = () => {
                                         <IconButton size="large" aria-label="show 4 new mails" color="black" style={{marginLeft:"-9%"}}>
                                            <div style={{marginBottom:"-39%",width:"20px",height:"20px"}}><Badge badgeContent={0} color="error">
                                                <CalendarMonthIcon/></Badge></div>
-
                                         </IconButton>
                                         <h4 style={{marginBottom:"-10%"}} > Date Checkin</h4>
                                     </MenuItem>
-
                                       <DatePicker
                                           className="mb-20 datepickerWidth"
                                         selected={selectedStartDate}

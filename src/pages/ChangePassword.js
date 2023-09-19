@@ -91,11 +91,11 @@ const ChangePassword = () => {
             >
                 <Form>
                     <div className="form-container">
-                        <h2 className="form-title">Change Password</h2>
+                        <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Change Password</h4>
                         <MenuItem>
                             <IconButton size="large" aria-label="show 4 new mails" color="black">
                                 <Badge badgeContent={0} color="error">
-                                    <div style={{ color: "yellow" }}> <WarningAmberIcon /></div>
+                                    <div style={{ color: "red" }}> <WarningAmberIcon /></div>
                                 </Badge>
                             </IconButton>
                             <p>Your password must be at least 6 characters</p>
@@ -106,6 +106,7 @@ const ChangePassword = () => {
                                 type="password"
                                 name="oldPassword"
                                 className="form-control"
+                                style={{ width: "100%" }}
                                 placeholder="Old Password"
                             />
                             <div className="error-message">
@@ -118,6 +119,7 @@ const ChangePassword = () => {
                                 type="password"
                                 name="password"
                                 className="form-control"
+                                style={{ width: "100%" }}
                                 placeholder="New Password"
                             />
                             <div className="error-message">
@@ -130,6 +132,7 @@ const ChangePassword = () => {
                                 type="password"
                                 name="confirmPassword"
                                 className="form-control"
+                                style={{ width: "100%" }}
                                 placeholder="Confirm New Password"
                             />
                             <div className="error-message">
@@ -139,6 +142,8 @@ const ChangePassword = () => {
                         <button type="submit" className="btn btn-success btn-confirm">Confirm</button>
                     </div>
                 </Form>
+
+
             </Formik>
         </div>
     );

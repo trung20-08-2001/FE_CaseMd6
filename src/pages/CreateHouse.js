@@ -176,7 +176,7 @@ const CreateHouse = () => {
         <>
             <div className="row">
                 <div className="agency-container">
-                    <h2 className="text-center mb-15" >Create House</h2>
+                    <h2 className="text-center mb-15 headerInBody" >Create House</h2>
                     <Formik
                         initialValues={{
                             name: '',

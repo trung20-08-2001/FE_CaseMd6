@@ -28,9 +28,9 @@ function TopHouse() {
                         {topHouse.length !==0 ?
                             topHouse.map(item => {
                                 return (
-                                    < div className="col-lg-4 mb-20" key={item.house.id}>
+                                    < div className="col-lg-4 mb-20 " key={item.house.id} >
                                         <Link to={"/houseDetail/"+item.house.id}>
-                                        <div className="single-property hover-effect-two">
+                                        <div className="single-property hover-effect-two  " >
                                             <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
                                                 <div className="title-left pull_left">
                                                     <h4 className="text-white mb-12">
