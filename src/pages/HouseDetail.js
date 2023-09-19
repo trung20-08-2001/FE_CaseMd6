@@ -56,6 +56,7 @@ const HouseDetail = () => {
         else navigate("/login");
     }
 
+
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
@@ -108,6 +109,7 @@ const HouseDetail = () => {
     }, [idHouse]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
                 setListFeedback(res.data);
@@ -399,7 +401,7 @@ const HouseDetail = () => {
                             <div className="col-lg-4 pl-35 order-2">
                                 <div className="single-sidebar-widget fix mb-40">
 
-                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50">
+                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50" style={{borderRadius:"15%"}}>
                                         <div className=" mb-37 pr-8" style={{marginLeft:"-9%",marginBottom:"5%"}} >
                                             <MenuItem>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -446,11 +448,9 @@ const HouseDetail = () => {
                                         <IconButton size="large" aria-label="show 4 new mails" color="black" style={{marginLeft:"-9%"}}>
                                            <div style={{marginBottom:"-39%",width:"20px",height:"20px"}}><Badge badgeContent={0} color="error">
                                                <CalendarMonthIcon/></Badge></div>
-
                                         </IconButton>
                                         <h4 style={{marginBottom:"-10%"}} > Date Checkin</h4>
                                     </MenuItem>
-
                                       <DatePicker
                                           className="mb-20 datepickerWidth"
                                         selected={selectedStartDate}
@@ -492,7 +492,7 @@ const HouseDetail = () => {
                                 </div>
                             </div>
                             <div className="col-lg-8 order-1">
-                                <div className="property-image mb-57">
+                                <div className="property-image mb-57" >
                                     <Slide images={houseDTO.images}
                                         styleImage={{ width: "600px", height: "400px" }}></Slide>
                                 </div>
@@ -505,7 +505,7 @@ const HouseDetail = () => {
 
                                     <div className="pull_left col-4">
                                         <img alt="" src={houseDTO.house.account.avatar}
-                                            style={{ width: "150px", height: "150px" }} />
+                                            style={{ width: "150px", height: "150px",borderRadius:"50%" }} />
                                     </div>
                                     <div className=" col-8">
                                         <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>

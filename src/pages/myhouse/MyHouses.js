@@ -135,52 +135,57 @@ function MyHouses() {
                             return (
                                 <div className="col-md-6  card_house mb-40 " key={item.house.id}>
                                     <div className="single-property hover-effect-two bg-violet">
-                                        <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet">
-                                            <div className="title-left pull_left">
-                                                <h4 className="text-white mb-12">
-                                                    <a>{item.house.name}</a>
-                                                </h4>
-                                                <span>
-                                                    <span className="mr-10">
-                                                        <img src="../images/icons/map.png" alt="" />
+                                        <div className="scaleHouse">
+                                            <div className="single-property hover-effect-two">
+                                                <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet"
+                                                     style={{
+                                                         borderRadius: "18px 18px 0 0",
+                                                         boxShadow: "0 0 10px rgba(0,0,0,0.5)"
+                                                     }}
+                                                >
+                                                    <div className="title-left pull_left">
+                                                        <h4 className="text-white mb-12">
+                                                            <a href="properties-details.html">{item.house.name}</a>
+                                                        </h4>
+                                                        <span style={{color: "#fef1ec"}}>
+                                                        <span className="mr-10">
+                                                            <img src="images/icons/map.png" alt=""/>
+                                                        </span>
+                                                            {item.house.address}
                                                     </span>
-                                                    {item.house.address}
-                                                </span>
-                                            </div>
-                                            <div className="fix pull_right">
-                                                <h3>{item.house.price} VNĐ/DAY</h3>
-                                            </div>
-                                        </div>
-                                        <div className="property-image">
+                                                    </div>
+                                                    <div className="fix pull_right">
+                                                        <p style={{color: "ghostwhite"}}><strong style={{
+                                                            color: "gold",
+                                                            fontSize: "15px",
+                                                            textShadow: "0 0 1px gold"
+                                                        }}>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}</strong> Vnd/Day
+                                                        </p></div>
+                                                </div>
+                                                <div className="property-image text-white">
+                                                    <Link to={"houseDetail/" + item.house.id}><img
+                                                        src={item.images[0].url} alt=""
+                                                        style={{width: "100%", height: "300px"}}/></Link>
+                                                    <div className="hover-container pl-15 pr-15 pt-16 pb-15">
+                                                        <div className="hover-item">
+                                                            <span>{item.house.status.name === "READY"? <strong style={{color:"#32CD32"}}>Ready</strong>:<p style={{color:"#ea4335"}}>Ordered</p> }</span>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <img className="mr-10" src="../images/icons/bed.png"
+                                                                 alt=""/>
+                                                            <strong>{item.house.numberOfBedrooms}</strong>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <img className="mr-10" src="../images/icons/shower.png"
+                                                                 alt=""/>
+                                                            <strong>{item.house.numberOfLivingRooms}</strong>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
 
-                                            {item.images[0].url === undefined ?
-                                                <img src={item.images[0]} alt="Image house"
-                                                    style={{ width: "100%", height: "250px" }} />
-                                                : <img src={item.images[0].url} alt="Image house"
-                                                    style={{ width: "100%", height: "250px" }} />}
-
-                                            <div className="hover-container pl-15 pr-15 pt-16 pb-15">
-                                                <div className="hover-item">
-                                                    {/* <img className="mr-10" src="../images/icons/floor.png" alt="" /> */}
-                                                    <span>{item.house.status.name}</span>
-                                                </div>
-                                                <div className="hover-item">
-                                                    <img className="mr-10" src="../images/icons/bed.png"
-                                                        alt="" />
-                                                    <span>{item.house.numberOfBedrooms}</span>
-                                                </div>
-                                                <div className="hover-item">
-                                                    <img className="mr-10" src="../images/icons/shower.png"
-                                                        alt="" />
-                                                    <span>{item.house.numberOfLivingRooms}</span>
-                                                </div>
-                                                <div className="hover-item">
-                                                    {/* <img className="mr-10" src="../images/icons/garage.png" alt="" /> */}
-                                                    <i className='fa fa-heart mr-10' style={{ color: "red" }}></i>
-                                                    {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z" />
-            </svg> */}
-                                                    <span>{item.house.numberOfHire}</span>
+                                                            <strong style={{textShadow:"0 0 2px red"}}>{item.house.numberOfHire}</strong>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuItem from "@mui/material/MenuItem";
+import EmailIcon from '@mui/icons-material/Email';
 
 const Footer = () => {
 
@@ -142,11 +147,17 @@ const Footer = () => {
                                 <div className="footer-contact-info">
                                     <img src="images/icons/f-globe.png" alt="" />
                                     <span className="pl-40 block">
-                                        Email : hoilamgi@gmail.com
-                                        <br />
                                         Web : webthuenha.com.vn
                                     </span>
                                 </div>
+                                <MenuItem>
+                                    <IconButton size="large" aria-label="show 4 new mails" color="white" style={{marginLeft:"-13%"}}>
+                                      <div style={{color:"gray"}}> <Badge badgeContent={0} color="error">
+                                          <EmailIcon/>
+                                      </Badge></div>
+                                    </IconButton>
+                                    <p style={{color:"white",fontSize:"12px"}}>Email:hoilamgi@gmail.com</p>
+                                </MenuItem>
                             </div>
                         </div>
                     </div>

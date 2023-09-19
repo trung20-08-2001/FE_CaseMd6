@@ -17,8 +17,8 @@ const validationSchema = Yup.object().shape({
 
 const UpRole2 = () => {
     let account = JSON.parse(localStorage.getItem('account'));
-    const [img1, setImg1] = useState();
-    const [img2, setImg2] = useState();
+    const [img1,setImg1] = useState();
+    const [img2,setImg2] = useState();
 
     const handleImageChange = (e, setImage) => {
         const img = e.target.files[0];
@@ -41,6 +41,7 @@ const UpRole2 = () => {
             .then(response => {
                 // Xử lý response từ server (nếu cần)
                 console.log(response);
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Sign Up Success!',
@@ -67,36 +68,38 @@ const UpRole2 = () => {
 
     return (
         <>
-            <div className="create-agency-area pt-15 pb-120">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-                            <div className="agency-container">
-                                <Formik initialValues={{
-                                    address: '', fullName: '', email: '', phone: '', img1: ''
-                                }}
-                                        validationSchema={validationSchema}
-                                        onSubmit={handleSubmit}>
-                                    {({isSubmitting}) => (
-                                        <Form action="#" method="post">
-                                            <br/>
-                                            <br/>
-                                            <h2 className='text-center pb-20 headerInBody'>
-                                                Register to become a landlord
-                                            </h2>
-                                            <h4 className="details-title text-medium mb-23 pt-24">
-                                                Provide more information
-                                            </h4>
-                                            <div className="row">
-                                                <div className="col-lg-6">
-                                                    <Field
-                                                        type="text"
-                                                        name="address"
-                                                        placeholder="Address"
-                                                        className="mb-28"
-                                                    />
-                                                    <p style={{color: "red"}} className="error-message">
-                                                        <ErrorMessage name="address" component="div" className="error"/>
+        <div className="create-agency-area pt-20 pb-120">
+            <div className="container">
+                <div className="row">
+                    <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                        <div className="agency-container">
+                            <Formik initialValues={{
+                                address: '', fullName: '', email: '', phone: '', img1: ''
+                            }}
+                                    validationSchema={validationSchema}
+                                    onSubmit={handleSubmit}>
+                                {({isSubmitting}) => (
+
+                                    <Form action="#" method="post">
+                                        <br/>
+                                        <br/>
+                                        <h2 className="text-center mb-43 headerInBody">
+                                            Register to become a landlord
+                                        </h2>
+                                        <h4 className="details-title text-medium mb-23 pt-24">
+                                            Provide more information
+                                        </h4>
+
+                                        <div className="row">
+                                            <div className="col-lg-6">
+                                                <Field
+                                                    type="text"
+                                                    name="address"
+                                                    placeholder="Address"
+                                                    className="mb-28"
+                                                />
+                                                <p style={{ color: "red" }} className="error-message">
+                                                    <ErrorMessage name="address" component="div" className="error"/>
 
                                                     </p>
                                                 </div>

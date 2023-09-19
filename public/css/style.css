@@ -198,8 +198,9 @@ span.text-dark{font-family: "montserratregular";}
 	top: -2px;
 }
 .property-image {position: relative;}
-.property-image > a> img {width: 100%;}
+.property-image > a> img {width: 100%; border-radius: 0 0 18px 18px; box-shadow: 0 0 10px rgba(0,0,0,0.5)}
 .hover-container {
+	border-radius: 0 0 18px 18px;
 	background: rgba(0, 0, 0, 0.64) none repeat scroll 0 0;
 	bottom: 0;
 	height: 18%;
@@ -649,7 +650,7 @@ span.text-dark{font-family: "montserratregular";}
 /*----------------------------------------*/
 /*  15.  Property Details Page
 /*----------------------------------------*/
-.property-image > img {width: 100%;}
+.property-image > img {width: 100%;  border-radius: 0 0 18px 18px; box-shadow: 0 0 10px rgba(0,0,0,0.5)}
 .property-desc > p span{font-family: "montserratregular"}
 .details-title, .author-info h5, .comment-text .reply, .package-list span.dark{
     color: #303030;
@@ -1334,12 +1335,25 @@ tr:hover {
     box-shadow: 0px 0px 4px #95C41F;
 }
 
+.property-title:hover {
+	box-shadow: 1px 1px 1px #95C41F
+}
 
+*{
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+}
 
+.scaleHouse {
+	transform: scale(1);
+	-webkit-transition: 0.5s ease-in-out;
+	transition: .8s ease-in-out;
+}
 
-
-
-
+.scaleHouse:hover {
+	transform: scale(1.06);
+	border-radius: 18px;
+	box-shadow: 0 0px 10px gold;
+}
 
 
 
