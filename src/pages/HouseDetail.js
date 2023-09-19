@@ -505,7 +505,7 @@ const HouseDetail = () => {
 
                                     <div className="pull_left col-4">
                                         <img alt="" src={houseDTO.house.account.avatar}
-                                            style={{ width: "150px", height: "150px" }} />
+                                            style={{ width: "150px", height: "150px",borderRadius:"50%" }} />
                                     </div>
                                     <div className=" col-8">
                                         <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>

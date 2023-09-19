@@ -3,7 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
-import Page404 from "./pages/404";
+import Page404 from "./pages/404/404";
 import ChangePassword from "./pages/ChangePassword";
 import HouseDetail from "./pages/HouseDetail";
 import CreateHouse from "./pages/CreateHouse";
