@@ -122,12 +122,23 @@ function EditProfile() {
                 }}
             >
                 <Form>
-                    <div className="create-agency-area pt-15 pb-120">
+                    {/* <div className="banner-area bg-2 bg-overlay-2 ptb-165">
                         <div className="container">
                             <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="banner-title text-center">
+                                        <h1 className="text-uppercase text-white">Edit Profile</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> */}
+                    <div className="create-agency-area pt-15 pb-120">
+                        <div className="container">
+                            <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
+                            <div className="row table distanceBody">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
-                                        <h4 className="details-title text-center mb-43">Edit</h4>
                                         <div className="row">
                                             <div className="col-lg-6">
 
@@ -168,18 +179,14 @@ function EditProfile() {
                                                               className="error-message"/>
                                             </div>
                                             <div className="col-lg-6">
-                                                <input type="file" name="avatar" className="mb-28"
-                                                       accept=".jpeg, .jpg, .png"
-                                                       onChange={(event) => handleChangeImage(event)}/>
-
-                                                {previewImage && (
-                                                    <img src={previewImage} alt="Image" height="200" width="200"/>
-                                                )}
-
+                                                    <input type="file" name="avatar" placeholder="Ảnh" accept=".jpeg, .jpg, .png" onChange={(event) => handleChangeImage(event)}/>
+                                                    {previewImage && (
+                                                        <img src={previewImage} alt="Image" className="preview-image"/>
+                                                    )}
                                             </div>
                                         </div>
-                                        <button style={{cursor: 'pointer'}} type={"button"} onClick={edit}
-                                                className="register-btn button lemon pull-left">
+                                        <button style={{cursor: 'pointer', marginLeft:"36%", width:"30%"}} type={"button"} onClick={edit}
+                                                className="button buttonShadow">
                                             Update
                                         </button>
                                     </div>

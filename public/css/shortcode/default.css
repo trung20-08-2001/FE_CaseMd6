@@ -1126,7 +1126,7 @@ textarea:focus {
 *************************/
 #scrollUp {
 	background: rgba(0, 0, 0, 0) url("../../images/icons/scroll.png") no-repeat scroll center center;
-	bottom: 66px;
+    bottom: 66px;
 	color: #90ae10;
 	cursor: pointer;
 	display: none;

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ function VendorTransactionHistory() {
 
 
     const displayBills_vendor = bills_vendor
-        .slice( pagesVisited, pagesVisited + billsPerPage)
+        .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
             const userId = bill?.bill.vendor.id || '';
             const dateCheckin = bill?.bill.dateCheckin || 'No Checkin';
@@ -38,7 +38,10 @@ function VendorTransactionHistory() {
             const houseName = bill?.house.name || 'No House Name';
             const userName = bill?.bill.user.username || 'No User Name';
             const totalPrice = bill?.bill.totalPrice || 0;
-            const status = bill?.bill.status.name || 'No Status';
+            const status = bill?.bill.status.id === 2 ? "Pending" : bill?.bill.status.id === 6 ? "Using" :
+                bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
+            const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
+                bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
 
             const handleBillClick = (billId) => {
                 const updatedBills = bills_vendor.map((bill) => {
@@ -169,19 +172,21 @@ function VendorTransactionHistory() {
                     });
             };
             return (
-                <tr key={bill.bill.id} style={{ height: '60px' }}>
+                <tr key={bill.bill.id} style={{height: "1%"}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
-                    <td>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')} VNĐ</td>
-                    <td>{status}</td>
+                    <td><span style={{
+                        fontWeight: "bold"
+                    }}>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')}</span> VNĐ</td>
+                    <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>
-                        <button style={{ width: "114px" }}
-                            className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
-                            ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
-                            ) : "btn btn-outline-secondary"}
-                            onClick={() => handleBillClick(bill?.bill.id)}
+                        <button style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
+                                className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
+                                ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
+                                ) : "btn btn-outline-secondary"}
+                                onClick={() => handleBillClick(bill?.bill.id)}
                         >{bill.bill.status.id === 2 ? (`Checkin`
                         ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
                         ) : `Checkout`}
@@ -233,6 +238,7 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
+
     return (
         <>
             <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
@@ -280,10 +286,10 @@ function VendorTransactionHistory() {
                 </div>
             </div >
 
-            <div className="container" style={{ marginBottom: "50px", marginTop: "50px" }}>
-                <h4 className='text-center pb-20'>Renting a house</h4>
 
-                <table className="table table-hover">
+            <div className="container distanceBody">
+                <h4 className='text-center pb-20 headerInBody'>Renting a house</h4>
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Date CheckIN</th>
