@@ -78,7 +78,6 @@ const UpRole2 = () => {
                                         validationSchema={validationSchema}
                                         onSubmit={handleSubmit}>
                                     {({isSubmitting}) => (
-
                                         <Form action="#" method="post">
                                             <br/>
                                             <br/>
