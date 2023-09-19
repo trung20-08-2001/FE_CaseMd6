@@ -63,9 +63,9 @@ function ListHouse() {
                                                         </h4>
                                                         <span style={{color: "#fef1ec"}}>
                                                         <span className="mr-10">
-                                                            <img src="images/icons/map.png" alt=""/>
+                                                            <img src="images/icons/map.png" alt="" />
                                                         </span>
-                                                            {item.house.address}
+                                                        {item.house.address}
                                                     </span>
                                                     </div>
                                                     <div className="fix pull_right">
@@ -103,7 +103,7 @@ function ListHouse() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div >
                                 )
                             })
                         :<Loading></Loading>
@@ -137,4 +137,4 @@ function ListHouse() {
     )
 }
 
-    export default ListHouse
+export default ListHouse

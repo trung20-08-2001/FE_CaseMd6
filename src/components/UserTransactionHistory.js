@@ -86,6 +86,7 @@ function UserTransactionHistory() {
                 bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
             const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
                 bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
+
             // Tính toán thời gian đặt thuê
             const checkinDate = new Date(dateCheckin);
             const currentDate = new Date();

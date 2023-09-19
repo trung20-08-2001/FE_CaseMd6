@@ -353,8 +353,7 @@ export default function PrimarySearchAppBar() {
                 handleMobileMenuClose();
             }}
         >
-            <Link to={`/myaccount/profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>My
-                profile</MenuItem></Link>
+            <Link to={`/myaccount/profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>My profile</MenuItem></Link>
             {account?.role?.id === 1 && menuAdmin.map(item => item)}
             {account?.role?.id === 2 && menuHost.map(item => item)}
             {account?.role?.id === 3 && menuUser.map(item => item)}
@@ -413,9 +412,9 @@ export default function PrimarySearchAppBar() {
 
     return (
         <>
-            <Box sx={{flexGrow: 1}} style={{zIndex: "99999"}}>
-                <AppBar position="static" style={{backgroundColor: "#1e7e34", height: "100px", paddingTop: "20px"}}>
-                    <Toolbar style={{paddingLeft: "7%", paddingRight: "4%"}}>
+            <Box sx={{flexGrow: 1}} style={{zIndex:"99999"}}>
+                <AppBar position="static" style={{backgroundColor: "#1e7e34", height:"100px", paddingTop:"20px"}}>
+                    <Toolbar style={{paddingLeft:"70px", paddingRight:"70px"}}>
                         <Link to="">
                             <Typography
                                 variant="h6"
@@ -424,9 +423,9 @@ export default function PrimarySearchAppBar() {
                                 aria-label="open drawer"
                                 color={"white"}
                                 sx={{display: {xs: 'block', sm: 'block'}}}
-                                style={{textShadow: "0px 0px 10px #ffc107"}}
+                                style={{fontWeight:"bold"}}
                             >
-                                <HouseOutlined style={{color:"gold"}}/>BOOKING HOUSE
+                                BOOKING HOUSE
                             </Typography>
                         </Link>
                         {/* <Search>
@@ -511,9 +510,8 @@ export default function PrimarySearchAppBar() {
                                     aria-label="open drawer"
                                     color={"white"}
                                     sx={{display: {xs: 'block', sm: 'block'}}}
-                                    style={{textShadow: "0px 0px 10px #ffc107"}}
                                 >
-                                    Login<LoginRounded/>
+                                    LOGIN
                                 </Typography>
                             </Link>
                         }

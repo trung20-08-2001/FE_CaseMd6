@@ -130,15 +130,17 @@ function ListUser() {
                 <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="text-center distanceBody headerInBody" style={{marginTop:"-6%"}}><i className="fa fa-info-circle"></i> Information</h5>
+                            <h5 className="text-center distanceBody headerInBody" style={{marginTop: "-6%"}}><i
+                                className="fa fa-info-circle"></i> Information</h5>
                             <button
                                 type="button"
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                style={{ border: "1px solid black"}}
+                                style={{border: "1px solid black"}}
                             >
-                                <span aria-hidden="true" className="fa fa-remove" style={{color:"black", borderRadius:"50%"}}></span>
+                                <span aria-hidden="true" className="fa fa-remove"
+                                      style={{color: "black", borderRadius: "50%"}}></span>
                             </button>
                         </div>
                         <div className="modal-body">
@@ -146,25 +148,33 @@ function ListUser() {
                                  style={{width: "150px", height: "150px"}}/>
                             <div className="card-body a ">
                                 <tr>
-                                    <th style={{width:"65%"}}>Username:</th>
-                                    <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.username}</td>
+                                    <th style={{width: "65%"}}>Username:</th>
+                                    <td style={{color: "#95c41f", fontWeight: "bold"}}>{userDetail.username}</td>
                                 </tr>
                                 <tr>
-                                    <th >FullName:</th>
-                                    <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.fullName === null ? <p className="text-danger">Not update</p> : userDetail.fullName}</td>
+                                    <th>FullName:</th>
+                                    <td style={{color: "#95c41f", fontWeight: "bold"}}>{userDetail.fullName === null ?
+                                        <p className="text-danger">Not update</p> : userDetail.fullName}</td>
                                 </tr>
                                 <tr>
-                                <th >Phone:</th>
-                                <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.phone}</td>
-                                </tr><tr>
-                                <th >Status:</th>
-                                <td style={{color:"#95c41f", fontWeight:"bold"}}>{userDetail.status !== undefined && userDetail.status.name}</td>
-                            </tr><tr>
-                                <th >Total Money:</th>
-                                <td style={{color:"#95c41f", fontWeight:"bold"}}><span>{new Intl.NumberFormat().format(userDetail.totalAllBill)}</span> VNĐ</td>
-                            </tr>
+                                    <th>Phone:</th>
+                                    <td style={{color: "#95c41f", fontWeight: "bold"}}>{userDetail.phone}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td style={{
+                                        color: "#95c41f",
+                                        fontWeight: "bold"
+                                    }}>{userDetail.status !== undefined && userDetail.status.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Money:</th>
+                                    <td style={{color: "#95c41f", fontWeight: "bold"}}>
+                                        <span>{new Intl.NumberFormat().format(userDetail.totalAllBill)}</span> VNĐ
+                                    </td>
+                                </tr>
                                 <br/>
-                                <h5 >Rental
+                                <h5>Rental
                                     history: {userDetail.bills && userDetail.bills.length === 0 && "Not rental history"}</h5>
                             </div>
                             {userDetail.bills && userDetail.bills.length !== 0 &&
@@ -181,7 +191,9 @@ function ListUser() {
                                         <tr key={item.id}>
                                             <td>{item.dateCheckin}</td>
                                             <td>{item.dateCheckout}</td>
-                                            <td><span style={{fontWeight:"bold"}}>{new Intl.NumberFormat().format(item.totalPrice)}</span> VNĐ</td>
+                                            <td><span
+                                                style={{fontWeight: "bold"}}>{new Intl.NumberFormat().format(item.totalPrice)}</span> VNĐ
+                                            </td>
                                         </tr>
                                     ))}
                                     </tbody>
