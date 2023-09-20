@@ -9,11 +9,7 @@ import { getAllCategory } from '../../services/categoryService';
 import { filterStatusHouse, nameHouseSearch } from '../../services/filterService';
 import { editHouse, findHouseByAccount } from '../../services/houseService';
 import "./style.css";
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 function MyHouses() {
     const dispatch = useDispatch();
@@ -21,8 +17,17 @@ function MyHouses() {
     const categories = useSelector(state => state.categories.categories);
     const allMyHouses = useSelector(state => state.house.myHousesDTO);
 
-
-
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const [itemsPerPage, setItemsPerPage] = useState(6); // Số mục trên mỗi trang
+    // Tổng số trang
+    const totalPages = Math.ceil(resultSearch.length / itemsPerPage);
+    // Lấy mục trên trang hiện tại
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = resultSearch.slice(indexOfFirstItem, indexOfLastItem);
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
 
     useEffect(() => {
@@ -129,7 +134,7 @@ function MyHouses() {
                     :
                     <>
                         <div className='row mt-20'>
-                            {resultSearch.length !== 0 && resultSearch.map((item, index) => {
+                            {currentItems.length !== 0 && currentItems.map((item, index) => {
                                 return (
                                     <div className="col-md-6  card_house mb-40 " key={item.house.id}>
                                         <div className="single-property hover-effect-two bg-violet">
@@ -173,8 +178,8 @@ function MyHouses() {
                                                         <div className="hover-item">
                                                             <span>
                                                                 {item.house.status.name === "READY" && <strong style={{ color: "#32CD32" }}>Ready</strong>}
-                                                                {item.house.status.name === "ORDERED" &&  <strong style={{ color: "red" }}>Ordered</strong>}
-                                                                {item.house.status.name === "BLOCKED" &&  <strong style={{ color: "yellow" }}>Blocked</strong>}
+                                                                {item.house.status.name === "ORDERED" && <strong style={{ color: "red" }}>Ordered</strong>}
+                                                                {item.house.status.name === "BLOCKED" && <strong style={{ color: "yellow" }}>Blocked</strong>}
                                                             </span>
                                                         </div>
                                                         <div className="hover-item">
@@ -205,17 +210,27 @@ function MyHouses() {
                                 )
                             })}
                         </div>
-                        <Stack spacing={3}>
-                            <Pagination
-                                count={5}
-                                renderItem={(item) => (
-                                    <PaginationItem
-                                        slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                        {...item}
-                                    />
+                        <div className="pagination-content text-center block fix col-12">
+                            <div>
+                                {Array.from({length: totalPages}, (_, index) => index + 1).map(
+                                    (pageNumber) => (
+                                        <button
+                                            key={pageNumber}
+                                            onClick={() => handlePageChange(pageNumber)}
+                                            disabled={currentPage === pageNumber}
+                                            style={{
+                                                backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
+                                                color: currentPage === pageNumber ? 'white' : 'black',
+                                                boxShadow: "0 0 1px gold",
+                                                borderRadius:"5px"
+                                            }}
+                                        >
+                                            {pageNumber}
+                                        </button>
+                                    )
                                 )}
-                            />
-                        </Stack>
+                            </div>
+                        </div>
                     </>
             }
         </>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function Slide(props) {
   return (
     <>
-      {props.images.length !== 0 ? 
+      {props.images.length !== 0 ?
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" style={props.styleImage} >
           <ol className="carousel-indicators">
             {props.images.map((image, index) => {
@@ -33,7 +33,7 @@ function Slide(props) {
             <span className="sr-only">Next</span>
           </a>
         </div>
-        :<h1>Chưa có dữ liệu</h1>}
+        : <h1>Chưa có dữ liệu</h1>}
     </>
 
   );

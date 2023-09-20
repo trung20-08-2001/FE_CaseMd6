@@ -98,7 +98,7 @@ function TopHouse() {
                                     </div>
                                 )
                             })
-                        : <Loading></Loading>
+                            : <Loading></Loading>
                         }
                     </div>
                 </div>
@@ -107,4 +107,4 @@ function TopHouse() {
     )
 }
 
-    export default TopHouse
+export default TopHouse
