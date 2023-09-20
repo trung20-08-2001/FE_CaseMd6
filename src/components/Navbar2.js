@@ -414,7 +414,7 @@ export default function PrimarySearchAppBar() {
         <>
             <Box sx={{flexGrow: 1}} style={{zIndex:"99999"}}>
                 <AppBar position="static" style={{backgroundColor: "#1e7e34", height:"100px", paddingTop:"20px"}}>
-                    <Toolbar style={{paddingLeft:"70px", paddingRight:"70px"}}>
+                    <Toolbar style={{paddingLeft: "7%", paddingRight: "4%"}}>
                         <Link to="">
                             <Typography
                                 variant="h6"

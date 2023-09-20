@@ -26,6 +26,9 @@ const SeeReviews = () => {
     const filteredCurrentItems = currentItems.filter(item =>
         item.status.id === 1
     );
+    const [index,setIndex] = useState(0)
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
 
     // Chuyển đổi trang
     const handlePageChange = (pageNumber) => {
@@ -87,6 +90,7 @@ const SeeReviews = () => {
                 setFeedbacks(res.data)
             })
     }
+
     return (
         <>
             <div className="property-area property-area-2 ptb-20">
