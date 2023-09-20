@@ -106,14 +106,14 @@ function EditProfile() {
                             await axios.post("http://localhost:8081/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
-                                title: 'Update successful!',
-                                text: 'You have successfully updated',
+                                title: 'Cập nhật thành công!',
+                                text: 'Bạn đã cập nhật thành công',
                             });
                         } else {
                             await Swal.fire({
                                 icon: 'error',
-                                title: 'Update failed',
-                                text: 'You have failed to update.',
+                                title: 'Cập nhật thất bại',
+                                text: 'Bạn đã cập nhật không thành công.',
                             });
                         }
                     } catch (error) {
@@ -124,7 +124,7 @@ function EditProfile() {
                 <Form>
                     <div className="create-agency-area pt-15 pb-60">
                         <div className="container">
-                            <h4 className="details-title text-center mt-20 mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
+                            <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Edit</h4>
                             <div className="row table distanceBody">
                                 <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
                                     <div className="agency-container">
@@ -168,14 +168,10 @@ function EditProfile() {
                                                               className="error-message"/>
                                             </div>
                                             <div className="col-lg-6">
-                                                <input type="file" name="avatar" className="mb-28"
-                                                       accept=".jpeg, .jpg, .png"
-                                                       onChange={(event) => handleChangeImage(event)}/>
-
-                                                {previewImage && (
-                                                    <img src={previewImage} alt="Image" height="200" width="200"/>
-                                                )}
-
+                                                    <input type="file" name="avatar" placeholder="Ảnh" accept=".jpeg, .jpg, .png" onChange={(event) => handleChangeImage(event)}/>
+                                                    {previewImage && (
+                                                        <img src={previewImage} alt="Image" className="preview-image"/>
+                                                    )}
                                             </div>
                                         </div>
                                         <button style={{cursor: 'pointer', marginLeft:"36%", width:"30%"}} type={"button"} onClick={edit}

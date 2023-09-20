@@ -26,6 +26,9 @@ const SeeReviews = () => {
     const filteredCurrentItems = currentItems.filter(item =>
         item.status.id === 1
     );
+    const [index,setIndex] = useState(0)
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
 
     // Chuyển đổi trang
     const handlePageChange = (pageNumber) => {
@@ -87,6 +90,7 @@ const SeeReviews = () => {
                 setFeedbacks(res.data)
             })
     }
+
     return (
         <>
             <div className="ptb-20">
@@ -143,7 +147,8 @@ const SeeReviews = () => {
                                                             <span>{houses.house.status.name === "READY" ? <strong
                                                                 style={{color: "#32CD32"}}> Ready</strong> : houses.house.status.name === "ORDERED" ?
                                                                 <strong style={{color: "#ea4335"}}> Ordered</strong> :
-                                                                <strong style={{color: "darkorange"}}> Blocked</strong>}</span>
+                                                                houses.house.status.name === "BLOCKED" ?
+                                                                <strong style={{color: "darkorange"}}> Blocked</strong>: <strong style={{color: "#FFD700"}}> Using</strong>} </span>
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <i className="fa fa-money"></i>

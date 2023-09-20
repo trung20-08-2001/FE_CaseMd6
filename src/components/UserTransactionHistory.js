@@ -46,7 +46,7 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification={type:"NOTIFICATION",content:account.fullName === null ? account.username : account.fullName + " canceled the booking " + res.data.house.name,url: `/myaccount/see_reviews/${res.data.vendor.id}`, account: {id:res.data.vendor.id }}
+                let notification={type:"NOTIFICATION",content:(account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name,url: `/myaccount/bills_vendor/${res.data.vendor.id}`, account: {id:res.data.vendor.id }}
                     WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',
@@ -86,6 +86,7 @@ function UserTransactionHistory() {
                 bill?.bill.status.id === 7 ? "Checked out" : bill?.bill.status.id === 8 ? "Canceled" : 'No Status';
             const statusColor = bill?.bill.status.id === 2 ? 'backgroundColorStatusPending' : bill?.bill.status.id === 6 ? 'backgroundColorStatusUsing' :
                 bill?.bill.status.id === 7 ? 'backgroundColorStatusCheckout' : bill?.bill.status.id === 8 ? 'backgroundColorStatusCanceled' : '';
+
             // Tính toán thời gian đặt thuê
             const checkinDate = new Date(dateCheckin);
             const currentDate = new Date();

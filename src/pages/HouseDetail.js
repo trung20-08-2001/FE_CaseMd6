@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 import {useNavigate, useParams} from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom';
 import WebSocketConfig from '../config/configWebsocket';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
 import MenuItem from "@mui/material/MenuItem";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {addAccountYouMessaged} from '../services/messageService';
@@ -234,13 +236,8 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                let notification = {
-                    content: account.fullName === null ? account.username : account.fullName + " has booked a house " + houseDTO.house.name,
-                    type: "NOTIFICATION",
-                    url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`,
-                    account: {id: houseDTO.house.account.id}
-                }
-                WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
+                let notification={content:(account.fullName === null ? account.username : account.fullName)  + " has booked a house "+ houseDTO.house.name,type:"NOTIFICATION",account:{id:houseDTO.house.account.id},url:`/myaccount/bills_vendor/${houseDTO.house.account.id}`}
+                WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
                 return response.data
             })
             .catch((error) => {
@@ -277,36 +274,31 @@ const HouseDetail = () => {
                         numberOfStars: numberOfStars.start,
                         date: new Date(),
                         comment: comment,
-                        status: {id: 1}
+                        status: { id: 1 }
                     })
                         .then(response => {
-                                let notification = {
-                                    content: account.fullName === null ? account.username : account.fullName + " just evaluated the house " + houseDTO.house.name,
-                                    type: "NOTIFICATION",
-                                    url: `/myaccount/see_reviews/${houseDTO.house.id}`,
-                                    account: {id: houseDTO.house.account.id}
-                                }
-                                WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
-                                setNumberOfStars({
-                                    ...numberOfStars,
-                                    start: 0
-                                });
-                                setComment('')
-                                setMyFeedback("")
+                            let notification={content:(account.fullName === null ? account.username : account.fullName)  + " just evaluated the house "+ houseDTO.house.name,type:"NOTIFICATION",account:{id:houseDTO.house.account.id},url:`/myaccount/see_reviews/${houseDTO.house.id}`}
+                            WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
+                            setNumberOfStars({
+                                ...numberOfStars,
+                                start: 0
+                            });
+                            setComment('')
+                            setMyFeedback("")
 
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Feedback Success',
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Feedback Success',
+                            })
+                            customAxios.get("/feedBack/showFeedback/" + idHouse)
+                                .then(res => {
+                                    setListFeedback(res.data);
                                 })
-                                customAxios.get("/feedBack/showFeedback/" + idHouse)
-                                    .then(res => {
-                                        setListFeedback(res.data);
-                                    })
-                                    .catch((err) => {
-                                        console.log(err)
-                                    })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
 
-                            }
+                        }
                         )
                         .catch(error => console.log(error))
                 } else if (myFeedback.status.id === 1) {
@@ -454,7 +446,7 @@ const HouseDetail = () => {
                                                 alt=""
                                                 className="pr-8"
                                             />
-                                            <span>Livingrooms: <strong>{houseDTO.house.numberOfLivingRooms}</strong></span>
+                                            <span>Livingrooms : {houseDTO.house.numberOfLivingRooms}</span>
                                         </div>
 
                                         <div className=" mb-35">
@@ -623,7 +615,6 @@ const HouseDetail = () => {
                                                         </div>
                                                         <p className="mb-18">{f.comment} </p>
                                                     </div>
-
                                                 </div>
 
                                             </div>

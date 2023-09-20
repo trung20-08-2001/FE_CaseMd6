@@ -67,7 +67,7 @@ export const filterBillHistoryHost = createSelector(
       if (status === "ALL") {
         return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched
       } else {
-        return isNameHouseMatched && (isDateCheckinMatched || isDateCheckoutMatched) && isStatusMatched
+        return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched && isStatusMatched
       }
     })
   }

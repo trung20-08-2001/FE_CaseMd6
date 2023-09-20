@@ -16,6 +16,18 @@ function MyHouses() {
     const categories = useSelector(state => state.categories.categories);
     const allMyHouses = useSelector(state => state.house.myHousesDTO);
 
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const [itemsPerPage, setItemsPerPage] = useState(6); // Số mục trên mỗi trang
+    // Tổng số trang
+    const totalPages = Math.ceil(resultSearch.length / itemsPerPage);
+    // Lấy mục trên trang hiện tại
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = resultSearch.slice(indexOfFirstItem, indexOfLastItem);
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem("account"))
@@ -119,8 +131,8 @@ function MyHouses() {
                     <h1 className='text-center' style={{color: "red"}}>No matching results</h1>
                     :
                     <>
-                        <div className='row mt-24'>
-                            {resultSearch.length !== 0 && resultSearch.map((item, index) => {
+                        <div className='row mt-20'>
+                            {currentItems.length !== 0 && currentItems.map((item, index) => {
                                 return (
                                     <div className="col-md-4 mb-40 " key={item.house.id}>
                                         <div className="scaleHouse">
@@ -161,9 +173,14 @@ function MyHouses() {
                                                     style={{width: "100%", height: "300px"}}/></Link>
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
-                                                        <span>{item.house.status.name === "READY" ?
-                                                            <strong style={{color: "#32CD32"}}>Ready</strong> :
-                                                            <p style={{color: "#ea4335"}}>Ordered</p>}</span>
+                                                        <span>{item.house.status.name === "READY" ? <strong
+                                                            style={{color: "#32CD32"}}> Ready</strong> : item.house.status.name === "ORDERED" ?
+                                                            <strong style={{color: "#ea4335"}}> Ordered</strong> :
+                                                            item.house.status.name === "BLOCKED" ?
+                                                                <strong
+                                                                    style={{color: "darkorange"}}> Blocked</strong> :
+                                                                <strong
+                                                                    style={{color: "#FFD700"}}> Using</strong>} </span>
                                                     </div>
                                                     <div className="hover-item">
                                                         <img className="mr-10" src="/images/icons/bed.png"
@@ -189,7 +206,8 @@ function MyHouses() {
                                                 to={"/myaccount/edit_house/" + index}
                                                 style={{color: "white"}}>Edit</Link></button>
                                             <button className="button buttonShadow mb-10 col-3"
-                                                    onClick={() => handleUpdateStatus(item, index)}><Link style={{color: "white"}}>Status</Link>
+                                                    onClick={() => handleUpdateStatus(item, index)}><Link
+                                                style={{color: "white"}}>Status</Link>
                                             </button>
                                             <button className="button buttonShadow mb-10 col-3"><Link
                                                 to={"/myaccount/see_reviews/" + item.house.id}

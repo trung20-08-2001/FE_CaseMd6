@@ -3,15 +3,21 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus } from "../services/billService";
-import { filterBillHistoryHost } from "../redux/selector";
-import { Label } from "reactstrap";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    addBillHistory,
+    filterDateCheckin,
+    filterDateCheckout,
+    filterNameHouse,
+    filterStatus
+} from "../services/billService";
+import {filterBillHistoryHost} from "../redux/selector";
+import {Label} from "reactstrap";
 
 function VendorTransactionHistory() {
     const bills_vendor = useSelector(filterBillHistoryHost)
 
-    const { id } = useParams();
+    const {id} = useParams();
     const dispatch = useDispatch()
 
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
@@ -26,7 +32,6 @@ function VendorTransactionHistory() {
                 })
         }
     }, []);
-
 
 
     const displayBills_vendor = bills_vendor
@@ -172,14 +177,15 @@ function VendorTransactionHistory() {
                     });
             };
             return (
-                <tr key={bill.bill.id} style={{height: "1%"}}>
+                <tr key={bill.bill.id} style={{height: '1%'}}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
                     <td>{userName}</td>
                     <td><span style={{
                         fontWeight: "bold"
-                    }}>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')}</span> VNĐ</td>
+                    }}>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')}</span> VNĐ
+                    </td>
                     <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>
                         <button style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
@@ -193,12 +199,15 @@ function VendorTransactionHistory() {
                         </button>
                     </td>
                 </tr>
-            );
+            )
+                ;
         });
 
     const pageCount = Math.ceil(bills_vendor.length / billsPerPage);
 
-    const changePage = ({ selected }) => {
+    const changePage = ({
+                            selected
+                        }) => {
         setPageNumber(selected);
     };
 
@@ -238,10 +247,9 @@ function VendorTransactionHistory() {
         return Promise.all([updateBillPromise, updateHousePromise]);
     };
 
-
     return (
         <>
-            <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
+            <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
                 <div className="col-xl-3">
                     <Label htmlFor="nameHouse">Name House</Label>
                     <input
@@ -249,7 +257,7 @@ function VendorTransactionHistory() {
                         type="text"
                         placeholder="Name house..."
                         onChange={e => dispatch(filterNameHouse(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     />
                 </div>
                 <div className="col-xl-3 ">
@@ -258,7 +266,7 @@ function VendorTransactionHistory() {
                         id="dateCheckin"
                         type="DATE"
                         onChange={e => dispatch(filterDateCheckin(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     />
                 </div>
                 <div className="col-xl-3">
@@ -267,7 +275,7 @@ function VendorTransactionHistory() {
                         id="dateCheckout"
                         type="DATE"
                         onChange={e => dispatch(filterDateCheckout(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     />
                 </div>
                 <div className="col-xl-3">
@@ -275,7 +283,7 @@ function VendorTransactionHistory() {
                     <select
                         id="status"
                         onChange={e => dispatch(filterStatus(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     >
                         <option value="ALL">All</option>
                         <option value="PENDING">PENDING</option>
@@ -284,25 +292,25 @@ function VendorTransactionHistory() {
                         <option value="CANCELED">CANCELED</option>
                     </select>
                 </div>
-            </div >
+            </div>
 
+            <div className="container" style={{marginBottom: "50px", marginTop: "50px"}}>
+                <h4 className='text-center pb-20'>Renting a house</h4>
 
-            <div className="container distanceBody">
-                <h4 className='text-center pb-20 headerInBody'>Renting a house</h4>
-                <table className="table">
+                <table className="table table-hover">
                     <thead>
-                        <tr>
-                            <th>Date CheckIN</th>
-                            <th>Date CheckOut</th>
-                            <th>Name House</th>
-                            <th>Customer</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                    <tr>
+                        <th>Date CheckIN</th>
+                        <th>Date CheckOut</th>
+                        <th>Name House</th>
+                        <th>Customer</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {displayBills_vendor}
+                    {displayBills_vendor}
                     </tbody>
                 </table>
                 {/* Phân trang */}

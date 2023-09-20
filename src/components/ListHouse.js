@@ -66,7 +66,7 @@ function ListHouse() {
                                                         </h4>
                                                         <span style={{color: "#fef1ec"}}>
                                                         <span className="mr-10">
-                                                            <img src="images/icons/map.png" alt=""/>
+                                                            <img src="images/icons/map.png" alt="" />
                                                         </span>
                                                             {item.house.address.slice(0, 15)}
                                                             {item.house.address.length > 15 && "..."}                                                    </span>
@@ -126,7 +126,7 @@ function ListHouse() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div >
                                 )
                             })
                             : <Loading></Loading>

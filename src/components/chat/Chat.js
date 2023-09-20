@@ -23,6 +23,28 @@ function Chat() {
     const [accountReceiverCurrent, setAccountReceiverCurrent] = useState({})
     const accountReceiver = useSelector(state => state.account.accountReceiverCurrent)
     const [usernameSearch, setUsenameSearch] = useState("")
+    const [panelWidth, setPanelWidth] = useState(0);
+    const myElementRef = useRef(null);
+
+
+    const openCloseNav = () => {
+        if (myElementRef.current) {
+            const width = myElementRef.current.getBoundingClientRect().width;
+            console.log(width);
+            if (panelWidth == 0) {
+                setPanelWidth(width);
+            } else {
+                setPanelWidth(0);
+            }
+        }
+        
+
+    };
+    const getWidth = () => {
+
+    };
+
+
 
 
     useEffect(() => {
@@ -75,6 +97,7 @@ function Chat() {
         setAccountReceiverCurrent(accountReceiver);
         setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
         dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
+        openCloseNav()
     }
 
     return (
@@ -97,7 +120,6 @@ function Chat() {
                                         }
                                     }}
                                 />
-
                                 <div className="input-group-prepend" onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
                                     <span className="input-group-text search_btn">
                                         <i className="fas fa-search" />
@@ -136,14 +158,68 @@ function Chat() {
                     <div className="card-footer" />
                 </div>
             </div>
-            <div className="col-md-12 col-xl-9 chat">
+
+            <div id="mySidepanel" class="sidepanel d-xl-none" style={{ width: panelWidth }}>
+                <div className="card mb-sm-3 mb-md-0 contacts_card">
+                    <div className="card-header d-flex align-items-center">
+                        {accountLogin.role.id !== 2 &&
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Search host"
+                                    name=""
+                                    className="form-control"
+                                    value={usernameSearch}
+                                    onChange={(event => setUsenameSearch(event.target.value))}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter') {
+                                            dispatch(findAccountHostByUsername(usernameSearch))
+                                        }
+                                    }}
+                                />
+                                <div className="input-group-prepend" onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
+                                    <span className="input-group-text search_btn">
+                                        <i className="fas fa-search" />
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div className="card-body contacts_body" >
+                        <ul className="contacts">
+                            {listAccountYouMessaged.map((item) => (
+                                <Link to={"/myaccount/chat/" + item.id} >
+                                    <li key={item.id} className={accountReceiverCurrent === item ? "active" : ""} onClick={() => handleFindMessageByAccount(item)}>
+                                        <div className="d-flex bd-highlight" >
+                                            <div className="img_cont">
+                                                <img
+                                                    src={item.avatar}
+                                                    className="rounded-circle user_img"
+                                                />
+                                                {/* <span className="online_icon offline" /> */}
+                                            </div>
+                                            <div className="user_info">
+                                                <span className="text-nowrap">
+                                                    {item.fullName === null ? item.username.slice(0, 10) : item.fullName.slice(0, 10)}
+                                                    {item.fullName !== null && item.fullName.length > 10 && " . . ."}
+                                                    {item.fullName === null && item.username.length > 10 && " . . ."}
+                                                </span>
+                                                <p>{item.role.name}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </Link>
+                            ))}
+                        </ul>
+                        <span id="action_menu_btn" onClick={openCloseNav}>X
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col-md-12 col-xl-9 chat" id="main">
                 <div className="card">
-                    <div className="card-header msg_head" >
-                        <div className="d-sm-block d-md-block d-lg-block d-xl-none" >
-                            <span id="arrow_menu_btn" >
-                                <i className="bi bi-list"></i>
-                            </span>
-                        </div>
+                    <div className="card-header msg_head" ref={myElementRef}>
                         {Object.keys(accountReceiverCurrent).length !== 0 &&
                             <div className="d-flex bd-highlight " >
                                 <div className="img_cont">
@@ -159,7 +235,7 @@ function Chat() {
                                 </div>
                             </div>
                         }
-                        <span id="action_menu_btn">
+                        <span id="action_menu_btn" className='d-sm-block' onClick={openCloseNav}>
                             <i className="fas fa-ellipsis-v" />
                         </span>
                         <div className="action_menu">
@@ -180,7 +256,7 @@ function Chat() {
                         </div>
 
                     </div>
-                    <div className="card-body msg_card_body" style={{ overflow: "auto" }} ref={messageContainerRef}>
+                    <div className="card-body msg_card_body" style={{ overflow: "auto" }} ref={messageContainerRef} >
                         {listMessage.length !== 0 ?
                             listMessage.map(item => {
                                 if (item.senderAccount?.id !== accountLogin.id) {
