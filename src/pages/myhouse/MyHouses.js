@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Label } from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {Label} from 'reactstrap';
 import Swal from 'sweetalert2';
-import { filterHouseByNameAndStatus } from '../../redux/selector';
+import {filterHouseByNameAndStatus} from '../../redux/selector';
 import customAxios from '../../services/api';
-import { getAllCategory } from '../../services/categoryService';
-import { filterStatusHouse, nameHouseSearch } from '../../services/filterService';
-import { editHouse, findHouseByAccount } from '../../services/houseService';
+import {getAllCategory} from '../../services/categoryService';
+import {filterStatusHouse, nameHouseSearch} from '../../services/filterService';
+import {editHouse, findHouseByAccount} from '../../services/houseService';
 import "./style.css";
 
 function MyHouses() {
@@ -80,11 +80,11 @@ function MyHouses() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(editHouse({
-                        house: { ...item.house, status: { id: 1, name: "READY" } },
-                        images: { ...item.images },
+                        house: {...item.house, status: {id: 1, name: "READY"}},
+                        images: {...item.images},
                         indexHouseEdit: index
                     }))
-                    customAxios.post("/houses/save", { ...item.house, status: { id: 4 } })
+                    customAxios.post("/houses/save", {...item.house, status: {id: 4}})
                         .then(() => {
                             Swal.fire('Changes are saved!', '', 'success')
                         })
@@ -98,8 +98,8 @@ function MyHouses() {
 
     return (
         <>
-            <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
-                <div className="col-xl-6 col-sm-6">
+            <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
+                <div className="col-xl-6 col-sm-6 mb-30">
                     <Label htmlFor="nameHouse">Name House</Label>
                     <input
                         name="nameHouse"
@@ -107,29 +107,29 @@ function MyHouses() {
                         placeholder="Name house..."
 
                         onChange={e => dispatch(nameHouseSearch(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     />
                 </div>
-                <div className="col-xl-6 col-sm-6">
+                <div className="col-xl-6 col-sm-6 mb-30">
                     <Label htmlFor="status">Status</Label>
                     <select
                         name="select"
                         onChange={e => dispatch(filterStatusHouse(e.target.value))}
-                        style={{ flex: 2, marginRight: '10px' }}
+                        style={{flex: 2, marginRight: '10px'}}
                     >
                         <option value={"ALL"}>All</option>
-                        <option value={"READY"}>READY</option>
-                        <option value={"ORDERED"}>ORDERED</option>
-                        <option value={"USING"}>USING</option>
-                        <option value={"BLOCKED"}>BLOCK</option>
+                        <option value={"READY"}>Ready</option>
+                        <option value={"ORDERED"}>Ordered</option>
+                        <option value={"USING"}>Using</option>
+                        <option value={"BLOCKED"}>Blocked</option>
                     </select>
                 </div>
             </div>
             {allMyHouses.length === 0 ?
-                <h1 className='text-center' style={{ color: "red" }}>You don't have any house to rent yet</h1>
+                <h1 className='text-center' style={{color: "red"}}>You don't have any house to rent yet</h1>
                 :
                 resultSearch.length === 0 ?
-                    <h1 className='text-center' style={{ color: "red" }}>No matching results</h1>
+                    <h1 className='text-center' style={{color: "red"}}>No matching results</h1>
                     :
                     <>
                         <div className='row mt-20'>
@@ -139,10 +139,10 @@ function MyHouses() {
                                         <div className="scaleHouse">
                                             <div className="single-property hover-effect-two">
                                                 <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet"
-                                                    style={{
-                                                        borderRadius: "18px 18px 0 0",
-                                                        boxShadow: "0 0 10px rgba(0,0,0,0.5)"
-                                                    }}
+                                                     style={{
+                                                         borderRadius: "18px 18px 0 0",
+                                                         boxShadow: "0 0 10px rgba(0,0,0,0.5)"
+                                                     }}
                                                 >
                                                     <div className="title-left pull_left">
                                                         <h4 className="text-white mb-12">
@@ -151,16 +151,16 @@ function MyHouses() {
                                                                 {item.house.name.length > 15 && "..."}
                                                             </span>
                                                         </h4>
-                                                        <span style={{ color: "#fef1ec" }}>
-                                                            <span className="mr-10">
-                                                                <img src="/images/icons/map.png" alt="" />
-                                                            </span>
+                                                        <span style={{color: "#fef1ec"}}>
+                                                                <span className="mr-10">
+                                                                    <img src="/images/icons/map.png" alt=""/>
+                                                                </span>
                                                             {item.house.address.slice(0, 15)}
                                                             {item.house.address.length > 15 && "..."}
                                                         </span>
                                                     </div>
                                                     <div className="fix pull_right">
-                                                        <p style={{ color: "ghostwhite" }}><strong style={{
+                                                        <p style={{color: "ghostwhite"}}><strong style={{
                                                             color: "gold",
                                                             fontSize: "15px",
                                                             textShadow: "0 0 1px gold"
@@ -179,7 +179,7 @@ function MyHouses() {
                                                             {item.house.status.name === "ORDERED" && <strong style={{ color: "#87CEEB" }}>Ordered</strong>}
                                                             {item.house.status.name === "BLOCKED" && <strong style={{ color: "darkorange" }}> Blocked</strong>}
                                                             {item.house.status.name === "READY" && <strong style={{ color: "#32CD32" }}>Ready</strong>}
-                                                        </span>
+                                                        </span>                                                   
                                                     </div>
                                                     <div className="hover-item">
                                                         <img className="mr-10" src="/images/icons/bed.png"
@@ -225,7 +225,8 @@ function MyHouses() {
                                                     backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
                                                     color: currentPage === pageNumber ? 'white' : 'black',
                                                     boxShadow: "0 0 1px gold",
-                                                    borderRadius: "5px"
+                                                    borderRadius: "5px",
+                                                    marginBottom: "60px"
                                                 }}
                                             >
                                                 {pageNumber}

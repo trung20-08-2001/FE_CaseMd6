@@ -3,6 +3,7 @@ import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse,
 
 const initialState = {
     billHistoryHost: [],
+    
     nameHouseSearch:"",
     dateCheckin:"1990-1-1",
     dateCheckout:"2999-12-31",

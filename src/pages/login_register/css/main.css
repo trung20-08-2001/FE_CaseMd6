@@ -61,7 +61,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: #a64bf4;
+  color: #95c41f;
 }
 
 /*---------------------------------------------*/
@@ -212,7 +212,6 @@ iframe {
 .wrap-input100 {
   width: 100%;
   position: relative;
-  border-bottom: 2px solid #d9d9d9;
 }
 
 .label-input100 {
@@ -228,7 +227,6 @@ iframe {
   font-size: 16px;
   color: #333333;
   line-height: 1.2;
-
   display: block;
   width: 100%;
   height: 55px;
@@ -277,11 +275,6 @@ iframe {
   left: 0;
   width: 0;
   height: 2px;
-  background: #7f7f7f;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
 }
 
 
@@ -294,11 +287,11 @@ iframe {
 }
 
 .input100:focus + .focus-input100::after {
-  color: #a64bf4;
+  color: goldenrod;
 }
 
 .has-val.input100 + .focus-input100::after {
-  color: #a64bf4;
+  color: #1e7e34;
 }
 
 
