@@ -37,9 +37,7 @@ function Register() {
                 validationSchema={SignupSchema}
                 onSubmit={async values => {
                     try {
-                        console.log(values)
                         const response = await axios.post("http://localhost:8081/accounts/register", values);
-                        console.log(response)
                         if (response.data === '') {
                             let account = {
                                 ...values,

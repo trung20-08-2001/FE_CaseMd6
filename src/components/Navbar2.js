@@ -307,20 +307,20 @@ export default function PrimarySearchAppBar() {
                 <p>Create houses</p>
             </MenuItem>
         </Link>,
-         <Link to={`/myaccount/bills_user/${account?.id}`}>
-         <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
-             <IconButton
-                 size="large"
-                 aria-label="show 17 new notifications"
-                 color="inherit"
-             >
-                 <Badge badgeContent={0} color="error">
-                     <HistoryIcon />
-                 </Badge>
-             </IconButton>
-             <p>Transaction history</p>
-         </MenuItem>
-     </Link>,
+        <Link to={`/myaccount/bills_user/${account?.id}`}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <HistoryIcon />
+                    </Badge>
+                </IconButton>
+                <p>Transaction history</p>
+            </MenuItem>
+        </Link>,
         <Link to={`/myaccount/bills_vendor/${account?.id}`}>
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -416,7 +416,7 @@ export default function PrimarySearchAppBar() {
                                 {formatter.format(new Date(item.time))}: {item.content}
                             </MenuItem>
                         </Link>
-                        {index < notifications.length - 1 && <MenuItem divider style={{ borderColor: 'green',padding:"0",margin:"0" }} />}
+                        {index < notifications.length - 1 && <MenuItem divider style={{ borderColor: 'green', padding: "0", margin: "0" }} />}
                     </div>
                 ))
             ) : (
@@ -556,7 +556,7 @@ export default function PrimarySearchAppBar() {
                                         aria-label="open drawer"
                                         color={"white"}
                                         sx={{ display: { xs: 'block', sm: 'block' } }}
-                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight:"10px" }}
+                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight: "10px" }}
                                     >
                                         {account.fullName != null ? account.fullName : account.username}
                                     </Typography>
@@ -577,19 +577,27 @@ export default function PrimarySearchAppBar() {
                                 </Box> */}
                             </>
                             :
-                            <Link to="login">
-                                <Typography
-                                    variant="h6"
-                                    noWrap
-                                    component="div"
-                                    aria-label="open drawer"
-                                    color={"white"}
-                                    sx={{ display: { xs: 'block', sm: 'block' } }}
-                                    style={{ textShadow: "0px 0px 10px #ffc107" }}
-                                >
-                                    Login<LoginRounded />
-                                </Typography>
-                            </Link>
+                            <>
+                                <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                    <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
+                                        <SearchIcon style={{ color: "white" }} />
+                                    </Badge> </Link>
+                                </IconButton>
+                                <Link to="login">
+                                    <Typography
+                                        variant="h6"
+                                        noWrap
+                                        component="div"
+                                        aria-label="open drawer"
+                                        color={"white"}
+                                        sx={{ display: { xs: 'block', sm: 'block' } }}
+                                        style={{ textShadow: "0px 0px 10px #ffc107" }}
+                                    >
+                                        Login<LoginRounded />
+                                    </Typography>
+                                </Link>
+                            </>
+
                         }
                     </Toolbar>
                 </AppBar>

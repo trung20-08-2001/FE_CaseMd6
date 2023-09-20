@@ -24,9 +24,7 @@ const SeeReviews = () => {
     const filteredCurrentItems = currentItems.filter(item =>
         item.status.id === 1
     );
-    const [index, setIndex] = useState(0)
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  
 
     // Chuyển đổi trang
     const handlePageChange = (pageNumber) => {
@@ -142,18 +140,12 @@ const SeeReviews = () => {
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <i className="fas fa-shield-alt"></i>
-
-
-                                                            <span>{houses.house.status.name === "USING" ?
-                                                                <strong style={{ color: "#FFD700" }}> Using</strong> :
-                                                                houses.house.status.name === "ORDERED" ?
-                                                                <strong style={{ color: "#87CEEB" }}> Ordered</strong>:
-                                                                houses.house.status.name === "BLOCKED" ?
-                                                                <strong
-                                                                style={{ color: "darkorange" }}> Blocked</strong>:
-                                                                    <strong 
-                                                                        style={{ color: "#32CD32" }}> Ready</strong> 
-                                                            }</span>
+                                                            <span>
+                                                            {houses.house.status.name === "USING" && <strong style={{ color: "#FFD700" }}> Using</strong>}
+                                                            {houses.house.status.name === "ORDERED" && <strong style={{ color: "#87CEEB" }}> Ordered</strong>}
+                                                            {houses.house.status.name === "BLOCKED" && <strong style={{ color: "darkorange" }}> Blocked</strong>}
+                                                            {houses.house.status.name === "READY" && <strong style={{ color: "#32CD32" }}> Ready</strong>}
+                                                        </span>
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <i className="fa fa-money"></i>
