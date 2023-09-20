@@ -59,7 +59,10 @@ function ListHouse() {
                                                 >
                                                     <div className="title-left pull_left">
                                                         <h4 className="text-white mb-12">
-                                                            <a href="properties-details.html">{item.house.name}</a>
+                                                            <a>
+                                                            {item.house.name.slice(0, 15)}
+                                                            {item.house.name.length > 15 && "..."}
+                                                        </a>
                                                         </h4>
                                                         <span style={{color: "#fef1ec"}}>
                                                         <span className="mr-10">

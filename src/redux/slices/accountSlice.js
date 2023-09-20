@@ -7,7 +7,7 @@ const initState={
     listAccountsHost:[],
     listAccountsUserMessageToAccountHost:[],
     accountAdmin:{},
-    accountSenderCurrent:{}
+    accountReceiverCurrent:{}
 }
 
 const accountSlice=createSlice({
@@ -65,13 +65,13 @@ const accountSlice=createSlice({
             state.listAccountsUserMessageToAccountHost=[]
         })
         build.addCase(findAccountById.fulfilled,(state,action)=>{
-            state.accountSenderCurrent=action.payload;
+            state.accountReceiverCurrent=action.payload;
         })
         build.addCase(findAccountById.pending,(state,action)=>{
-            state.accountSenderCurrent={}
+            state.accountReceiverCurrent={}
         });
         build.addCase(findAccountById.rejected,(state,action)=>{
-            state.accountSenderCurrent={}
+            state.accountReceiverCurrent={}
         })
     }
 })

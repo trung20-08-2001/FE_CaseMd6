@@ -6,6 +6,7 @@ import accountSlice from "./slices/accountSlice";
 import revenueSlice from "./slices/revenueSlice";
 import billSlice from "./slices/billSlice";
 import messageSlice from "./slices/messageSlice";
+import notifiactionSlice from "./slices/notifiactionSlice";
 
 const store=configureStore({
     reducer:{
@@ -15,7 +16,8 @@ const store=configureStore({
         account:accountSlice,
         revenue:revenueSlice,
         bill:billSlice,
-        message:messageSlice
+        message:messageSlice,
+        notification:notifiactionSlice
     }
 })
 

@@ -1,29 +1,62 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { addMessage, addNotification, findMessageByReceiverAccountAndSenderAccount, receiveMessage } from "../../services/messageService"
+import { addAccountYouMessaged, findAccountHostByUsername, findListAccountYouMessaged, findMessageByReceiverAccountAndSenderAccount, saveMessage, send } from "../../services/messageService"
 
-const initialState={
-    messages:{},
-    notification:{},    
+
+const initialState = {
+    messages: {},
+    listAccountYouMessaged: [],
+    messages: [],
 }
 
-const messagesSlice=createSlice({
-    name:"messages",
-    initialState:initialState,
-    reducers:{},
-    extraReducers:build=>{
-        build.addCase(addMessage.fulfilled,(state,action)=>{
-            state.messages=action.payload
+const messagesSlice = createSlice({
+    name: "messages",
+    initialState: initialState,
+    reducers: {},
+    extraReducers: build => {
+        build.addCase(saveMessage.fulfilled, (state, action) => {
+            state.messages.push(action.payload);
         })
-        build.addCase(addMessage.pending,(state,action)=>{
-            state.messages=[]
+        build.addCase(saveMessage.pending, (state, action) => {
+            // state.messages=[]
         })
-        build.addCase(addMessage.rejected,(state,action)=>{
-            state.messages=[]
+        build.addCase(saveMessage.rejected, (state, action) => {
+            // state.messages=[]
         });
-        build.addCase(addNotification.fulfilled,(state,action)=>{
-            state.notification=action.payload;
+        build.addCase(findMessageByReceiverAccountAndSenderAccount.fulfilled, (state, action) => {
+            state.messages = action.payload
         })
-        
+        build.addCase(findMessageByReceiverAccountAndSenderAccount.pending, (state, action) => {
+            state.messages = []
+        })
+        build.addCase(findMessageByReceiverAccountAndSenderAccount.rejected, (state, action) => {
+            state.messages = []
+        })
+        build.addCase(findListAccountYouMessaged.fulfilled, (state, action) => {
+            state.listAccountYouMessaged = action.payload
+        })
+        build.addCase(findListAccountYouMessaged.pending, (state, action) => {
+            state.listAccountYouMessaged = []
+        })
+        build.addCase(findListAccountYouMessaged.rejected, (state, action) => {
+            state.listAccountYouMessaged = []
+        });
+        build.addCase(send.fulfilled, (state, action) => {
+            state.messages.push(action.payload)
+        })
+        build.addCase(addAccountYouMessaged.fulfilled, (state, action) => {
+            let account = state.listAccountYouMessaged.find(item => item.id === action.payload.id)
+            if (account === undefined) {
+                state.listAccountYouMessaged.push(action.payload)
+            }
+        })
+        build.addCase(findAccountHostByUsername.fulfilled, (state, action) => {
+            for (let i = 0; i < action.payload.length; i++) {
+                let account = state.listAccountYouMessaged.find(item => item.id === action.payload[i].id)
+                if (account === undefined) {
+                    state.listAccountYouMessaged.push(action.payload[i])
+                }
+            }
+        })
     }
 })
 

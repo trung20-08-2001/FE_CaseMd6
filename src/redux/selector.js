@@ -29,7 +29,7 @@ export const filterHouseByNameAndStatus = createSelector(
       }
       return (
         removeDiacritics(houseDTO.house.name).toLowerCase().includes(removeDiacritics(nameHouseSearch).toLowerCase()) &&
-        houseDTO.house.status.name === nameStatus
+        houseDTO.house.status.name=== nameStatus
       )
     });
   }

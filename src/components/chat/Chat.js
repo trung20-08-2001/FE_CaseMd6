@@ -1,151 +1,116 @@
-import React, { useEffect, useState, useRef } from 'react'
-import WebSocketConfig from '../../config/configWebsocket';
-import "./style.css"
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { findAccountAdmin, findAccountById, findAccountsHost, findAccountsUserMessageToAccountHost } from '../../services/accountService';
-import { addMessage, findMessageByReceiverAccountAndSenderAccount, receiveMessage } from '../../services/messageService';
-import customAxios from '../../services/api';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from '@mui/icons-material/Close';
+import { Link, useParams } from 'react-router-dom';
+import WebSocketConfig from '../../config/configWebsocket';
+import { findAccountAdmin, findAccountById } from '../../services/accountService';
+import { findAccountHostByUsername, findListAccountYouMessaged, findMessageByReceiverAccountAndSenderAccount, saveMessage } from '../../services/messageService';
+import "./style.css";
 
 
-
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth() + 1;
+const day = currentDate.getDate();
 function Chat() {
-    const [newMessage, setNewMessage] = useState({ message: "", type: "MESSAGE" });
     const dispatch = useDispatch();
     const messageContainerRef = useRef(null);
+    const [newMessage, setNewMessage] = useState({ message: "", type: "MESSAGE" });
+    const accountLogin = useSelector(state => state.account.account)
+    const listAccountYouMessaged = useSelector(state => state.message.listAccountYouMessaged)
     const accountAdmin = useSelector(state => state.account.accountAdmin)
-    const listAccountsHost = useSelector(state => state.account.listAccountsHost);
-    const listAccountsUserMessageToAccountHost = useSelector(state => state.account.listAccountsUserMessageToAccountHost)
-    const account = useSelector(state => state.account.account)
-    const message = useSelector(state => state.message.messages);
-    const [listMessage, setListMessages] = useState([])
+    const { idReceiverAccount } = useParams()
+    const listMessage = useSelector(state => state.message.messages)
     const [accountReceiverCurrent, setAccountReceiverCurrent] = useState({})
-    const accountSenderCurrent = useSelector(state => state.account.accountSenderCurrent);
-    const { idSenderAccount } = useParams()
+    const accountReceiver = useSelector(state => state.account.accountReceiverCurrent)
+    const [usernameSearch, setUsenameSearch] = useState("")
+
 
     useEffect(() => {
         const messageContainer = messageContainerRef.current;
         messageContainer.scrollTop = messageContainer.scrollHeight;
     }, [listMessage]);
 
-
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (Object.keys(accountAdmin).length === 0) {
-            dispatch(findAccountAdmin())
+        if (listAccountYouMessaged.length === 0) {
+            dispatch(findListAccountYouMessaged(accountLogin.id))
         }
-        if (account.role.name === 'ROLE_USER' || account.role.id === 3) {
-            if (listAccountsHost.length === 0) {
-                dispatch(findAccountsHost());
+        if (idReceiverAccount === undefined) {
+            if (Object.keys(accountAdmin).length === 0) {
+                dispatch(findAccountAdmin())
+            } else {
+                setAccountReceiverCurrent(accountAdmin)
+                dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountAdmin.id, idSenderAccount: accountLogin.id }))
+                setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountAdmin, date: `${day}-${month}-${year}` })
             }
+        } else {
+            dispatch(findAccountById(idReceiverAccount))
         }
-        if (idSenderAccount !== undefined) {
-            dispatch(findAccountById(idSenderAccount))
-        }
-    }, [])
-
+    }, [idReceiverAccount])
 
     useEffect(() => {
-        if (idSenderAccount !== undefined) {
-            setAccountReceiverCurrent(accountSenderCurrent)
-            handleFindMessageByAccount(accountSenderCurrent)
+        if (Object.keys(accountAdmin).length !== 0) {
+            setAccountReceiverCurrent(accountAdmin)
+            dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountAdmin.id, idSenderAccount: accountLogin.id }))
+            setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountAdmin, date: `${day}-${month}-${year}` })
         }
-    }, [accountSenderCurrent])
+        if (Object.keys(accountReceiver).length !== 0) {
+            setAccountReceiverCurrent(accountReceiver)
+            dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
+            setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
+        }
+    }, [accountAdmin, accountReceiver]);
 
-    useEffect(() => {
-        if (idSenderAccount !== undefined) {
-            dispatch(findAccountById(idSenderAccount))
-        }
-    }, [idSenderAccount])
+
 
     const sendMessage = () => {
         if (newMessage.message !== "") {
-            dispatch(addMessage( { ...newMessage, receiverAccount: { id: accountReceiverCurrent.id }, senderAccount: { id: account.id } }))
-            WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage)
-            customAxios.post("/messages/save", { ...newMessage, receiverAccount: { id: accountReceiverCurrent.id }, senderAccount: { id: account.id }, date: new Date() })
-                .then(() => {
-                    dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: account.id, idSenderAccount: accountReceiverCurrent.id }))
-                    setNewMessage({ ...newMessage, message: "" })
-                })
-                .catch(err => console.log(err));
+            WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage);
+            dispatch(saveMessage({ ...newMessage, date: currentDate }))
+            setNewMessage({ ...newMessage, message: "" })
         }
     }
 
-
-    useEffect(() => {
-        customAxios.get("messages/findMessageByReceiverAccountAndSenderAccount/" + idSenderAccount + "/" + account.id)
-            .then((response) => {
-                setListMessages(response.data);
-            })
-            .catch(error => { console.log(error); })
-    }, [message])
-
-
     const handleFindMessageByAccount = (accountReceiver) => {
-        dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: idSenderAccount, idSenderAccount: account.id }))
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1;
-        const day = currentDate.getDate();
         setAccountReceiverCurrent(accountReceiver);
-        setNewMessage({ ...newMessage, senderAccount: account, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
-        customAxios.get("messages/findMessageByReceiverAccountAndSenderAccount/" + idSenderAccount + "/" + account.id)
-        .then((response) => {
-            setListMessages(response.data);
-        })
-        .catch(error => { console.log(error); })
-
+        setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
+        dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
     }
 
     return (
-        // <div className="container-fluid h-100">
-
         <div className="row justify-content-center h-100" >
-            <div className="col-md-2 col-xl-3 chat d-sm-none d-md-none d-lg-block d-xl-block">
-                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: "650px" }}>
+            <div className=" col-xl-3 chat d-none d-xl-block">
+                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: "630px" }}>
                     <div className="card-header d-flex align-items-center">
-                        {/* <div className="input-group">
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                name=""
-                                className="form-control"
-                            />
-                            <div className="input-group-prepend">
-                                <span className="input-group-text search_btn">
-                                    <i className="fas fa-search" />
-                                </span>
+                        {accountLogin.role.id !== 2 &&
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Search host"
+                                    name=""
+                                    className="form-control"
+                                    value={usernameSearch}
+                                    onChange={(event => setUsenameSearch(event.target.value))}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter') {
+                                            dispatch(findAccountHostByUsername(usernameSearch))
+                                        }
+                                    }}
+                                />
+
+                                <div className="input-group-prepend" onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
+                                    <span className="input-group-text search_btn">
+                                        <i className="fas fa-search" />
+                                    </span>
+                                </div>
                             </div>
-                        </div> */}
+                        }
                     </div>
                     <div className="card-body contacts_body">
                         <ul className="contacts">
-                            {account.role.name !== "ROLE_ADMIN" &&
-                                <Link to={"/myaccount/chat/" + accountAdmin.id}>
-                                    <li className={accountReceiverCurrent === accountAdmin ? "active" : ""}>
-                                        <div className="d-flex bd-highlight">
-                                            <div className="img_cont">
-                                                <img
-                                                    src={accountAdmin.avatar}
-                                                    className="rounded-circle user_img"
-                                                />
-                                                {/* <span className="online_icon" /> */}
-                                            </div>
-                                            <div className="user_info">
-                                                <span>{accountAdmin.fullName === null ? "ADMIN" : accountAdmin.fullName}</span>
-                                                <p>ADMIN</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </Link>
-                            }
-                            {listAccountsHost.map((item) => (
-                                <Link to={"/myaccount/chat/" + item.id}>
-                                    <li key={item.id} className={accountReceiverCurrent === item ? "active" : ""}>
+                            {listAccountYouMessaged.map((item) => (
+                                <Link to={"/myaccount/chat/" + item.id} >
+                                    <li key={item.id} className={accountReceiverCurrent === item ? "active" : ""} onClick={() => handleFindMessageByAccount(item)}>
                                         <div className="d-flex bd-highlight" >
                                             <div className="img_cont">
                                                 <img
@@ -155,95 +120,47 @@ function Chat() {
                                                 {/* <span className="online_icon offline" /> */}
                                             </div>
                                             <div className="user_info">
-                                                <span>{item.fullName === null ? item.username : item.fullName}</span>
+                                                <span className="text-nowrap">
+                                                    {item.fullName === null ? item.username.slice(0, 10) : item.fullName.slice(0, 10)}
+                                                    {item.fullName !== null && item.fullName.length > 10 && " . . ."}
+                                                    {item.fullName === null && item.username.length > 10 && " . . ."}
+                                                </span>
                                                 <p>{item.role.name}</p>
                                             </div>
                                         </div>
                                     </li>
                                 </Link>
-                            ))
-                            }
-                            {listAccountsUserMessageToAccountHost.map((item) => (
-                                <li key={new Date().getTime()} className={accountReceiverCurrent === item ? "active" : ""}>
-                                    <div className="d-flex bd-highlight" >
-                                        <div className="img_cont">
-                                            <img
-                                                src={item.avatar}
-                                                className="rounded-circle user_img"
-                                            />
-                                            {/* <span className="online_icon offline" /> */}
-                                        </div>
-                                        <div className="user_info">
-                                            <span>{item.fullName === null ? item.username : item.fullName}</span>
-                                            <p>{item.role.name}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))
-                            }
+                            ))}
                         </ul>
                     </div>
                     <div className="card-footer" />
                 </div>
             </div>
-            <div className="col-md-12 col-xl-9 chat" style={{ height: "650px" }}>
-                <div className="card " style={{ height: "650px" }}>
+            <div className="col-md-12 col-xl-9 chat">
+                <div className="card">
                     <div className="card-header msg_head" >
-                        {account.role.id !== 3 &&
-                            Object.keys(accountSenderCurrent).length !== 0 &&
-                            <div className="d-flex bd-highlight">
-                                <div className="img_cont">
-                                    <img
-                                        src={accountSenderCurrent.avatar}
-                                        className="rounded-circle user_img"
-                                    />
-                                    <span className="online_icon" />
-                                </div>
-                                <div className="user_info">
-                                    <span>{accountSenderCurrent.fullName === null ? accountSenderCurrent.username : accountSenderCurrent.fullName}</span>
-                                    <p>{accountSenderCurrent.role.name}</p>
-                                </div>
-                                {/* <div className="video_cam">
-                                    <span>
-                                        <i className="fas fa-video" />
-                                    </span>
-                                    <span>
-                                        <i className="fas fa-phone" />
-                                    </span>
-                                </div> */}
-                            </div>
-                        }
-                        {account.role.id === 3 &&
-                            Object.keys(accountReceiverCurrent).length !== 0 &&
-                            <div className="d-flex bd-highlight">
+                        <div className="d-sm-block d-md-block d-lg-block d-xl-none" >
+                            <span id="arrow_menu_btn" >
+                                <i className="bi bi-list"></i>
+                            </span>
+                        </div>
+                        {Object.keys(accountReceiverCurrent).length !== 0 &&
+                            <div className="d-flex bd-highlight " >
                                 <div className="img_cont">
                                     <img
                                         src={accountReceiverCurrent.avatar}
                                         className="rounded-circle user_img"
                                     />
-                                    <span className="online_icon" />
+                                    {/* <span className="online_icon" /> */}
                                 </div>
                                 <div className="user_info">
                                     <span>{accountReceiverCurrent.fullName === null ? accountReceiverCurrent.username : accountReceiverCurrent.fullName}</span>
                                     <p>{accountReceiverCurrent.role.name}</p>
                                 </div>
-                                {/* <div className="video_cam">
-                            <span>
-                                <i className="fas fa-video" />
-                            </span>
-                            <span>
-                                <i className="fas fa-phone" />
-                            </span>
-                        </div> */}
                             </div>
                         }
                         <span id="action_menu_btn">
-                            <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                        <Link to={"/"}><Badge badgeContent={0} color="error">
-                                            <div style={{fontSize:"30px" ,color:"white"}}><CloseIcon /></div>
-
-                                        </Badge> </Link>
-                                    </IconButton>
+                            <i className="fas fa-ellipsis-v" />
                         </span>
                         <div className="action_menu">
                             <ul>
@@ -261,21 +178,25 @@ function Chat() {
                                 </li>
                             </ul>
                         </div>
+
                     </div>
                     <div className="card-body msg_card_body" style={{ overflow: "auto" }} ref={messageContainerRef}>
-                        {listMessage.map(item => {
-                           if (item.senderAccount?.id !== account.id) {
+                        {listMessage.length !== 0 ?
+                            listMessage.map(item => {
+                                if (item.senderAccount?.id !== accountLogin.id) {
                                     return (
                                         <div className="d-flex justify-content-start mb-4" key={item.id}>
                                             <div className="img_cont_msg">
                                                 <img
-                                                    src={accountSenderCurrent.avatar}
+                                                    src={accountReceiverCurrent.avatar}
                                                     className="rounded-circle user_img_msg"
                                                 />
                                             </div>
                                             <div className="msg_cotainer_send">
                                                 {item.message}
-                                                <span className="msg_time text-dark" >{item.date}</span>
+                                                <span className={`msg_time text-dark ${item.message.length < item.date.length ? 'msg_time--single-line' : ''}`}>
+                                                    {item.date}
+                                                </span>
                                             </div>
                                         </div>
                                     )
@@ -290,16 +211,15 @@ function Chat() {
                                             </div>
                                             <div className="img_cont_msg">
                                                 <img
-                                                    src={account.avatar}
+                                                    src={accountLogin.avatar}
                                                     className="rounded-circle user_img_msg"
                                                 />
                                             </div>
                                         </div>
                                     )
                                 }
-                            }
-
-                        )}
+                            })
+                            : <h3 className='text-center text-danger'>There are no messages yet</h3>}
                     </div>
                     <div className="card-footer">
                         <div className="input-group">
@@ -326,16 +246,10 @@ function Chat() {
                                 </span>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-        // </div>
-
-
-
 
     )
 }

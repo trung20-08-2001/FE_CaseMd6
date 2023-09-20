@@ -120,7 +120,7 @@ const Footer = () => {
                                         <a>SUPPORT</a>
                                     </li>
                                     <li>
-                                        <a>RECRUITMENTg</a>
+                                        <a>RECRUITMENT</a>
                                     </li>
                                     <li>
                                         <a>CONTACT</a>

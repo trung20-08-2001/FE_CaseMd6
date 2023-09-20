@@ -1,6 +1,8 @@
 import Stomp from 'stompjs';
+import { saveNotification, } from '../services/notificationService';
 import store from "../redux/store"
-import { addMessage, addNotification } from '../services/messageService';
+import { send } from '../services/messageService';
+
 
 const WebSocketConfig = {
     stompClient: null,
@@ -12,18 +14,27 @@ const WebSocketConfig = {
     },
 
     onConnected: (account) => {
-        // Xử lý logic sau khi kết nối thành công
         // WebSocketConfig.stompClient.subscribe('/private/messages', WebSocketConfig.onMessageReceived);
         WebSocketConfig.stompClient.subscribe('/private/' + account.id, WebSocketConfig.onMessageReceived)
     },
 
     onMessageReceived: (message) => {
         let newMessage = JSON.parse(message.body)
+        const currentPath = window.location.pathname;
+        console.log(newMessage);
         if (newMessage.type === "MESSAGE") {
-            store.dispatch(addMessage(newMessage));
-        }else if(newMessage.type==="NOTIFICATION"){
-            store.dispatch(addNotification(newMessage))
-        }      
+            if (newMessage.senderAccount.role.id === 1) {
+                store.dispatch(send(newMessage));
+                store.dispatch(saveNotification({ content: newMessage.senderAccount.fullName===null?newMessage.senderAccount.username:newMessage.senderAccount.fullName + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } }))
+            } else if (currentPath !== `/myaccount/chat/${newMessage.senderAccount.id}`) {
+                store.dispatch(saveNotification({ content: newMessage.senderAccount.fullName===null?newMessage.senderAccount.username:newMessage.senderAccount.fullName + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } }))
+            } else {
+                store.dispatch(send(newMessage));
+            }
+
+        } else if (newMessage.type === "NOTIFICATION") {
+            store.dispatch(saveNotification(newMessage))
+        }
     },
 
     sendMessage: (channel, message) => {
@@ -33,14 +44,12 @@ const WebSocketConfig = {
 
     onError: (error) => {
         console.log(error);
-        // Xử lý logic khi có lỗi
     },
 
     disconnect: () => {
         if (WebSocketConfig.stompClient !== null) {
             WebSocketConfig.stompClient.disconnect();
         }
-        console.log('Disconnected');
     },
 };
 

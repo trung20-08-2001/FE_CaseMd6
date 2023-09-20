@@ -91,7 +91,7 @@ function Sidebar() {
                                     <li className="nav-item">
                                         <NavLink to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
                                             <HistoryIcon/>
-                                            <h5 className="ms-1 d-none d-sm-inline">Renting a House</h5>
+                                            <h5 className="ms-1 d-none d-sm-inline">Renting a house</h5>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
