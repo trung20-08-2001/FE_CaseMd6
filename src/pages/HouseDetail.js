@@ -51,9 +51,19 @@ const HouseDetail = () => {
 
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
 
-    const handleClickChat = () => {
-        if (account) navigate("/myaccount/chat")
-        else navigate("/login");
+    const handleClickChat = (idHost) => {
+        if (account){
+            if( account.id!==idHost) {
+            navigate("/myaccount/chat/"+idHost)
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: "You can't chat with yourself",
+                });
+            }
+        }else{
+            navigate("/login");
+        }  
     }
 
 
@@ -509,7 +519,7 @@ const HouseDetail = () => {
                                     </div>
                                     <div className=" col-8">
                                         <h3>Host: {houseDTO.house.account.fullName}</h3><br/>
-                                        <div className="chat-icon" style={{cursor: "pointer"}} onClick={handleClickChat}>
+                                        <div className="chat-icon" style={{cursor: "pointer"}} onClick={()=>handleClickChat(houseDTO.house.account.id)}>
                                             <i className="fas fa-comment"></i>
                                             <span> Chat</span>
                                         </div><br/>
