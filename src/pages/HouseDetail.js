@@ -377,7 +377,6 @@ const HouseDetail = () => {
                                 setApiDates(dates);
                                 setSelectedEndDate(null)
                                 setSelectedStartDate(null)
-
                             })
                             .catch(error => {
                                 console.error('Error fetching available dates:', error);
@@ -534,8 +533,8 @@ const HouseDetail = () => {
                                     </div>
                                     <div className=" col-8">
                                         <h3>Host: {houseDTO.house.account.fullName}</h3><br/>
-                                        <div class="chat-icon" style={{cursor: "pointer"}} onClick={handleClickChat}>
-                                            <i class="fas fa-comment"></i>
+                                        <div className="chat-icon" style={{cursor: "pointer"}} onClick={handleClickChat}>
+                                            <i className="fas fa-comment"></i>
                                             <span> Chat</span>
                                         </div>
                                         <br/>

@@ -62,7 +62,7 @@ function Login() {
             .catch(function (err) {
                 if (err.response && err.response.status === 401) {
                     Swal.fire({
-                        icon: 'success',
+                        icon: 'error',
                         title: 'Login failed!',
                         text: "Your account has been locked",
                     });

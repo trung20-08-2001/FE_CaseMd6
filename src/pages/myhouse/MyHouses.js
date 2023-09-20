@@ -205,9 +205,9 @@ function MyHouses() {
                                 )
                             })}
                         </div>
-                        <Stack spacing={2}>
+                        <Stack spacing={3}>
                             <Pagination
-                                count={10}
+                                count={5}
                                 renderItem={(item) => (
                                     <PaginationItem
                                         slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
