@@ -229,7 +229,7 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                let notification={content:account.username + " has booked a house "+ houseDTO.house.name,type:"NOTIFICATION"}
+                let notification={content:(account.fullName === null ? account.username : account.fullName)  + " has booked a house "+ houseDTO.house.name,type:"NOTIFICATION",account:{id:houseDTO.house.account.id},url:`/myaccount/bills_vendor/${houseDTO.house.account.id}`}
                 WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
                 return response.data
             })
@@ -270,7 +270,7 @@ const HouseDetail = () => {
                         status: { id: 1 }
                     })
                         .then(response => {
-                            let notification={content:account.username + " just evaluated the house "+ houseDTO.house.name,type:"NOTIFICATION"}
+                            let notification={content:(account.fullName === null ? account.username : account.fullName)  + " just evaluated the house "+ houseDTO.house.name,type:"NOTIFICATION",account:{id:houseDTO.house.account.id},url:`/myaccount/see_reviews/${houseDTO.house.id}`}
                             WebSocketConfig.sendMessage("/private/"+houseDTO.house.account.id,notification)
                             setNumberOfStars({
                                 ...numberOfStars,
@@ -508,9 +508,9 @@ const HouseDetail = () => {
                                             style={{ width: "150px", height: "150px",borderRadius:"50%" }} />
                                     </div>
                                     <div className=" col-8">
-                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br/>
-                                        <div class="chat-icon" style={{cursor:"pointer"}} onClick={handleClickChat}>
-                                            <i class="fas fa-comment"></i>
+                                        <h3>Host: {houseDTO.house.account.fullName}</h3><br/>
+                                        <div className="chat-icon" style={{cursor: "pointer"}} onClick={handleClickChat}>
+                                            <i className="fas fa-comment"></i>
                                             <span> Chat</span>
                                         </div><br/>
                                         <div className="phone-icon">

@@ -21,7 +21,6 @@ const WebSocketConfig = {
     onMessageReceived: (message) => {
         let newMessage = JSON.parse(message.body)
         const currentPath = window.location.pathname;
-        console.log(newMessage);
         if (newMessage.type === "MESSAGE") {
             if (newMessage.senderAccount.role.id === 1) {
                 store.dispatch(send(newMessage));
