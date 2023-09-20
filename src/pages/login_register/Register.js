@@ -35,7 +35,7 @@ function Register() {
                     confirmPassword: ''
                 }}
                 validationSchema={SignupSchema}
-                onSubmit={async values => {
+                onSubmit={async (values, { resetForm }) => {
                     try {
                         console.log(values)
                         const response = await axios.post("http://localhost:8081/accounts/register", values);
@@ -48,6 +48,7 @@ function Register() {
                                 avatar: "https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-image-700-205124837.jpg"
                             }
                             axios.post("http://localhost:8081/accounts/createAccount", account);
+                            resetForm();
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Sign Up Success!',

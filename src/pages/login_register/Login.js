@@ -94,7 +94,7 @@ function Login() {
         console.log(data)
         let a2 = {
             ...account,
-            username: data.given_name,
+            username: data.given_name + data.family_name,
             avatar: data.picture,
             email: data.email,
             password: data.sub,
