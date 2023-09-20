@@ -9,7 +9,7 @@ function ListHouse() {
 
     const dispatch = useDispatch();
     const listHouse = useSelector(state => state.house.allHouse)
-
+    const account = useSelector(state => state.account.account)
     useEffect(() => {
         if (listHouse.length === 0) {
             dispatch(findAllHouse())
@@ -60,16 +60,16 @@ function ListHouse() {
                                                     <div className="title-left pull_left">
                                                         <h4 className="text-white mb-12">
                                                             <a>
-                                                            {item.house.name.slice(0, 15)}
-                                                            {item.house.name.length > 15 && "..."}
-                                                        </a>
+                                                                {item.house.name.slice(0, 15)}
+                                                                {item.house.name.length > 15 && "..."}
+                                                            </a>
                                                         </h4>
                                                         <span style={{color: "#fef1ec"}}>
                                                         <span className="mr-10">
                                                             <img src="images/icons/map.png" alt=""/>
                                                         </span>
-                                                            {item.house.address}
-                                                    </span>
+                                                            {item.house.address.slice(0, 15)}
+                                                            {item.house.address.length > 15 && "..."}                                                    </span>
                                                     </div>
                                                     <div className="fix pull_right">
                                                         <p style={{color: "ghostwhite"}}><strong style={{
@@ -85,7 +85,26 @@ function ListHouse() {
                                                         style={{width: "100%", height: "300px"}}/></Link>
                                                     <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                         <div className="hover-item">
-                                                            <span>{item.house.status.name === "READY"? <strong style={{color:"#32CD32"}}>Ready</strong>:<p style={{color:"#ea4335"}}>Ordered</p> }</span>
+                                                            <span>{account != null ?
+                                                                <span>{item.house.status.name === "READY" ?
+                                                                    <strong
+                                                                        style={{color: "#32CD32"}}>Ready</strong> : item.house.status.name === "ORDERED" ?
+                                                                        <strong
+                                                                            style={{color: "#ea4335"}}>Ordered</strong> :
+                                                                        item.house.status.name === "USING" ? <strong
+                                                                                style={{color: "#FFD700"}}>Using</strong> :
+                                                                            <strong
+                                                                                style={{color: "darkorange"}}> Blocked</strong>
+                                                                }</span> :
+                                                                <span>{item.house.status.name === "USING" ?
+                                                                    <strong style={{color: "#FFD700"}}>Using</strong> :
+                                                                    item.house.status.name === "USING" ?
+                                                                        <strong
+                                                                            style={{color: "#32CD32"}}>Ready</strong> :
+                                                                        <strong
+                                                                            style={{color: "darkorange"}}> Blocked</strong>
+                                                                }</span>
+                                                            }</span>
                                                         </div>
                                                         <div className="hover-item">
                                                             <img className="mr-10" src="../images/icons/bed.png"
@@ -100,7 +119,8 @@ function ListHouse() {
                                                         <div className="hover-item">
                                                             <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
 
-                                                            <strong style={{textShadow:"0 0 2px red"}}>{item.house.numberOfHire}</strong>
+                                                            <strong
+                                                                style={{textShadow: "0 0 2px red"}}>{item.house.numberOfHire}</strong>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,7 +129,7 @@ function ListHouse() {
                                     </div>
                                 )
                             })
-                        :<Loading></Loading>
+                            : <Loading></Loading>
                         }
                         <div className="pagination-content text-center block fix col-12">
                             <div>
@@ -123,7 +143,7 @@ function ListHouse() {
                                                 backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
                                                 color: currentPage === pageNumber ? 'white' : 'black',
                                                 boxShadow: "0 0 1px gold",
-                                                borderRadius:"5px"
+                                                borderRadius: "5px"
                                             }}
                                         >
                                             {pageNumber}
@@ -140,4 +160,4 @@ function ListHouse() {
     )
 }
 
-    export default ListHouse
+export default ListHouse

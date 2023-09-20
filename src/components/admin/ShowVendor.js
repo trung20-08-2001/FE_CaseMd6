@@ -26,8 +26,8 @@ function ShowVendor() {
     const displayVendors = vendors
         .slice(pagesVisited, pagesVisited + vendorsPerPage)
         .map((vendor) => {
-            const statusColor = vendor.account.status.name === "ACTIVE" ? "backgroundColorStatusActive" : "backgroundColorStatusBlocked";
-            const statusName = vendor.account.status.name === "ACTIVE" ? "Active" : "Blocked";
+            const statusColor = vendor.account.status.name === "ACTIVE" ? "backgroundColorStatusActive" : vendor.account.status.name=== "BLOCKED"?"backgroundColorStatusBlocked": "backgroundColorStatusPending";
+            const statusName = vendor.account.status.name === "ACTIVE" ? "Active" : vendor.account.status.name=== "BLOCKED"? "Blocked":"Pending";
             return (
                 <tr key={vendor.account.id}>
                     <td >{vendor.account.fullName == null ? <p className="text-danger">Not update</p> : <p>{vendor.account.fullName}</p>}</td>
@@ -44,7 +44,7 @@ function ShowVendor() {
                     <td>
                         {vendor.account.status.id === 2 ? (
                             <div>
-                                <Link className="btn btn-outline-secondary" to={`/myaccount/vendor/upRole/${vendor.account.id}`}>
+                                <Link className="btn btn-outline-info buttonShadow" to={`/myaccount/vendor/upRole/${vendor.account.id}`}>
                                     Up Role
                                 </Link>
                             </div>

@@ -31,7 +31,7 @@ function VendorDetail() {
                     </tr>
                     <tr>
                         <th>Full Name</th>
-                        <td>{vendor.account?.fullName== null ? <p className="text-danger">Chưa cập nhật</p> : <p>{vendor.account?.fullName}</p>}</td>
+                        <td>{vendor.account?.fullName== null ? <p className="text-danger">Not update</p> : <p>{vendor.account?.fullName}</p>}</td>
                     </tr>
                     <tr>
                         <th>Phone Number</th>

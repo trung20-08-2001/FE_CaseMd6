@@ -59,10 +59,13 @@ const UpRole2 = () => {
 
     return (
         <>
-        <div className="create-agency-area pt-20 pb-120">
+        <div className="create-agency-area pt-30 pb-60">
             <div className="container">
-                <div className="row">
-                    <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                <h2 className="text-center mb-43 headerInBody">
+                    Register to become a landlord
+                </h2>
+                <div className="row distanceBody table">
+                    <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ml-20 mr-20 mt-0">
                         <div className="agency-container">
                             <Formik initialValues={{
                                 address: '', fullName: '', email: '', phone: '', img1: ''
@@ -74,10 +77,7 @@ const UpRole2 = () => {
                                     <Form action="#" method="post">
                                         <br/>
                                         <br/>
-                                        <h2 className="text-center mb-43 headerInBody">
-                                            Register to become a landlord
-                                        </h2>
-                                        <h4 className="details-title text-medium mb-23 pt-24">
+                                        <h4 className="details-title text-medium mb-23">
                                             Provide more information
                                         </h4>
 
@@ -168,75 +168,10 @@ const UpRole2 = () => {
                                             <br/>
                                         </div>
                                         <div className="text-center">
-                                            <button type="submit" className="btn btn-success btn-submit">Submit</button>
+                                            <button type="submit" className="button buttonShadow w-25">Up Role</button>
                                         </div>
                                     </Form>)}
                             </Formik>
-                        </div>
-
-                        <div className="property-package">
-                            <h4 className="details-title text-medium mb-24 pt-30">
-                                Select a Package
-                            </h4>
-                            <div className="row">
-                                <div className="col-lg-4 pl-12 pr-12 text-center">
-                                    <div className="single-package">
-                                        <div className="package-title bg-violet pt-23 pb-23">
-                                            <h4 className="text-white text-uppercase">Basic</h4>
-                                        </div>
-                                        <div className="package-list pt-37 pb-25">
-                                            <span className="block dark mb-25">Fee $0</span>
-                                            <span className="block mb-27">Property Sumbit 1</span>
-                                            <span className="block mb-27">Agent Profiles 1</span>
-                                            <span className="block mb-27">Agent Profiles 1</span>
-                                            <span className="block mb-43">No Featured Properties</span>
-                                            <button type="button" className="button text-white">
-                                                Select
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 pl-12 pr-12 text-center">
-                                    <div className="single-package">
-                                        <div className="package-title bg-violet pt-23 pb-23">
-                                            <h4 className="text-white text-uppercase">SILVER</h4>
-                                        </div>
-                                        <div className="package-list pt-37 pb-25">
-                                            <span className="block dark mb-25">Fee $15</span>
-                                            <span className="block mb-27">Property Sumbit 30</span>
-                                            <span className="block mb-27">Agent Profiles 15</span>
-                                            <span className="block mb-27">Agent Profiles 10</span>
-                                            <span className="block mb-43">Featured Properties</span>
-                                            <button type="button" className="button text-white">
-                                                Select
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 pl-12 pr-12 text-center">
-                                    <div className="single-package">
-                                        <div className="package-title bg-violet pt-23 pb-23">
-                                            <h4 className="text-white text-uppercase">Gold</h4>
-                                        </div>
-                                        <div className="package-list pt-37 pb-25">
-                                            <span className="block dark mb-25">Fee $28</span>
-                                            <span className="block mb-27">
-                      Property Sumbit unlimited
-                    </span>
-                                            <span className="block mb-27">
-                      Agent Profiles unlimited
-                    </span>
-                                            <span className="block mb-27">
-                      Agent Profiles unlimited
-                    </span>
-                                            <span className="block mb-43">Featured Properties</span>
-                                            <button type="button" className="button text-white">
-                                                Select
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

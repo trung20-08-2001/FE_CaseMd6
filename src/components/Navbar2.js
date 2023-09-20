@@ -533,7 +533,7 @@ export default function PrimarySearchAppBar() {
                                         aria-label="open drawer"
                                         color={"white"}
                                         sx={{ display: { xs: 'block', sm: 'block' } }}
-                                        style={{ fontSize: "15px", color: "#ffc107" }}
+                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight:"5px" }}
                                     >
                                         {account.fullName != null ? account.fullName : account.username}
                                     </Typography>

@@ -96,7 +96,7 @@ function UserTransactionHistory() {
             const cancelButton = (diffInDays > 1 && bill.bill.status.id === 2) ? (
                 <button
                     style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
-                    className="btn btn-outline-danger"
+                    className="btn btn-outline-danger buttonShadow"
                     onClick={() => handleCancelClick(bill?.bill.id)}
                 >Cancel</button>
             ) : null;

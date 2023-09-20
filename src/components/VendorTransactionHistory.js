@@ -183,9 +183,9 @@ function VendorTransactionHistory() {
                     <td className="statusCenter"><p className={statusColor}>{status}</p></td>
                     <td>
                         <button style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
-                                className={bill.bill.status.id === 2 ? ("btn btn-outline-success"
+                                className={bill.bill.status.id === 2 ? ("btn btn-outline-success buttonShadow"
                                 ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
-                                ) : "btn btn-outline-secondary"}
+                                ) : "btn btn-outline-secondary buttonShadow"}
                                 onClick={() => handleBillClick(bill?.bill.id)}
                         >{bill.bill.status.id === 2 ? (`Checkin`
                         ) : (bill.bill.status.id === 8 || bill.bill.status.id === 7) ? (null
