@@ -179,7 +179,8 @@ function MyHouses() {
                                                             <span>
                                                                 {item.house.status.name === "READY" && <strong style={{ color: "#32CD32" }}>Ready</strong>}
                                                                 {item.house.status.name === "ORDERED" && <strong style={{ color: "red" }}>Ordered</strong>}
-                                                                {item.house.status.name === "BLOCKED" && <strong style={{ color: "yellow" }}>Blocked</strong>}
+                                                                {item.house.status.name === "BLOCKED" && <strong style={{ color: "darkorange" }}>Blocked</strong>}
+                                                                {item.house.status.name === "USING" && <strong style={{ color: "#FFD700" }}>Using</strong>}
                                                             </span>
                                                         </div>
                                                         <div className="hover-item">

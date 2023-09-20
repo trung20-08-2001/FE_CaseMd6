@@ -88,6 +88,12 @@ function Sidebar() {
                                             <h5 className="ms-1 d-none d-sm-inline">Create houses</h5>
                                         </NavLink>
                                     </li>
+                                    <li className="nav-item mt-10">
+                                        <NavLink to={`/myaccount/bills_user/${account.id}`} className="nav-link text-truncate">
+                                            <HistoryIcon />
+                                            <h5 className="ms-1 d-none d-sm-inline">Transaction history</h5>
+                                        </NavLink>
+                                    </li>
                                     <li className="nav-item">
                                         <NavLink to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
                                             <HistoryIcon/>
