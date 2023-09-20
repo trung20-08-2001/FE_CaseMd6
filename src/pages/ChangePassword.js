@@ -1,11 +1,11 @@
 import React from 'react';
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { login } from '../services/accountService';
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from 'react-redux';
+import {login} from '../services/accountService';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
@@ -74,7 +74,10 @@ const ChangePassword = () => {
                                 text: 'The old password is incorrect',
                             });
                         } else {
-                            axios.post("http://localhost:8081/accounts/createAccount", { ...accountCurrent, password: values.password });
+                            axios.post("http://localhost:8081/accounts/createAccount", {
+                                ...accountCurrent,
+                                password: values.password
+                            });
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Password changed successfully!',
@@ -90,56 +93,47 @@ const ChangePassword = () => {
                 }}
             >
                 <Form>
-                    <div className="form-container">
-                        <h4 className="details-title text-center mb-43 headerInBody"><i className="fas fa-edit"></i> Change Password</h4>
-                        <MenuItem>
-                            <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                <Badge badgeContent={0} color="error">
-                                    <div style={{ color: "red" }}> <WarningAmberIcon /></div>
-                                </Badge>
-                            </IconButton>
-                            <p>Your password must be at least 6 characters</p>
-                        </MenuItem>
-                        <div className="form-group">
-                            <label htmlFor="oldPassword">Old Password</label>
+                    <div className="form-container distanceBody">
+                        <h4 className="details-title text-center mb-43 headerInBody"><i
+                            className="fas fa-edit"></i> Change Password</h4>
+                        <div className="table text-center">
+                        <div className="form-group mt-20">
+                            <label htmlFor="oldPassword">Old Password</label><br/>
                             <Field
                                 type="password"
                                 name="oldPassword"
-                                className="form-control"
-                                style={{ width: "100%" }}
                                 placeholder="Old Password"
+                                style={{width:"300px"}}
                             />
                             <div className="error-message">
-                                <ErrorMessage name="oldPassword" component="div" />
+                                <ErrorMessage name="oldPassword"/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">New Password</label>
+                            <label htmlFor="password">New Password</label><br/>
                             <Field
                                 type="password"
                                 name="password"
-                                className="form-control"
-                                style={{ width: "100%" }}
                                 placeholder="New Password"
+                                style={{width:"300px"}}
                             />
                             <div className="error-message">
-                                <ErrorMessage name="password" component="div" />
+                                <ErrorMessage name="password"/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm New Password</label>
+                            <label htmlFor="confirmPassword">Confirm New Password</label><br/>
                             <Field
                                 type="password"
                                 name="confirmPassword"
-                                className="form-control"
-                                style={{ width: "100%" }}
                                 placeholder="Confirm New Password"
+                                style={{width:"300px"}}
                             />
                             <div className="error-message">
-                                <ErrorMessage name="confirmPassword" component="div" />
+                                <ErrorMessage name="confirmPassword"/>
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-success btn-confirm">Confirm</button>
+                        <button type="submit" className="button buttonShadow mb-30">Confirm</button></div>
                     </div>
                 </Form>
 
