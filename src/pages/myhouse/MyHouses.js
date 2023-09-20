@@ -40,6 +40,7 @@ function MyHouses() {
     }, [])
 
 
+
     const handleUpdateStatus = (item, index) => {
         if (item.house.status.name === "USING" || item.house.status.name === "ORDERED") {
             Swal.fire({
@@ -55,20 +56,20 @@ function MyHouses() {
                 confirmButtonText: "BLOCK",
 
             }).then((result) => {
-                    if (result.isConfirmed) {
-                        dispatch(editHouse({
-                            house: {...item.house, status: {id: 1, name: "BLOCKED"}},
-                            images: {...item.images},
-                            indexHouseEdit: index
-                        }))
-                        customAxios.post("/houses/save", {...item.house, status: {id: 3}})
-                            .then(() => {
-                                Swal.fire('Changes are saved!', '', 'success')
-                            })
-                            .catch(err => console.log(err))
-                    }
-
+                if (result.isConfirmed) {
+                    dispatch(editHouse({
+                        house: { ...item.house, status: { id: 1, name: "BLOCKED" } },
+                        images: { ...item.images },
+                        indexHouseEdit: index
+                    }))
+                    customAxios.post("/houses/save", { ...item.house, status: { id: 3 } })
+                        .then(() => {
+                            Swal.fire('Changes are saved!', '', 'success')
+                        })
+                        .catch(err => console.log(err))
                 }
+
+            }
             )
         } else if (item.house.status.name === "BLOCKED") {
             Swal.fire({

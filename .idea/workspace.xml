@@ -5,45 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2ce57b6-c244-4d4e-a8f3-51f854879ebb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditProfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ListHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ListHouse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navbar2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Slide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Slide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TopHouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopHouse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTransactionHistory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VendorTransactionHistory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ListUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ListUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ShowVendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/.rescache" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/chat/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/Chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/configFirebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/configFirebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/configWebsocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/configWebsocket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/HouseDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HouseDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SeeReviews.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SeeReviews.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UpRole2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UpRole2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login_register/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login_register/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login_register/css/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login_register/fonts/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/myhouse/.rescache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Sidebar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/selector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/selector.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/.rescache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/.rescache" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

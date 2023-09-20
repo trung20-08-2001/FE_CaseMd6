@@ -200,9 +200,7 @@ function Chat() {
                                             </div>
                                             <div className="user_info">
                                                 <span className="text-nowrap">
-                                                    {item.fullName === null ? item.username.slice(0, 10) : item.fullName.slice(0, 10)}
-                                                    {item.fullName !== null && item.fullName.length > 10 && " . . ."}
-                                                    {item.fullName === null && item.username.length > 10 && " . . ."}
+                                                    {item.fullName === null ? item.username : item.fullName}
                                                 </span>
                                                 <p>{item.role.name}</p>
                                             </div>

@@ -59,6 +59,7 @@ function App() {
                                         <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
                                         <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
                                         <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
+                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
 
                                     </>
                                 }

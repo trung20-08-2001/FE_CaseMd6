@@ -162,6 +162,8 @@ export default function PrimarySearchAppBar() {
             password</MenuItem></Link>,
         <Link to="myaccount/host" onClick={() => setAnchorEl(null)}><MenuItem>My houses</MenuItem></Link>,
         <Link to="myaccount/create_house" onClick={() => setAnchorEl(null)}><MenuItem>Create houses</MenuItem></Link>,
+        <Link to={`myaccount/bills_user/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Transaction
+            history</MenuItem></Link>,
         <Link to={`myaccount/bills_vendor/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Renting a
             House</MenuItem></Link>,
         <Link to="myaccount/income" onClick={() => setAnchorEl(null)}><MenuItem>Revenue</MenuItem></Link>
@@ -305,6 +307,20 @@ export default function PrimarySearchAppBar() {
                 <p>Create houses</p>
             </MenuItem>
         </Link>,
+         <Link to={`/myaccount/bills_user/${account?.id}`}>
+         <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+             <IconButton
+                 size="large"
+                 aria-label="show 17 new notifications"
+                 color="inherit"
+             >
+                 <Badge badgeContent={0} color="error">
+                     <HistoryIcon />
+                 </Badge>
+             </IconButton>
+             <p>Transaction history</p>
+         </MenuItem>
+     </Link>,
         <Link to={`/myaccount/bills_vendor/${account?.id}`}>
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -540,7 +556,7 @@ export default function PrimarySearchAppBar() {
                                         aria-label="open drawer"
                                         color={"white"}
                                         sx={{ display: { xs: 'block', sm: 'block' } }}
-                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight:"5px" }}
+                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight:"10px" }}
                                     >
                                         {account.fullName != null ? account.fullName : account.username}
                                     </Typography>
