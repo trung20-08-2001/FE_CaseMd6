@@ -99,7 +99,7 @@ function MyHouses() {
     return (
         <>
             <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
-                <div className="col-xl-6 col-sm-6">
+                <div className="col-xl-6 col-sm-6 mb-30">
                     <Label htmlFor="nameHouse">Name House</Label>
                     <input
                         name="nameHouse"
@@ -110,7 +110,7 @@ function MyHouses() {
                         style={{flex: 2, marginRight: '10px'}}
                     />
                 </div>
-                <div className="col-xl-6 col-sm-6">
+                <div className="col-xl-6 col-sm-6 mb-30">
                     <Label htmlFor="status">Status</Label>
                     <select
                         name="select"
@@ -118,10 +118,10 @@ function MyHouses() {
                         style={{flex: 2, marginRight: '10px'}}
                     >
                         <option value={"ALL"}>All</option>
-                        <option value={"READY"}>READY</option>
-                        <option value={"ORDERED"}>ORDERED</option>
-                        <option value={"USING"}>USING</option>
-                        <option value={"BLOCKED"}>BLOCK</option>
+                        <option value={"READY"}>Ready</option>
+                        <option value={"ORDERED"}>Ordered</option>
+                        <option value={"USING"}>Using</option>
+                        <option value={"BLOCKED"}>Blocked</option>
                     </select>
                 </div>
             </div>

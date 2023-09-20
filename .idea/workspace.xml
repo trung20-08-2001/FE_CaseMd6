@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2ce57b6-c244-4d4e-a8f3-51f854879ebb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/Chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login_register/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login_register/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/myhouse/MyHouses.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +94,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4f8cb61f-7ee9-40e4-892c-156ddbc359e2" name="Changes" comment="" />
+      <changelist id="f2ce57b6-c244-4d4e-a8f3-51f854879ebb" name="Changes" comment="" />
       <created>1693229106396</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -123,6 +124,7 @@
       <workItem from="1694847243181" duration="13342000" />
       <workItem from="1694959791375" duration="9479000" />
       <workItem from="1695000684246" duration="28301000" />
+      <workItem from="1695219112010" duration="5924000" />
     </task>
     <servers />
   </component>

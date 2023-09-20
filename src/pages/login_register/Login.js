@@ -127,11 +127,12 @@ function Login() {
             <div className="limiter">
                 <div
                     className="container-login100"
-                    style={{ backgroundImage: 'url("../images/bg/bg-01.jpg")' }}
+                    style={{background: "linear-gradient(to right, rgb(30, 126, 52) 0%, rgba(30, 126, 52, 0.8) 100%)"}}
                 >
                     <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
                         <form className="login100-form validate-form">
-                            <span className="login100-form-title p-b-49">Login</span>
+                            <div className="text-center">
+                            <h1 className="p-b-49 headerLogin">Login</h1></div>
                             <div
                                 className="wrap-input100 validate-input m-b-23"
                                 data-validate="Username is reauired"
@@ -174,7 +175,7 @@ function Login() {
                             <div className="container-login100-form-btn">
                                 <div className="wrap-login100-form-btn">
                                     <div className="login100-form-bgbtn" />
-                                    <button className="login100-form-btn" onClick={handleLogin}>Login</button>
+                                    <button className="login100-form-btn button buttonShadow" onClick={handleLogin}>Login</button>
                                 </div>
                             </div>
                             <div className="txt1 text-center p-t-54 p-b-20">
@@ -185,7 +186,7 @@ function Login() {
                                     appId={"1034030891357735"}
                                     onReject={handleLoginFailure}
                                     onResolve={({ provider, data }) => handleLoginSuccess1(data)}>
-                                    <a className="login100-social-item bg1">
+                                    <a className=" bg2 iconFacebook">
                                         <i className="fa fa-facebook" />
                                     </a>
                                 </LoginSocialFacebook>
@@ -195,14 +196,14 @@ function Login() {
                                     client_id={"584666386792-6sjtfu9j1efsat5pqml02tevg66k3s4e.apps.googleusercontent.com"}
                                     onReject={handleLoginFailure}
                                     onResolve={({ provider, data }) => handleLoginSuccess2(data)}>
-                                    <a className="login100-social-item bg3">
+                                    <a className=" bg3 iconGoogle">
                                         <i className="fa fa-google" />
                                     </a>
                                 </LoginSocialGoogle>
                             </div>
                             <div className="flex-col-c p-t-10">
                                 <span className="txt1 p-b-17">Do not have an account?</span>
-                                <Link to="/register" className="txt2">
+                                <Link to="/register" className="signUpAndIn">
                                     Sign Up
                                 </Link>
                             </div>
