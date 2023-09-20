@@ -68,8 +68,6 @@ function TopHouse() {
                                                             </p>
                                                         </div>                                                    </div>
                                                     <div className="property-image text-white">
-                                                        {/* <Link to={"houseDetail/"+item.house.id}></Link>      */}
-
                                                         <img src={item.images.length !== 0 ? item.images[0].url : ""}
                                                              alt="" style={{width: "100%", height: "300px"}}/>
                                                         <div className="hover-container pl-15 pr-15 pt-16 pb-15">
