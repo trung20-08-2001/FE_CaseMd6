@@ -62,7 +62,7 @@ export const filterBillHistoryHost = createSelector(
     return allBill.filter((bill) => {
       const isNameHouseMatched = removeDiacritics(bill.house.name).toLowerCase().includes(removeDiacritics(nameHouse).toLowerCase());
       const isDateCheckinMatched = new Date(bill.bill.dateCheckin).getTime() >= new Date(dateCheckin).getTime();
-      const isDateCheckoutMatched = new Date(bill.bill.dateCheckout).getTime() == new Date(dateCheckout).getTime();
+      const isDateCheckoutMatched = new Date(bill.bill.dateCheckout).getTime() <= new Date(dateCheckout).getTime();
       const isStatusMatched = bill.bill.status.name === status;
       if (status === "ALL") {
         return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched

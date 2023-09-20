@@ -29,7 +29,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
 import { findNotificationByIdAccount, updateStatus } from '../services/notificationService';
-import {Houseboat, HouseOutlined, LoginOutlined, LoginRounded} from "@mui/icons-material";
+import { Houseboat, HouseOutlined, LoginOutlined, LoginRounded } from "@mui/icons-material";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -385,20 +385,27 @@ export default function PrimarySearchAppBar() {
             }}
             PaperProps={{
                 style: {
-                    maxHeight: 200, // Giới hạn chiều cao của menu
-                    maxWidth: 500, // Giới hạn chiều rộng của menu
+                    maxHeight: 500, // Giới hạn chiều cao của menu
+                    maxWidth: 250, // Giới hạn chiều rộng của menu
                     overflowY: 'auto', // Hiển thị thanh cuộn nếu nội dung quá dài
+
                 },
             }}
         >
-            {notifications.length !== 0 ?
-                notifications.map(item => {
-                    return (
-                        <Link to={item.url} onClick={() => setNotificationsAnchorEl(null)}><MenuItem>{formatter.format(new Date(item.time))}: {item.content}</MenuItem></Link>
-                    )
-                })
-                : <MenuItem onClick={() => setNotificationsAnchorEl(null)}>You don't have any notifications yet</MenuItem>}
-        </Menu>
+            {notifications.length !== 0 ? (
+                notifications.map((item, index) => (
+                    <div key={index}>
+                        <Link to={item.url} onClick={() => setNotificationsAnchorEl(null)}>
+                            <MenuItem style={{ whiteSpace: 'pre-wrap' }}>
+                                {formatter.format(new Date(item.time))}: {item.content}
+                            </MenuItem>
+                        </Link>
+                        {index < notifications.length - 1 && <MenuItem divider style={{ borderColor: 'green',padding:"0",margin:"0" }} />}
+                    </div>
+                ))
+            ) : (
+                <MenuItem onClick={() => setNotificationsAnchorEl(null)}>You don't have any notifications yet</MenuItem>
+            )}</Menu>
     )
     const renderMenu = (
         <Menu
@@ -561,8 +568,8 @@ export default function PrimarySearchAppBar() {
                                     component="div"
                                     aria-label="open drawer"
                                     color={"white"}
-                                    sx={{display: {xs: 'block', sm: 'block'}}}
-                                    style={{textShadow: "0px 0px 10px #ffc107"}}
+                                    sx={{ display: { xs: 'block', sm: 'block' } }}
+                                    style={{ textShadow: "0px 0px 10px #ffc107" }}
                                 >
                                     Login<LoginRounded />
                                 </Typography>

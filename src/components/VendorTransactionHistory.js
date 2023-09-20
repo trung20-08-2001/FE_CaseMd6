@@ -33,12 +33,6 @@ function VendorTransactionHistory() {
         }
     }, []);
 
-    // const resultSearch = useSelector(filterBillHistoryHost)
-    // console.log(resultSearch);
-
-
-
-
 
     const displayBills_vendor = bills_vendor
         .slice(pagesVisited, pagesVisited + billsPerPage)

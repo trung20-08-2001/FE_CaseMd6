@@ -120,7 +120,6 @@ function Chat() {
                                         }
                                     }}
                                 />
-
                                 <div className="input-group-prepend" onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
                                     <span className="input-group-text search_btn">
                                         <i className="fas fa-search" />
