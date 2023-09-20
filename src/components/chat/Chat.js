@@ -214,7 +214,6 @@ function Chat() {
                     </div>
                 </div>
             </div>
-
             <div className="col-md-12 col-xl-9 chat" id="main">
                 <div className="card">
                     <div className="card-header msg_head" ref={myElementRef}>
@@ -233,7 +232,7 @@ function Chat() {
                                 </div>
                             </div>
                         }
-                        <span id="action_menu_btn" className='d-sm-block' onClick={openCloseNav}>
+                        <span id="action_menu_btn" className='d-sm-block d-xl-none' onClick={openCloseNav}>
                             <i className="fas fa-ellipsis-v" />
                         </span>
                         <div className="action_menu">

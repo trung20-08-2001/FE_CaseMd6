@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {findAllHouse} from '../services/houseService';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { findAllHouse } from '../services/houseService';
 import Loading from './Loading';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "../assets/styleHouse.css"
 
 function ListHouse() {
@@ -31,15 +31,15 @@ function ListHouse() {
     return (
         <>
             <div className="property-area pb-60"
-                 style={{background: "linear-gradient(245.59deg, #f9f9f9 0%, #f2f2f2 28.53%, #ebebeb 75.52%)"}}>
-                <div className="container" style={{maxWidth: "100%"}}>
+                style={{ background: "linear-gradient(245.59deg, #f9f9f9 0%, #f2f2f2 28.53%, #ebebeb 75.52%)" }}>
+                <div className="container" style={{ maxWidth: "100%" }}>
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="section-title mb-38 mt-31 text-center">
                                 {/* <span className="opacity-text text-uppercase center">
                                         LIST HOUSE
                                     </span> */}
-                                <h2 className="uppercase headerInBody mb-25" style={{textShadow: "0 0 2px gold"}}>LIST
+                                <h2 className="uppercase headerInBody mb-25" style={{ textShadow: "0 0 2px gold" }}>LIST
                                     HOUSE</h2>
                             </div>
                         </div>
@@ -52,10 +52,10 @@ function ListHouse() {
                                         <div className="scaleHouse">
                                             <div className="single-property hover-effect-two">
                                                 <div className="property-title fix pl-18 pr-18 pt-22 pb-18 bg-violet"
-                                                     style={{
-                                                         borderRadius: "18px 18px 0 0",
-                                                         boxShadow: "0 0 10px rgba(0,0,0,0.5)"
-                                                     }}
+                                                    style={{
+                                                        borderRadius: "18px 18px 0 0",
+                                                        boxShadow: "0 0 10px rgba(0,0,0,0.5)"
+                                                    }}
                                                 >
                                                     <div className="title-left pull_left">
                                                         <h4 className="text-white mb-12">
@@ -64,15 +64,15 @@ function ListHouse() {
                                                                 {item.house.name.length > 15 && "..."}
                                                             </a>
                                                         </h4>
-                                                        <span style={{color: "#fef1ec"}}>
-                                                        <span className="mr-10">
-                                                            <img src="images/icons/map.png" alt="" />
-                                                        </span>
+                                                        <span style={{ color: "#fef1ec" }}>
+                                                            <span className="mr-10">
+                                                                <img src="images/icons/map.png" alt="" />
+                                                            </span>
                                                             {item.house.address.slice(0, 15)}
                                                             {item.house.address.length > 15 && "..."}                                                    </span>
                                                     </div>
                                                     <div className="fix pull_right">
-                                                        <p style={{color: "ghostwhite"}}><strong style={{
+                                                        <p style={{ color: "ghostwhite" }}><strong style={{
                                                             color: "gold",
                                                             fontSize: "15px",
                                                             textShadow: "0 0 1px gold"
@@ -82,45 +82,45 @@ function ListHouse() {
                                                 <div className="property-image text-white">
                                                     <Link to={"houseDetail/" + item.house.id}><img
                                                         src={item.images[0].url} alt=""
-                                                        style={{width: "100%", height: "300px"}}/></Link>
+                                                        style={{ width: "100%", height: "300px" }} /></Link>
                                                     <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                         <div className="hover-item">
                                                             <span>{account != null ?
-                                                                <span>{item.house.status.name === "READY" ?
+                                                                <span>{item.house.status.name === "BLOCKED" ?
                                                                     <strong
-                                                                        style={{color: "#32CD32"}}>Ready</strong> : item.house.status.name === "ORDERED" ?
+                                                                        style={{ color: "darkorange" }}> Blocked</strong>
+                                                                    :
+                                                                    item.house.status.name === "USING" ? <strong
+                                                                        style={{ color: "#FFD700" }}>Using</strong> :
                                                                         <strong
-                                                                            style={{color: "#ea4335"}}>Ordered</strong> :
-                                                                        item.house.status.name === "USING" ? <strong
-                                                                                style={{color: "#FFD700"}}>Using</strong> :
-                                                                            <strong
-                                                                                style={{color: "darkorange"}}> Blocked</strong>
+                                                                            style={{ color: "#32CD32" }}>Ready</strong>
                                                                 }</span> :
                                                                 <span>{item.house.status.name === "USING" ?
-                                                                    <strong style={{color: "#FFD700"}}>Using</strong> :
-                                                                    item.house.status.name === "USING" ?
+                                                                    <strong style={{ color: "#FFD700" }}>Using</strong> :
+                                                                    item.house.status.name === "BLOCKED" ?
+                                                                    <strong
+                                                                    style={{ color: "darkorange" }}> Blocked</strong>:
                                                                         <strong
-                                                                            style={{color: "#32CD32"}}>Ready</strong> :
-                                                                        <strong
-                                                                            style={{color: "darkorange"}}> Blocked</strong>
+                                                                            style={{ color: "#32CD32" }}>Ready</strong> 
+                                                                      
                                                                 }</span>
                                                             }</span>
                                                         </div>
                                                         <div className="hover-item">
                                                             <img className="mr-10" src="../images/icons/bed.png"
-                                                                 alt=""/>
+                                                                alt="" />
                                                             <strong>{item.house.numberOfBedrooms}</strong>
                                                         </div>
                                                         <div className="hover-item">
                                                             <img className="mr-10" src="../images/icons/shower.png"
-                                                                 alt=""/>
+                                                                alt="" />
                                                             <strong>{item.house.numberOfLivingRooms}</strong>
                                                         </div>
                                                         <div className="hover-item">
-                                                            <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
+                                                            <i className='fa fa-heart mr-10' style={{ color: "red" }}></i>
 
                                                             <strong
-                                                                style={{textShadow: "0 0 2px red"}}>{item.house.numberOfHire}</strong>
+                                                                style={{ textShadow: "0 0 2px red" }}>{item.house.numberOfHire}</strong>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +133,7 @@ function ListHouse() {
                         }
                         <div className="pagination-content text-center block fix col-12">
                             <div>
-                                {Array.from({length: totalPages}, (_, index) => index + 1).map(
+                                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                                     (pageNumber) => (
                                         <button
                                             key={pageNumber}
@@ -152,7 +152,6 @@ function ListHouse() {
                                 )}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

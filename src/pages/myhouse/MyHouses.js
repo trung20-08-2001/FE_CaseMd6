@@ -157,7 +157,7 @@ function MyHouses() {
                                                                 </span>
                                                             {item.house.address.slice(0, 15)}
                                                             {item.house.address.length > 15 && "..."}
-                                                            </span>
+                                                        </span>
                                                     </div>
                                                     <div className="fix pull_right">
                                                         <p style={{color: "ghostwhite"}}><strong style={{
@@ -169,54 +169,75 @@ function MyHouses() {
                                                 </div>
                                             </div>
                                             <div className="property-image text-white">
-                                                <Link to={"houseDetail/" + item.house.id}><img
+                                                <Link to={"/myaccount/see_reviews/" + item.house.id}><img
                                                     src={item.images[0].url} alt=""
-                                                    style={{width: "100%", height: "300px"}}/></Link>
+                                                    style={{ width: "100%", height: "300px" }} /></Link>
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
-                                                        <span>{item.house.status.name === "READY" ? <strong
-                                                            style={{color: "#32CD32"}}> Ready</strong> : item.house.status.name === "ORDERED" ?
-                                                            <strong style={{color: "#ea4335"}}> Ordered</strong> :
-                                                            item.house.status.name === "BLOCKED" ?
+                                                    <span>{item.house.status.name === "USING" ?
+                                                                <strong style={{ color: "#FFD700" }}>Using</strong> :
+                                                                item.house.status.name === "ORDERED" ?
+                                                                <strong style={{ color: "#87CEEB" }}>Ordered</strong>:
+                                                                item.house.status.name === "BLOCKED" ?
                                                                 <strong
-                                                                    style={{color: "darkorange"}}> Blocked</strong> :
-                                                                <strong
-                                                                    style={{color: "#FFD700"}}> Using</strong>} </span>
+                                                                style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                    <strong
+                                                                        style={{ color: "#32CD32" }}>Ready</strong>
+                                                            }</span>
                                                     </div>
                                                     <div className="hover-item">
                                                         <img className="mr-10" src="/images/icons/bed.png"
-                                                             alt=""/>
+                                                            alt="" />
                                                         <strong>{item.house.numberOfBedrooms}</strong>
                                                     </div>
                                                     <div className="hover-item">
                                                         <img className="mr-10" src="/images/icons/shower.png"
-                                                             alt=""/>
+                                                            alt="" />
                                                         <strong>{item.house.numberOfLivingRooms}</strong>
                                                     </div>
                                                     <div className="hover-item">
-                                                        <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
+                                                        <i className='fa fa-heart mr-10' style={{ color: "red" }}></i>
                                                         <strong
-                                                            style={{textShadow: "0 0 2px red"}}>{item.house.numberOfHire}</strong>
+                                                            style={{ textShadow: "0 0 2px red" }}>{item.house.numberOfHire}</strong>
                                                     </div>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div className='mt-16 text-center'>
-                                            <button className="button buttonShadow mb-10 col-3"><Link
+                                            <button className="button buttonShadow mb-10 col-4"><Link
                                                 to={"/myaccount/edit_house/" + index}
-                                                style={{color: "white"}}>Edit</Link></button>
-                                            <button className="button buttonShadow mb-10 col-3"
-                                                    onClick={() => handleUpdateStatus(item, index)}><Link
-                                                style={{color: "white"}}>Status</Link>
+                                                style={{ color: "white" }}>Edit</Link></button>
+                                            <button className="button buttonShadow mb-10 col-4"
+                                                onClick={() => handleUpdateStatus(item, index)}><Link
+                                                    style={{ color: "white" }}>Status</Link>
                                             </button>
-                                            <button className="button buttonShadow mb-10 col-3"><Link
-                                                to={"/myaccount/see_reviews/" + item.house.id}
-                                                style={{color: "white"}}>Detail</Link></button>
+
                                         </div>
                                     </div>
                                 )
                             })}
+                            <div className="pagination-content text-center block fix col-12">
+                                <div>
+                                    {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                        (pageNumber) => (
+                                            <button
+                                                key={pageNumber}
+                                                onClick={() => handlePageChange(pageNumber)}
+                                                disabled={currentPage === pageNumber}
+                                                style={{
+                                                    backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
+                                                    color: currentPage === pageNumber ? 'white' : 'black',
+                                                    boxShadow: "0 0 1px gold",
+                                                    borderRadius: "5px"
+                                                }}
+                                            >
+                                                {pageNumber}
+                                            </button>
+                                        )
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </>
             }

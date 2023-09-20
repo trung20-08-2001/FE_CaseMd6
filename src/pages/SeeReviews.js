@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import AverageStarsFeedback from "./AverageStarsFeedback";
 import StarFeedback from "./StarFeedback";
 import ReactModal from "react-modal";
-import loading from "../components/Loading";
-
 
 const SeeReviews = () => {
     const [houses, setHouse] = useState([]);
@@ -14,7 +12,7 @@ const SeeReviews = () => {
     const [itemsPerPage, setItemsPerPage] = useState(5); // Số mục trên mỗi trang
     // Tổng số trang
     const totalPages = Math.ceil(feedbacks.length / itemsPerPage);
-    const {idHouse} = useParams();
+    const { idHouse } = useParams();
     // Lấy mục trên trang hiện tại
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -26,7 +24,7 @@ const SeeReviews = () => {
     const filteredCurrentItems = currentItems.filter(item =>
         item.status.id === 1
     );
-    const [index,setIndex] = useState(0)
+    const [index, setIndex] = useState(0)
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
 
@@ -103,7 +101,7 @@ const SeeReviews = () => {
                                         <div className="text-center">
                                             <h4 className="mb-22 distanceBody headerInBody"><i className="bi bi-house-fill"></i> {houses.house.name}</h4>
                                             <div className="property-image mb-57">
-                                                <img src={houses.images[0].url} alt="" style={{boxShadow:"0 0 3px rgba(0,0,0,0.5)",borderRadius: "10px", width:"800px", height:"600px"}}/>
+                                                <img src={houses.images[0].url} alt="" style={{ boxShadow: "0 0 3px rgba(0,0,0,0.5)", borderRadius: "10px", width: "800px", height: "600px" }} />
                                             </div>
                                         </div>
                                         <div className="property-desc mb-56">
@@ -119,11 +117,11 @@ const SeeReviews = () => {
                                                     <h4 className="details-title mb-38">Condition</h4>
                                                     <div className="bg-gray fix pl-35 pt-42 pr-35 pb-79 left-column mb-56">
                                                         <div className="desc-info mb-37">
-                                                            <img src="/images/icons/g-map.png" alt="" className="pr-8"/>
+                                                            <img src="/images/icons/g-map.png" alt="" className="pr-8" />
                                                             <span>{houses.house.address}</span>
                                                         </div>
                                                         <div className="desc-info mb-37">
-                                                            <img src="/images/icons/g-bed.png" alt="" className="pr-8"/>
+                                                            <img src="/images/icons/g-bed.png" alt="" className="pr-8" />
                                                             <span>Bedroom <strong>{houses.house.numberOfBedrooms}</strong></span>
                                                         </div>
                                                         <div className="desc-info mb-37">
@@ -144,11 +142,18 @@ const SeeReviews = () => {
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <i className="fas fa-shield-alt"></i>
-                                                            <span>{houses.house.status.name === "READY" ? <strong
-                                                                style={{color: "#32CD32"}}> Ready</strong> : houses.house.status.name === "ORDERED" ?
-                                                                <strong style={{color: "#ea4335"}}> Ordered</strong> :
+
+
+                                                            <span>{houses.house.status.name === "USING" ?
+                                                                <strong style={{ color: "#FFD700" }}> Using</strong> :
+                                                                houses.house.status.name === "ORDERED" ?
+                                                                <strong style={{ color: "#87CEEB" }}> Ordered</strong>:
                                                                 houses.house.status.name === "BLOCKED" ?
-                                                                <strong style={{color: "darkorange"}}> Blocked</strong>: <strong style={{color: "#FFD700"}}> Using</strong>} </span>
+                                                                <strong
+                                                                style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                    <strong 
+                                                                        style={{ color: "#32CD32" }}> Ready</strong> 
+                                                            }</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <i className="fa fa-money"></i>
@@ -166,43 +171,43 @@ const SeeReviews = () => {
                                                     <h4 className="details-title mb-38">Amenities</h4>
                                                     <div className="bg-gray fix pl-50 pr-50 pt-44 pb-38 right-column mb-56">
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Air Conditioning</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Bedding</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Balcony</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Cable TV</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Internet</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Parking</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Lift</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Pool</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Dishwasher</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Toaster</span>
                                                         </div>
                                                     </div>
@@ -212,17 +217,17 @@ const SeeReviews = () => {
                                                 <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 mb-56">
                                                     <div>
                                                         <h4 className="details-title pb-8 mb-27">{feedbacks.length} Feedback</h4>
-                                                        <div style={{flex: '1'}}>
-                                                            <AverageStarsFeedback houseId={idHouse}/>
+                                                        <div style={{ flex: '1' }}>
+                                                            <AverageStarsFeedback houseId={idHouse} />
                                                         </div>
-                                                        <div style={{display: 'flex'}}>
+                                                        <div style={{ display: 'flex' }}>
                                                             <button style={{
                                                                 display: 'flex',
                                                                 alignItems: 'center',
                                                                 marginRight: '1rem',
                                                                 backgroundColor: 'orangered'
                                                             }} onClick={getAll}>
-                                                                <span style={{marginRight: '0.5rem'}}>All</span>
+                                                                <span style={{ marginRight: '0.5rem' }}>All</span>
                                                             </button>
                                                             <button style={{
                                                                 display: 'flex',
@@ -230,12 +235,12 @@ const SeeReviews = () => {
                                                                 marginRight: '1rem',
                                                                 backgroundColor: 'orangered'
                                                             }} onClick={getByCmt}>
-                                                                <span style={{marginRight: '0.5rem'}}>Replied</span>
+                                                                <span style={{ marginRight: '0.5rem' }}>Replied</span>
                                                             </button>
                                                         </div>
-                                                        <br/>
-                                                        <div style={{display: 'flex'}}>
-                                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <br />
+                                                        <div style={{ display: 'flex' }}>
+                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
@@ -244,7 +249,7 @@ const SeeReviews = () => {
                                                                 }} onClick={() => {
                                                                     rate(5)
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>5 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>5 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -254,7 +259,7 @@ const SeeReviews = () => {
                                                                 }} onClick={() => {
                                                                     rate(4)
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>4 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>4 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -264,7 +269,7 @@ const SeeReviews = () => {
                                                                 }} onClick={() => {
                                                                     rate(3)
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>3 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>3 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -274,7 +279,7 @@ const SeeReviews = () => {
                                                                 }} onClick={() => {
                                                                     rate(2)
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>2 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>2 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
@@ -284,7 +289,7 @@ const SeeReviews = () => {
                                                                 }} onClick={() => {
                                                                     rate(1)
                                                                 }}>
-                                                                    <span style={{marginRight: '0.5rem'}}>1 Sao</span>
+                                                                    <span style={{ marginRight: '0.5rem' }}>1 Sao</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -306,13 +311,13 @@ const SeeReviews = () => {
                                                                                 borderRadius: '50%',
                                                                                 objectFit: 'cover',
                                                                                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-                                                                            }}/></div>
+                                                                            }} /></div>
                                                                         <div className="comment-text fix">
                                                                             <div className="author-info">
                                                                                 <h5 className="mb-8">
                                                                                     <a href="#">{fb.account.username}</a>
                                                                                 </h5>
-                                                                                <div style={{float: "right"}}>
+                                                                                <div style={{ float: "right" }}>
                                                                                     <select
                                                                                         style={{
                                                                                             borderRadius: "20px",
@@ -323,18 +328,18 @@ const SeeReviews = () => {
                                                                                         }}
                                                                                         value={selectedOption}
                                                                                         onChange={(e) => handleSelectChange(e, fb.id)}>
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={1}>Show
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={1}>Show
                                                                                         </option>
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={3}>Hidden
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={3}>Hidden
                                                                                         </option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <span className="block mb-11">{fb.date}</span>
                                                                                 <span className="block mb-11">
-                                                                                <StarFeedback star={fb.numberOfStars}/>
-                                                                            </span>
+                                                                                    <StarFeedback star={fb.numberOfStars} />
+                                                                                </span>
                                                                             </div>
                                                                             <p className="mb-18">
                                                                                 {fb.comment}
@@ -342,7 +347,7 @@ const SeeReviews = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <hr/>
+                                                                <hr />
                                                             </div>
                                                             <ReactModal
                                                                 isOpen={isOpen}
@@ -363,8 +368,8 @@ const SeeReviews = () => {
                                                                         backgroundColor: 'yellowgreen'
                                                                     }} onClick={handleCance}>Cancel
                                                                     </button>
-                                                                    <button style={{backgroundColor: 'red'}}
-                                                                            onClick={handleConfirm}>Agree
+                                                                    <button style={{ backgroundColor: 'red' }}
+                                                                        onClick={handleConfirm}>Agree
                                                                     </button>
                                                                 </div>
                                                             </ReactModal>
@@ -375,7 +380,7 @@ const SeeReviews = () => {
                                             }
                                             <div className="pagination-content text-center block fix col-10">
                                                 <div>
-                                                    {Array.from({length: totalPages}, (_, index) => index + 1).map(
+                                                    {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                                                         (pageNumber) => (
                                                             <button
                                                                 key={pageNumber}

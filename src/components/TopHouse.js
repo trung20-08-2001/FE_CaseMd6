@@ -74,26 +74,26 @@ function TopHouse() {
                                                              alt="" style={{width: "100%", height: "300px"}}/>
                                                         <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                             <div className="hover-item">
-                                                                <span>{account != null ?
-                                                                    <span>{item.house.status.id === 4 ?
+                                                            <span>{account != null ?
+                                                                <span>{item.house.status.name === "BLOCKED" ?
+                                                                    <strong
+                                                                        style={{ color: "darkorange" }}> Blocked</strong>
+                                                                    :
+                                                                    item.house.status.name === "USING" ? <strong
+                                                                        style={{ color: "#FFD700" }}>Using</strong> :
                                                                         <strong
-                                                                            style={{color: "#32CD32"}}>Ready</strong> : item.house.status.id === 5 ?
-                                                                            <strong
-                                                                                style={{color: "#ea4335"}}>Ordered</strong> :
-                                                                            item.house.status.id === 6 ? <strong
-                                                                                    style={{color: "#FFD700"}}>Using</strong> :
-                                                                                <strong
-                                                                                    style={{color: "darkorange"}}> Blocked</strong>
-                                                                    }</span> :
-                                                                    <span>{item.house.status.name === 6 ?
-                                                                        <strong style={{color: "#FFD700"}}>Using</strong> :
-                                                                        item.house.status.name === 3 ?
-                                                                            <strong
-                                                                                style={{color: "darkorange"}}> Blocked</strong>:
-                                                                            <strong
-                                                                                style={{color: "#32CD32"}}>Ready</strong>
-                                                                    }</span>
+                                                                            style={{ color: "#32CD32" }}>Ready</strong>
+                                                                }</span> :
+                                                                <span>{item.house.status.name === "USING" ?
+                                                                    <strong style={{ color: "#FFD700" }}>Using</strong> :
+                                                                    item.house.status.name === "BLOCKED" ?
+                                                                    <strong
+                                                                            style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                        <strong
+                                                                            style={{ color: "#32CD32" }}>Ready</strong>
+                                                                        
                                                                 }</span>
+                                                            }</span>
                                                             </div>
                                                             <div className="hover-item">
                                                                 <img className="mr-10" src="/images/icons/bed.png"
