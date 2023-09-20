@@ -163,9 +163,9 @@ function MyHouses() {
                                                         </p></div>
                                                 </div>
                                                 <div className="property-image text-white">
-                                                    <Link to={"houseDetail/" + item.house.id}><img
+                                                    <img
                                                         src={item.images[0].url} alt=""
-                                                        style={{width: "100%", height: "300px"}}/></Link>
+                                                        style={{width: "100%", height: "300px"}}/>
                                                     <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                         <div className="hover-item">
                                                             <span>{item.house.status.name === "READY"? <strong style={{color:"#32CD32"}}>Ready</strong>:<p style={{color:"#ea4335"}}>Ordered</p> }</span>
