@@ -8,6 +8,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
 import WebSocketConfig from '../config/configWebsocket';
+import HomeIcon from '@mui/icons-material/Home';
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuItem from "@mui/material/MenuItem";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { addAccountYouMessaged } from '../services/messageService';
 
 const HouseDetail = () => {
@@ -35,7 +41,7 @@ const HouseDetail = () => {
         });
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
-    const dispatch =useDispatch()
+    const dispatch = useDispatch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -47,13 +53,14 @@ const HouseDetail = () => {
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
 
     const handleClickChat = () => {
-        if (account){
-            navigate("/myaccount/chat/"+houseDTO.house.account.id)
+        if (account) {
+            navigate("/myaccount/chat/" + houseDTO.house.account.id)
             dispatch(addAccountYouMessaged(houseDTO.house.account))
         }
-        
+
         else navigate("/login");
     }
+
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -106,6 +113,7 @@ const HouseDetail = () => {
     }, [idHouse]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         customAxios.get("/feedBack/showFeedback/" + idHouse)
             .then(res => {
                 setListFeedback(res.data);
@@ -225,11 +233,11 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                let notification = { content: account.username + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`, account: { id: houseDTO.house.account.id } }
+                let notification = { content: account.fullName === null ? account.username : account.fullName + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`, account: { id: houseDTO.house.account.id } }
                 WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                 return response.data
             })
-            .catch((error) => { 
+            .catch((error) => {
                 throw error;
             });
     };
@@ -266,7 +274,7 @@ const HouseDetail = () => {
                         status: { id: 1 }
                     })
                         .then(response => {
-                            let notification = { content: account.username + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION",url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
+                            let notification = { content: account.fullName === null ? account.username : account.fullName + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
                             WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                             setNumberOfStars({
                                 ...numberOfStars,
@@ -325,21 +333,26 @@ const HouseDetail = () => {
         if (!account) {
             Swal.fire({
                 icon: 'error',
+                text: 'You need to login ',
+                showConfirmButton: true,
+                confirmButtonText: "Login",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+            })
 
-                text: 'Bạn chưa đăng nhập',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        } else if (account.role.id === 2) {
+
+        } else if (account.id === houseDTO.house.account.id) {
             Swal.fire({
                 icon: 'error',
-                text: 'Là chủ nhà, bạn không thể thuê nhà của mình',
+                text: 'As a homeowner, you cannot rent your home',
             });
         } else if (startDate >= endDate) {
             Swal.fire({
                 icon: 'error',
-                title: 'Đăng ký thất bại',
-                text: 'Ngày bắt đầu phải trước ngày kết thúc ít nhất 1 ngày',
+                title: 'Registration Failed',
+                text: 'The start date must be at least 1 day before the end date',
             });
         } else {
             customAxios.get(`/order/${startDate}/${endDate}/${idHouse}`)
@@ -347,37 +360,37 @@ const HouseDetail = () => {
                     if (response.data) {
                         return saveBill();
                     } else {
-                        throw new Error('Ngày hoặc thời gian không hợp lệ');
+                        throw new Error('Invalid date or time');
                     }
                 })
                 .then(data => {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Thuê thành công!',
-                        text: 'Bạn đã thuê nhà thành công',
+                        title: 'Successful hire!',
+                        text: 'You have successfully rented a house',
                         showConfirmButton: false,
                         timer: 1500,
                     }).then(() => {
                         customAxios.get(`order/${idHouse}`)
-                        .then(response => {
-                            const data = response.data;
-                            setAvailableDates(data);
-                            const dates = data.map(item => new Date(item)); // Chuyển đổi các ngày từ dạng string sang đối tượng Date
-                            setApiDates(dates);
-                            setSelectedEndDate(null)
-                            setSelectedStartDate(null)
-                            
-                        })
-                        .catch(error => {
-                            console.error('Error fetching available dates:', error);
-                        });
+                            .then(response => {
+                                const data = response.data;
+                                setAvailableDates(data);
+                                const dates = data.map(item => new Date(item)); // Chuyển đổi các ngày từ dạng string sang đối tượng Date
+                                setApiDates(dates);
+                                setSelectedEndDate(null)
+                                setSelectedStartDate(null)
+
+                            })
+                            .catch(error => {
+                                console.error('Error fetching available dates:', error);
+                            });
                     });
                 })
                 .catch(error => {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Thuê thất bại',
-                        text: 'Nhà này đã có người thuê rồi.',
+                        title: 'Hire failure',
+                        text: 'This house is already rented.',
                         showConfirmButton: false,
                         timer: 1500,
                     });
@@ -403,13 +416,25 @@ const HouseDetail = () => {
                         <div className="row property-details_wrap">
                             <div className="col-lg-4 pl-35 order-2">
                                 <div className="single-sidebar-widget fix mb-40">
-                                    <div className="sidebar-widget-title mb-30">
-                                        <h5>{houseDTO.house.name}</h5>
-                                    </div>
-                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50">
+
+                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50" style={{ borderRadius: "15%" }}>
+                                        <div className=" mb-37 pr-8" style={{ marginLeft: "-9%", marginBottom: "5%" }} >
+                                            <MenuItem>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <IconButton size="large" aria-label="show 4 new mails" color="black" >
+                                                        <Badge badgeContent={0} color="error">
+                                                            <HomeIcon />
+                                                        </Badge>
+                                                    </IconButton>
+                                                    <div className="pr-8">
+                                                        <span >Name House:{houseDTO.house.name}</span>
+                                                    </div>
+                                                </div>
+                                            </MenuItem>
+                                        </div>
                                         <div className=" mb-37">
                                             <img src="../images/icons/g-bed.png" alt="" className="pr-8" />
-                                            <span> Bedroom {houseDTO.house.numberOfBedrooms}</span>
+                                            <span> Bedroom :{houseDTO.house.numberOfBedrooms}</span>
                                         </div>
                                         <div className="mb-37">
                                             <img
@@ -417,7 +442,7 @@ const HouseDetail = () => {
                                                 alt=""
                                                 className="pr-8"
                                             />
-                                            <span>Livingrooms {houseDTO.house.numberOfLivingRooms}</span>
+                                            <span>Livingrooms : {houseDTO.house.numberOfLivingRooms}</span>
                                         </div>
 
                                         <div className=" mb-35">
@@ -435,17 +460,31 @@ const HouseDetail = () => {
                                             <span className="location">  Stastus: {houseDTO.house.status.name}</span>
                                         </div>
                                     </div>
-                                    <h5>Checkin</h5>
+                                    <MenuItem>
+                                        <IconButton size="large" aria-label="show 4 new mails" color="black" style={{ marginLeft: "-9%" }}>
+                                            <div style={{ marginBottom: "-39%", width: "20px", height: "20px" }}><Badge badgeContent={0} color="error">
+                                                <CalendarMonthIcon /></Badge></div>
+                                        </IconButton>
+                                        <h4 style={{ marginBottom: "-10%" }} > Date Checkin</h4>
+                                    </MenuItem>
                                     <DatePicker
+                                        className="mb-20 datepickerWidth"
                                         selected={selectedStartDate}
                                         onChange={event => handleStartDateChange(event)} min={today}
                                         excludeDates={disabledDates}
                                         minDate={new Date(today)}
                                         dateFormat="yyyy-MM-dd"
                                     />
-                                    <h5>Checkout</h5>
+                                    <MenuItem>
+                                        <IconButton size="large" aria-label="show 4 new mails" color="black" style={{ marginLeft: "-9%" }}>
+                                            <div style={{ marginBottom: "-39%", width: "20px", height: "20px" }}><Badge badgeContent={0} color="error">
+                                                <CalendarMonthIcon /></Badge></div>
+                                        </IconButton>
+                                        <h4 style={{ marginBottom: "-10%" }}> Date Checkout</h4>
+                                    </MenuItem>
+
                                     <DatePicker
-                                        className={`mb-20 ${isCheckoutDisabled ? 'disabled' : ''}`}
+                                        className={"mb-20 datepickerWidth"}
                                         selected={selectedEndDate}
                                         onChange={event => handleEndDateChange(event)} min={startDateCheckout}
                                         value={endDate || ''} onFocus={handleEndDateFocus}
@@ -453,6 +492,7 @@ const HouseDetail = () => {
                                         minDate={new Date(startDateCheckout)}
                                         maxDate={maxDateValue}
                                         dateFormat="yyyy-MM-dd"
+
                                     />
                                     {numberOfDays > 0 && (
                                         <div>
@@ -470,7 +510,7 @@ const HouseDetail = () => {
                                 </div>
                             </div>
                             <div className="col-lg-8 order-1">
-                                <div className="property-image mb-57">
+                                <div className="property-image mb-57" >
                                     <Slide images={houseDTO.images}
                                         styleImage={{ width: "600px", height: "400px" }}></Slide>
                                 </div>
@@ -483,7 +523,7 @@ const HouseDetail = () => {
 
                                     <div className="pull_left col-4">
                                         <img alt="" src={houseDTO.house.account.avatar}
-                                            style={{ width: "150px", height: "200px" }} />
+                                            style={{ width: "150px", height: "150px", borderRadius: "50%" }} />
                                     </div>
                                     <div className=" col-8">
                                         <h3 >Host: {houseDTO.house.account.fullName}</h3><br />
@@ -496,7 +536,6 @@ const HouseDetail = () => {
                                             <span> {houseDTO.house.account.phone}</span>
                                         </div>
                                     </div>
-
 
                                 </div>
                                 <hr />
@@ -572,7 +611,6 @@ const HouseDetail = () => {
                                             }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                             onClick={saveFeedback}>Review
-
                                             {renderPagination()}
                                         </button>
                                     </div>

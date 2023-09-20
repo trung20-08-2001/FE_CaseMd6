@@ -55,9 +55,9 @@ const SeeReviews = () => {
 
 
     const handleConfirm = () => {
-        axios.post("http://localhost:8081/api/feedback/updateFeedback/" + fbId)
-            .then(() => {
-                window.location.reload();
+        axios.post("http://localhost:8081/api/feedback/updateFeedback/" + fbId + "/" + idHouse)
+            .then((res) => {
+                setFeedbacks(res.data)
             })
             .catch(function (err) {
                 console.log(err)
@@ -67,6 +67,25 @@ const SeeReviews = () => {
     const handleCance = () => {
         setSelectedOption(1);
         setIsOpen(false);
+    }
+
+    const rate = (number) => {
+            axios.get("http://localhost:8081/api/feedback/getAllByStar/" + idHouse +"/" + number)
+                .then(res=>{
+                    setFeedbacks(res.data)
+                })
+    }
+    const getAll = ()=>{
+        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+            .then(res =>{
+                setFeedbacks(res.data)
+            })
+    }
+    const getByCmt=()=>{
+        axios.get("http://localhost:8081/api/feedback/getAllFeedbackByComment/" + idHouse)
+            .then(res=>{
+                setFeedbacks(res.data)
+            })
     }
     return (
         <>
@@ -436,7 +455,7 @@ const SeeReviews = () => {
                                                     <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
                                                         <div className="desc-info mb-37">
                                                             <img src="../images/icons/g-floor.png" alt="" className="pr-8"/>
-                                                            <span>Area 450 sqft</span>
+                                                            <span>{houses.house.address}</span>
                                                         </div>
                                                         <div className="desc-info mb-37">
                                                             <img src="../images/icons/g-bed.png" alt="" className="pr-8"/>
@@ -460,16 +479,14 @@ const SeeReviews = () => {
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <img src="../images/icons/kitchen.png" alt="" className="pr-8"/>
-                                                            <span>Kitchen 2</span>
+                                                            <span>{houses.house.status.name}</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
                                                             <span className="price">{houses.house.price} VND</span>
                                                         </div>
                                                         <div className="desc-info">
                                                             <img src="../images/icons/g-map.png" alt="" className="pr-8"/>
-                                                            <span className="location">
-                    {houses.house.address}
-                  </span>
+                                                            <span className="location"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -527,14 +544,32 @@ const SeeReviews = () => {
                                                             <AverageStarsFeedback houseId={idHouse} />
                                                         </div>
                                                         <div style={{ display: 'flex' }}>
-
+                                                            <button style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                marginRight: '1rem',
+                                                                backgroundColor: 'orangered'
+                                                            }} onClick={getAll}>
+                                                                <span style={{marginRight: '0.5rem'}}>All</span>
+                                                            </button>
+                                                            <button style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                marginRight: '1rem',
+                                                                backgroundColor: 'orangered'
+                                                            }} onClick={getByCmt}>
+                                                                <span style={{marginRight: '0.5rem'}}>Replied</span>
+                                                            </button>
+                                                        </div>
+                                                        <br/>
+                                                        <div style={{ display: 'flex' }}>
                                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }}>
+                                                                }} onClick={()=>{rate(5)}}>
                                                                     <span style={{marginRight: '0.5rem'}}>5 Sao</span>
                                                                 </button>
                                                                 <button style={{
@@ -542,7 +577,7 @@ const SeeReviews = () => {
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }}>
+                                                                }} onClick={()=>{rate(4)}}>
                                                                     <span style={{marginRight: '0.5rem'}}>4 Sao</span>
                                                                 </button>
                                                                 <button style={{
@@ -550,7 +585,7 @@ const SeeReviews = () => {
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }}>
+                                                                }} onClick={()=>{rate(3)}}>
                                                                     <span style={{marginRight: '0.5rem'}}>3 Sao</span>
                                                                 </button>
                                                                 <button style={{
@@ -558,7 +593,7 @@ const SeeReviews = () => {
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }}>
+                                                                }} onClick={()=>{rate(2)}}>
                                                                     <span style={{marginRight: '0.5rem'}}>2 Sao</span>
                                                                 </button>
                                                                 <button style={{
@@ -566,7 +601,7 @@ const SeeReviews = () => {
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }}>
+                                                                }} onClick={()=> {rate(1)}}>
                                                                     <span style={{marginRight: '0.5rem'}}>1 Sao</span>
                                                                 </button>
                                                             </div>
@@ -605,8 +640,7 @@ const SeeReviews = () => {
                                                                                             fontSize: '10px'
                                                                                         }}
                                                                                         value={selectedOption}
-                                                                                        onChange={(e) => handleSelectChange(e, fb.id)}
-                                                                                    >
+                                                                                        onChange={(e) => handleSelectChange(e, fb.id)}>
                                                                                         <option style={{fontSize: "12px"}}
                                                                                                 value={1}>Show
                                                                                         </option>
@@ -669,8 +703,7 @@ const SeeReviews = () => {
                                                                     backgroundColor: currentPage === pageNumber ? 'yellowgreen' : 'snow',
                                                                     color: currentPage === pageNumber ? 'white' : 'black',
 
-                                                                }}
-                                                            >
+                                                                }}>
                                                                 {pageNumber}
                                                             </button>
                                                         )

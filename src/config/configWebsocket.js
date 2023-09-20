@@ -25,7 +25,7 @@ const WebSocketConfig = {
             if (newMessage.senderAccount.role.id !== 1) {
                 store.dispatch(send(newMessage));
             } else if (currentPath !== `/myaccount/chat/${newMessage.senderAccount.id}`) {
-                store.dispatch(saveNotification({ content: newMessage.senderAccount.username + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } }))
+                store.dispatch(saveNotification({ content: newMessage.senderAccount.fullName===null?newMessage.senderAccount.username:newMessage.senderAccount.fullName + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } }))
             } else {
                 store.dispatch(send(newMessage));
             }

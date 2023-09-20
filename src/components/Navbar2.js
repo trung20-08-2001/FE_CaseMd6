@@ -11,12 +11,10 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -30,8 +28,8 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import HistoryIcon from '@mui/icons-material/History';
 import BackupIcon from '@mui/icons-material/Backup';
 import WebSocketConfig from "../config/configWebsocket";
-import Notification from "../components/Notification"
 import { findNotificationByIdAccount, updateStatus } from '../services/notificationService';
+import {Houseboat, HouseOutlined, LoginOutlined, LoginRounded} from "@mui/icons-material";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -143,7 +141,7 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.target);
     };
 
-    const handleNotifictionMessage =(idAccount)=>{
+    const handleNotifictionMessage = (idAccount) => {
         setNotificationsAnchorEl(null);
         dispatch(findAccountById(idAccount))
     }
@@ -203,7 +201,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <p>Notifications</p>
         </MenuItem>,
-        <Link>
+        <Link to={`/profile/${account?.id}`}>
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
                     size="large"
@@ -399,7 +397,7 @@ export default function PrimarySearchAppBar() {
                         <Link to={item.url} onClick={() => setNotificationsAnchorEl(null)}><MenuItem>{formatter.format(new Date(item.time))}: {item.content}</MenuItem></Link>
                     )
                 })
-                :<MenuItem onClick={() => setNotificationsAnchorEl(null)}>You don't have any notifications yet</MenuItem>}
+                : <MenuItem onClick={() => setNotificationsAnchorEl(null)}>You don't have any notifications yet</MenuItem>}
         </Menu>
     )
     const renderMenu = (
@@ -421,7 +419,8 @@ export default function PrimarySearchAppBar() {
                 handleMobileMenuClose();
             }}
         >
-            <Link onClick={() => setAnchorEl(null)}><MenuItem>My profile</MenuItem></Link>
+            <Link to={`/myaccount/profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>My
+                profile</MenuItem></Link>
             {account?.role?.id === 1 && menuAdmin.map(item => item)}
             {account?.role?.id === 2 && menuHost.map(item => item)}
             {account?.role?.id === 3 && menuUser.map(item => item)}
@@ -467,9 +466,10 @@ export default function PrimarySearchAppBar() {
 
     return (
         <>
+
             <Box sx={{ flexGrow: 1 }} style={{ zIndex: "99999" }}>
                 <AppBar position="static" style={{ backgroundColor: "#1e7e34", height: "100px", paddingTop: "20px" }}>
-                    <Toolbar style={{ paddingLeft: "70px", paddingRight: "70px" }}>
+                    <Toolbar style={{ paddingLeft: "7%", paddingRight: "4%" }}>
                         <Link to="">
                             <Typography
                                 variant="h6"
@@ -478,54 +478,67 @@ export default function PrimarySearchAppBar() {
                                 aria-label="open drawer"
                                 color={"white"}
                                 sx={{ display: { xs: 'block', sm: 'block' } }}
+                                style={{ textShadow: "0px 0px 10px #ffc107" }}
                             >
-                                BOOKING HOUSE
+                                <HouseOutlined style={{ color: "gold" }} />BOOKING HOUSE
                             </Typography>
                         </Link>
                         <Box sx={{ flexGrow: 1 }} />
                         {account ?
                             <>
                                 {/* <Box sx={{ display: { xs: 'flex', md: 'flex' } }}> */}
-                                    <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                        <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
-                                            <SearchIcon style={{ color: "white" }} />
-                                        </Badge> </Link>
-                                    </IconButton>
-                                    <IconButton size="large" aria-label="show 4 new mails" color="black">
-                                        <Link to="myaccount/chat">
-                                            <Badge badgeContent={0} color="error">
-                                                <MailIcon style={{ color: "white" }} />
-                                            </Badge>
-                                        </Link>
-                                    </IconButton>
-                                    <IconButton
-                                        size="large"
-                                        aria-label="show 17 new notifications"
-                                        color="black"
-                                        aria-haspopup="true"
-                                        onClick={handleNotificationsOpen}
+                                <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                    <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
+                                        <SearchIcon style={{ color: "white" }} />
+                                    </Badge> </Link>
+                                </IconButton>
+                                <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                    <Link to="myaccount/chat">
+                                        <Badge badgeContent={0} color="error">
+                                            <MailIcon style={{ color: "white" }} />
+                                        </Badge>
+                                    </Link>
+                                </IconButton>
+                                <IconButton
+                                    size="large"
+                                    aria-label="show 17 new notifications"
+                                    color="black"
+                                    aria-haspopup="true"
+                                    onClick={handleNotificationsOpen}
+                                >
+                                    {numberOfNotificationNotSeen === 0 ?
+                                        <Badge badgeContent={0} color="error">
+                                            <NotificationsIcon style={{ color: "white" }} />
+                                        </Badge>
+                                        :
+                                        <Badge badgeContent={numberOfNotificationNotSeen} color="error">
+                                            <NotificationsIcon style={{ color: "white" }} />
+                                        </Badge>
+                                    }
+                                </IconButton>
+                                <IconButton
+                                    size="large"
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                    style={{ backgroundColor: "#1c7430", boxShadow: "0px 0px 4px #ffc107", borderRadius: "15px" }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        noWrap
+                                        component="div"
+                                        aria-label="open drawer"
+                                        color={"white"}
+                                        sx={{ display: { xs: 'block', sm: 'block' } }}
+                                        style={{ fontSize: "15px", color: "#ffc107" }}
                                     >
-                                        {numberOfNotificationNotSeen === 0 ?
-                                            <Badge badgeContent={0} color="error">
-                                                <NotificationsIcon style={{ color: "white" }} />
-                                            </Badge>
-                                            :
-                                            <Badge badgeContent={numberOfNotificationNotSeen} color="error">
-                                                <NotificationsIcon style={{ color: "white" }} />
-                                            </Badge>
-                                        }
-                                    </IconButton>
-                                    <IconButton
-                                        size="large"
-                                        edge="end"
-                                        aria-label="account of current user"
-                                        aria-controls={menuId}
-                                        aria-haspopup="true"
-                                        onClick={handleProfileMenuOpen}
-                                        color="inherit"
-                                    >
-                                        <Avatar alt={account.username} src={account.avatar} />
-                                    </IconButton>
+                                        {account.fullName != null ? account.fullName : account.username}
+                                    </Typography>
+                                    <Avatar alt={account.username} src={account.avatar} />
+                                </IconButton>
                                 {/* </Box> */}
                                 {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                                     <IconButton
@@ -548,9 +561,10 @@ export default function PrimarySearchAppBar() {
                                     component="div"
                                     aria-label="open drawer"
                                     color={"white"}
-                                    sx={{ display: { xs: 'block', sm: 'block' } }}
+                                    sx={{display: {xs: 'block', sm: 'block'}}}
+                                    style={{textShadow: "0px 0px 10px #ffc107"}}
                                 >
-                                    LOGIN
+                                    Login<LoginRounded />
                                 </Typography>
                             </Link>
                         }

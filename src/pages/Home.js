@@ -1,5 +1,4 @@
 import React from 'react'
-import Banner from '../components/Banner'
 import TopHouse from '../components/TopHouse'
 import ListHouse from '../components/ListHouse'
 
@@ -65,12 +64,10 @@ function Home() {
                     </div>
                 </div>
             </div>
-           
-                <TopHouse />
-                <ListHouse />
-          
+            <TopHouse/>
+            <ListHouse/>
         </>
     )
 }
 
-export default Home
+export default Home;
