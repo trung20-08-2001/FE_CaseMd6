@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import customAxios from "../services/api";
 import Slide from "../components/Slide"
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from 'react-router-dom';
 import WebSocketConfig from '../config/configWebsocket';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuItem from "@mui/material/MenuItem";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { addAccountYouMessaged } from '../services/messageService';
@@ -32,13 +30,13 @@ const HouseDetail = () => {
     const [listFeedback, setListFeedback] = useState([]);
     const account = useSelector(state => state.account.account);
     const today = new Date().toISOString().split('T')[0];
-    const { idHouse } = useParams()
+    const {idHouse} = useParams()
     const [myFeedback, setMyFeedback] = useState("");
     const [numberOfStars, setNumberOfStars] = useState
-        ({
-            start: 0,
-            starts: [1, 2, 3, 4, 5]
-        });
+    ({
+        start: 0,
+        starts: [1, 2, 3, 4, 5]
+    });
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -74,7 +72,7 @@ const HouseDetail = () => {
                     key={i}
                     onClick={() => handlePageChange(i)}
                     className={`page-button ${currentPage === i ? "active" : ""}`}
-                    style={{ color: "red" }}
+                    style={{color: "red"}}
                 >
                     {i}
                 </button>
@@ -84,14 +82,14 @@ const HouseDetail = () => {
             <div className="pagination">
                 {currentPage > 1 && (
                     <button className="arrow-button" onClick={() => handlePageChange(currentPage - 1)}
-                        style={{ backgroundColor: "blue" }}>
+                            style={{backgroundColor: "green"}}>
                         &lt; Back
                     </button>
                 )}
                 {pages}
                 {currentPage < totalPages && (
                     <button className="arrow-button" onClick={() => handlePageChange(currentPage + 1)}
-                        style={{ backgroundColor: "blue" }}>
+                            style={{backgroundColor: "green"}}>
                         Next &gt;
                     </button>
                 )}
@@ -271,7 +269,7 @@ const HouseDetail = () => {
                         numberOfStars: numberOfStars.start,
                         date: new Date(),
                         comment: comment,
-                        status: { id: 1 }
+                        status: {id: 1}
                     })
                         .then(response => {
                             let notification = { content: account.fullName === null ? account.username : account.fullName + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
@@ -283,19 +281,19 @@ const HouseDetail = () => {
                             setComment('')
                             setMyFeedback("")
 
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Feedback Success',
-                            })
-                            customAxios.get("/feedBack/showFeedback/" + idHouse)
-                                .then(res => {
-                                    setListFeedback(res.data);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Feedback Success',
                                 })
-                                .catch((err) => {
-                                    console.log(err)
-                                })
+                                customAxios.get("/feedBack/showFeedback/" + idHouse)
+                                    .then(res => {
+                                        setListFeedback(res.data);
+                                    })
+                                    .catch((err) => {
+                                        console.log(err)
+                                    })
 
-                        }
+                            }
                         )
                         .catch(error => console.log(error))
                 } else if (myFeedback.status.id === 1) {
@@ -417,23 +415,25 @@ const HouseDetail = () => {
                             <div className="col-lg-4 pl-35 order-2">
                                 <div className="single-sidebar-widget fix mb-40">
 
-                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50" style={{ borderRadius: "15%" }}>
-                                        <div className=" mb-37 pr-8" style={{ marginLeft: "-9%", marginBottom: "5%" }} >
+                                    <div className="bg-gray fix pl-10 pt-10 pr-10 pb-10 left-column mb-50"
+                                         style={{borderRadius: "15%"}}>
+                                        <div className=" mb-37 pr-8" style={{marginLeft: "-9%", marginBottom: "5%"}}>
                                             <MenuItem>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <IconButton size="large" aria-label="show 4 new mails" color="black" >
+                                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                                    <IconButton size="large" aria-label="show 4 new mails"
+                                                                color="black">
                                                         <Badge badgeContent={0} color="error">
-                                                            <HomeIcon />
+                                                            <HomeIcon/>
                                                         </Badge>
                                                     </IconButton>
                                                     <div className="pr-8">
-                                                        <span >Name House:{houseDTO.house.name}</span>
+                                                        <span>Name House:{houseDTO.house.name}</span>
                                                     </div>
                                                 </div>
                                             </MenuItem>
                                         </div>
                                         <div className=" mb-37">
-                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8" />
+                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8"/>
                                             <span> Bedroom :{houseDTO.house.numberOfBedrooms}</span>
                                         </div>
                                         <div className="mb-37">
@@ -447,10 +447,11 @@ const HouseDetail = () => {
 
                                         <div className=" mb-35">
                                             <i className="fa fa-money"></i>
-                                            <span className="price">  Price: {new Intl.NumberFormat().format(houseDTO.house.price)} VNĐ/DAY</span>
+                                            <span
+                                                className="price">  Price: {new Intl.NumberFormat().format(houseDTO.house.price)} VNĐ/DAY</span>
                                         </div>
                                         <div className=" mb-35">
-                                            <img src="../images/icons/g-map.png" alt="" className="pr-8" />
+                                            <img src="../images/icons/g-map.png" alt="" className="pr-8"/>
                                             <span className="location">Address:
                                                 {houseDTO.house.address}
                                             </span>
@@ -461,11 +462,13 @@ const HouseDetail = () => {
                                         </div>
                                     </div>
                                     <MenuItem>
-                                        <IconButton size="large" aria-label="show 4 new mails" color="black" style={{ marginLeft: "-9%" }}>
-                                            <div style={{ marginBottom: "-39%", width: "20px", height: "20px" }}><Badge badgeContent={0} color="error">
-                                                <CalendarMonthIcon /></Badge></div>
+                                        <IconButton size="large" aria-label="show 4 new mails" color="black"
+                                                    style={{marginLeft: "-9%"}}>
+                                            <div style={{marginBottom: "-39%", width: "20px", height: "20px"}}><Badge
+                                                badgeContent={0} color="error">
+                                                <CalendarMonthIcon/></Badge></div>
                                         </IconButton>
-                                        <h4 style={{ marginBottom: "-10%" }} > Date Checkin</h4>
+                                        <h4 style={{marginBottom: "-10%"}}> Date Checkin</h4>
                                     </MenuItem>
                                     <DatePicker
                                         className="mb-20 datepickerWidth"
@@ -476,11 +479,13 @@ const HouseDetail = () => {
                                         dateFormat="yyyy-MM-dd"
                                     />
                                     <MenuItem>
-                                        <IconButton size="large" aria-label="show 4 new mails" color="black" style={{ marginLeft: "-9%" }}>
-                                            <div style={{ marginBottom: "-39%", width: "20px", height: "20px" }}><Badge badgeContent={0} color="error">
-                                                <CalendarMonthIcon /></Badge></div>
+                               <IconButton size="large" aria-label="show 4 new mails" color="black"
+                                                    style={{marginLeft: "-9%"}}>
+                                            <div style={{marginBottom: "-39%", width: "20px", height: "20px"}}><Badge
+                                                badgeContent={0} color="error">
+                                                <CalendarMonthIcon/></Badge></div>
                                         </IconButton>
-                                        <h4 style={{ marginBottom: "-10%" }}> Date Checkout</h4>
+                                        <h4 style={{marginBottom: "-10%"}}> Date Checkout</h4>
                                     </MenuItem>
 
                                     <DatePicker
@@ -496,23 +501,24 @@ const HouseDetail = () => {
                                     />
                                     {numberOfDays > 0 && (
                                         <div>
-                                            <p style={{ color: "#9ac438" }}>Day: <span style={{
+                                            <p style={{color: "#9ac438"}}>Day: <span style={{
                                                 fontWeight: "bold"
                                             }}>{numberOfDays}</span></p>
-                                            <p style={{ color: "#9ac438" }}>Total amount: <span style={{
+                                            <p style={{color: "#9ac438"}}>Total amount: <span style={{
                                                 fontWeight: "bold"
                                             }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</p>
                                         </div>
                                     )}
-                                    <button className="btn lemon" style={{ color: "white", marginLeft: "250px" }}
-                                        onClick={handleOrderHouse}>Rent
+                                    <button className=" btn lemon "
+                                            style={{color: "white", marginLeft: "82%", borderRadius: "50px"}}
+                                            onClick={handleOrderHouse}>Rent
                                     </button>
                                 </div>
                             </div>
                             <div className="col-lg-8 order-1">
-                                <div className="property-image mb-57" >
+                                <div className="property-image mb-57">
                                     <Slide images={houseDTO.images}
-                                        styleImage={{ width: "600px", height: "400px" }}></Slide>
+                                           styleImage={{width: "600px", height: "400px",boxShadow: "0 0 10px rgba(0,0,0,0.5)"}}></Slide>
                                 </div>
                                 <div className="property-desc mb-56">
                                     <h4 className="details-title mb-22">Description</h4>
@@ -523,14 +529,16 @@ const HouseDetail = () => {
 
                                     <div className="pull_left col-4">
                                         <img alt="" src={houseDTO.house.account.avatar}
-                                            style={{ width: "150px", height: "150px", borderRadius: "50%" }} />
+
+                                             style={{width: "150px", height: "150px", borderRadius: "50%"}}/>
                                     </div>
                                     <div className=" col-8">
-                                        <h3 >Host: {houseDTO.house.account.fullName}</h3><br />
-                                        <div className="chat-icon" style={{ cursor: "pointer" }} onClick={handleClickChat}>
-                                            <i className="fas fa-comment"></i>
+                                        <h3>Host: {houseDTO.house.account.fullName}</h3><br/>
+                                        <div class="chat-icon" style={{cursor: "pointer"}} onClick={handleClickChat}>
+                                            <i class="fas fa-comment"></i>
                                             <span> Chat</span>
-                                        </div><br />
+                                        </div>
+                                        <br/>
                                         <div className="phone-icon">
                                             <i className="fas fa-phone"></i>
                                             <span> {houseDTO.house.account.phone}</span>
@@ -538,7 +546,7 @@ const HouseDetail = () => {
                                     </div>
 
                                 </div>
-                                <hr />
+                                <hr/>
                                 <h4 className="details-title pb-8"> Feedback</h4>
                                 {
                                     displayedReviews.map((f) => {
@@ -549,7 +557,7 @@ const HouseDetail = () => {
                                                 <div className="single-comment fix mb-18">
                                                     <div className="author-image pull_left mr-23">
                                                         <img alt="" src={f.account.avatar}
-                                                            style={{ width: "70px", height: "70px" }} />
+                                                             style={{width: "70px", height: "70px"}}/>
                                                     </div>
                                                     <div className="comment-text fix">
                                                         <div className="author-info">
@@ -559,59 +567,64 @@ const HouseDetail = () => {
                                                             {numberOfStars.starts.map(item => {
                                                                 if (item <= f.numberOfStars) return (
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="15"
-                                                                        height="15" viewBox="0 0 16 16" key={item}
-                                                                        onClick={() => changeStart(item)}>
+                                                                         height="15" viewBox="0 0 16 16" key={item}
+                                                                         onClick={() => changeStart(item)}>
                                                                         <polygon fill="yellow"
-                                                                            points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0" />
+                                                                                 points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0"/>
                                                                     </svg>
                                                                 )
                                                                 else return (
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="15"
-                                                                        height="15"
-                                                                        viewBox="0 0 16 16" key={item}
-                                                                        onClick={() => changeStart(item)}>
+                                                                         height="15"
+                                                                         viewBox="0 0 16 16" key={item}
+                                                                         onClick={() => changeStart(item)}>
                                                                         <path
                                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-                                                                            fill="yellow" />
+                                                                            fill="yellow"/>
                                                                     </svg>
                                                                 )
                                                             })}
                                                         </div>
                                                         <p className="mb-18">{f.comment} </p>
                                                     </div>
+
                                                 </div>
-                                            </div>)
+
+                                            </div>
+
+                                        )
+
                                     })}
+                                {renderPagination()}
 
                                 <div className="new-comment-post mt-35">
                                     <h4 className="details-title pb-8 mb-27"> Review</h4>
                                     {numberOfStars.starts.map(item => {
                                         if (item <= numberOfStars.start) return (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                                                height="30" viewBox="0 0 16 16" key={item}
-                                                onClick={() => changeStart(item)}>
+                                                 height="30" viewBox="0 0 16 16" key={item}
+                                                 onClick={() => changeStart(item)}>
                                                 <polygon fill="yellow"
-                                                    points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0" />
+                                                         points="8 0 9.09 4.94 14.17 5.75 10.82 9.81 11.64 14.86 8 12.5 4.36 14.86 5.18 9.81 1.83 5.75 6.91 4.94 8 0"/>
                                             </svg>
                                         )
                                         else return (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
+                                                 viewBox="0 0 16 16" key={item} onClick={() => changeStart(item)}>
                                                 <path
                                                     d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-                                                    fill="yellow" />
+                                                    fill="yellow"/>
                                             </svg>
                                         )
                                     })}
                                     <div className="comment-form mt-10">
                                         <textarea name="post-comment" cols="30" rows="10" placeholder="Write here"
-                                            className="mb-34 bg-light" value={comment}
-                                            onChange={(event) => {
-                                                setComment(event.target.value)
-                                            }}></textarea>
+                                                  className="mb-34 bg-light" value={comment}
+                                                  onChange={(event) => {
+                                                      setComment(event.target.value)
+                                                  }}></textarea>
                                         <button className="button text-uppercase lemon pl-30 pr-30"
                                             onClick={saveFeedback}>Review
-                                            {renderPagination()}
                                         </button>
                                     </div>
                                 </div>

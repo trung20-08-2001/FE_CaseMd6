@@ -158,27 +158,34 @@ function MyHouses() {
                                                             }}>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}</strong> Vnd/Day
                                                             </p></div>
                                                     </div>
-                                                    <div className="property-image text-white">
-                                                        <Link to={"houseDetail/" + item.house.id}><img
-                                                            src={item.images[0].url} alt=""
-                                                            style={{ width: "100%", height: "300px" }} /></Link>
-                                                        <div className="hover-container pl-15 pr-15 pt-16 pb-15">
-                                                            <div className="hover-item">
-                                                                <span>{item.house.status.name === "READY" ? <strong style={{ color: "#32CD32" }}>Ready</strong> : <p style={{ color: "#ea4335" }}>Ordered</p>}</span>
-                                                            </div>
-                                                            <div className="hover-item">
-                                                                <img className="mr-10" src="../images/icons/bed.png"
-                                                                    alt="" />
-                                                                <strong>{item.house.numberOfBedrooms}</strong>
-                                                            </div>
-                                                            <div className="hover-item">
-                                                                <img className="mr-10" src="../images/icons/shower.png"
-                                                                    alt="" />
-                                                                <strong>{item.house.numberOfLivingRooms}</strong>
-                                                            </div>
-                                                            <div className="hover-item">
-                                                                <i className='fa fa-heart mr-10' style={{ color: "red" }}></i>
-
+                                                    <div className="fix pull_right">
+                                                        <p style={{color: "ghostwhite"}}><strong style={{
+                                                            color: "gold",
+                                                            fontSize: "15px",
+                                                            textShadow: "0 0 1px gold"
+                                                        }}>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}</strong> Vnd/Day
+                                                        </p></div>
+                                                </div>
+                                                <div className="property-image text-white">
+                                                    <img
+                                                        src={item.images[0].url} alt=""
+                                                        style={{width: "100%", height: "300px"}}/>
+                                                    <div className="hover-container pl-15 pr-15 pt-16 pb-15">
+                                                        <div className="hover-item">
+                                                            <span>{item.house.status.name === "READY"? <strong style={{color:"#32CD32"}}>Ready</strong>:<p style={{color:"#ea4335"}}>Ordered</p> }</span>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <img className="mr-10" src="../images/icons/bed.png"
+                                                                 alt=""/>
+                                                            <strong>{item.house.numberOfBedrooms}</strong>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <img className="mr-10" src="../images/icons/shower.png"
+                                                                 alt=""/>
+                                                            <strong>{item.house.numberOfLivingRooms}</strong>
+                                                        </div>
+                                                        <div className="hover-item">
+                                                            <i className='fa fa-heart mr-10' style={{color: "red"}}></i>
                                                                 <strong style={{ textShadow: "0 0 2px red" }}>{item.house.numberOfHire}</strong>
                                                             </div>
                                                         </div>
@@ -191,11 +198,11 @@ function MyHouses() {
                                                 <button className="button fill mb-10" ><Link to={"/myaccount/see_reviews/" + item.house.id} style={{ color: "white" }} >DETAIL</Link></button>
                                             </div>
                                         </div>
-                                    </div>
+                                   
                                 )
                             })}
-                        </div>
-                    </>
+                            </div>
+                            </>
             }
         </>
     )
