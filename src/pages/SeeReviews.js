@@ -147,7 +147,7 @@ const SeeReviews = () => {
                                                             <span>{houses.house.status.name === "USING" ?
                                                                 <strong style={{ color: "#FFD700" }}> Using</strong> :
                                                                 houses.house.status.name === "ORDERED" ?
-                                                                <strong style={{ color: "#87CEEB" }}> Ordered</strong>:
+                                                                <strong style={{ color: "#6610f2" }}> Ordered</strong>:
                                                                 houses.house.status.name === "BLOCKED" ?
                                                                 <strong
                                                                 style={{ color: "darkorange" }}> Blocked</strong>:

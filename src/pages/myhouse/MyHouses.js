@@ -175,14 +175,14 @@ function MyHouses() {
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
                                                     <span>{item.house.status.name === "USING" ?
-                                                                <strong style={{ color: "#FFD700" }}>Using</strong> :
+                                                                <strong style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
                                                                 item.house.status.name === "ORDERED" ?
-                                                                <strong style={{ color: "#87CEEB" }}>Ordered</strong>:
+                                                                <strong style={{ color: "#6610f2", textShadow:"0 0 3px #6610f2"}}>Ordered</strong>:
                                                                 item.house.status.name === "BLOCKED" ?
                                                                 <strong
-                                                                style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>:
                                                                     <strong
-                                                                        style={{ color: "#32CD32" }}>Ready</strong>
+                                                                        style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
                                                             }</span>
                                                     </div>
                                                     <div className="hover-item">
@@ -229,7 +229,8 @@ function MyHouses() {
                                                     backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
                                                     color: currentPage === pageNumber ? 'white' : 'black',
                                                     boxShadow: "0 0 1px gold",
-                                                    borderRadius: "5px"
+                                                    borderRadius: "5px",
+                                                    marginBottom: "60px"
                                                 }}
                                             >
                                                 {pageNumber}

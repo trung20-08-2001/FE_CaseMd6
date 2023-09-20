@@ -88,20 +88,20 @@ function ListHouse() {
                                                             <span>{account != null ?
                                                                 <span>{item.house.status.name === "BLOCKED" ?
                                                                     <strong
-                                                                        style={{ color: "darkorange" }}> Blocked</strong>
+                                                                        style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>
                                                                     :
                                                                     item.house.status.name === "USING" ? <strong
-                                                                        style={{ color: "#FFD700" }}>Using</strong> :
+                                                                        style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
                                                                         <strong
-                                                                            style={{ color: "#32CD32" }}>Ready</strong>
+                                                                            style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
                                                                 }</span> :
                                                                 <span>{item.house.status.name === "USING" ?
-                                                                    <strong style={{ color: "#FFD700" }}>Using</strong> :
+                                                                    <strong style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
                                                                     item.house.status.name === "BLOCKED" ?
                                                                     <strong
-                                                                    style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                    style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>:
                                                                         <strong
-                                                                            style={{ color: "#32CD32" }}>Ready</strong> 
+                                                                            style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
                                                                       
                                                                 }</span>
                                                             }</span>
