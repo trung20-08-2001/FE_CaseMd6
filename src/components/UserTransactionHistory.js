@@ -46,7 +46,7 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification={type:"NOTIFICATION",content:account.fullName === null ? account.username : account.fullName + " canceled the booking " + res.data.house.name,url: `/myaccount/see_reviews/${res.data.vendor.id}`, account: {id:res.data.vendor.id }}
+                let notification={type:"NOTIFICATION",content:(account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name,url: `/myaccount/bills_vendor/${res.data.vendor.id}`, account: {id:res.data.vendor.id }}
                     WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
                 Swal.fire({
                     icon: 'success',

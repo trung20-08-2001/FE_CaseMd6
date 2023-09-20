@@ -231,7 +231,7 @@ const HouseDetail = () => {
         };
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
-                let notification = { content: account.fullName === null ? account.username : account.fullName + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`, account: { id: houseDTO.house.account.id } }
+                let notification = { content: (account.fullName === null ? account.username : account.fullName) + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/bills_vendor/${houseDTO.house.account.id}`, account: { id: houseDTO.house.account.id } }
                 WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                 return response.data
             })
@@ -272,7 +272,7 @@ const HouseDetail = () => {
                         status: {id: 1}
                     })
                         .then(response => {
-                            let notification = { content: account.fullName === null ? account.username : account.fullName + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
+                            let notification = { content: (account.fullName === null ? account.username : account.fullName) + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", url: `/myaccount/see_reviews/${houseDTO.house.id}`, account: { id: houseDTO.house.account.id } }
                             WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
                             setNumberOfStars({
                                 ...numberOfStars,
