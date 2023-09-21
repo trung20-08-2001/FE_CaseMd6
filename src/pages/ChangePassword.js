@@ -142,8 +142,6 @@ const ChangePassword = () => {
                         <button type="submit" className="btn btn-success btn-confirm">Confirm</button>
                     </div>
                 </Form>
-
-
             </Formik>
         </div>
     );
