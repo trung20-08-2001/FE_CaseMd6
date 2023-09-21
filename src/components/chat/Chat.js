@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import WebSocketConfig from '../../config/configWebsocket';
 import { findAccountAdmin, findAccountById } from '../../services/accountService';
 import { findAccountHostByUsername, findListAccountYouMessaged, findMessageByReceiverAccountAndSenderAccount, saveMessage } from '../../services/messageService';
 import "./style.css";
+import Swal from "sweetalert2";
 
 
 const currentDate = new Date();
@@ -13,6 +14,7 @@ const month = currentDate.getMonth() + 1;
 const day = currentDate.getDate();
 function Chat() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const messageContainerRef = useRef(null);
     const [newMessage, setNewMessage] = useState({ message: "", type: "MESSAGE" });
     const accountLogin = useSelector(state => state.account.account)
@@ -37,12 +39,10 @@ function Chat() {
                 setPanelWidth(0);
             }
         }
-        
+
 
     };
-    const getWidth = () => {
 
-    };
 
 
 
@@ -61,9 +61,7 @@ function Chat() {
             if (Object.keys(accountAdmin).length === 0) {
                 dispatch(findAccountAdmin())
             } else {
-                setAccountReceiverCurrent(accountAdmin)
-                dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountAdmin.id, idSenderAccount: accountLogin.id }))
-                setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountAdmin, date: `${day}-${month}-${year}` })
+                navigate("/myaccount/chat/" + accountAdmin.id)
             }
         } else {
             dispatch(findAccountById(idReceiverAccount))
@@ -75,21 +73,35 @@ function Chat() {
             setAccountReceiverCurrent(accountAdmin)
             dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountAdmin.id, idSenderAccount: accountLogin.id }))
             setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountAdmin, date: `${day}-${month}-${year}` })
+
         }
+    }, [accountAdmin]);
+
+    useEffect(() => {
         if (Object.keys(accountReceiver).length !== 0) {
             setAccountReceiverCurrent(accountReceiver)
             dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
             setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
         }
-    }, [accountAdmin, accountReceiver]);
+    }, [accountReceiver]);
 
 
 
     const sendMessage = () => {
         if (newMessage.message !== "") {
-            WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage);
-            dispatch(saveMessage({ ...newMessage, date: currentDate }))
-            setNewMessage({ ...newMessage, message: "" })
+            if (accountLogin.id === accountReceiverCurrent.id) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Chat fail',
+                    text: "You can't chat with yourself",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else {
+                WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage);
+                dispatch(saveMessage({ ...newMessage, date: currentDate }))
+                setNewMessage({ ...newMessage, message: "" })
+            }
         }
     }
 
@@ -162,7 +174,7 @@ function Chat() {
             <div id="mySidepanel" class="sidepanel d-xl-none" style={{ width: panelWidth }}>
                 <div className="card mb-sm-3 mb-md-0 contacts_card">
                     <div className="card-header d-flex align-items-center">
-                        {accountLogin.role.id !== 2 &&
+                        {/* {accountLogin.role.id !== 2 &&
                             <div className="input-group">
                                 <input
                                     type="text"
@@ -183,7 +195,7 @@ function Chat() {
                                     </span>
                                 </div>
                             </div>
-                        }
+                        } */}
                     </div>
                     <div className="card-body contacts_body" >
                         <ul className="contacts">

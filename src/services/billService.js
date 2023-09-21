@@ -1,9 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const addBillHistory = createAsyncThunk(
+export const addBillHistoryHost = createAsyncThunk(
     "bill/billHistoryHost",
     async(bills_vendor)=>{
         return bills_vendor;
+    }
+)
+
+export const addBillHistoryUser=createAsyncThunk(
+    "bill/addBillHistoryUser",
+    async(bills_user)=>{
+        return bills_user;
     }
 )
 

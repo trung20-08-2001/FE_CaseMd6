@@ -149,7 +149,14 @@ export default function PrimarySearchAppBar() {
 
 
     const menuId = 'primary-search-account-menu';
+
     const menuAdmin = [
+        <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit
+            profile</MenuItem></Link>,
+        <Link to={"myaccount/changePassword"} onClick={() => setAnchorEl(null)}><MenuItem>Change
+            password</MenuItem></Link>,
+             <Link to={`myaccount/bills_user/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Transaction
+             history</MenuItem></Link>,
         <Link to="myaccount/account_user" onClick={() => setAnchorEl(null)}><MenuItem>Accounts user</MenuItem></Link>,
         <Link to="myaccount/vendors" onClick={() => setAnchorEl(null)}><MenuItem>Accounts host</MenuItem></Link>,
         <Link to={`myaccount/edit_profile/${account?.id}`} onClick={() => setAnchorEl(null)}><MenuItem>Edit
@@ -180,7 +187,7 @@ export default function PrimarySearchAppBar() {
     ]
 
     const menuMobile = [
-        <Link to={"myaccount/chat"} onClick={() => setMobileMoreAnchorEl(null)}>
+        <Link to={"/myaccount/chat"} onClick={() => setMobileMoreAnchorEl(null)}>
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="black">
                     <Badge badgeContent={0} color="error">
@@ -248,6 +255,20 @@ export default function PrimarySearchAppBar() {
     ]
 
     const menuMobileAdmin = [
+        <Link to={`/myaccount/bills_user/${account?.id}`}>
+        <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+            <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+            >
+                <Badge badgeContent={0} color="error">
+                    <HistoryIcon />
+                </Badge>
+            </IconButton>
+            <p>Transaction history</p>
+        </MenuItem>
+    </Link>,
         <Link to="/myaccount/account_user">
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -307,20 +328,20 @@ export default function PrimarySearchAppBar() {
                 <p>Create houses</p>
             </MenuItem>
         </Link>,
-         <Link to={`/myaccount/bills_user/${account?.id}`}>
-         <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
-             <IconButton
-                 size="large"
-                 aria-label="show 17 new notifications"
-                 color="inherit"
-             >
-                 <Badge badgeContent={0} color="error">
-                     <HistoryIcon />
-                 </Badge>
-             </IconButton>
-             <p>Transaction history</p>
-         </MenuItem>
-     </Link>,
+        <Link to={`/myaccount/bills_user/${account?.id}`}>
+            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
+                <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                >
+                    <Badge badgeContent={0} color="error">
+                        <HistoryIcon />
+                    </Badge>
+                </IconButton>
+                <p>Transaction history</p>
+            </MenuItem>
+        </Link>,
         <Link to={`/myaccount/bills_vendor/${account?.id}`}>
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -352,20 +373,6 @@ export default function PrimarySearchAppBar() {
     ]
 
     const menuMobileUser = [
-        <Link to={`/myaccount/bills_user/${account?.id}`}>
-            <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={0} color="error">
-                        <HistoryIcon />
-                    </Badge>
-                </IconButton>
-                <p>Transaction history</p>
-            </MenuItem>
-        </Link>,
         <Link to={"/myaccount/user"}>
             <MenuItem onClick={() => setMobileMoreAnchorEl(null)}>
                 <IconButton
@@ -416,7 +423,7 @@ export default function PrimarySearchAppBar() {
                                 {formatter.format(new Date(item.time))}: {item.content}
                             </MenuItem>
                         </Link>
-                        {index < notifications.length - 1 && <MenuItem divider style={{ borderColor: 'green',padding:"0",margin:"0" }} />}
+                        {index < notifications.length - 1 && <MenuItem divider style={{ borderColor: 'green', padding: "0", margin: "0" }} />}
                     </div>
                 ))
             ) : (
@@ -556,7 +563,7 @@ export default function PrimarySearchAppBar() {
                                         aria-label="open drawer"
                                         color={"white"}
                                         sx={{ display: { xs: 'block', sm: 'block' } }}
-                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight:"10px" }}
+                                        style={{ fontSize: "15px", color: "#ffc107", paddingRight: "10px" }}
                                     >
                                         {account.fullName != null ? account.fullName : account.username}
                                     </Typography>
@@ -577,19 +584,27 @@ export default function PrimarySearchAppBar() {
                                 </Box> */}
                             </>
                             :
-                            <Link to="login">
-                                <Typography
-                                    variant="h6"
-                                    noWrap
-                                    component="div"
-                                    aria-label="open drawer"
-                                    color={"white"}
-                                    sx={{ display: { xs: 'block', sm: 'block' } }}
-                                    style={{ textShadow: "0px 0px 10px #ffc107" }}
-                                >
-                                    Login<LoginRounded />
-                                </Typography>
-                            </Link>
+                            <>
+                                <IconButton size="large" aria-label="show 4 new mails" color="black">
+                                    <Link to={"/searchHouse"}><Badge badgeContent={0} color="error">
+                                        <SearchIcon style={{ color: "white" }} />
+                                    </Badge> </Link>
+                                </IconButton>
+                                <Link to="login">
+                                    <Typography
+                                        variant="h6"
+                                        noWrap
+                                        component="div"
+                                        aria-label="open drawer"
+                                        color={"white"}
+                                        sx={{ display: { xs: 'block', sm: 'block' } }}
+                                        style={{ textShadow: "0px 0px 10px #ffc107" }}
+                                    >
+                                        Login<LoginRounded />
+                                    </Typography>
+                                </Link>
+                            </>
+
                         }
                     </Toolbar>
                 </AppBar>

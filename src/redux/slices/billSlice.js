@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { addBillHistory, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus, updateBillsHost } from "../../services/billService"
+import { addBillHistoryHost, addBillHistoryUser, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus, updateBillsHost } from "../../services/billService"
 
 const initialState = {
     billHistoryHost: [],
+    billHistoryUser:[],
     nameHouseSearch:"",
     dateCheckin:"1990-1-1",
     dateCheckout:"2999-12-31",
@@ -14,14 +15,23 @@ const billSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(addBillHistory.fulfilled, (state, action) => {
+        builder.addCase(addBillHistoryHost.fulfilled, (state, action) => {
             state.billHistoryHost = action.payload
         })
-        builder.addCase(addBillHistory.pending, (state, action) => {
+        builder.addCase(addBillHistoryHost.pending, (state, action) => {
             state.billHistoryHost = []
         })
-        builder.addCase(addBillHistory.rejected, (state, action) => {
+        builder.addCase(addBillHistoryHost.rejected, (state, action) => {
             state.billHistoryHost = []
+        })
+        builder.addCase(addBillHistoryUser.fulfilled, (state, action) => {
+            state.billHistoryUser = action.payload
+        })
+        builder.addCase(addBillHistoryUser.pending, (state, action) => {
+            state.billHistoryUser = []
+        })
+        builder.addCase(addBillHistoryUser.rejected, (state, action) => {
+            state.billHistoryUser = []
         })
         builder.addCase(updateBillsHost.fulfilled, (state, action) => {
             state.billHistoryHost = action.payload

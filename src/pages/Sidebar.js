@@ -39,24 +39,30 @@ function Sidebar() {
                                     <h5 className="ms-1 d-none d-sm-inline">Home</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item mt-10">
                                 <NavLink to={`/myaccount/profile/${account.id}`} className="nav-link text-truncate">
                                     <AccountCircle />
                                     <h5 className="ms-1 d-none d-sm-inline">My profile</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item mt-10">
                                 <NavLink to={`/myaccount/edit_profile/${account.id}`} className="nav-link text-truncate">
                                     <EditIcon />
                                     <h5 className="ms-1 d-none d-sm-inline">Edit profile</h5>
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item mt-10">
                                 <NavLink to={"/myaccount/changePassword"} className="nav-link text-truncate">
                                     <ChangeCircleIcon />
                                     <h5 className="ms-1 d-none d-sm-inline">Change password</h5>
                                 </NavLink>
                             </li>
+                            <li className="nav-item mt-10">
+                                        <NavLink to={`/myaccount/bills_user/${account.id}`} className="nav-link text-truncate">
+                                            <HistoryIcon />
+                                            <h5 className="ms-1 d-none d-sm-inline">Transaction history</h5>
+                                        </NavLink>
+                                    </li>
                             {account.role.id === 1 &&
                                 <>
 
@@ -76,31 +82,25 @@ function Sidebar() {
                             }
                             {account && account.role.id === 2 &&
                                 <>
-                                    <li className="nav-item">
+                                    <li className="nav-item mt-10">
                                         <NavLink to="/myaccount/host" className="nav-link text-truncate">
                                             <HolidayVillageIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">My houses</h5>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className="nav-item mt-10">
                                         <NavLink to="/myaccount/create_house" className="nav-link text-truncate">
                                             <AddBusinessIcon/>
                                             <h5 className="ms-1 d-none d-sm-inline">Create houses</h5>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item mt-10">
-                                        <NavLink to={`/myaccount/bills_user/${account.id}`} className="nav-link text-truncate">
-                                            <HistoryIcon />
-                                            <h5 className="ms-1 d-none d-sm-inline">Transaction history</h5>
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item">
                                         <NavLink to={`/myaccount/bills_vendor/${account.id}`} className="nav-link text-truncate">
                                             <HistoryIcon/>
                                             <h5 className="ms-1 d-none d-sm-inline">Renting a house</h5>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
+                                    <li className="nav-item mt-10">
                                         <NavLink to="/myaccount/income" className="nav-link text-truncate">
                                             <BarChartIcon />
                                             <h5 className="ms-1 d-none d-sm-inline">Revenue</h5>
@@ -110,13 +110,6 @@ function Sidebar() {
                             }
                             {account && account.role.id === 3 &&
                                 <>
-
-                                    <li className="nav-item mt-10">
-                                        <NavLink to={`/myaccount/bills_user/${account.id}`} className="nav-link text-truncate">
-                                            <HistoryIcon />
-                                            <h5 className="ms-1 d-none d-sm-inline">Transaction history</h5>
-                                        </NavLink>
-                                    </li>
                                     <li className="nav-item mt-10">
                                         <NavLink to={"/myaccount/user"} className="nav-link text-truncate">
                                             <BackupIcon />
@@ -125,7 +118,7 @@ function Sidebar() {
                                     </li>
                                 </>
                             }
-                            <li className="nav-item" style={{textIndent: "15px", cursor:"pointer"}}>
+                            <li className="nav-item mt-10" style={{textIndent: "15px", cursor:"pointer"}}>
                                 <a className="nav-link text-truncate"
                                     onClick={handleLogout}
                                 >

@@ -37,9 +37,7 @@ function Register() {
                 validationSchema={SignupSchema}
                 onSubmit={async (values, { resetForm }) => {
                     try {
-                        console.log(values)
                         const response = await axios.post("http://localhost:8081/accounts/register", values);
-                        console.log(response)
                         if (response.data === '') {
                             let account = {
                                 ...values,
@@ -106,7 +104,7 @@ function Register() {
                                         />
                                         <span className="focus-input100" data-symbol="&#x260E;"></span>
                                     </div>
-                                    <div style={{color:"red"}}><ErrorMessage name="password" component="div"
+                                    <div style={{color:"red"}}><ErrorMessage name="phone" component="div"
                                                        className="error-message"/></div>
                                     <div
                                         className="wrap-input100 validate-input m-b-23"

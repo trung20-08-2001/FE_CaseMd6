@@ -4,25 +4,37 @@ import {useParams} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 import WebSocketConfig from "../config/configWebsocket";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { Label } from "reactstrap";
+import {
+    addBillHistoryUser,
+    filterDateCheckin,
+    filterDateCheckout,
+    filterNameHouse,
+    filterStatus
+} from "../services/billService";
+import { filterBillHistoryUser } from "../redux/selector";
 
 function UserTransactionHistory() {
-    const [bills_User, setBills_User] = useState([]);
+    const dispatch=useDispatch()
+    const resultSearch=useSelector(filterBillHistoryUser)
     const {id} = useParams();
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     const account = useSelector(state => state.account.account)
+    
+    console.log(resultSearch);
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
             .then(function (res) {
-                setBills_User(res.data)
+                dispatch(addBillHistoryUser(res.data));
             })
     }, [])
 
     const handleCancelClick = (billID) => {
-        const updatedBills = bills_User.map((bill) => {
+        const updatedBills = resultSearch.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
                 const updatedBill = {...bill};
@@ -33,12 +45,12 @@ function UserTransactionHistory() {
             }
             return bill;
         });
-        setBills_User(updatedBills);
+        dispatch(addBillHistoryUser(updatedBills));
         updateAfterCancel(billID);
     };
 
     const updateAfterCancel = (billID) => {
-        const foundBill = bills_User.find((bill) => bill.bill.id === billID);
+        const foundBill = resultSearch.find((bill) => bill.bill.id === billID);
         const house = new FormData();
         house.append("idStatus", foundBill.house.status.id);
         const bill = new FormData();
@@ -56,7 +68,7 @@ function UserTransactionHistory() {
                 })
                 axios.get("http://localhost:8081/bills_user/" + id)
                 .then(function (res) {
-                    setBills_User(res.data)
+                    dispatch(addBillHistoryUser(res.data));
                 })
             })
             .catch((err) => {
@@ -73,7 +85,7 @@ function UserTransactionHistory() {
             });
     };
 
-    const displayBills_User = bills_User
+    const displayBills_User = resultSearch
         .slice(pagesVisited, pagesVisited + billsPerPage)
         .map((bill) => {
             const userId = bill?.bill.user.id || '';
@@ -118,7 +130,7 @@ function UserTransactionHistory() {
             );
         });
 
-    const pageCount = Math.ceil(bills_User.length / billsPerPage);
+    const pageCount = Math.ceil(resultSearch.length / billsPerPage);
 
     const changePage = ({selected}) => {
         setPageNumber(selected);
@@ -127,6 +139,50 @@ function UserTransactionHistory() {
 
     return (
         <>
+        <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
+                <div className="col-xl-3">
+                    <Label htmlFor="nameHouse">Name House</Label>
+                    <input
+                        id="nameHouse"
+                        type="text"
+                        placeholder="Name house..."
+                        onChange={e => dispatch(filterNameHouse(e.target.value))}
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                </div>
+                <div className="col-xl-3 ">
+                    <Label htmlFor="dateCheckin">Date Checkin</Label>
+                    <input
+                        id="dateCheckin"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckin(e.target.value))}
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="dateCheckout">Date Checkout</Label>
+                    <input
+                        id="dateCheckout"
+                        type="DATE"
+                        onChange={e => dispatch(filterDateCheckout(e.target.value))}
+                        style={{flex: 2, marginRight: '10px'}}
+                    />
+                </div>
+                <div className="col-xl-3">
+                    <Label htmlFor="status">Status</Label>
+                    <select
+                        id="status"
+                        onChange={e => dispatch(filterStatus(e.target.value))}
+                        style={{flex: 2, marginRight: '10px'}}
+                    >
+                        <option value="ALL">All</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="USING">USING</option>
+                        <option value="CHECKED_OUT">CHECKED_OUT</option>
+                        <option value="CANCELED">CANCELED</option>
+                    </select>
+                </div>
+            </div>
 
             <div className="container distanceBody">
                 <h4 className='text-center pb-20 headerInBody'>Transaction history</h4>

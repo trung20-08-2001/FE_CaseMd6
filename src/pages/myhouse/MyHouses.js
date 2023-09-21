@@ -174,16 +174,12 @@ function MyHouses() {
                                                     style={{ width: "100%", height: "300px" }} /></Link>
                                                 <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                     <div className="hover-item">
-                                                    <span>{item.house.status.name === "USING" ?
-                                                                <strong style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
-                                                                item.house.status.name === "ORDERED" ?
-                                                                <strong style={{ color: "#6610f2", textShadow:"0 0 3px #6610f2"}}>Ordered</strong>:
-                                                                item.house.status.name === "BLOCKED" ?
-                                                                <strong
-                                                                style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>:
-                                                                    <strong
-                                                                        style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
-                                                            }</span>
+                                                        <span>
+                                                            {item.house.status.name === "USING" && <strong style={{ color: "#FFD700" }}>Using</strong>}
+                                                            {item.house.status.name === "ORDERED" && <strong style={{ color: "#87CEEB" }}>Ordered</strong>}
+                                                            {item.house.status.name === "BLOCKED" && <strong style={{ color: "darkorange" }}> Blocked</strong>}
+                                                            {item.house.status.name === "READY" && <strong style={{ color: "#32CD32" }}>Ready</strong>}
+                                                        </span>                                                   
                                                     </div>
                                                     <div className="hover-item">
                                                         <img className="mr-10" src="/images/icons/bed.png"

@@ -62,7 +62,7 @@ export default function Income() {
         labels,
         datasets: [
             {
-                label: 'Thu nhập năm',
+                label: 'Revenue in ',
                 data: [],
                 backgroundColor: 'green',
             },
@@ -80,12 +80,12 @@ export default function Income() {
         if (revenue.length > 0) {
             setChartData(prevData => ({
                 ...prevData,
-                label:'Thu nhập năm',
+                label:'Revenue in ',
                 datasets: [
                     {
                         ...prevData.datasets[0],
                         data: revenue[0].months,
-                        label: 'Thu nhập năm' + revenue[0].year,
+                        label: 'Revenue in ' + revenue[0].year,
                     },
                 ],
             }));
@@ -101,7 +101,7 @@ export default function Income() {
                     {
                         ...prevData.datasets[0],
                         data: revenue[index].months,
-                        label:'Thu nhập năm '+revenue[index].year,
+                        label:'Revenue in '+revenue[index].year,
                     },
                 ],
             }));

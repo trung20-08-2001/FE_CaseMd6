@@ -6,15 +6,12 @@ import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from 'react-router-dom';
 import WebSocketConfig from '../config/configWebsocket';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuItem from "@mui/material/MenuItem";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { addAccountYouMessaged } from '../services/messageService';
+
 
 const HouseDetail = () => {
     const [apiDates, setApiDates] = useState([]);
@@ -54,7 +51,12 @@ const HouseDetail = () => {
 
     const handleClickChat = (idHost) => {
         if (account) {
-            if (account.id !== idHost) {
+            if(account.role.id===2 && account.id !== idHost){
+                Swal.fire({
+                    icon: 'error',
+                    text: "Host accounts cannot chat with each other",
+                });
+            }else if (account.id !== idHost) {
                 navigate("/myaccount/chat/" + idHost)
             } else {
                 Swal.fire({
@@ -575,7 +577,7 @@ const HouseDetail = () => {
                                     <div className=" col-8">
                                         <h3>{houseDTO.house.account.fullName}</h3><br />
                                         <div className="chat-icon" style={{ cursor: "pointer" }}
-                                            onClick={handleClickChat}>
+                                            onClick={()=>handleClickChat(houseDTO.house.account.id)}>
                                             <i className="fas fa-comment"></i>
                                             <span> Chat</span>
                                         </div>

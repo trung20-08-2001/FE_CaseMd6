@@ -9,7 +9,7 @@ import "../assets/styleFormAddHouse.css";
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { findHouseByAccount, saveHouse } from '../services/houseService';
+import { findAllHouse, findHouseByAccount, findTopHouse, saveHouse } from '../services/houseService';
 
 
 const validationSchema = Yup.object().shape({
@@ -108,7 +108,6 @@ const CreateHouse = () => {
             });
             Promise.all(uploadPromises)
                 .then((urls) => {
-                    
                     let images = []
                     for (let url of urls) {
                         images.push({ url: url, type: "HOUSE", house: { id: house.id } });
@@ -129,6 +128,8 @@ const CreateHouse = () => {
         customAxios.post("/images/save", images)
             .then((response) => {
                 dispatch(findHouseByAccount(JSON.parse(localStorage.getItem('account')).id));
+                dispatch(findAllHouse())
+                dispatch(findTopHouse())
             })
             .catch((error) => console.log(error))
     }
