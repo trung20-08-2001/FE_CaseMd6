@@ -105,7 +105,7 @@ function Register() {
                                         />
                                         <span className="focus-input100" data-symbol="&#x260E;"></span>
                                     </div>
-                                    <div style={{color:"red"}}><ErrorMessage name="password" component="div"
+                                    <div style={{color:"red"}}><ErrorMessage name="phone" component="div"
                                                        className="error-message"/></div>
                                     <div
                                         className="wrap-input100 validate-input m-b-23"
