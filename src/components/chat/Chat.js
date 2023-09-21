@@ -26,13 +26,13 @@ function Chat() {
     const accountReceiver = useSelector(state => state.account.accountReceiverCurrent)
     const [usernameSearch, setUsenameSearch] = useState("")
     const [panelWidth, setPanelWidth] = useState(0);
+    const [height,setHeight]=useState()
     const myElementRef = useRef(null);
 
 
     const openCloseNav = () => {
         if (myElementRef.current) {
             const width = myElementRef.current.getBoundingClientRect().width;
-            console.log(width);
             if (panelWidth == 0) {
                 setPanelWidth(width);
             } else {
@@ -54,6 +54,8 @@ function Chat() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        const height=document.getElementById('menu').offsetHeight;
+        setHeight(height)
         if (listAccountYouMessaged.length === 0) {
             dispatch(findListAccountYouMessaged(accountLogin.id))
         }
@@ -115,7 +117,7 @@ function Chat() {
     return (
         <div className="row justify-content-center h-100" >
             <div className=" col-xl-3 chat d-none d-xl-block">
-                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: "630px" }}>
+                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: height }}>
                     <div className="card-header d-flex align-items-center">
                         {accountLogin.role.id !== 2 &&
                             <div className="input-group">
@@ -171,8 +173,8 @@ function Chat() {
                 </div>
             </div>
 
-            <div id="mySidepanel" class="sidepanel d-xl-none" style={{ width: panelWidth }}>
-                <div className="card mb-sm-3 mb-md-0 contacts_card">
+            <div id="mySidepanel" class="sidepanel d-xl-none" style={{ width: panelWidth}}>
+                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: height }}>
                     <div className="card-header d-flex align-items-center">
                         {/* {accountLogin.role.id !== 2 &&
                             <div className="input-group">
@@ -227,7 +229,7 @@ function Chat() {
                 </div>
             </div>
             <div className="col-md-12 col-xl-9 chat" id="main">
-                <div className="card">
+                <div className="card" style={{ height: height }}>
                     <div className="card-header msg_head" ref={myElementRef}>
                         {Object.keys(accountReceiverCurrent).length !== 0 &&
                             <div className="d-flex bd-highlight " >

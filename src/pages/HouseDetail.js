@@ -363,7 +363,7 @@ const HouseDetail = () => {
         } else if (startDate >= endDate) {
             Swal.fire({
                 icon: 'error',
-                title: 'Registration Failed',
+                title: 'Registration failed',
                 text: 'The start date must be at least 1 day before the end date',
             });
         } else if (houseDTO.house.status.id === 3) {
