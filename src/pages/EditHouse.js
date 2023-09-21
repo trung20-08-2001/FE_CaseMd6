@@ -10,7 +10,7 @@ import Slide from '../components/Slide';
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { editHouse, findHouseByAccount } from '../services/houseService';
+import { editHouse, findAllHouse, findHouseByAccount, findTopHouse } from '../services/houseService';
 
 
 
@@ -138,7 +138,8 @@ const EditHouse = () => {
           }
           customAxios.post("/images/updateImageHouse/" + house.id, images)
             .then((response) => {
-
+              dispatch(findAllHouse())
+              dispatch(findTopHouse())
             })
             .catch((error) => console.log(error))
         })
@@ -251,11 +252,11 @@ const EditHouse = () => {
 
                     <label htmlFor='category' >Category</label>
                     <select name="idCategory" id="category" className="mb-28" defaultValue={house.house.category.id} onChange={handleCategoryChange}>
-                        {categories.map(category => (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                        ))}
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="col-lg-12">
@@ -285,7 +286,7 @@ const EditHouse = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="file-upload-btn" type="submit"  style={{width:"10%",marginLeft:"40%",borderRadius:"50%"}}><h3>Save</h3></button>
+                  <button className="file-upload-btn" type="submit" style={{ width: "10%", marginLeft: "40%", borderRadius: "50%" }}><h3>Save</h3></button>
                 </div>
               </Form>
             )}

@@ -51,7 +51,12 @@ const HouseDetail = () => {
 
     const handleClickChat = (idHost) => {
         if (account) {
-            if (account.id !== idHost) {
+            if(account.role.id===2 && account.id !== idHost){
+                Swal.fire({
+                    icon: 'error',
+                    text: "Host accounts cannot chat with each other",
+                });
+            }else if (account.id !== idHost) {
                 navigate("/myaccount/chat/" + idHost)
             } else {
                 Swal.fire({

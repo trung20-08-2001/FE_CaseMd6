@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addBillHistory,
+    addBillHistoryHost,
     filterDateCheckin,
     filterDateCheckout,
     filterNameHouse,
@@ -28,7 +28,7 @@ function VendorTransactionHistory() {
         if (bills_vendor.length === 0) {
             axios.get("http://localhost:8081/bills_vendor/" + id)
                 .then(function (res) {
-                    dispatch(addBillHistory(res.data))
+                    dispatch(addBillHistoryHost(res.data))
                 })
         }
     }, []);
@@ -169,7 +169,7 @@ function VendorTransactionHistory() {
                     .then(() => {
                         axios.get("http://localhost:8081/bills_vendor/" + id)
                             .then(function (res) {
-                                dispatch(addBillHistory(res.data))
+                                dispatch(addBillHistoryHost(res.data))
                             })
                     })
                     .catch((error) => {

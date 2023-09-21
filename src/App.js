@@ -40,6 +40,7 @@ function App() {
                                 <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
                                 <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
                                 <Route path={"profile/:id"} element={<Profile/>}></Route>
+                                <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
                                 {account.role.id === 1 &&
                                     <>
                                         <Route path={'vendors'} element={<ShowVendor />}></Route>
@@ -59,14 +60,12 @@ function App() {
                                         <Route path="edit_house/:indexHouseEdit" element={<EditHouse />}></Route>
                                         <Route path='bills_vendor/:id' element={<VendorTransactionHistory/>}></Route>
                                         <Route path="see_reviews/:idHouse" element={<SeeReviews/>}></Route>
-                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
 
                                     </>
                                 }
                                 {account.role.id === 3 &&
                                     <>
                                         <Route path={"user"} element={<UpRole2 />}></Route>
-                                        <Route path={'bills_user/:id'} element={<UserTransactionHistory />}></Route>
                                     </>
                                 }
                                 <Route path="chat" element={<Chat/>}></Route>

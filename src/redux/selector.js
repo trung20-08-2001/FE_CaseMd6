@@ -10,8 +10,8 @@ export const filterBathroom = (state) => state.house.bathroom;
 export const filterPriceHouse = (state) => state.house.priceHouse;
 export const allHouse = state => state.house.allHouse;
 
-
-export const filterbillHistoryHost = state => state.bill.billHistoryHost;
+export const allBillHistoryUser = (state) => state.bill.billHistoryUser;
+export const allBillHistoryHost = state => state.bill.billHistoryHost;
 export const filternameHouseSearch = state => state.bill.nameHouseSearch;
 export const filterdateCheckin = state => state.bill.dateCheckin;
 export const filterdateCheckout = state => state.bill.dateCheckout;
@@ -53,13 +53,34 @@ export const filterSearchHouse = createSelector(
 
 
 export const filterBillHistoryHost = createSelector(
-  filterbillHistoryHost,
+  allBillHistoryHost,
   filternameHouseSearch,
   filterdateCheckin,
   filterdateCheckout,
   filterstatus,
   (allBill, nameHouse, dateCheckin, dateCheckout, status) => {
     return allBill.filter((bill) => {
+      const isNameHouseMatched = removeDiacritics(bill.house.name).toLowerCase().includes(removeDiacritics(nameHouse).toLowerCase());
+      const isDateCheckinMatched = new Date(bill.bill.dateCheckin).getTime() >= new Date(dateCheckin).getTime();
+      const isDateCheckoutMatched = new Date(bill.bill.dateCheckout).getTime() <= new Date(dateCheckout).getTime();
+      const isStatusMatched = bill.bill.status.name === status;
+      if (status === "ALL") {
+        return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched
+      } else {
+        return isNameHouseMatched && isDateCheckinMatched && isDateCheckoutMatched && isStatusMatched
+      }
+    })
+  }
+)
+
+export const filterBillHistoryUser=createSelector(
+  allBillHistoryUser,
+  filternameHouseSearch,
+  filterdateCheckin,
+  filterdateCheckout,
+  filterstatus,
+  (allBill, nameHouse, dateCheckin, dateCheckout, status) =>{
+    return allBill.filter(bill=>{
       const isNameHouseMatched = removeDiacritics(bill.house.name).toLowerCase().includes(removeDiacritics(nameHouse).toLowerCase());
       const isDateCheckinMatched = new Date(bill.bill.dateCheckin).getTime() >= new Date(dateCheckin).getTime();
       const isDateCheckoutMatched = new Date(bill.bill.dateCheckout).getTime() <= new Date(dateCheckout).getTime();
