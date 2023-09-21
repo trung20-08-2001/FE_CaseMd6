@@ -4,8 +4,6 @@ import axios from "axios";
 import AverageStarsFeedback from "./AverageStarsFeedback";
 import StarFeedback from "./StarFeedback";
 import ReactModal from "react-modal";
-import loading from "../components/Loading";
-
 
 const SeeReviews = () => {
     const [houses, setHouse] = useState([]);
@@ -26,7 +24,7 @@ const SeeReviews = () => {
     const filteredCurrentItems = currentItems.filter(item =>
         item.status.id === 1
     );
-    const [index,setIndex] = useState(0)
+    const [index, setIndex] = useState(0)
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
 
@@ -73,377 +71,38 @@ const SeeReviews = () => {
     }
 
     const rate = (number) => {
-            axios.get("http://localhost:8081/api/feedback/getAllByStar/" + idHouse +"/" + number)
-                .then(res=>{
-                    setFeedbacks(res.data)
-                })
-    }
-    const getAll = ()=>{
-        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
-            .then(res =>{
+        axios.get("http://localhost:8081/api/feedback/getAllByStar/" + idHouse + "/" + number)
+            .then(res => {
                 setFeedbacks(res.data)
             })
     }
-    const getByCmt=()=>{
+    const getAll = () => {
+        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+            .then(res => {
+                setFeedbacks(res.data)
+            })
+    }
+    const getByCmt = () => {
         axios.get("http://localhost:8081/api/feedback/getAllFeedbackByComment/" + idHouse)
-            .then(res=>{
+            .then(res => {
                 setFeedbacks(res.data)
             })
     }
 
     return (
         <>
-            <div className="property-area property-area-2 ptb-20">
+            <div className="ptb-20">
                 <div className="container">
                     <div className="row property-details_wrap">
-                        <div className="col-lg-4 pl-35 order-2">
-                            <div className="single-sidebar-widget fix mb-40">
-                                <div className="sidebar-widget-title mb-30">
-                                    <h5>Search for Property</h5>
-                                </div>
-                                <form action="#" className="">
-                                    <div className="form-box mb-18 pr-10">
-                                        <div className="select">
-                                            <select name="location">
-                                                <option>Location</option>
-                                                <option>Dhaka</option>
-                                                <option>Shylet</option>
-                                                <option>Khulna</option>
-                                                <option>Barishal</option>
-                                                <option>Chittagong</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box mb-18 pl-10">
-                                        <div className="select">
-                                            <select name="sub-location">
-                                                <option>Sub - Location</option>
-                                                <option>Dhaka</option>
-                                                <option>Shylet</option>
-                                                <option>Khulna</option>
-                                                <option>Barishal</option>
-                                                <option>Chittagong</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box mb-18 pr-10">
-                                        <div className="select">
-                                            <select name="min-sqft">
-                                                <option>Min area (sqft)</option>
-                                                <option>Dhaka</option>
-                                                <option>Shylet</option>
-                                                <option>Khulna</option>
-                                                <option>Barishal</option>
-                                                <option>Chittagong</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box mb-400 pl-10">
-                                        <div className="select">
-                                            <select name="max-sqft">
-                                                <option>Max area (sqft)</option>
-                                                <option>Dhaka</option>
-                                                <option>Shylet</option>
-                                                <option>Khulna</option>
-                                                <option>Barishal</option>
-                                                <option>Chittagong</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box pr-10">
-                                        <div className="select">
-                                            <select name="bedrooms">
-                                                <option>No of Bedroom</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box pl-10">
-                                        <div className="select">
-                                            <select name="bedrooms">
-                                                <option>No of Bathroom</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="form-box large mt-8">
-                                        <div className="price_filter">
-                                            <div className="price_slider_amount mb-20">
-                                                <div className="slider-values">
-                                                    <span>Price Range</span>
-                                                    <input
-                                                        type="text"
-                                                        className="amount"
-                                                        name="price"
-                                                        placeholder="Add Your Price"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div
-                                                className="slider-range ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                                <div
-                                                    className="ui-slider-range ui-widget-header ui-corner-all"
-                                                    style={{left: "9.09091%", width: "70.2479%"}}
-                                                />
-                                                <span
-                                                    className="ui-slider-handle ui-state-default ui-corner-all"
-                                                    tabIndex={0}
-                                                    style={{left: "9.09091%"}}
-                                                />
-                                                <span
-                                                    className="ui-slider-handle ui-state-default ui-corner-all"
-                                                    tabIndex={0}
-                                                    style={{left: "79.3388%"}}
-                                                />
-                                            </div>
-                                        </div>
-                                        <button
-                                            name="search_price"
-                                            type="button"
-                                            className="button search_price lemon mt-36"
-                                        >
-                <span>
-                  <span>SEARCH PROPERTY</span>
-                </span>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="single-sidebar-widget fix mb-60 d-none d-md-block">
-                                <div className="sidebar-widget-title mb-32">
-                                    <h5>Popular Property</h5>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-6 pr-9 mb-18 col-md-3">
-                                        <div className="single-property hover-effect-two">
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-0 bg-violet">
-                                                <div className="title-left">
-                                                    <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">Sizling de Villa</a>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <div className="property-image">
-                                                <a
-                                                    href="properties-details.html"
-                                                    className="block dark-hover"
-                                                >
-                                                    <img src="images/properties/s-1.jpg" alt=""/>
-                                                    <span className="img-button text-uppercase">
-                      More Details
-                    </span>
-                                                </a>
-                                            </div>
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
-                                                <h3>$52,354</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 pl-9 mb-18 col-md-3">
-                                        <div className="single-property hover-effect-two">
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-0 bg-violet">
-                                                <div className="title-left">
-                                                    <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">Zackson Heits</a>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <div className="property-image">
-                                                <a
-                                                    href="properties-details.html"
-                                                    className="block dark-hover"
-                                                >
-                                                    <img src="images/properties/s-2.jpg" alt=""/>
-                                                    <span className="img-button text-uppercase">
-                      More Details
-                    </span>
-                                                </a>
-                                            </div>
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
-                                                <h3>$65,435</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 pr-9 col-md-3">
-                                        <div className="single-property hover-effect-two">
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-0 bg-violet">
-                                                <div className="title-left">
-                                                    <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">Dom Plaza</a>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <div className="property-image">
-                                                <a
-                                                    href="properties-details.html"
-                                                    className="block dark-hover"
-                                                >
-                                                    <img src="images/properties/s-3.jpg" alt=""/>
-                                                    <span className="img-button text-uppercase">
-                      More Details
-                    </span>
-                                                </a>
-                                            </div>
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
-                                                <h3>$67,879</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 pl-9 col-md-3">
-                                        <div className="single-property hover-effect-two">
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-0 bg-violet">
-                                                <div className="title-left">
-                                                    <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">Rose de Villa</a>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <div className="property-image">
-                                                <a
-                                                    href="properties-details.html"
-                                                    className="block dark-hover"
-                                                >
-                                                    <img src="images/properties/s-4.jpg" alt=""/>
-                                                    <span className="img-button text-uppercase">
-                      More Details
-                    </span>
-                                                </a>
-                                            </div>
-                                            <div className="property-title fix pl-18 pr-18 pt-9 pb-9 bg-violet">
-                                                <h3>$87,345</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="single-sidebar-widget fix mb-60">
-                                <div className="sidebar-widget-title mb-32">
-                                    <h5>Our Agent</h5>
-                                </div>
-                                <div className="sidebar-agent">
-                                    <div className="row">
-                                        <div className="col-lg-4 mb-22 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-1.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Ross Taylor
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 mb-22 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-2.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Tom Cruse
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 mb-22 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-3.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Lisa Smith
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-4.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Rosi Wiams
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-5.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Evan Smith
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-2 col-4">
-                                            <div className="agent-hover">
-                                                <a href="agent-details.html" className="block border mb-11">
-                                                    <img src="images/team/s-6.jpg" alt=""/>
-                                                </a>
-                                                <h5>
-                                                    <a href="agent-details.html" className="block">
-                                                        Nail Albert
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="single-sidebar-widget fix">
-                                <div className="sidebar-widget-title mb-32">
-                                    <h5>Tags</h5>
-                                </div>
-                                <ul className="tags">
-                                    <li>
-                                        <a href="properties-details.html" className="mb-15 mr-7">
-                                            Real Estate
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index1.html" className="mb-15 ml-7 mr-7">
-                                            Home
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="properties-details.html" className="mb-15 ml-7">
-                                            Appartment
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="properties-details.html" className="mb-15 mr-7">
-                                            Duplex Villa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="properties-details.html" className="mb-15 ml-7">
-                                            Buy Property
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                         {
                             houses.length !== 0 && (
                                 <>
-                                    <div className="col-lg-8 order-1">
-                                        <h1 className="details-title mb-22">{houses.house.name}</h1>
-                                        <div className="property-image mb-57">
-                                            <img src={houses.images[0].url} alt=""/>
+                                    <div className=" order-1">
+                                        <div className="text-center">
+                                            <h4 className="mb-22 distanceBody headerInBody"><i className="bi bi-house-fill"></i> {houses.house.name}</h4>
+                                            <div className="property-image mb-57">
+                                                <img src={houses.images[0].url} alt="" style={{ boxShadow: "0 0 3px rgba(0,0,0,0.5)", borderRadius: "10px", width: "800px", height: "600px" }} />
+                                            </div>
                                         </div>
                                         <div className="property-desc mb-56">
                                             <h4 className="details-title mb-22">Description</h4>
@@ -456,41 +115,55 @@ const SeeReviews = () => {
                                             <div className="row">
                                                 <div className="col-lg-6">
                                                     <h4 className="details-title mb-38">Condition</h4>
-                                                    <div className="bg-gray fix pl-35 pt-42 pr-35 pb-39 left-column mb-56">
+                                                    <div className="bg-gray fix pl-35 pt-42 pr-35 pb-79 left-column mb-56">
                                                         <div className="desc-info mb-37">
-                                                            <img src="../images/icons/g-floor.png" alt="" className="pr-8"/>
+                                                            <img src="/images/icons/g-map.png" alt="" className="pr-8" />
                                                             <span>{houses.house.address}</span>
                                                         </div>
                                                         <div className="desc-info mb-37">
-                                                            <img src="../images/icons/g-bed.png" alt="" className="pr-8"/>
-                                                            <span>Bedroom {houses.house.numberOfBedrooms}</span>
+                                                            <img src="/images/icons/g-bed.png" alt="" className="pr-8" />
+                                                            <span>Bedroom <strong>{houses.house.numberOfBedrooms}</strong></span>
                                                         </div>
                                                         <div className="desc-info mb-37">
                                                             <img
-                                                                src="../images/icons/g-shower.png"
+                                                                src="/images/icons/g-shower.png"
                                                                 alt=""
                                                                 className="pr-8"
                                                             />
-                                                            <span>Bathroom {houses.house.numberOfLivingRooms}</span>
+                                                            <span>Bathroom <strong>{houses.house.numberOfLivingRooms}</strong></span>
                                                         </div>
                                                         <div className="desc-info mb-37">
                                                             <img
-                                                                src="../images/icons/g-garage.png"
+                                                                src="/images/icons/g-garage.png"
                                                                 alt=""
                                                                 className="pr-8"
                                                             />
                                                             <span>{houses.house.category.name}</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
-                                                            <img src="../images/icons/kitchen.png" alt="" className="pr-8"/>
-                                                            <span>{houses.house.status.name}</span>
+                                                            <i className="fas fa-shield-alt"></i>
+
+
+                                                            <span>{houses.house.status.name === "USING" ?
+                                                                <strong style={{ color: "#FFD700" }}> Using</strong> :
+                                                                houses.house.status.name === "ORDERED" ?
+                                                                <strong style={{ color: "#6610f2" }}> Ordered</strong>:
+                                                                houses.house.status.name === "BLOCKED" ?
+                                                                <strong
+                                                                style={{ color: "darkorange" }}> Blocked</strong>:
+                                                                    <strong 
+                                                                        style={{ color: "#32CD32" }}> Ready</strong> 
+                                                            }</span>
                                                         </div>
                                                         <div className="desc-info mb-35">
-                                                            <span className="price">{houses.house.price} VND</span>
+                                                            <i className="fa fa-money"></i>
+                                                            <span> <strong style={{
+                                                                color: "gold",
+                                                                textShadow: "0 0 1px yellow"
+                                                            }}>{new Intl.NumberFormat().format(houses.house.price)}</strong> Vnd/Day</span>
+
                                                         </div>
                                                         <div className="desc-info">
-                                                            <img src="../images/icons/g-map.png" alt="" className="pr-8"/>
-                                                            <span className="location"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -498,43 +171,43 @@ const SeeReviews = () => {
                                                     <h4 className="details-title mb-38">Amenities</h4>
                                                     <div className="bg-gray fix pl-50 pr-50 pt-44 pb-38 right-column mb-56">
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Air Conditioning</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Bedding</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Balcony</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Cable TV</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Internet</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Parking</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Lift</span>
                                                         </div>
                                                         <div className="desc-info mb-26">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Pool</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Dishwasher</span>
                                                         </div>
                                                         <div className="desc-info">
-                                                            <i className="fa fa-check-square-o mr-9"/>
+                                                            <i className="fa fa-check-square-o mr-9" />
                                                             <span>Toaster</span>
                                                         </div>
                                                     </div>
@@ -554,7 +227,7 @@ const SeeReviews = () => {
                                                                 marginRight: '1rem',
                                                                 backgroundColor: 'orangered'
                                                             }} onClick={getAll}>
-                                                                <span style={{marginRight: '0.5rem'}}>All</span>
+                                                                <span style={{ marginRight: '0.5rem' }}>All</span>
                                                             </button>
                                                             <button style={{
                                                                 display: 'flex',
@@ -562,10 +235,10 @@ const SeeReviews = () => {
                                                                 marginRight: '1rem',
                                                                 backgroundColor: 'orangered'
                                                             }} onClick={getByCmt}>
-                                                                <span style={{marginRight: '0.5rem'}}>Replied</span>
+                                                                <span style={{ marginRight: '0.5rem' }}>Replied</span>
                                                             </button>
                                                         </div>
-                                                        <br/>
+                                                        <br />
                                                         <div style={{ display: 'flex' }}>
                                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                 <button style={{
@@ -573,40 +246,50 @@ const SeeReviews = () => {
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }} onClick={()=>{rate(5)}}>
-                                                                    <span style={{marginRight: '0.5rem'}}>5 Sao</span>
+                                                                }} onClick={() => {
+                                                                    rate(5)
+                                                                }}>
+                                                                    <span style={{ marginRight: '0.5rem' }}>5 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }} onClick={()=>{rate(4)}}>
-                                                                    <span style={{marginRight: '0.5rem'}}>4 Sao</span>
+                                                                }} onClick={() => {
+                                                                    rate(4)
+                                                                }}>
+                                                                    <span style={{ marginRight: '0.5rem' }}>4 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }} onClick={()=>{rate(3)}}>
-                                                                    <span style={{marginRight: '0.5rem'}}>3 Sao</span>
+                                                                }} onClick={() => {
+                                                                    rate(3)
+                                                                }}>
+                                                                    <span style={{ marginRight: '0.5rem' }}>3 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }} onClick={()=>{rate(2)}}>
-                                                                    <span style={{marginRight: '0.5rem'}}>2 Sao</span>
+                                                                }} onClick={() => {
+                                                                    rate(2)
+                                                                }}>
+                                                                    <span style={{ marginRight: '0.5rem' }}>2 Sao</span>
                                                                 </button>
                                                                 <button style={{
                                                                     display: 'flex',
                                                                     alignItems: 'center',
                                                                     marginRight: '1rem',
                                                                     backgroundColor: 'orangered'
-                                                                }} onClick={()=> {rate(1)}}>
-                                                                    <span style={{marginRight: '0.5rem'}}>1 Sao</span>
+                                                                }} onClick={() => {
+                                                                    rate(1)
+                                                                }}>
+                                                                    <span style={{ marginRight: '0.5rem' }}>1 Sao</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -628,13 +311,13 @@ const SeeReviews = () => {
                                                                                 borderRadius: '50%',
                                                                                 objectFit: 'cover',
                                                                                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-                                                                            }}/></div>
+                                                                            }} /></div>
                                                                         <div className="comment-text fix">
                                                                             <div className="author-info">
                                                                                 <h5 className="mb-8">
                                                                                     <a href="#">{fb.account.username}</a>
                                                                                 </h5>
-                                                                                <div style={{float: "right"}}>
+                                                                                <div style={{ float: "right" }}>
                                                                                     <select
                                                                                         style={{
                                                                                             borderRadius: "20px",
@@ -645,18 +328,18 @@ const SeeReviews = () => {
                                                                                         }}
                                                                                         value={selectedOption}
                                                                                         onChange={(e) => handleSelectChange(e, fb.id)}>
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={1}>Show
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={1}>Show
                                                                                         </option>
-                                                                                        <option style={{fontSize: "12px"}}
-                                                                                                value={3}>Hidden
+                                                                                        <option style={{ fontSize: "12px" }}
+                                                                                            value={3}>Hidden
                                                                                         </option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <span className="block mb-11">{fb.date}</span>
                                                                                 <span className="block mb-11">
-                                                                                <StarFeedback star={fb.numberOfStars}/>
-                                                                            </span>
+                                                                                    <StarFeedback star={fb.numberOfStars} />
+                                                                                </span>
                                                                             </div>
                                                                             <p className="mb-18">
                                                                                 {fb.comment}
@@ -664,7 +347,7 @@ const SeeReviews = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <hr/>
+                                                                <hr />
                                                             </div>
                                                             <ReactModal
                                                                 isOpen={isOpen}
@@ -685,8 +368,8 @@ const SeeReviews = () => {
                                                                         backgroundColor: 'yellowgreen'
                                                                     }} onClick={handleCance}>Cancel
                                                                     </button>
-                                                                    <button style={{backgroundColor: 'red'}}
-                                                                            onClick={handleConfirm}>Agree
+                                                                    <button style={{ backgroundColor: 'red' }}
+                                                                        onClick={handleConfirm}>Agree
                                                                     </button>
                                                                 </div>
                                                             </ReactModal>

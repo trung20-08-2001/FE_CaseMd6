@@ -71,16 +71,17 @@ function Register() {
                     <div className="limiter">
                         <div
                             className="container-login100"
-                            style={{backgroundImage: 'url("../images/bg/bg-01.jpg")'}}
+                            style={{background: "linear-gradient(to right, rgb(30, 126, 52) 0%, rgba(30, 126, 52, 0.8) 100%)"}}
                         >
                             <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
                                 <div className="login100-form validate-form">
-                                    <span className="login100-form-title p-b-49">Register</span>
+                                    <div className="text-center">
+                                    <h1 className="p-b-49 headerLogin">Register</h1></div>
                                     <div
                                         className="wrap-input100 validate-input m-b-23"
                                         data-validate="Username is reauired"
                                     >
-                                        <span className="label-input100" style={{color:"blue", fontSize:"20px"}}>Username</span>
+                                        <span className="label-input100">Username</span>
                                         <Field
                                             className="input100"
                                             type="text"
@@ -96,7 +97,7 @@ function Register() {
                                         className="wrap-input100 validate-input m-b-23"
                                         data-validate="Password is required"
                                     >
-                                        <span className="label-input100" style={{color:"blue", fontSize:"20px"}}>Phone</span>
+                                        <span className="label-input100">Phone</span>
                                         <Field
                                             className="input100"
                                             type="text"
@@ -111,7 +112,7 @@ function Register() {
                                         className="wrap-input100 validate-input m-b-23"
                                         data-validate="Password is required"
                                     >
-                                        <span className="label-input100" style={{color:"blue", fontSize:"20px"}}>Password</span>
+                                        <span className="label-input100">Password</span>
                                         <Field
                                             className="input100"
                                             type="password"
@@ -127,7 +128,7 @@ function Register() {
                                         className="wrap-input100 validate-input m-b-23"
                                         data-validate="Password is required"
                                     >
-                                        <span className="label-input100" style={{color:"blue", fontSize:"20px"}}>Confirm Password</span>
+                                        <span className="label-input100">Confirm Password</span>
                                         <Field
                                             className="input100"
                                             type="password"
@@ -141,17 +142,17 @@ function Register() {
                                                        component="div"
                                                        className="error-message"/></div>
 
-                                    <div className="container-login100-form-btn">
+                                    <div className="container-login100-form-btn p-t-20">
                                         <div className="wrap-login100-form-btn">
                                             <div className="login100-form-bgbtn"/>
-                                            <button className="login100-form-btn" type="submit">Register</button>
+                                            <button className="login100-form-btn button buttonShadow" type="submit">Register</button>
                                         </div>
                                     </div>
 
-                                    <div className="flex-col-c p-t-10">
+                                    <div className="flex-col-c p-t-20">
                                         Already have an Account?
-                                        <Link to="/login" className="txt2" style={{fontSize:"20px"}}>
-                                            Login
+                                        <Link to="/login" className="signUpAndIn p-t-15">
+                                            Sign in
                                         </Link>
                                     </div>
                                 </div>

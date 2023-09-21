@@ -3,10 +3,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
-import {imageDb, storage} from "../config/configFirebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {imageDb} from "../config/configFirebase";
 import {v4} from "uuid";
-
 
 const validationSchema = Yup.object().shape({
     address: Yup.string().required('Address is required'),
@@ -68,10 +67,13 @@ const UpRole2 = () => {
 
     return (
         <>
-        <div className="create-agency-area pt-20 pb-120">
+        <div className="create-agency-area pt-30 pb-60">
             <div className="container">
-                <div className="row">
-                    <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                <h2 className="text-center mb-43 headerInBody">
+                    Register to become a landlord
+                </h2>
+                <div className="row distanceBody table">
+                    <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ml-20 mr-20 mt-0">
                         <div className="agency-container">
                             <Formik initialValues={{
                                 address: '', fullName: '', email: '', phone: '', img1: ''
@@ -83,10 +85,7 @@ const UpRole2 = () => {
                                     <Form action="#" method="post">
                                         <br/>
                                         <br/>
-                                        <h2 className="text-center mb-43 headerInBody">
-                                            Register to become a landlord
-                                        </h2>
-                                        <h4 className="details-title text-medium mb-23 pt-24">
+                                        <h4 className="details-title text-medium mb-23">
                                             Provide more information
                                         </h4>
 
@@ -99,7 +98,7 @@ const UpRole2 = () => {
                                                     className="mb-28"
                                                 />
                                                 <p style={{ color: "red" }} className="error-message">
-                                                    <ErrorMessage name="address" component="div" className="error"/>
+                                                        <ErrorMessage name="address" component="div" className="error"/>
 
                                                     </p>
                                                 </div>
@@ -166,7 +165,7 @@ const UpRole2 = () => {
                                                 <br/>
                                             </div>
                                             <div className="text-center">
-                                                <button type="submit" className="btn btn-success btn-submit">Submit
+                                                <button type="submit" className="button buttonShadow">Up role
                                                 </button>
                                             </div>
                                         </Form>)}

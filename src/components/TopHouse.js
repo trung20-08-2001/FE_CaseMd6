@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 function TopHouse() {
     const dispatch = useDispatch();
     const topHouse = useSelector(state => state.house.topHouse);
-
+    const account = useSelector(state => state.account.account);
     useEffect(() => {
         if (topHouse.length === 0) {
             dispatch(findTopHouse())
@@ -46,16 +46,17 @@ function TopHouse() {
                                                     >
                                                         <div className="title-left pull_left">
                                                             <h4 className="text-white mb-12">
-                                                            <a>
-                                                            {item.house.name.slice(0, 15)}
-                                                            {item.house.name.length > 15 && " ..."}
-                                                        </a>
+                                                                <a>
+                                                                    {item.house.name.slice(0, 15)}
+                                                                    {item.house.name.length > 15 && " ..."}
+                                                                </a>
                                                             </h4>
                                                             <span style={{color: "#fef1ec"}}>
                                                         <  span className="mr-10">
-                                                            <img src="images/icons/map.png" alt=""/>
+                                                            <img src="/images/icons/map.png" alt=""/>
                                                                                                                     </span>
-                                                                {item.house.address}
+                                                                {item.house.address.slice(0, 15)}
+                                                                {item.house.address.length > 15 && "..."}
                                                     </span>
 
                                                         </div>
@@ -66,21 +67,41 @@ function TopHouse() {
                                                                 textShadow: "0 0 1px gold"
                                                             }}>{new Intl.NumberFormat().format(item.house.price).replace(/,/g, ' ')}</strong> Vnd/Day
                                                             </p>
-                                                        </div>                                                    </div>
+                                                        </div>
+                                                    </div>
                                                     <div className="property-image text-white">
                                                         <img src={item.images.length !== 0 ? item.images[0].url : ""}
                                                              alt="" style={{width: "100%", height: "300px"}}/>
                                                         <div className="hover-container pl-15 pr-15 pt-16 pb-15">
                                                             <div className="hover-item">
-                                                                <span>{item.house.status.name === "READY"? <strong style={{color:"#32CD32"}}>Ready</strong>:<p style={{color:"#ea4335"}}>Ordered</p> }</span>
+                                                            <span>{account != null ?
+                                                                <span>{item.house.status.name === "BLOCKED" ?
+                                                                    <strong
+                                                                        style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>
+                                                                    :
+                                                                    item.house.status.name === "USING" ? <strong
+                                                                        style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
+                                                                        <strong
+                                                                            style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
+                                                                }</span> :
+                                                                <span>{item.house.status.name === "USING" ?
+                                                                    <strong style={{ color: "#FFD700", textShadow:"0 0 3px #FFD700"}}>Using</strong> :
+                                                                    item.house.status.name === "BLOCKED" ?
+                                                                    <strong
+                                                                            style={{ color: "darkorange", textShadow:"0 0 3px darkorange"}}> Blocked</strong>:
+                                                                        <strong
+                                                                            style={{ color: "#32CD32", textShadow:"0 0 3px #32CD32"}}>Ready</strong>
+                                                                        
+                                                                }</span>
+                                                            }</span>
                                                             </div>
                                                             <div className="hover-item">
-                                                                <img className="mr-10" src="../images/icons/bed.png"
+                                                                <img className="mr-10" src="/images/icons/bed.png"
                                                                      alt=""/>
                                                                 <strong>{item.house.numberOfBedrooms}</strong>
                                                             </div>
                                                             <div className="hover-item">
-                                                                <img className="mr-10" src="../images/icons/shower.png"
+                                                                <img className="mr-10" src="/images/icons/shower.png"
                                                                      alt=""/>
                                                                 <strong>{item.house.numberOfLivingRooms}</strong>
                                                             </div>

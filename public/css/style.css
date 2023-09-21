@@ -1158,17 +1158,29 @@ button.close:hover {
     text-overflow: ellipsis;
 }
 
-.chat-icon span:hover {
+.chat-icon:hover {
     color: #9ac438;
 }
 
 .table, select, input {
-    border-radius: 5px;
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+}
+
+select {
+	cursor: pointer;
+}
+
+select:hover {
+	box-shadow: 0 0 2px 2px #95c41f;
+}
+
+select:focus {
+	box-shadow: 0 0 2px 2px #95c41f; /* Hiệu ứng viền mở rộng */
 }
 
 input:hover {
-    border-color: #95c41f;
+	box-shadow: 0 0 2px 2px #95c41f;
 }
 
 input:focus {
@@ -1283,6 +1295,7 @@ input:focus {
 }
 
 .buttonShadow:hover {
+	box-shadow: 0 0 4px gold;
     background-color: #1e7e34;
     color: white;
 }
@@ -1292,6 +1305,14 @@ input:focus {
     font-size: 30px;
     font-weight: bold;
     cursor: default;
+}
+
+.headerLogin {
+	color: #1e7e34;
+	font-size: 35px;
+	font-weight: bold;
+	cursor: default;
+	text-shadow: 0 0 3px gold;
 }
 
 .distanceBody {
@@ -1332,7 +1353,7 @@ tr:hover {
 }
 
 .property-title:hover {
-	box-shadow: 1px 1px 1px #95C41F
+	box-shadow: 1px 1px 1px #95C41F;
 }
 
 *{
@@ -1340,6 +1361,7 @@ tr:hover {
 }
 
 .scaleHouse {
+	border-radius: 18px;
 	transform: scale(1);
 	-webkit-transition: 0.5s ease-in-out;
 	transition: .8s ease-in-out;
@@ -1351,12 +1373,55 @@ tr:hover {
 	box-shadow: 0 0px 10px gold;
 }
 
+.iconFacebook i, .iconGoogle i{
+	cursor: pointer;
+	color: #fef1ec;
+	font-size: 25px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin: 5px;
+}
 
+.iconFacebook i:hover {
+	color: #fef1ec;
+	background-color: #007bff;
+	box-shadow: 0 0 10px #007bff;
+}
 
+.iconGoogle i:hover {
+	color: #fef1ec;
+	background-color: #ea4335;
+	box-shadow: 0 0 10px #ea4335;
+}
 
+.iconFacebook i{
+	color:#007bff;
+	box-shadow: 0 0 6px #007bff;
+}
 
+.iconGoogle i{
+	color: #ea4335;
+	box-shadow: 0 0 6px #ea4335;
+}
 
+.signUpAndIn {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #95C41F;
+	text-shadow: 0 0 3px yellow;
+}
 
-
-
+.signUpAndIn:hover {
+	color: #1e7e34;
+	text-shadow: 0 0 3px goldenrod;
+}
 
