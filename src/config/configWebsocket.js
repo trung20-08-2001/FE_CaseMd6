@@ -1,5 +1,5 @@
 import Stomp from 'stompjs';
-import { saveNotification, } from '../services/notificationService';
+import { addNotification, hasNotifiaction, saveNotification, } from '../services/notificationService';
 import store from "../redux/store"
 import { send } from '../services/messageService';
 
@@ -26,9 +26,9 @@ const WebSocketConfig = {
             } else {
                 store.dispatch(send(newMessage));
             }
-
         } else if (newMessage.type === "NOTIFICATION") {
-            store.dispatch(saveNotification(newMessage))
+            store.dispatch(addNotification(newMessage))
+            store.dispatch(hasNotifiaction())
         }
     },
 

@@ -11,6 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
+import { saveNotification } from '../services/notificationService';
 
 
 const HouseDetail = () => {
@@ -248,7 +249,9 @@ const HouseDetail = () => {
         return customAxios.post("/order/saveBill", bill) // Return the promise here
             .then((response) => {
                 let notification = { content: (account.fullName === null ? account.username : account.fullName) + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", account: { id: houseDTO.house.account.id }, url: `/myaccount/bills_vendor/${houseDTO.house.account.id}` }
-                WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
+                saveNotification(notification)
+                .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, {...res.data,type : "NOTIFICATION"}))
+                .catch((err) => console.log(err))
                 return response.data
             })
             .catch((error) => {
@@ -289,7 +292,9 @@ const HouseDetail = () => {
                     })
                         .then(response => {
                             let notification = { content: (account.fullName === null ? account.username : account.fullName) + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", account: { id: houseDTO.house.account.id }, url: `/myaccount/see_reviews/${houseDTO.house.id}` }
-                            WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, notification)
+                            saveNotification(notification)
+                            .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, {...res.data,type : "NOTIFICATION"}))
+                            .catch((err) => console.log(err))
                             setNumberOfStars({
                                 ...numberOfStars,
                                 start: 0
@@ -471,7 +476,7 @@ const HouseDetail = () => {
                                                     color: "gold",
                                                     textShadow: "0 0 1px yellow",
                                                     fontSize: "20px"
-                                                }}>{new Intl.NumberFormat().format(houseDTO.house.price)}</strong> Vnd/Day</span>
+                                                }}>{new Intl.NumberFormat().format(houseDTO.house.price).replace(/,/g, ' ')}</strong> Vnd/Day</span>
                                         </div>
                                         <div className=" mb-35">
                                             <img src="../images/icons/g-map.png" alt="" className="pr-8" />
@@ -537,7 +542,7 @@ const HouseDetail = () => {
                                                 }}>{numberOfDays}</span></p>
                                                 <p style={{ color: "#9ac438" }}>Total amount: <span style={{
                                                     fontWeight: "bold"
-                                                }}>{new Intl.NumberFormat().format(totalPrice)}</span> VNĐ</p>
+                                                }}>{new Intl.NumberFormat().format(totalPrice).replace(/,/g, ' ')}</span> VNĐ</p>
                                             </div>
                                         )}
                                         <button
