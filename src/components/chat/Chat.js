@@ -138,6 +138,7 @@ function Chat() {
                         <ul className="contacts">
                             {accountLogin.role.id !== 1 &&
                                 Object.keys(accountAdmin).length !== 0 &&
+                                <Link to={"/myaccount/chat/" + accountAdmin.id} >
                                 <li key={accountAdmin.id} className={accountAdmin === accountReceiverCurrent ? "active" : ""} onClick={() => handleFindMessageByAccount(accountAdmin)}>
                                     <div className="d-flex bd-highlight" >
                                         <div className="img_cont">
@@ -157,6 +158,7 @@ function Chat() {
                                         </div>
                                     </div>
                                 </li>
+                                </Link>
                             }
                             {listAccountYouMessaged.map((item) => (
                                 <Link to={"/myaccount/chat/" + item.id} >
@@ -195,6 +197,7 @@ function Chat() {
                         <ul className="contacts">
                             {accountLogin.role.id !== 1 &&
                                 Object.keys(accountAdmin).length !== 0 &&
+                                <Link to={"/myaccount/chat/" + accountAdmin.id} >
                                 <li key={accountAdmin.id} className={accountAdmin === accountReceiverCurrent ? "active" : ""} onClick={() => handleFindMessageByAccount(accountAdmin)}>
                                     <div className="d-flex bd-highlight" >
                                         <div className="img_cont">
@@ -213,6 +216,7 @@ function Chat() {
                                         </div>
                                     </div>
                                 </li>
+                                </Link>
                             }
                             {listAccountYouMessaged.map((item) => (
                                 <Link to={"/myaccount/chat/" + item.id} >

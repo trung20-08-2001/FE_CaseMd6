@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import "../assets/styleFormAddHouse.css";
-import Slide from '../components/Slide';
+import Slide from './Slide';
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";

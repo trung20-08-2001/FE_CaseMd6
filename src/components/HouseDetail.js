@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import customAxios from "../services/api";
-import Slide from "../components/Slide"
+import Slide from "./Slide"
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";

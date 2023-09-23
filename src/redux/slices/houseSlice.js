@@ -5,11 +5,12 @@ import {
     filterBathroom,
     filterBedroom,
     filterNameAddress,
-    filterPriceHouse
+    filterPriceMin,
+    filterPriceMax
 } from "../../services/filterService";
 
 const initState = {
-    myHousesDTO: [],   // house and list images for each house
+    myHousesDTO: [],   
     topHouse: [],
     allHouse:[],
     statusHouse:"ALL",
@@ -17,7 +18,8 @@ const initState = {
     nameAddress:"",
     bedroom:0,
     bathroom:0,
-    priceHouse:1000000,
+    priceMin:0,
+    priceMax:10000000,
 }
 
 const houseSlice = createSlice({
@@ -85,8 +87,11 @@ const houseSlice = createSlice({
         build.addCase(filterBathroom.fulfilled, (state, action) => {
             state.bathroom = action.payload
         })
-        build.addCase(filterPriceHouse.fulfilled, (state, action) => {
-            state.priceHouse = action.payload
+        build.addCase(filterPriceMin.fulfilled, (state, action) => {
+            state.priceMin = action.payload
+        })
+        build.addCase(filterPriceMax.fulfilled, (state, action) => {
+            state.priceMax = action.payload
         })
     }
 })
