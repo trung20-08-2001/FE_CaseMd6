@@ -12,7 +12,6 @@ const notificationSlice=createSlice({
     reducers:{},
     extraReducers:build=>{
         build.addCase(addNotification.fulfilled,(state,action)=>{
-            console.log(action.payload);
             state.notifications.unshift(action.payload)
         })
         build.addCase(findNotificationByIdAccount.fulfilled,(state,action)=>{
