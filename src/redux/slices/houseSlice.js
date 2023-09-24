@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse } from "../../services/houseService"
+import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch } from "../../services/houseService"
 import { filterStatusHouse, nameHouseSearch } from "../../services/filterService"
 import {
     filterBathroom,
@@ -11,8 +11,12 @@ import {
 
 const initState = {
     myHousesDTO: [],   
-    topHouse: [],
+    topHouse: {
+        data:[],
+        loading:true
+    },
     allHouse:[],
+    topSearch:[],
     statusHouse:"ALL",
     nameHouseSearch:"",
     nameAddress:"",
@@ -20,6 +24,7 @@ const initState = {
     bathroom:0,
     priceMin:0,
     priceMax:10000000,
+    searched:false
 }
 
 const houseSlice = createSlice({
@@ -54,13 +59,16 @@ const houseSlice = createSlice({
             state.myHousesDTO = [];
         })
         build.addCase(findTopHouse.fulfilled, (state, action) => {
-            state.topHouse = action.payload;
+            state.topHouse.data = action.payload;
+            state.topHouse.loading = false;
         })
         build.addCase(findTopHouse.rejected, (state, action) => {
-            state.topHouse = []
+            state.topHouse.data = []
+            state.topHouse.loading = true
         })
         build.addCase(findTopHouse.pending, (state, action) => {
-            state.topHouse = []
+            state.topHouse.data = []
+            state.topHouse.loading = true
         })
         build.addCase(findAllHouse.fulfilled, (state, action) => {
             state.allHouse = action.payload;
@@ -80,19 +88,33 @@ const houseSlice = createSlice({
 
         build.addCase(filterNameAddress.fulfilled, (state, action) => {
             state.nameAddress = action.payload
+            state.searched=true;
         })
         build.addCase(filterBedroom.fulfilled, (state, action) => {
             state.bedroom = action.payload
+            state.searched=true;
         })
         build.addCase(filterBathroom.fulfilled, (state, action) => {
             state.bathroom = action.payload
+            state.searched=true;
         })
         build.addCase(filterPriceMin.fulfilled, (state, action) => {
-            state.priceMin = action.payload
+            state.priceMin = action.payload;
+            state.searched=true;
         })
         build.addCase(filterPriceMax.fulfilled, (state, action) => {
             state.priceMax = action.payload
+            state.searched=true;
         })
+        build.addCase(findHouseTopSearch.fulfilled,(state,action) => {
+            state.topSearch=action.payload
+        })
+        build.addCase(findHouseTopSearch.pending,(state,action)=>{
+            state.topSearch=[]
+        })
+        build.addCase(findHouseTopSearch.rejected,(state,action)=>{
+            state.topSearch=[]
+        })  
     }
 })
 

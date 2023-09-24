@@ -95,8 +95,8 @@ function ListUser() {
                     </tbody>
                 </table>
             </div>
-            <br></br>
-            <div className="pagination-content text-center block top-margin">
+            
+            <div className="pagination-content text-center block top-margin mt-20">
                 <ul className="pagination fix mt-10 mb-0">
                     <li>
                         <a onClick={() => (currentPage > 1) && setCurrentPage(currentPage - 1)}>
@@ -104,12 +104,11 @@ function ListUser() {
                         </a>
                     </li>
                     {pages.map(item => {
-                        if (currentPage === item) {
                             return (
                                 <li key={item}>
                                     <a onClick={() => setCurrentPage(item)}>{item}</a>
                                 </li>)
-                        }
+                        
                     })}
                     <li className="current">
                         <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>
