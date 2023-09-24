@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 import WebSocketConfig from "../config/configWebsocket";
 import {useDispatch, useSelector} from "react-redux";
-import { Label } from "reactstrap";
+import {Label} from "reactstrap";
 import {
     addBillHistoryUser,
     filterDateCheckin,
@@ -13,18 +13,25 @@ import {
     filterNameHouse,
     filterStatus
 } from "../services/billService";
-import { filterBillHistoryUser } from "../redux/selector";
+import {filterBillHistoryUser} from "../redux/selector";
 
 function UserTransactionHistory() {
-    const dispatch=useDispatch()
-    const resultSearch=useSelector(filterBillHistoryUser)
+    const dispatch = useDispatch()
+    const resultSearch = useSelector(filterBillHistoryUser)
     const {id} = useParams();
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     const account = useSelector(state => state.account.account)
-    
-    console.log(resultSearch);
+
+    async function yourFunction(updatedBills, billID) {
+        try {
+            await dispatch(addBillHistoryUser(updatedBills));
+            updateAfterCancel(billID);
+        } catch (error) {
+            // Xử lý lỗi nếu cần
+        }
+    }
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -37,20 +44,36 @@ function UserTransactionHistory() {
         const updatedBills = resultSearch.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-                const updatedBill = {...bill};
-                updatedBill.bill.status.id = 8; // CANCELED
-                updatedBill.bill.status.name = newStatus;
-                updatedBill.house.status.id = 4; // READY
+                // let updatedBill = {...bill};
+                // updatedBill.bill.status.id = 8; // CANCELED
+                // updatedBill.bill.status.name = newStatus;
+                // updatedBill.house.status.id = 4; // READY
+                const updatedBill = {
+                    ...bill,
+                    bill: {
+                        ...bill.bill,
+                        status: {
+                            id: 8,
+                            name: newStatus
+                        }
+                    },
+                    house: {
+                        ...bill.house,
+                        status: {
+                            id: 4
+                        }
+                    }
+                };
+                console.log(updatedBill)
                 return updatedBill;
             }
             return bill;
         });
         dispatch(addBillHistoryUser(updatedBills));
-        updateAfterCancel(billID);
-    };
-
-    const updateAfterCancel = (billID) => {
-        const foundBill = resultSearch.find((bill) => bill.bill.id === billID);
+        updateAfterCancel(billID, updatedBills);
+    }
+    const updateAfterCancel = (billID, updatedBills) => {
+        const foundBill = updatedBills.find((bill) => bill.bill.id === billID);
         const house = new FormData();
         house.append("idStatus", foundBill.house.status.id);
         const bill = new FormData();
@@ -58,8 +81,13 @@ function UserTransactionHistory() {
         axios
             .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
             .then((res) => {
-                let notification={type:"NOTIFICATION",content:(account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name,url: `/myaccount/bills_vendor/${res.data.vendor.id}`, account: {id:res.data.vendor.id }}
-                    WebSocketConfig.sendMessage("/private/" +res.data.vendor.id,notification)
+                let notification = {
+                    type: "NOTIFICATION",
+                    content: (account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name,
+                    url: `/myaccount/bills_vendor/${res.data.vendor.id}`,
+                    account: {id: res.data.vendor.id}
+                }
+                WebSocketConfig.sendMessage("/private/" + res.data.vendor.id, notification)
                 Swal.fire({
                     icon: 'success',
                     title: 'You have cancelled!',
@@ -67,9 +95,9 @@ function UserTransactionHistory() {
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
                 axios.get("http://localhost:8081/bills_user/" + id)
-                .then(function (res) {
-                    dispatch(addBillHistoryUser(res.data));
-                })
+                    .then(function (res) {
+                        dispatch(addBillHistoryUser(res.data));
+                    })
             })
             .catch((err) => {
                 console.log("Error updating bill status:", err);
@@ -139,7 +167,7 @@ function UserTransactionHistory() {
 
     return (
         <>
-        <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
+            <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
                 <div className="col-xl-3">
                     <Label htmlFor="nameHouse">Name House</Label>
                     <input

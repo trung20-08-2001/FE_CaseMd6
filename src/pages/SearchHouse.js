@@ -74,6 +74,10 @@ const SearchHouse = () => {
                             <option value="3000000">Below 3.000.000VNĐ</option>
                             <option value="4000000">Below 4.000.000VNĐ</option>
                             <option value="5000000">Below 5.000.000VNĐ</option>
+                            <option value="10000000">Below 10.000.000VNĐ</option>
+                            <option value="20000000">Below 20.000.000VNĐ</option>
+                            <option value="50000000">Below 50.000.000VNĐ</option>
+                            <option value="99999000">Below 99.999.000VNĐ</option>
                         </select>
                     </div>
                 </div>
@@ -105,7 +109,8 @@ const SearchHouse = () => {
                                                         <span className="mr-10">
                                                             <img src="images/icons/map.png" alt=""/>
                                                         </span>
-                                                                {item.house.address}
+                                                                {item.house.address.slice(0, 15)}
+                                                                {item.house.address.length > 15 && "..."}
                                                     </span>
                                                         </div>
                                                         <div className="fix pull_right">

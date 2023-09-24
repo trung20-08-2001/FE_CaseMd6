@@ -25,12 +25,12 @@ function VendorTransactionHistory() {
     const pagesVisited = pageNumber * billsPerPage;
 
     useEffect(() => {
-        if (bills_vendor.length === 0) {
+
             axios.get("http://localhost:8081/bills_vendor/" + id)
                 .then(function (res) {
                     dispatch(addBillHistoryHost(res.data))
                 })
-        }
+
     }, []);
 
 

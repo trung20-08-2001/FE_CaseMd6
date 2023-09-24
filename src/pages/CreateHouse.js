@@ -176,8 +176,9 @@ const CreateHouse = () => {
     return (
         <>
             <div className="row">
-                <div className="agency-container">
+                <div className="agency-container distanceBody">
                     <h2 className="text-center mb-15 headerInBody" >Create House</h2>
+                    <div className=" distanceBody">
                     <Formik
                         initialValues={{
                             name: '',
@@ -259,12 +260,13 @@ const CreateHouse = () => {
                                                     ))}
                                             </div>
                                         </div>
-                                        <button className="file-upload-btn" type="submit"  style={{width:"10%",marginLeft:"40%",borderRadius:"50%"}}><h3>Save</h3></button>
+                                        <button className=" button buttonShadow mt-20 mb-10" type="submit"  style={{width:"10%",marginLeft:"40%"}}><h3>Save</h3></button>
                                     </div>
                                 </div>
                             </Form>
                         )}
                     </Formik>
+                    </div>
                 </div>
             </div>
         </>

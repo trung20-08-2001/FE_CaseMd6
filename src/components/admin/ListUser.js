@@ -95,21 +95,20 @@ function ListUser() {
                     </tbody>
                 </table>
             </div>
-            <br></br>
-            <div className="pagination-content text-center block top-margin">
-                <ul className="pagination fix mt-10 mb-0">
+            <div className="pagination-content text-center block top-margin mb-30">
+                <ul className="pagination fix">
                     <li>
                         <a onClick={() => (currentPage > 1) && setCurrentPage(currentPage - 1)}>
                             <i className="zmdi zmdi-long-arrow-left"/>
                         </a>
                     </li>
                     {pages.map(item => {
-                        if (currentPage === item) {
+
                             return (
                                 <li key={item}>
                                     <a onClick={() => setCurrentPage(item)}>{item}</a>
                                 </li>)
-                        }
+
                     })}
                     <li className="current">
                         <a onClick={() => currentPage < pages.length && setCurrentPage(currentPage + 1)}>
