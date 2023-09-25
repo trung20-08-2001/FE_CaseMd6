@@ -1,8 +1,7 @@
 import Stomp from 'stompjs';
 import { addNotification, hasNotifiaction, saveNotification, } from '../services/notificationService';
 import store from "../redux/store"
-import { send } from '../services/messageService';
-
+import { addAccountYouMessaged, send } from '../services/messageService';
 
 const WebSocketConfig = {
     stompClient: null,
@@ -25,6 +24,11 @@ const WebSocketConfig = {
                 saveNotification({ content: (newMessage.senderAccount.fullName === null ? newMessage.senderAccount.username : newMessage.senderAccount.fullName) + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } })
                     .then((res) => {
                         store.dispatch(addNotification(res.data))
+                        const listAccountYouMessaged=store.getState().message.listAccountYouMessaged;
+                        let accountChat = listAccountYouMessaged.find(item => item.id == newMessage.senderAccount.id)
+                        if (accountChat === undefined) {
+                            store.dispatch(addAccountYouMessaged(newMessage.senderAccount))
+                        }
                     })
                     .catch((err) => console.log(err))
 

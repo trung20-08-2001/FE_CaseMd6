@@ -75,6 +75,7 @@ const SearchHouse = () => {
 
 
     const handleClick = (house) => {
+        console.log("rrr");
         saveHouseToServer({ ...house, searchVolume: house.searchVolume + 1 })
             .then(() => {
                 dispatch(findAllHouse())

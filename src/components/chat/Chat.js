@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import WebSocketConfig from '../../config/configWebsocket';
 import { findAccountAdmin, findAccountById } from '../../services/accountService';
-import { findAccountHostByUsername, findListAccountYouMessaged, findMessageByReceiverAccountAndSenderAccount, saveMessage } from '../../services/messageService';
+import { addAccountYouMessaged, findAccountHostByUsername, findMessageByReceiverAccountAndSenderAccount, saveMessage } from '../../services/messageService';
 import "./style.css";
 import Swal from "sweetalert2";
 
@@ -50,8 +50,6 @@ function Chat() {
         window.scrollTo(0, 0);
         const height = document.getElementById('menu').offsetHeight;
         setHeight(height)
-        dispatch(findListAccountYouMessaged(accountLogin.id))
-        dispatch(findAccountAdmin())
         if (idReceiverAccount === undefined) {
             if (Object.keys(accountAdmin).length === 0) {
                 dispatch(findAccountAdmin())
@@ -73,14 +71,18 @@ function Chat() {
 
     useEffect(() => {
         if (Object.keys(accountReceiver).length !== 0) {
+            const accountChat = listAccountYouMessaged.find(item => item.id == accountReceiver.id)
+            if (accountChat === undefined && accountReceiver.role.id!=1) {
+                dispatch(addAccountYouMessaged(accountReceiver))
+            }
             setAccountReceiverCurrent(accountReceiver)
             dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
             setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
         }
+        
     }, [accountReceiver]);
 
-
-
+    
     const sendMessage = () => {
         if (newMessage.message !== "") {
             if (accountLogin.id === accountReceiverCurrent.id) {

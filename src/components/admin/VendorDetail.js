@@ -63,6 +63,9 @@ function VendorDetail() {
                 <Link to={"/myaccount/vendors"}>
                     <button className="btn btn-info buttonShadow" style={{width:"20%"}}><i className="bi bi-back"></i> Back</button>
                 </Link>
+                <Link to={"/myaccount/chat/"+vendor.account?.id}>
+                    <button className="btn btn-info buttonShadow ml-10" style={{width:"20%"}}><i className="bi bi-chat"></i> Chat</button>
+                </Link>
             </div>
         </>
     )

@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import { saveNotification } from '../services/notificationService';
+import ContactHost from './ContactHost';
 
 
 const HouseDetail = () => {
@@ -39,7 +40,6 @@ const HouseDetail = () => {
         });
     const [comment, setComment] = useState('');
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 3; // Số đánh giá trên mỗi trang
@@ -50,26 +50,7 @@ const HouseDetail = () => {
 
     const totalPages = Math.ceil(listFeedback.length / reviewsPerPage);
 
-    const handleClickChat = (idHost) => {
-        if (account) {
-            if(account.role.id===2 && account.id !== idHost){
-                Swal.fire({
-                    icon: 'error',
-                    text: "Host accounts cannot chat with each other",
-                });
-            }else if (account.id !== idHost) {
-                navigate("/myaccount/chat/" + idHost)
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    text: "You can't chat with yourself",
-                });
-            }
-        } else {
-            navigate("/login");
-        }
-    }
-
+    
 
 
     const handlePageChange = (newPage) => {
@@ -250,8 +231,8 @@ const HouseDetail = () => {
             .then((response) => {
                 let notification = { content: (account.fullName === null ? account.username : account.fullName) + " has booked a house " + houseDTO.house.name, type: "NOTIFICATION", account: { id: houseDTO.house.account.id }, url: `/myaccount/bills_vendor/${houseDTO.house.account.id}` }
                 saveNotification(notification)
-                .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, {...res.data,type : "NOTIFICATION"}))
-                .catch((err) => console.log(err))
+                    .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, { ...res.data, type: "NOTIFICATION" }))
+                    .catch((err) => console.log(err))
                 return response.data
             })
             .catch((error) => {
@@ -293,8 +274,8 @@ const HouseDetail = () => {
                         .then(response => {
                             let notification = { content: (account.fullName === null ? account.username : account.fullName) + " just evaluated the house " + houseDTO.house.name, type: "NOTIFICATION", account: { id: houseDTO.house.account.id }, url: `/myaccount/see_reviews/${houseDTO.house.id}` }
                             saveNotification(notification)
-                            .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, {...res.data,type : "NOTIFICATION"}))
-                            .catch((err) => console.log(err))
+                                .then((res) => WebSocketConfig.sendMessage("/private/" + houseDTO.house.account.id, { ...res.data, type: "NOTIFICATION" }))
+                                .catch((err) => console.log(err))
                             setNumberOfStars({
                                 ...numberOfStars,
                                 start: 0
@@ -499,11 +480,11 @@ const HouseDetail = () => {
                                                 <span>{houseDTO.house.status.name === "USING" ?
                                                     <strong style={{ color: "#FFD700" }}>Using</strong> :
                                                     houseDTO.house.status.name === "BLOCKED" ?
-                                        
+
                                                         <strong
-                                                            style={{ color: "darkorange" }}> Blocked</strong>:
-                                                            <strong
-                                                            style={{ color: "#32CD32" }}>Ready</strong> 
+                                                            style={{ color: "darkorange" }}> Blocked</strong> :
+                                                        <strong
+                                                            style={{ color: "#32CD32" }}>Ready</strong>
                                                 }</span>
                                             }</span>
                                         </div>
@@ -579,19 +560,7 @@ const HouseDetail = () => {
 
                                             style={{ width: "180px", height: "180px", borderRadius: "50%" }} />
                                     </div>
-                                    <div className=" col-8">
-                                        <h3>{houseDTO.house.account.fullName}</h3><br />
-                                        <div className="chat-icon" style={{ cursor: "pointer" }}
-                                            onClick={()=>handleClickChat(houseDTO.house.account.id)}>
-                                            <i className="fas fa-comment"></i>
-                                            <span> Chat</span>
-                                        </div>
-                                        <br />
-                                        <div className="phone-icon">
-                                            <i className="fas fa-phone"></i>
-                                            <span> {houseDTO.house.account.phone}</span>
-                                        </div>
-                                    </div>
+                                   <ContactHost accountHost={houseDTO.house.account}/>
 
                                 </div>
                                 <hr />
