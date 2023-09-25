@@ -46,7 +46,8 @@ function TopSearch() {
                                                         <span className="mr-10">
                                                             <img src="images/icons/map.png" alt="" />
                                                         </span>
-                                                        {item.house.address}
+                                                        {item.house.address.slice(0, 15)}
+                                                        {item.house.address.length > 15 && "..."}
                                                     </span>
                                                 </div>
                                                 <div className="fix pull_right">

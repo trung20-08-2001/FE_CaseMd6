@@ -193,8 +193,8 @@ const EditHouse = () => {
   return (
     <>{house !== undefined && categories !== undefined &&
       <div className="row">
-        <div className="agency-container">
-          <h2 className="text-center mb-15">Edit House</h2>
+        <div className="agency-container distanceBody">
+          <h2 className="text-center mb-25 headerInBody">Edit House</h2>
           <div className='d-flex justify-content-center mb-50 col-12' >
             <Slide images={house.images} styleImage={{ height: "200px", width: "500px" }}></Slide>
           </div>
@@ -286,7 +286,7 @@ const EditHouse = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="file-upload-btn" type="submit" style={{ width: "10%", marginLeft: "40%", borderRadius: "50%" }}><h3>Save</h3></button>
+                  <button className="button buttonShadow mt-30 mb-10" type="submit" style={{ width: "10%", marginLeft: "40%"}}><h3>Save</h3></button>
                 </div>
               </Form>
             )}

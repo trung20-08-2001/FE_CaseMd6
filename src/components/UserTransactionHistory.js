@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 import WebSocketConfig from "../config/configWebsocket";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { Label } from "reactstrap";
 import {
     addBillHistoryUser,
@@ -18,9 +18,9 @@ import { saveMessage } from "../services/messageService";
 import { saveNotification } from "../services/notificationService";
 
 function UserTransactionHistory() {
-    const dispatch = useDispatch()
-    const resultSearch = useSelector(filterBillHistoryUser)
-    const { id } = useParams();
+    const dispatch=useDispatch()
+    const resultSearch=useSelector(filterBillHistoryUser)
+    const {id} = useParams();
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
@@ -33,8 +33,7 @@ function UserTransactionHistory() {
             })
     }, [])
 
-
-    async function handleCancelClick(billID) {
+    const handleCancelClick = (billID) => {
         const updatedBills = resultSearch.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;

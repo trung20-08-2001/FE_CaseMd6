@@ -26,7 +26,7 @@ const WebSocketConfig = {
                         store.dispatch(addNotification(res.data))
                         const listAccountYouMessaged=store.getState().message.listAccountYouMessaged;
                         let accountChat = listAccountYouMessaged.find(item => item.id == newMessage.senderAccount.id)
-                        if (accountChat === undefined) {
+                        if (accountChat === undefined && newMessage.senderAccount.role.id!=1) {
                             store.dispatch(addAccountYouMessaged(newMessage.senderAccount))
                         }
                     })
