@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuItem from "@mui/material/MenuItem";
 import EmailIcon from '@mui/icons-material/Email';
 

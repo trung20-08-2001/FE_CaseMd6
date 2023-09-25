@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from '../Footer'
 import { Outlet } from 'react-router-dom'
-import Navbar2 from '../Navbar2'
+import Navbar from '../Navbar'
 
 export default function Master() {
   return (
     <>
-      <Navbar2></Navbar2>
+      <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>
     </>

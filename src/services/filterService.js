@@ -1,42 +1,48 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const filterStatusHouse=createAsyncThunk(
+export const filterStatusHouse = createAsyncThunk(
     "house/filterStatusHouse",
-    async(nameStatus)=>{
+    async (nameStatus) => {
         return nameStatus;
     }
 )
 
-export const nameHouseSearch=createAsyncThunk(
+export const nameHouseSearch = createAsyncThunk(
     "house/nameHouseSearch",
-    async(name)=>{
+    async (name) => {
         return name;
     }
 )
 
-export const filterPriceHouse=createAsyncThunk(
-    "house/filterPriceHouse",
-    async(priceHouse)=>{
-        return priceHouse
+export const filterPriceMin = createAsyncThunk(
+    "house/filterPriceMin",
+    async (priceMin) => {
+        return priceMin
     })
 
-export const  filterNameAddress=createAsyncThunk(
+export const filterPriceMax = createAsyncThunk(
+    "house/filterPriceMax",
+    async (priceMax) => {
+        return priceMax
+    })
+
+export const filterNameAddress = createAsyncThunk(
     "house/filterNameAddress",
-    async(nameAddress)=>{
+    async (nameAddress) => {
         return nameAddress
     }
 )
 
-export const filterBathroom=createAsyncThunk(
+export const filterBathroom = createAsyncThunk(
     "house/filterBathroom",
-    async(bathroom)=>{
+    async (bathroom) => {
         return bathroom
     }
 )
 
-export const filterBedroom=createAsyncThunk(
+export const filterBedroom = createAsyncThunk(
     "house/filterBedroom",
-    async(bedroom)=>{
+    async (bedroom) => {
         return bedroom
     })
 

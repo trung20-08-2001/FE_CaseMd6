@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
 import WebSocketConfig from "../config/configWebsocket";
 import {useDispatch, useSelector} from "react-redux";
-import {Label} from "reactstrap";
+import { Label } from "reactstrap";
 import {
     addBillHistoryUser,
     filterDateCheckin,
@@ -13,25 +13,18 @@ import {
     filterNameHouse,
     filterStatus
 } from "../services/billService";
-import {filterBillHistoryUser} from "../redux/selector";
+import { filterBillHistoryUser } from "../redux/selector";
+import { saveMessage } from "../services/messageService";
+import { saveNotification } from "../services/notificationService";
 
 function UserTransactionHistory() {
-    const dispatch = useDispatch()
-    const resultSearch = useSelector(filterBillHistoryUser)
+    const dispatch=useDispatch()
+    const resultSearch=useSelector(filterBillHistoryUser)
     const {id} = useParams();
     const [pageNumber, setPageNumber] = useState(0); // Trang hiện tại
     const billsPerPage = 10; // Số bill hiển thị trên mỗi trang
     const pagesVisited = pageNumber * billsPerPage;
     const account = useSelector(state => state.account.account)
-
-    async function yourFunction(updatedBills, billID) {
-        try {
-            await dispatch(addBillHistoryUser(updatedBills));
-            updateAfterCancel(billID);
-        } catch (error) {
-            // Xử lý lỗi nếu cần
-        }
-    }
 
     useEffect(() => {
         axios.get("http://localhost:8081/bills_user/" + id)
@@ -44,50 +37,37 @@ function UserTransactionHistory() {
         const updatedBills = resultSearch.map((bill) => {
             if (bill.bill.id === billID) {
                 const newStatus = bill.bill.status.id === 2 ? "CANCELED" : bill.bill.status.name;
-                // let updatedBill = {...bill};
-                // updatedBill.bill.status.id = 8; // CANCELED
-                // updatedBill.bill.status.name = newStatus;
-                // updatedBill.house.status.id = 4; // READY
-                const updatedBill = {
+                return {
                     ...bill,
                     bill: {
                         ...bill.bill,
                         status: {
                             id: 8,
                             name: newStatus
-                        }
+                        },
                     },
                     house: {
                         ...bill.house,
                         status: {
-                            id: 4
+                            id: 4,
                         }
                     }
-                };
-                console.log(updatedBill)
-                return updatedBill;
+                }
             }
             return bill;
         });
-        dispatch(addBillHistoryUser(updatedBills));
-        updateAfterCancel(billID, updatedBills);
-    }
+        updateAfterCancel(billID, updatedBills)
+    };
+
     const updateAfterCancel = (billID, updatedBills) => {
-        const foundBill = updatedBills.find((bill) => bill.bill.id === billID);
-        const house = new FormData();
-        house.append("idStatus", foundBill.house.status.id);
-        const bill = new FormData();
-        bill.append("idStatus", foundBill.bill.status.id);
+        const foundBill = updatedBills.find((bill) => bill.bill.id == billID);
         axios
-            .post(`http://localhost:8081/bills_user/${billID}/bill`, bill)
+            .post(`http://localhost:8081/bills_user/bill`, foundBill.bill)
             .then((res) => {
-                let notification = {
-                    type: "NOTIFICATION",
-                    content: (account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name,
-                    url: `/myaccount/bills_vendor/${res.data.vendor.id}`,
-                    account: {id: res.data.vendor.id}
-                }
-                WebSocketConfig.sendMessage("/private/" + res.data.vendor.id, notification)
+                let notification = { content: (account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name, url: `/myaccount/bills_vendor/${res.data.vendor.id}`, account: { id: res.data.vendor.id } }
+                saveNotification(notification)
+                    .then((response) => WebSocketConfig.sendMessage("/private/" + res.data.vendor.id, { ...response.data, type: "NOTIFICATION" }))
+                    .catch((err) => console.log(err))
                 Swal.fire({
                     icon: 'success',
                     title: 'You have cancelled!',
@@ -104,7 +84,7 @@ function UserTransactionHistory() {
             });
 
         axios
-            .post(`http://localhost:8081/bills_user/${billID}/house`, house)
+            .post(`http://localhost:8081/bills_user/house`, foundBill.house)
             .then((res) => {
                 console.log("House status updated successfully");
             })
@@ -136,14 +116,14 @@ function UserTransactionHistory() {
             // Kiểm tra nếu thời gian đặt thuê lớn hơn 1 ngày, hiển thị nút "Cancel"
             const cancelButton = (diffInDays > 1 && bill.bill.status.id === 2) ? (
                 <button
-                    style={{width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)"}}
+                    style={{ width: "114px", fontWeight: 'bold', boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.4)" }}
                     className="btn btn-outline-danger buttonShadow"
                     onClick={() => handleCancelClick(bill?.bill.id)}
                 >Cancel</button>
             ) : null;
 
             return (
-                <tr key={bill.bill.id} style={{height: '60px'}}>
+                <tr key={bill.bill.id} style={{ height: '60px' }}>
                     <td>{dateCheckin}</td>
                     <td>{dateCheckout}</td>
                     <td>{houseName}</td>
@@ -160,14 +140,14 @@ function UserTransactionHistory() {
 
     const pageCount = Math.ceil(resultSearch.length / billsPerPage);
 
-    const changePage = ({selected}) => {
+    const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
 
 
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center'}} className="row mt-30">
+            <div style={{ display: 'flex', alignItems: 'center' }} className="row mt-30">
                 <div className="col-xl-3">
                     <Label htmlFor="nameHouse">Name House</Label>
                     <input
@@ -175,7 +155,7 @@ function UserTransactionHistory() {
                         type="text"
                         placeholder="Name house..."
                         onChange={e => dispatch(filterNameHouse(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
+                        style={{ flex: 2, marginRight: '10px' }}
                     />
                 </div>
                 <div className="col-xl-3 ">
@@ -184,7 +164,7 @@ function UserTransactionHistory() {
                         id="dateCheckin"
                         type="DATE"
                         onChange={e => dispatch(filterDateCheckin(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
+                        style={{ flex: 2, marginRight: '10px' }}
                     />
                 </div>
                 <div className="col-xl-3">
@@ -193,7 +173,7 @@ function UserTransactionHistory() {
                         id="dateCheckout"
                         type="DATE"
                         onChange={e => dispatch(filterDateCheckout(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
+                        style={{ flex: 2, marginRight: '10px' }}
                     />
                 </div>
                 <div className="col-xl-3">
@@ -201,7 +181,7 @@ function UserTransactionHistory() {
                     <select
                         id="status"
                         onChange={e => dispatch(filterStatus(e.target.value))}
-                        style={{flex: 2, marginRight: '10px'}}
+                        style={{ flex: 2, marginRight: '10px' }}
                     >
                         <option value="ALL">All</option>
                         <option value="PENDING">PENDING</option>
@@ -217,18 +197,18 @@ function UserTransactionHistory() {
 
                 <table className="table">
                     <thead>
-                    <tr>
-                        <th>Date CheckIN</th>
-                        <th>Date CheckOut</th>
-                        <th>Name House</th>
-                        <th>Total Price</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                        <tr>
+                            <th>Date CheckIN</th>
+                            <th>Date CheckOut</th>
+                            <th>Name House</th>
+                            <th>Total Price</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {displayBills_User}
+                        {displayBills_User}
                     </tbody>
                 </table>
                 {/* Phân trang */}
