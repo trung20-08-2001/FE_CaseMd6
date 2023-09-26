@@ -7,7 +7,7 @@
 .card {
     height: 630px;
     border-radius: 15px !important;
-    background-color: rgba(40, 226, 201, 0.9) !important;
+    background-color: rgb(253, 253, 253) !important;
 }
 
 .contacts_body {
@@ -23,6 +23,7 @@
 .card-header {
     border-radius: 15px 15px 0 0 !important;
     border-bottom: 0 !important;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.2);
 }
 
 .card-footer {
@@ -47,16 +48,23 @@
 }
 
 .type_msg {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: white !important;
     border: 0 !important;
-    color: white !important;
+    color: black !important;
     height: 60px !important;
     overflow-y: auto;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5) !important;
+    border-radius: 15px 0 0 15px !important;
+}
+
+.type_msg:hover {
+    box-shadow: 0 0 4px #95c41f !important;
 }
 
 .type_msg:focus {
     box-shadow: none !important;
     outline: 0px !important;
+    box-shadow: 0 0 4px #95c41f !important;
 }
 
 .attach_btn {
@@ -69,18 +77,48 @@
 
 .send_btn {
     border-radius: 0 15px 15px 0 !important;
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: #95c41f !important;
+    border: 0 !important;
+    color: white !important;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5) !important;
+}
+
+.send_btn:hover {
+    box-shadow: 0 0 5px #95c41f !important;
+}
+
+.search_btn {
+    border-radius: 0 15px 15px 0 !important;
+    background-color: #95c41f !important;
     border: 0 !important;
     color: white !important;
     cursor: pointer;
 }
 
-.search_btn {
-    border-radius: 0 15px 15px 0 !important;
-    background-color: rgba(0, 0, 0, 0.3) !important;
+.search_btn:hover {
+    box-shadow: 0 0 5px #95c41f !important;
+}
+
+.type_search {
+    background-color: white !important;
     border: 0 !important;
-    color: white !important;
-    cursor: pointer;
+    color: black !important;
+    overflow-y: auto;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5) !important;
+    border-radius: 15px 0 0 15px;
+}
+
+.type_search:hover {
+    box-shadow: none !important;
+    outline: 0px !important;
+    box-shadow: 0 0 4px #95c41f !important;
+}
+
+.type_search:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+    box-shadow: 0 0 4px #95c41f !important;
 }
 
 .contacts {
@@ -95,7 +133,7 @@
 }
 
 .active {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #95c41f;
 }
 
 .user_img {
@@ -146,12 +184,12 @@
 
 .user_info span {
     font-size: 20px;
-    color: white;
+    color: black;
 }
 
 .user_info p {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
+    color: black;
 }
 
 .video_cam {
@@ -181,7 +219,17 @@
     margin-bottom: auto;
     margin-right: 10px;
     border-radius: 25px;
-    background-color: #78e08f;
+    background-color: #95C41F;
+    padding: 10px;
+    position: relative;
+}
+
+.msg_cotainer_send2 {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 25px;
+    background-color: #cfd2d6;
     padding: 10px;
     position: relative;
 }
@@ -273,6 +321,6 @@
     left: 35px;
     overflow-x: block !important;
     transition: 0.5s; 
-    border-radius: 5%;  
+    border-radius: 5%;
+    color: #fdfdfd;
   }
-  

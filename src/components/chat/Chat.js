@@ -1,9 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import WebSocketConfig from '../../config/configWebsocket';
-import { findAccountAdmin, findAccountById } from '../../services/accountService';
-import { addAccountYouMessaged, findAccountHostByUsername, findMessageByReceiverAccountAndSenderAccount, saveMessage } from '../../services/messageService';
+import {findAccountAdmin, findAccountById} from '../../services/accountService';
+import {
+    addAccountYouMessaged,
+    findAccountHostByUsername,
+    findMessageByReceiverAccountAndSenderAccount,
+    saveMessage
+} from '../../services/messageService';
 import "./style.css";
 import Swal from "sweetalert2";
 
@@ -12,15 +17,16 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth() + 1;
 const day = currentDate.getDate();
+
 function Chat() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const messageContainerRef = useRef(null);
-    const [newMessage, setNewMessage] = useState({ message: "", type: "MESSAGE" });
+    const [newMessage, setNewMessage] = useState({message: "", type: "MESSAGE"});
     const accountLogin = useSelector(state => state.account.account)
     const listAccountYouMessaged = useSelector(state => state.message.listAccountYouMessaged)
     const accountAdmin = useSelector(state => state.account.accountAdmin)
-    const { idReceiverAccount } = useParams()
+    const {idReceiverAccount} = useParams()
     const listMessage = useSelector(state => state.message.messages)
     const [accountReceiverCurrent, setAccountReceiverCurrent] = useState({})
     const accountReceiver = useSelector(state => state.account.accountReceiverCurrent)
@@ -64,25 +70,41 @@ function Chat() {
     useEffect(() => {
         if (Object.keys(accountAdmin).length !== 0) {
             setAccountReceiverCurrent(accountAdmin)
-            dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountAdmin.id, idSenderAccount: accountLogin.id }))
-            setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountAdmin, date: `${day}-${month}-${year}` })
+            dispatch(findMessageByReceiverAccountAndSenderAccount({
+                idReceiverAccount: accountAdmin.id,
+                idSenderAccount: accountLogin.id
+            }))
+            setNewMessage({
+                ...newMessage,
+                senderAccount: accountLogin,
+                receiverAccount: accountAdmin,
+                date: `${day}-${month}-${year}`
+            })
         }
     }, [accountAdmin]);
 
     useEffect(() => {
         if (Object.keys(accountReceiver).length !== 0) {
             const accountChat = listAccountYouMessaged.find(item => item.id == accountReceiver.id)
-            if (accountChat === undefined && accountReceiver.role.id!=1) {
+            if (accountChat === undefined && accountReceiver.role.id != 1) {
                 dispatch(addAccountYouMessaged(accountReceiver))
             }
             setAccountReceiverCurrent(accountReceiver)
-            dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
-            setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
+            dispatch(findMessageByReceiverAccountAndSenderAccount({
+                idReceiverAccount: accountReceiver.id,
+                idSenderAccount: accountLogin.id
+            }))
+            setNewMessage({
+                ...newMessage,
+                senderAccount: accountLogin,
+                receiverAccount: accountReceiver,
+                date: `${day}-${month}-${year}`
+            })
         }
-        
+
     }, [accountReceiver]);
 
-    
+
     const sendMessage = () => {
         if (newMessage.message !== "") {
             if (accountLogin.id === accountReceiverCurrent.id) {
@@ -95,23 +117,31 @@ function Chat() {
                 });
             } else {
                 WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage);
-                dispatch(saveMessage({ ...newMessage, date: currentDate }))
-                setNewMessage({ ...newMessage, message: "" })
+                dispatch(saveMessage({...newMessage, date: currentDate}))
+                setNewMessage({...newMessage, message: ""})
             }
         }
     }
 
     const handleFindMessageByAccount = (accountReceiver) => {
         setAccountReceiverCurrent(accountReceiver);
-        setNewMessage({ ...newMessage, senderAccount: accountLogin, receiverAccount: accountReceiver, date: `${day}-${month}-${year}` })
-        dispatch(findMessageByReceiverAccountAndSenderAccount({ idReceiverAccount: accountReceiver.id, idSenderAccount: accountLogin.id }))
+        setNewMessage({
+            ...newMessage,
+            senderAccount: accountLogin,
+            receiverAccount: accountReceiver,
+            date: `${day}-${month}-${year}`
+        })
+        dispatch(findMessageByReceiverAccountAndSenderAccount({
+            idReceiverAccount: accountReceiver.id,
+            idSenderAccount: accountLogin.id
+        }))
         openCloseNav()
     }
 
     return (
-        <div className="row justify-content-center h-100" >
+        <div className="row justify-content-center h-100 distanceBody">
             <div className=" col-xl-3 chat d-none d-xl-block">
-                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: height }}>
+                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{height: "560px"}}>
                     <div className="card-header d-flex align-items-center">
                         {accountLogin.role.id !== 2 &&
                             <div className="input-group">
@@ -119,7 +149,7 @@ function Chat() {
                                     type="text"
                                     placeholder="Search host"
                                     name=""
-                                    className="form-control"
+                                    className="form-control type_search"
                                     value={usernameSearch}
                                     onChange={(event => setUsenameSearch(event.target.value))}
                                     onKeyDown={(event) => {
@@ -128,9 +158,10 @@ function Chat() {
                                         }
                                     }}
                                 />
-                                <div className="input-group-prepend" onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
+                                <div className="input-group-prepend"
+                                     onClick={() => dispatch(findAccountHostByUsername(usernameSearch))}>
                                     <span className="input-group-text search_btn">
-                                        <i className="fas fa-search" />
+                                        <i className="fas fa-search"/>
                                     </span>
                                 </div>
                             </div>
@@ -140,32 +171,34 @@ function Chat() {
                         <ul className="contacts">
                             {accountLogin.role.id !== 1 &&
                                 Object.keys(accountAdmin).length !== 0 &&
-                                <Link to={"/myaccount/chat/" + accountAdmin.id}  key={accountAdmin.id}>
-                                <li className={accountAdmin === accountReceiverCurrent ? "active" : ""} onClick={() => handleFindMessageByAccount(accountAdmin)}>
-                                    <div className="d-flex bd-highlight" >
-                                        <div className="img_cont">
-                                            <img
-                                                src={accountAdmin.avatar}
-                                                className="rounded-circle user_img"
-                                            />
-                                            {/* <span className="online_icon offline" /> */}
-                                        </div>
-                                        <div className="user_info">
+                                <Link to={"/myaccount/chat/" + accountAdmin.id} key={accountAdmin.id}>
+                                    <li className={accountAdmin === accountReceiverCurrent ? "active" : ""}
+                                        onClick={() => handleFindMessageByAccount(accountAdmin)}>
+                                        <div className="d-flex bd-highlight">
+                                            <div className="img_cont">
+                                                <img
+                                                    src={accountAdmin.avatar}
+                                                    className="rounded-circle user_img"
+                                                />
+                                                {/* <span className="online_icon offline" /> */}
+                                            </div>
+                                            <div className="user_info">
                                             <span className="text-nowrap">
                                                 {accountAdmin.fullName === null ? accountAdmin.username.slice(0, 10) : accountAdmin.fullName.slice(0, 10)}
                                                 {accountAdmin.fullName !== null && accountAdmin.fullName.length > 10 && " . . ."}
                                                 {accountAdmin.fullName === null && accountAdmin.username.length > 10 && " . . ."}
                                             </span>
-                                            <p>{accountAdmin.role.name}</p>
+                                                <p>{accountAdmin.role.name}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 </Link>
                             }
                             {listAccountYouMessaged.map((item) => (
                                 <Link to={"/myaccount/chat/" + item.id} key={item.id}>
-                                    <li  className={accountReceiverCurrent === item ? "active" : ""} onClick={() => handleFindMessageByAccount(item)}>
-                                        <div className="d-flex bd-highlight" >
+                                    <li className={accountReceiverCurrent === item ? "active" : ""}
+                                        onClick={() => handleFindMessageByAccount(item)}>
+                                        <div className="d-flex bd-highlight">
                                             <div className="img_cont">
                                                 <img
                                                     src={item.avatar}
@@ -187,43 +220,45 @@ function Chat() {
                             ))}
                         </ul>
                     </div>
-                    <div className="card-footer" />
+                    <div className="card-footer"/>
                 </div>
             </div>
 
-            <div id="mySidepanel" className="sidepanel d-xl-none" style={{ width: panelWidth }}>
-                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{ height: height }}>
+            <div id="mySidepanel" className="sidepanel d-xl-none" style={{width: panelWidth}}>
+                <div className="card mb-sm-3 mb-md-0 contacts_card" style={{height: "560px"}}>
                     <div className="card-header d-flex align-items-center">
                     </div>
-                    <div className="card-body contacts_body" >
+                    <div className="card-body contacts_body">
                         <ul className="contacts">
                             {accountLogin.role.id !== 1 &&
                                 Object.keys(accountAdmin).length !== 0 &&
-                                <Link to={"/myaccount/chat/" + accountAdmin.id} key={accountAdmin.id} >
-                                <li  className={accountAdmin === accountReceiverCurrent ? "active" : ""} onClick={() => handleFindMessageByAccount(accountAdmin)}>
-                                    <div className="d-flex bd-highlight" >
-                                        <div className="img_cont">
-                                            <img
-                                                src={accountAdmin.avatar}
-                                                className="rounded-circle user_img"
-                                            />
-                                        </div>
-                                        <div className="user_info">
+                                <Link to={"/myaccount/chat/" + accountAdmin.id} key={accountAdmin.id}>
+                                    <li className={accountAdmin === accountReceiverCurrent ? "active" : ""}
+                                        onClick={() => handleFindMessageByAccount(accountAdmin)}>
+                                        <div className="d-flex bd-highlight">
+                                            <div className="img_cont">
+                                                <img
+                                                    src={accountAdmin.avatar}
+                                                    className="rounded-circle user_img"
+                                                />
+                                            </div>
+                                            <div className="user_info">
                                             <span className="text-nowrap">
                                                 {accountAdmin.fullName === null ? accountAdmin.username.slice(0, 10) : accountAdmin.fullName.slice(0, 10)}
                                                 {accountAdmin.fullName !== null && accountAdmin.fullName.length > 10 && " . . ."}
                                                 {accountAdmin.fullName === null && accountAdmin.username.length > 10 && " . . ."}
                                             </span>
-                                            <p>{accountAdmin.role.name}</p>
+                                                <p>{accountAdmin.role.name}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 </Link>
                             }
                             {listAccountYouMessaged.map((item) => (
-                                <Link to={"/myaccount/chat/" + item.id} key={item.id}  >
-                                    <li className={accountReceiverCurrent === item ? "active" : ""} onClick={() => handleFindMessageByAccount(item)}>
-                                        <div className="d-flex bd-highlight" >
+                                <Link to={"/myaccount/chat/" + item.id} key={item.id}>
+                                    <li className={accountReceiverCurrent === item ? "active" : ""}
+                                        onClick={() => handleFindMessageByAccount(item)}>
+                                        <div className="d-flex bd-highlight">
                                             <div className="img_cont">
                                                 <img
                                                     src={item.avatar}
@@ -247,10 +282,10 @@ function Chat() {
                 </div>
             </div>
             <div className="col-md-12 col-xl-9 chat" id="main">
-                <div className="card" style={{ height: height }}>
+                <div className="card" style={{height: "560px"}}>
                     <div className="card-header msg_head" ref={myElementRef}>
                         {Object.keys(accountReceiverCurrent).length !== 0 &&
-                            <div className="d-flex bd-highlight " >
+                            <div className="d-flex bd-highlight ">
                                 <div className="img_cont">
                                     <img
                                         src={accountReceiverCurrent.avatar}
@@ -264,27 +299,27 @@ function Chat() {
                             </div>
                         }
                         <span id="action_menu_btn" className='d-sm-block d-xl-none' onClick={openCloseNav}>
-                            <i className="fas fa-ellipsis-v" />
+                            <i className="fas fa-ellipsis-v"/>
                         </span>
                         <div className="action_menu">
                             <ul>
                                 <li>
-                                    <i className="fas fa-user-circle" /> View profile
+                                    <i className="fas fa-user-circle"/> View profile
                                 </li>
                                 <li>
-                                    <i className="fas fa-users" /> Add to close friends
+                                    <i className="fas fa-users"/> Add to close friends
                                 </li>
                                 <li>
-                                    <i className="fas fa-plus" /> Add to group
+                                    <i className="fas fa-plus"/> Add to group
                                 </li>
                                 <li>
-                                    <i className="fas fa-ban" /> Block
+                                    <i className="fas fa-ban"/> Block
                                 </li>
                             </ul>
                         </div>
 
                     </div>
-                    <div className="card-body msg_card_body" style={{ overflow: "auto" }} ref={messageContainerRef} >
+                    <div className="card-body msg_card_body" style={{overflow: "auto"}} ref={messageContainerRef}>
                         {listMessage.length !== 0 ?
                             listMessage.map(item => {
                                 if (item.senderAccount?.id !== accountLogin.id) {
@@ -296,9 +331,10 @@ function Chat() {
                                                     className="rounded-circle user_img_msg"
                                                 />
                                             </div>
-                                            <div className="msg_cotainer_send">
+                                            <div className="msg_cotainer_send2 ml-10">
                                                 {item.message}
-                                                <span className={`msg_time text-dark ${item.message.length < item.date.length ? 'msg_time--single-line' : ''}`}>
+                                                <span
+                                                    className={`msg_time text-dark ${item.message.length < item.date.length ? 'msg_time--single-line' : ''}`}>
                                                     {item.date}
                                                 </span>
                                             </div>
@@ -327,16 +363,11 @@ function Chat() {
                     </div>
                     <div className="card-footer">
                         <div className="input-group">
-                            <div className="input-group-append">
-                                <span className="input-group-text attach_btn">
-                                    <i className="fas fa-paperclip" />
-                                </span>
-                            </div>
                             <input
                                 name="message"
                                 className="form-control type_msg"
                                 value={newMessage.message}
-                                onChange={(event) => setNewMessage({ ...newMessage, message: event.target.value })}
+                                onChange={(event) => setNewMessage({...newMessage, message: event.target.value})}
                                 onKeyDown={(event) => {
                                     if (event.key === 'Enter') {
                                         sendMessage()
@@ -345,7 +376,7 @@ function Chat() {
                             />
                             <div className="input-group-append" onClick={sendMessage}>
                                 <span className="input-group-text send_btn">
-                                    <i className="fas fa-location-arrow" />
+                                    <i className="fas fa-location-arrow"/>
                                 </span>
                             </div>
                         </div>
