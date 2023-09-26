@@ -169,9 +169,9 @@ function Login() {
                                     {errorMessage}
                                 </p>
                             )}
-                            {/* <div className="text-right p-t-8 p-b-31">
-                                <a>Forgot password?</a>
-                            </div> */}
+                            <div className="text-right p-t-8 p-b-31">
+                                {/* <a>Forgot password?</a> */}
+                            </div>
                             <div className="container-login100-form-btn">
                                 <div className="wrap-login100-form-btn">
                                     <div className="login100-form-bgbtn" />
