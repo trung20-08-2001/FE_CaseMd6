@@ -8,7 +8,7 @@ const customAxios = axios.create({
     headers: {
         Authorization: `Bearer ${account.token}`
     },
-    baseURL: 'http://localhost:8081/'
+    baseURL: 'http://45.117.177.92:8081/'
 })
 export default customAxios;
 
