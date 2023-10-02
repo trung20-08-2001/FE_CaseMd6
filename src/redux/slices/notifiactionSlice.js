@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { findNotificationByIdAccount, saveNotification, updateStatus } from "../../services/notificationService"
+import { addNotification, findNotificationByIdAccount, updateStatus } from "../../services/notificationService"
 
 const initialState={
     notifications:[]
@@ -11,7 +11,7 @@ const notificationSlice=createSlice({
     initialState:initialState,
     reducers:{},
     extraReducers:build=>{
-        build.addCase(saveNotification.fulfilled,(state,action)=>{
+        build.addCase(addNotification.fulfilled,(state,action)=>{
             state.notifications.unshift(action.payload)
         })
         build.addCase(findNotificationByIdAccount.fulfilled,(state,action)=>{
@@ -32,6 +32,7 @@ const notificationSlice=createSlice({
         build.addCase(updateStatus.rejected,(state,action)=>{
             state.notifications=[]
         })
+       
     }
 })
 

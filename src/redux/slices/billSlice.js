@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { addBillHistoryHost, addBillHistoryUser, filterDateCheckin, filterDateCheckout, filterNameHouse, filterStatus, updateBillsHost } from "../../services/billService"
-
+import {hasNotifiaction,seenNotification} from "../../services/notificationService"
 const initialState = {
     billHistoryHost: [],
     billHistoryUser:[],
     nameHouseSearch:"",
     dateCheckin:"1990-1-1",
     dateCheckout:"2999-12-31",
-    status:"ALL"
+    status:"ALL",
+    hasNotifiaction:false
 }
 
 const billSlice = createSlice({
@@ -53,6 +54,12 @@ const billSlice = createSlice({
         })
         builder.addCase(filterStatus.fulfilled, (state, action) => {
             state.status=action.payload;
+        })
+        builder.addCase(hasNotifiaction.fulfilled,(state,action)=>{
+            state.hasNotifiaction=action.payload
+        })
+        builder.addCase(seenNotification.fulfilled,(state,action)=>{
+            state.hasNotifiaction=action.payload
         })
     }
 })

@@ -3,26 +3,26 @@ import {Route, Routes} from "react-router-dom";
 import Income from "./components/Revenue";
 import ListUser from "./components/admin/ListUser";
 import Master from "./components/layout/Master";
-import ChangePassword from "./pages/ChangePassword";
-import HouseDetail from "./pages/HouseDetail";
-import CreateHouse from "./pages/CreateHouse";
-import EditHouse from "./pages/EditHouse";
+import ChangePassword from "./components/ChangePassword";
+import HouseDetail from "./components/HouseDetail";
+import CreateHouse from "./components/CreateHouse";
+import EditHouse from "./components/EditHouse";
 import Home from "./pages/Home";
-import MyHouses from "./pages/myhouse/MyHouses";
-import UpRole2 from "./pages/UpRole2";
+import MyHouses from "./components/myhouse/MyHouses";
+import UpRole from "./components/UpRole";
 import Login from "./pages/login_register/Login";
 import Register from "./pages/login_register/Register";
-import SideBar from "./pages/Sidebar";
+import SideBar from "./components/Sidebar";
 import VendorDetail from "./components/admin/VendorDetail";
 import ShowVendor from "./components/admin/ShowVendor";
 import EditProfile from "./components/EditProfile";
 import UpRoleUserToVendor from "./components/admin/UpRoleUserToVendor";
 import UserTransactionHistory from "./components/UserTransactionHistory";
 import VendorTransactionHistory from "./components/VendorTransactionHistory";
-import SeeReviews from "./pages/SeeReviews";
+import SeeReviews from "./components/SeeReviews";
 import Chat from "./components/chat/Chat";
 import SearchHouse from "./pages/SearchHouse";
-import NoResult from "./pages/NoResult";
+import NoResult from "./components/NoResult";
 import Profile from "./components/Profile";
 import Page404 from "./pages/404";
 
@@ -65,7 +65,7 @@ function App() {
                                 }
                                 {account.role.id === 3 &&
                                     <>
-                                        <Route path={"user"} element={<UpRole2 />}></Route>
+                                        <Route path={"user"} element={<UpRole />}></Route>
                                     </>
                                 }
                                 <Route path="chat" element={<Chat/>}></Route>

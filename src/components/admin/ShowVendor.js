@@ -35,7 +35,6 @@ function ShowVendor() {
                     <td>{vendor.account.phone}</td>
                     <td><span>{new Intl.NumberFormat().format(vendor.revenue)}</span> VNĐ</td>
                     <td className="text-center">{vendor.countHouse}</td>
-                    <td>{vendor.countHouse}</td>
                     <td>
                         <Link to={`/myaccount/vendor/detail/${vendor.account.id}`} className="seeDetails">
                             See Details

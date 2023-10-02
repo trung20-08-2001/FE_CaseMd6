@@ -5,7 +5,6 @@ const initState={
     account:JSON.parse(localStorage.getItem("account")),
     listAccountUser:[],
     listAccountsHost:[],
-    listAccountsUserMessageToAccountHost:[],
     accountAdmin:{},
     accountReceiverCurrent:{}
 }

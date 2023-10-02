@@ -1,75 +1,33 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import { HouseOutlined, LoginRounded } from "@mui/icons-material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import BackupIcon from '@mui/icons-material/Backup';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import HistoryIcon from '@mui/icons-material/History';
+import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { findAccountById, login } from '../services/accountService';
-import EditIcon from '@mui/icons-material/Edit';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import PeopleIcon from '@mui/icons-material/People';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import HistoryIcon from '@mui/icons-material/History';
-import BackupIcon from '@mui/icons-material/Backup';
+import SearchIcon from '@mui/icons-material/Search';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { findListAccountYouMessaged } from '../services/messageService';
 import WebSocketConfig from "../config/configWebsocket";
+import { findAccountById, login,findAccountAdmin } from '../services/accountService';
 import { findNotificationByIdAccount, updateStatus } from '../services/notificationService';
-import { Houseboat, HouseOutlined, LoginOutlined, LoginRounded } from "@mui/icons-material";
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
 
 const formatter = new Intl.DateTimeFormat('en-GB', {
     hour: '2-digit',
@@ -97,6 +55,8 @@ export default function PrimarySearchAppBar() {
 
     useEffect(() => {
         if (account !== null) {
+            dispatch(findListAccountYouMessaged(account.id))
+            dispatch(findAccountAdmin())
             if (notifications.length === 0) {
                 dispatch(findNotificationByIdAccount(account.id))
             }

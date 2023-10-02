@@ -12,7 +12,7 @@ import "./vendor/daterangepicker/daterangepicker.css"
 import "./css/util.css"
 import "./css/main.css"
 import { login } from "../../services/accountService"
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
@@ -170,7 +170,7 @@ function Login() {
                                 </p>
                             )}
                             <div className="text-right p-t-8 p-b-31">
-                                <a>Forgot password?</a>
+                                {/* <a>Forgot password?</a> */}
                             </div>
                             <div className="container-login100-form-btn">
                                 <div className="wrap-login100-form-btn">

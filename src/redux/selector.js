@@ -7,7 +7,8 @@ export const filterNameHouseSearch = (state) => state.house.nameHouseSearch;
 export const filterNameAddress = (state) => state.house.nameAddress;
 export const filterBedroom = (state) => state.house.bedroom;
 export const filterBathroom = (state) => state.house.bathroom;
-export const filterPriceHouse = (state) => state.house.priceHouse;
+export const filterPriceMin = (state) => state.house.priceMin;
+export const filterPriceMax = (state) => state.house.priceMax;
 export const allHouse = state => state.house.allHouse;
 
 export const allBillHistoryUser = (state) => state.bill.billHistoryUser;
@@ -40,13 +41,14 @@ export const filterSearchHouse = createSelector(
   filterNameAddress,
   filterBedroom,
   filterBathroom,
-  filterPriceHouse,
-  (allHouse, nameAddress, bedroom, bathroom, priceHouse) => {
+  filterPriceMin,
+  filterPriceMax,
+  (allHouse, nameAddress, bedroom, bathroom, priceMin,priceMax) => {
     return allHouse.filter(item => {
       return (removeDiacritics(item.house.address).toLowerCase()).includes(removeDiacritics(nameAddress).toLowerCase())
         && item.house.numberOfBedrooms==bedroom
         && item.house.numberOfLivingRooms==bathroom
-        && parseInt(item.house.price)<=parseInt(priceHouse)
+        && (parseInt(priceMin)<=parseInt(item.house.price) && parseInt(item.house.price)<=parseInt(priceMax))
     })
   }
 )

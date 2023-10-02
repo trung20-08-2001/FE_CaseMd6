@@ -3,9 +3,9 @@ import { addAccountYouMessaged, findAccountHostByUsername, findListAccountYouMes
 
 
 const initialState = {
-    messages: {},
     listAccountYouMessaged: [],
     messages: [],
+    check: false
 }
 
 const messagesSlice = createSlice({
@@ -44,10 +44,7 @@ const messagesSlice = createSlice({
             state.messages.push(action.payload)
         })
         build.addCase(addAccountYouMessaged.fulfilled, (state, action) => {
-            let account = state.listAccountYouMessaged.find(item => item.id === action.payload.id)
-            if (account === undefined) {
-                state.listAccountYouMessaged.push(action.payload)
-            }
+            state.listAccountYouMessaged.push(action.payload)
         })
         build.addCase(findAccountHostByUsername.fulfilled, (state, action) => {
             for (let i = 0; i < action.payload.length; i++) {

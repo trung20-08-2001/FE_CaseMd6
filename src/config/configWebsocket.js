@@ -1,8 +1,7 @@
 import Stomp from 'stompjs';
-import { saveNotification, } from '../services/notificationService';
+import { addNotification, hasNotifiaction, saveNotification, } from '../services/notificationService';
 import store from "../redux/store"
-import { send } from '../services/messageService';
-
+import { addAccountYouMessaged, send } from '../services/messageService';
 
 const WebSocketConfig = {
     stompClient: null,
@@ -21,14 +20,24 @@ const WebSocketConfig = {
         let newMessage = JSON.parse(message.body)
         const currentPath = window.location.pathname;
         if (newMessage.type === "MESSAGE") {
-           if (currentPath !== `/myaccount/chat/${newMessage.senderAccount.id}`) {
-                store.dispatch(saveNotification({ content: (newMessage.senderAccount.fullName === null ? newMessage.senderAccount.username : newMessage.senderAccount.fullName) + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } }))
+            if (currentPath !== `/myaccount/chat/${newMessage.senderAccount.id}`) {
+                saveNotification({ content: (newMessage.senderAccount.fullName === null ? newMessage.senderAccount.username : newMessage.senderAccount.fullName) + ' has sent you a message', url: `/myaccount/chat/${newMessage.senderAccount.id}`, account: { id: newMessage.receiverAccount.id } })
+                    .then((res) => {
+                        store.dispatch(addNotification(res.data))
+                        const listAccountYouMessaged=store.getState().message.listAccountYouMessaged;
+                        let accountChat = listAccountYouMessaged.find(item => item.id == newMessage.senderAccount.id)
+                        if (accountChat === undefined && newMessage.senderAccount.role.id!=1) {
+                            store.dispatch(addAccountYouMessaged(newMessage.senderAccount))
+                        }
+                    })
+                    .catch((err) => console.log(err))
+
             } else {
                 store.dispatch(send(newMessage));
             }
-
         } else if (newMessage.type === "NOTIFICATION") {
-            store.dispatch(saveNotification(newMessage))
+            store.dispatch(addNotification(newMessage))
+            store.dispatch(hasNotifiaction())
         }
     },
 
