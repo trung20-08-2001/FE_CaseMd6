@@ -122,7 +122,7 @@ function TopHouse() {
                                 )
                             })
                             :
-                           <Loading/>
+                            <Loading />
                         }
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
+import customAxios from "../../services/api";
 
 function ShowVendor() {
     const [vendors, setVendors] = useState([]);
@@ -13,7 +13,7 @@ function ShowVendor() {
     // end
 
     useEffect(() => {
-        axios.get("http://localhost:8081/admin/vendors")
+        customAxios.get("admin/vendors")
             .then(res => {
                 setVendors(res.data);
             })
@@ -117,7 +117,7 @@ function ShowVendor() {
                 timer: 1000 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
             });
         }
-        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
+        customAxios.post(`accounts/createAccount`, updatedAccount)
             .then((res) => {
 
             })
@@ -177,10 +177,10 @@ function ShowVendor() {
         updatedAccount.role.id = newRoleId;
         updatedAccount.status.id = newStatusId;
 
-        axios.post(`http://localhost:8081/accounts/createAccount`, updatedAccount)
+        customAxios.post(`accounts/createAccount`, updatedAccount)
             .then((res) => {
                 if (updatedAccount.role.id == 3) {
-                    axios.post('http://localhost:8081/send-email/'+updatedAccount.email)
+                    customAxios.post('/send-email/'+updatedAccount.email)
                     console.log(updatedAccount.email)
                 }
                 window.location.reload();

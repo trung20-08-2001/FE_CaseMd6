@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {Link, useNavigate, useParams} from "react-router-dom";
+import customAxios from "../../services/api";
 
 function UpRoleUserToVendor() {
     const [user, setUser] = useState();
@@ -9,7 +9,7 @@ function UpRoleUserToVendor() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8081/accounts/searchAccount/" + id)
+        customAxios.get("accounts/searchAccount/" + id)
             .then(function (res) {
                 setUser(res.data);
             })
@@ -63,10 +63,10 @@ function UpRoleUserToVendor() {
         user.role.id = newRoleId;
         user.status.id = newStatusId;
 
-        axios.post(`http://localhost:8081/accounts/createAccount`, user)
+        customAxios.post(`accounts/createAccount`, user)
             .then((res) => {
                 if (user.role.id == 3) {
-                    axios.post('http://localhost:8081/send-email/'+user.email)
+                    customAxios.post('send-email/'+user.email)
                 }
                 navigate("/myaccount/vendors")
             })

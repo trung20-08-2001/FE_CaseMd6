@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import axios from "axios";
+import {useParams} from "react-router-dom";
+import customAxios from "../services/api";
 
 function Profile() {
     const [account, setAccount] = useState({});
     const {id} = useParams();
 
     useEffect(() => {
-        axios.get("http://localhost:8081/accounts/searchAccount/" + id)
+        customAxios.get("/accounts/searchAccount/" + id)
             .then(function (res) {
                 setAccount(res.data)
             })

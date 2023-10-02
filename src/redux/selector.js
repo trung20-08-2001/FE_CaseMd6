@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import removeDiacritics from 'remove-diacritics';
 
-export const listMyHouseDTO = (state) => state.house.myHousesDTO;
+export const listMyHouseDTO = (state) => state.house.myHousesDTO.data;
 export const filterStatusHouse = (state) => state.house.statusHouse;
 export const filterNameHouseSearch = (state) => state.house.nameHouseSearch;
 export const filterNameAddress = (state) => state.house.nameAddress;
@@ -9,7 +9,7 @@ export const filterBedroom = (state) => state.house.bedroom;
 export const filterBathroom = (state) => state.house.bathroom;
 export const filterPriceMin = (state) => state.house.priceMin;
 export const filterPriceMax = (state) => state.house.priceMax;
-export const allHouse = state => state.house.allHouse;
+export const allHouse = state => state.house.allHouse.data;
 
 export const allBillHistoryUser = (state) => state.bill.billHistoryUser;
 export const allBillHistoryHost = state => state.bill.billHistoryHost;

@@ -128,8 +128,8 @@ const CreateHouse = () => {
         customAxios.post("/images/save", images)
             .then((response) => {
                 dispatch(findHouseByAccount(JSON.parse(localStorage.getItem('account')).id));
-                dispatch(findAllHouse())
-                dispatch(findTopHouse())
+                dispatch(findAllHouse());
+                dispatch(findTopHouse());
             })
             .catch((error) => console.log(error))
     }

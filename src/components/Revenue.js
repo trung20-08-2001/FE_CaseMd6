@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { findRevenueOfHost } from '../services/revenueService';
-import Loading from  "./Loading"
+import Loading from "./Loading"
 
 
 
@@ -27,9 +27,10 @@ ChartJS.register(
 
 export default function Income() {
     const account = useSelector(state => state.account.account)
-    const revenue = useSelector(state => state.revenue.revenue);
+    const revenue = useSelector(state => state.revenue.data);
+    const loading = useSelector(state => state.revenue.loading);
     const dispatch = useDispatch()
-
+    console.log(revenue);
     const options = {
         responsive: true,
         plugins: {
@@ -75,12 +76,12 @@ export default function Income() {
         }
     }, []);
 
-    
+
     useEffect(() => {
         if (revenue.length > 0) {
             setChartData(prevData => ({
                 ...prevData,
-                label:'Revenue in ',
+                label: 'Revenue in ',
                 datasets: [
                     {
                         ...prevData.datasets[0],
@@ -96,12 +97,12 @@ export default function Income() {
         if (revenue.length > 0 && index >= 0 && index < revenue.length) {
             setChartData(prevData => ({
                 ...prevData,
-                
+
                 datasets: [
                     {
                         ...prevData.datasets[0],
                         data: revenue[index].months,
-                        label:'Revenue in '+revenue[index].year,
+                        label: 'Revenue in ' + revenue[index].year,
                     },
                 ],
             }));
@@ -110,16 +111,24 @@ export default function Income() {
     return (
         <>
             <div className='mt-50'>
-                {revenue.length > 0 ?
-                    <>
-                        <Bar options={options} data={chartData} />
-                        {revenue.map((item, index) => {
-                            return (
-                                <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
-                            )
-                        })}
-                    </>
-                    :<Loading></Loading>
+                {loading ? <div className="row">
+                    <div className="col-lg-12">
+                        <div className="section-title mb-38 mt-31 text-center">
+                            <Loading />
+                        </div>
+                    </div>
+                </div> :
+                    revenue.length === 0 ?
+                        <h1 className='text-center text-danger'>You don't have any revenue yet</h1>
+                        :
+                        <>
+                            <Bar options={options} data={chartData} />
+                            {revenue.map((item, index) => {
+                                return (
+                                    <button className='btn btn-primary' onClick={() => handleButtonClick(index)} key={item.year}>{item.year}</button>
+                                )
+                            })}
+                        </>
                 }
             </div>
         </>

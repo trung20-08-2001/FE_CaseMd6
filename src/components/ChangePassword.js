@@ -1,16 +1,12 @@
 import React from 'react';
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import axios from "axios";
 import Swal from "sweetalert2";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import {login} from '../services/accountService';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
+import customAxios from '../services/api';
+
 
 const SignupSchema = Yup.object().shape({
     oldPassword: Yup.string().required('The old password cannot be blank'),
@@ -24,7 +20,7 @@ const ChangePassword = () => {
     const dispatch = useDispatch();
 
     let accountCurrent = {}
-    axios.get("http://localhost:8081/accounts/searchAccount/" + account.id)
+    customAxios.get("/accounts/searchAccount/" + account.id)
         .then(res => {
             accountCurrent = res.data
         })
@@ -74,7 +70,7 @@ const ChangePassword = () => {
                                 text: 'The old password is incorrect',
                             });
                         } else {
-                            axios.post("http://localhost:8081/accounts/createAccount", {
+                            customAxios.post("/accounts/createAccount", {
                                 ...accountCurrent,
                                 password: values.password
                             });

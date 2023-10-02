@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import AverageStarsFeedback from "./AverageStarsFeedback";
 import StarFeedback from "./StarFeedback";
 import ReactModal from "react-modal";
+import customAxios from '../services/api';
 
 const SeeReviews = () => {
     const [houses, setHouse] = useState([]);
@@ -31,14 +31,14 @@ const SeeReviews = () => {
         setCurrentPage(pageNumber);
     };
     useEffect(() => {
-        axios.get("http://localhost:8081/houses/houseDetail/" + idHouse)
+        customAxios.get("/houses/houseDetail/" + idHouse)
             .then(res => {
                 setHouse(res.data)
             })
             .catch(function (err) {
                 console.log(err)
             })
-        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+            customAxios.get("/api/feedback/getAllFeedback/" + idHouse)
             .then(res1 => {
                 setFeedbacks(res1.data)
             })
@@ -54,7 +54,7 @@ const SeeReviews = () => {
 
 
     const handleConfirm = () => {
-        axios.post("http://localhost:8081/api/feedback/updateFeedback/" + fbId + "/" + idHouse)
+        customAxios.post("api/feedback/updateFeedback/" + fbId + "/" + idHouse)
             .then((res) => {
                 setFeedbacks(res.data)
             })
@@ -69,19 +69,19 @@ const SeeReviews = () => {
     }
 
     const rate = (number) => {
-        axios.get("http://localhost:8081/api/feedback/getAllByStar/" + idHouse + "/" + number)
+        customAxios.get("api/feedback/getAllByStar/" + idHouse + "/" + number)
             .then(res => {
                 setFeedbacks(res.data)
             })
     }
     const getAll = () => {
-        axios.get("http://localhost:8081/api/feedback/getAllFeedback/" + idHouse)
+        customAxios.get("api/feedback/getAllFeedback/" + idHouse)
             .then(res => {
                 setFeedbacks(res.data)
             })
     }
     const getByCmt = () => {
-        axios.get("http://localhost:8081/api/feedback/getAllFeedbackByComment/" + idHouse)
+        customAxios.get("api/feedback/getAllFeedbackByComment/" + idHouse)
             .then(res => {
                 setFeedbacks(res.data)
             })

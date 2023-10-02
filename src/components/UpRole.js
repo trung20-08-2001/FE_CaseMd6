@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import * as Yup from "yup";
-import axios from "axios";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {imageDb} from "../config/configFirebase";
 import {v4} from "uuid";
+import customAxios from '../services/api';
 
 const validationSchema = Yup.object().shape({
     address: Yup.string().required('Address is required'),
@@ -36,7 +36,7 @@ const UpRole2 = () => {
     const handleSubmit = (values, {setSubmitting, resetForm}) => {
         values.img1 = img1;
         values.img2 = img2;
-        axios.post("http://localhost:8081/admin/registration/req/" + account.id, values)
+        customAxios.post("admin/registration/req/" + account.id, values)
             .then(response => {
                 // Xử lý response từ server (nếu cần)
                 console.log(response);

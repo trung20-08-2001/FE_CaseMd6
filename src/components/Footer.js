@@ -47,7 +47,7 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="social-links mt-25 mb-80">
-                                <a>
+                                {/* <a>
                                     <i className="fa fa-facebook text-white" />
                                 </a>
                                 <a>
@@ -58,7 +58,7 @@ const Footer = () => {
                                 </a>
                                 <a>
                                     <i className="fa fa-google-plus text-white" />
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </div>

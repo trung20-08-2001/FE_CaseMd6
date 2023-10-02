@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch } from "../../services/houseService"
+import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch, changePageCurrent } from "../../services/houseService"
 import { filterStatusHouse, nameHouseSearch } from "../../services/filterService"
 import {
     filterBathroom,
@@ -10,12 +10,22 @@ import {
 } from "../../services/filterService";
 
 const initState = {
-    myHousesDTO: [],   
+    myHousesDTO:  {
+        data:[],
+        loading:false
+    },   
     topHouse: {
         data:[],
-        loading:true
+        loading:false
     },
-    allHouse:[],
+    allHouse: {
+        data:{
+            content:[],
+            totalPages:1,
+            currentPage:0
+        },
+        loading:false
+    },
     topSearch:[],
     statusHouse:"ALL",
     nameHouseSearch:"",
@@ -50,13 +60,15 @@ const houseSlice = createSlice({
             ];
         })
         build.addCase(findHouseByAccount.fulfilled, (state, action) => {
-            state.myHousesDTO = action.payload
+            state.myHousesDTO.data = action.payload;
+            state.myHousesDTO.loading=false;
         })
         build.addCase(findHouseByAccount.rejected, (state, action) => {
-            state.myHousesDTO = [];
+            state.myHousesDTO.data = [];
         })
         build.addCase(findHouseByAccount.pending, (state, action) => {
-            state.myHousesDTO = [];
+            state.myHousesDTO.data = [];
+            state.myHousesDTO.loading=true
         })
         build.addCase(findTopHouse.fulfilled, (state, action) => {
             state.topHouse.data = action.payload;
@@ -71,13 +83,19 @@ const houseSlice = createSlice({
             state.topHouse.loading = true
         })
         build.addCase(findAllHouse.fulfilled, (state, action) => {
-            state.allHouse = action.payload;
+            state.allHouse.data.content[state.allHouse.data.currentPage] = action.payload.content;
+            state.allHouse.data.totalPages= action.payload.totalPages;
+            state.allHouse.loading=false;
         })
         build.addCase(findAllHouse.rejected, (state, action) => {
-            state.allHouse = []
+            state.allHouse.data.content = []
         })
         build.addCase(findAllHouse.pending, (state, action) => {
-            state.allHouse = []
+            state.allHouse.data.content[state.allHouse.data.currentPage] = []
+            state.allHouse.loading=true;
+        })
+        build.addCase(changePageCurrent.fulfilled,(state, action) => {
+            state.allHouse.data.currentPage= action.payload;
         })
         build.addCase(filterStatusHouse.fulfilled, (state, action) => {
             state.statusHouse = action.payload

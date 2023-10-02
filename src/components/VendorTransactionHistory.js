@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
@@ -14,6 +13,7 @@ import {
 import { filterBillHistoryHost } from "../redux/selector";
 import { Label } from "reactstrap";
 import { seenNotification } from "../services/notificationService";
+import customAxios from "../services/api";
 
 function VendorTransactionHistory() {
     const bills_vendor = useSelector(filterBillHistoryHost)
@@ -27,7 +27,7 @@ function VendorTransactionHistory() {
     const pagesVisited = pageNumber * billsPerPage;
 
     useEffect(() => {
-        axios.get("http://localhost:8081/bills_vendor/" + id)
+        customAxios.get("bills_vendor/" + id)
             .then(function (res) {
                 dispatch(addBillHistoryHost(res.data))
             })
@@ -36,7 +36,7 @@ function VendorTransactionHistory() {
 
     useEffect(() => {
         if (hasNotifiaction) {
-            axios.get("http://localhost:8081/bills_vendor/" + id)
+            customAxios.get("bills_vendor/" + id)
                 .then(function (res) {
                     dispatch(addBillHistoryHost(res.data))
                 })
@@ -179,7 +179,7 @@ function VendorTransactionHistory() {
 
                 updateStatus_billAndHouse(billId, updatedBills)
                     .then(() => {
-                        axios.get("http://localhost:8081/bills_vendor/" + id)
+                        customAxios.get("bills_vendor/" + id)
                             .then(function (res) {
                                 dispatch(addBillHistoryHost(res.data))
                             })
@@ -227,7 +227,7 @@ function VendorTransactionHistory() {
     const updateStatus_billAndHouse = (billId, updatedBills) => {
         const updatedStatus_bill = updatedBills.find((bill) => bill.bill.id === billId).bill;
         const updatedStatus_house = updatedBills.find((bill) => bill.bill.id === billId).house;
-        const updateBillPromise = axios.post(`http://localhost:8081/bills_vendor/${billId}/bill`, updatedStatus_bill)
+        const updateBillPromise = customAxios.post(`bills_vendor/${billId}/bill`, updatedStatus_bill)
             .then((res) => {
                 if (updatedStatus_bill.status.id === 6) {
                     Swal.fire({
@@ -249,7 +249,7 @@ function VendorTransactionHistory() {
                 console.log("Error updating bill status:", err);
             });
 
-        const updateHousePromise = axios.post(`http://localhost:8081/bills_vendor/${billId}/house`, updatedStatus_house)
+        const updateHousePromise = customAxios.post(`bills_vendor/${billId}/house`, updatedStatus_house)
             .then((res) => {
             })
             .catch((err) => {

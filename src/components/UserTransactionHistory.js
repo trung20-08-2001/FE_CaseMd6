@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
@@ -14,8 +13,8 @@ import {
     filterStatus
 } from "../services/billService";
 import { filterBillHistoryUser } from "../redux/selector";
-import { saveMessage } from "../services/messageService";
 import { saveNotification } from "../services/notificationService";
+import customAxios from "../services/api";
 
 function UserTransactionHistory() {
     const dispatch=useDispatch()
@@ -27,7 +26,7 @@ function UserTransactionHistory() {
     const account = useSelector(state => state.account.account)
 
     useEffect(() => {
-        axios.get("http://localhost:8081/bills_user/" + id)
+        customAxios.get("bills_user/" + id)
             .then(function (res) {
                 dispatch(addBillHistoryUser(res.data));
             })
@@ -61,8 +60,8 @@ function UserTransactionHistory() {
 
     const updateAfterCancel = (billID, updatedBills) => {
         const foundBill = updatedBills.find((bill) => bill.bill.id == billID);
-        axios
-            .post(`http://localhost:8081/bills_user/bill`, foundBill.bill)
+        customAxios
+            .post(`bills_user/bill`, foundBill.bill)
             .then((res) => {
                 let notification = { content: (account.fullName === null ? account.username : account.fullName) + " canceled the booking " + res.data.house.name, url: `/myaccount/bills_vendor/${res.data.vendor.id}`, account: { id: res.data.vendor.id } }
                 saveNotification(notification)
@@ -74,7 +73,7 @@ function UserTransactionHistory() {
                     showConfirmButton: false, // Ẩn nút "OK"
                     timer: 1500 // Tự động đóng cửa sổ thông báo sau 1 giây (tuỳ chỉnh theo ý muốn)
                 })
-                axios.get("http://localhost:8081/bills_user/" + id)
+                customAxios.get("bills_user/" + id)
                     .then(function (res) {
                         dispatch(addBillHistoryUser(res.data));
                     })
@@ -83,8 +82,8 @@ function UserTransactionHistory() {
                 console.log("Error updating bill status:", err);
             });
 
-        axios
-            .post(`http://localhost:8081/bills_user/house`, foundBill.house)
+        customAxios
+            .post(`bills_user/house`, foundBill.house)
             .then((res) => {
                 console.log("House status updated successfully");
             })

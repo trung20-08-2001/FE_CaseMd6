@@ -35,8 +35,8 @@ export const findTopHouse = createAsyncThunk(
 
 export const findAllHouse=createAsyncThunk(
     "houses/findAllHouse",
-    async()=>{
-        const response=await customAxios.get("houses/findAllHouse")
+    async({page,size})=>{
+        const response=await customAxios.get("houses/findAllHouse?page="+page+"&size="+size)
         return response.data;
     }
 )
@@ -50,3 +50,11 @@ export const findHouseTopSearch=createAsyncThunk(
 )
 
 export const saveHouseToServer=(house)=> customAxios.post("/houses/save",house)
+
+
+export const changePageCurrent=createAsyncThunk(
+    "houses/changePageCurrent",
+    async(page)=>{
+        return page
+    }
+)

@@ -7,7 +7,7 @@ const WebSocketConfig = {
     stompClient: null,
 
     connect: (account) => {
-        const socket = new WebSocket('ws://localhost:8081/ws/websocket');
+        const socket = new WebSocket('ws://45.117.177.92:8081/ws/websocket');
         WebSocketConfig.stompClient = Stomp.over(socket);
         WebSocketConfig.stompClient.connect({}, () => WebSocketConfig.onConnected(account), WebSocketConfig.onError);
     },

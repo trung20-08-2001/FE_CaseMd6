@@ -1,13 +1,14 @@
 import axios from "axios";
 
 
-let account=JSON.parse(localStorage.getItem('account')) ?? {};
+const  account=JSON.parse(localStorage.getItem('account'));
 
 const customAxios = axios.create({
   
     headers: {
-        Authorization: `Bearer ${account.token}`
+        Authorization: `Bearer ${account?.token}`
     },
+    // baseURL: 'http://45.117.177.92:8081/'
     baseURL: 'http://localhost:8081/'
 })
 export default customAxios;

@@ -1,32 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { findAllHouse } from '../services/houseService';
+import { changePageCurrent, findAllHouse } from '../services/houseService';
 import Loading from './Loading';
 import { Link } from 'react-router-dom';
 import "../assets/styleHouse.css"
+import CustomPagination from './CustomPagination';
 
 function ListHouse() {
 
     const dispatch = useDispatch();
-    const listHouse = useSelector(state => state.house.allHouse)
+    const currentPage=useSelector(state=>state.house.allHouse.data.currentPage);
+    const content = useSelector(state => state.house.allHouse.data.content)
+    const totalPages = useSelector(state => state.house.allHouse.data.totalPages)
+    const loading = useSelector(state => state.house.allHouse.loading)
     const account = useSelector(state => state.account.account)
-    useEffect(() => {
-        if (listHouse.length === 0) {
-            dispatch(findAllHouse())
-        }
-    }, [])
 
-    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
-    const [itemsPerPage, setItemsPerPage] = useState(8); // Số mục trên mỗi trang
-    // Tổng số trang
-    const totalPages = Math.ceil(listHouse.length / itemsPerPage);
-    // Lấy mục trên trang hiện tại
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = listHouse.slice(indexOfFirstItem, indexOfLastItem);
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    const setCurrentPage=(number)=>{
+        dispatch(changePageCurrent(number))
+    }
+    useEffect(() => {
+        if (content[currentPage] === undefined) {
+           dispatch(findAllHouse({ page: currentPage, size: 8 }))
+        }
+    }, [currentPage])
 
     return (
         <>
@@ -36,14 +32,16 @@ function ListHouse() {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="section-title mb-38 mt-31 text-center">
-                                <h2 className="uppercase headerInBody mb-25" style={{ textShadow: "0 0 2px gold" }}>LIST
-                                    HOUSE</h2>
+                                <h2 className="uppercase headerInBody mb-25" style={{ textShadow: "0 0 2px gold" }}>LIST HOUSE</h2>
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        {currentItems.length !== 0 ?
-                            currentItems.map(item => {
+                        {loading ?
+                            <Loading />
+                            :
+                            content[currentPage]?.length !== 0 &&
+                            content[currentPage]?.map(item => {
                                 return (
                                     <div className="col-lg-3 mb-25" key={item.house.id}>
                                         <div className="scaleHouse">
@@ -128,32 +126,16 @@ function ListHouse() {
                                     </div >
                                 )
                             })
-                            : <Loading></Loading>
                         }
-                        <div className="pagination-content text-center block fix col-12">
-                            <div>
-                                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-                                    (pageNumber) => (
-                                        <button
-                                            key={pageNumber}
-                                            onClick={() => handlePageChange(pageNumber)}
-                                            disabled={currentPage === pageNumber}
-                                            style={{
-                                                backgroundColor: currentPage === pageNumber ? '#95C41F' : 'snow',
-                                                color: currentPage === pageNumber ? 'white' : 'black',
-                                                boxShadow: "0 0 1px gold",
-                                                borderRadius: "5px"
-                                            }}
-                                        >
-                                            {pageNumber}
-                                        </button>
-                                    )
-                                )}
-                            </div>
-                        </div>
                     </div>
                 </div>
+                {!loading &&
+                    <div className="d-flex justify-content-center">
+                        <CustomPagination totalPages={totalPages} setPageCurrent={(number) => setCurrentPage(number)} pageCurrent={currentPage+1} />
+                    </div>
+                }
             </div>
+
         </>
     )
 }

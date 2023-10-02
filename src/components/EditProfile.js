@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
+import {useParams} from "react-router-dom";
 import {storage} from "../config/configFirebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import * as Yup from 'yup';
@@ -8,6 +7,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import Swal from "sweetalert2";
 import {useDispatch} from "react-redux";
 import {login} from "../services/accountService";
+import customAxios from "../services/api";
 
 function EditProfile() {
     const [account, setAccount] = useState({
@@ -27,7 +27,7 @@ function EditProfile() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("http://localhost:8081/accounts/searchAccount/" + id)
+        customAxios.get("/accounts/searchAccount/" + id)
             .then(res => {
                 setPreviewImage(res.data.avatar);
                 setAccount(res.data)
@@ -42,7 +42,7 @@ function EditProfile() {
     const edit = (e) => {
         localStorage.setItem("account",JSON.stringify(account));
         dispatch(login(account));
-        axios.post("http://localhost:8081/accounts/edit", account)
+        customAxios.post("/accounts/edit", account)
             .then(res => {
                 Swal.fire({
                     icon: 'success',
@@ -101,9 +101,9 @@ function EditProfile() {
                 validationSchema={UpdateProfileSchema}
                 onSubmit={async values => {
                     try {
-                        const response = await axios.post("http://localhost:8081/accounts/", values);
+                        const response = await customAxios.post("/accounts/", values);
                         if (response.data === '') {
-                            await axios.post("http://localhost:8081/accounts/edit", values);
+                            await customAxios.post("/accounts/edit", values);
                             await Swal.fire({
                                 icon: 'success',
                                 title: 'Cập nhật thành công!',

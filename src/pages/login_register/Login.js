@@ -16,8 +16,9 @@ import { useDispatch } from 'react-redux';
 import "../../assets/styleModal.css"
 import customAxios from '../../services/api'
 import Swal from "sweetalert2";
-import axios from "axios";
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import Typography from '@mui/material/Typography';
+import { HouseOutlined } from "@mui/icons-material";
 
 
 function Login() {
@@ -104,7 +105,7 @@ function Login() {
     }
     const sendUserInfoToBackend = (userData) => {
         // Gửi thông tin người dùng đến backend
-        axios.post("http://localhost:8081/loginBySocialNetwork", userData)
+        customAxios.post("/loginBySocialNetwork", userData)
             .then((response) => {
                 // Xử lý phản hồi từ backend
                 localStorage.setItem("account", JSON.stringify(response.data));
@@ -125,14 +126,33 @@ function Login() {
     return (
         <>
             <div className="limiter">
+
                 <div
                     className="container-login100"
-                    style={{background: "linear-gradient(to right, rgb(30, 126, 52) 0%, rgba(30, 126, 52, 0.8) 100%)"}}
+                    style={{ background: "linear-gradient(to right, rgb(30, 126, 52) 0%, rgba(30, 126, 52, 0.8) 100%)" }}
                 >
+                    
+
                     <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
                         <form className="login100-form validate-form">
+
                             <div className="text-center">
-                            <h1 className="p-b-49 headerLogin">Login</h1></div>
+                            <Link to="/" style={{ position: "fixed", top: "5%", left: "7%" }}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            aria-label="open drawer"
+                            color={"white"}
+                            sx={{ display: { xs: 'block', sm: 'block' } }}
+                            style={{ textShadow: "0px 0px 10px #ffc107" }}
+                        >
+                            <HouseOutlined style={{ color: "gold" }} />BOOKING HOUSE
+                        </Typography>
+                    </Link>
+                                <h1 className="p-b-49 headerLogin">Login</h1>
+                            </div>
                             <div
                                 className="wrap-input100 validate-input m-b-23"
                                 data-validate="Username is reauired"

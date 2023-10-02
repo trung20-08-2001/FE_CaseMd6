@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import customAxios from "../services/api";
 
 function StarNumber(props) {
     const [feedbacks, setFeedbacks] = useState([]);
 
     useEffect(() => {
-        axios
-            .get("http://localhost:8081/api/feedback/getAllFeedback/" + props.houseId)
+        customAxios
+            .get("api/feedback/getAllFeedback/" + props.houseId)
             .then((res) => {
                 setFeedbacks(res.data);
             })

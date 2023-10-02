@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import axios from "axios";
+import customAxios from "../../services/api";
 
 function VendorDetail() {
     const [vendor, setVendor] = useState({});
     const {id} = useParams();
 
     useEffect(() => {
-        axios.get("http://localhost:8081/admin/vendor/" + id)
+        customAxios.get("admin/vendor/" + id)
             .then(function (res) {
                 setVendor(res.data)
             })
