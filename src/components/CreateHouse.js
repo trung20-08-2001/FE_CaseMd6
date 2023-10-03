@@ -9,7 +9,8 @@ import "../assets/styleFormAddHouse.css";
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { findAllHouse, findHouseByAccount, findTopHouse, saveHouse } from '../services/houseService';
+import { findAllHouse, findHouseByAccount, findTopHouse, resetData, saveHouse } from '../services/houseService';
+import ReactLoading from 'react-loading';
 
 
 const validationSchema = Yup.object().shape({
@@ -112,6 +113,7 @@ const CreateHouse = () => {
                     for (let url of urls) {
                         images.push({ url: url, type: "HOUSE", house: { id: house.id } });
                     }
+                    dispatch(saveHouse({ house: house, images: images }))
                     handleSaveImageToDatabase(images)
                 })
                 .catch((error) => {
@@ -119,6 +121,7 @@ const CreateHouse = () => {
                 });
         } else {
             let image = [{ url: "https://afdevinfo.com/wp-content/uploads/2017/10/thiet-ke-hinh-ngoi-nha-dep.jpg", type: "HOUSE", house: { id: house.id } }]
+            dispatch(saveHouse({ house: house, images: image }))
             handleSaveImageToDatabase(image)
         }
     };
@@ -127,14 +130,12 @@ const CreateHouse = () => {
     const handleSaveImageToDatabase = (images) => {
         customAxios.post("/images/save", images)
             .then((response) => {
-                dispatch(findHouseByAccount(JSON.parse(localStorage.getItem('account')).id));
-                dispatch(findAllHouse());
-                dispatch(findTopHouse());
+                displaySwalAlter();
             })
             .catch((error) => console.log(error))
     }
 
-    const displaySwalAlter=() => {
+    const displaySwalAlter = () => {
         Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -142,11 +143,11 @@ const CreateHouse = () => {
             allowOutsideClick: true,
             willClose: (result) => {
                 if (result.dismiss === Swal.DismissReason.backdrop) {
-                  navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
-                }else {
-                  navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
+                    navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
+                } else {
+                    navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
                 }
-              }
+            }
         })
     }
 
@@ -155,19 +156,16 @@ const CreateHouse = () => {
             .validate(values, { abortEarly: false })
             .then(() => {
                 let newHouse = { ...values, category: { id: idCategory }, numberOfHire: 0, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4, name: "READY" } }
-                dispatch(saveHouse({ house: newHouse, images: selectedImages.length === 0 ? ["https://afdevinfo.com/wp-content/uploads/2017/10/thiet-ke-hinh-ngoi-nha-dep.jpg"] : selectedImages }))
-                .then(() => {
-                    displaySwalAlter();
-                    customAxios.post("/houses/save", newHouse)
-                        .then(res => {
-                            handleUploadMutilFile(res.data);
-                        })
-                        .catch(error => console.log(error));
-                    resetForm();
-                    fileInputRef.current.value = null;
-                    setSelectedImages([]);
+                
+                customAxios.post("/houses/save", newHouse)
+                    .then(res => {
+                        handleUploadMutilFile(res.data);
+                    })
+                    .catch(error => console.log(error));
+                resetForm();
+                fileInputRef.current.value = null;
+                setSelectedImages([]);
             })
-        })
     };
 
 
@@ -175,97 +173,98 @@ const CreateHouse = () => {
 
     return (
         <>
+         {/* <ReactLoading type={"spinningBubbles"} color={"black"} height={'20%'} width={'20%'}  /> */}
             <div className="row">
                 <div className="agency-container distanceBody">
                     <h2 className="text-center mb-15 headerInBody" >Create House</h2>
                     <div className=" distanceBody">
-                    <Formik
-                        initialValues={{
-                            name: '',
-                            numberOfBedrooms: '',
-                            price: '',
-                            address: '',
-                            numberOfLivingRooms: '',
-                            category: 0,
-                            description: '',
-                        }}
-                        validationSchema={validationSchema}
-                        onSubmit={handleSubmit}
-                    >
-                        {({ errors, touched }) => (
-                            <Form>
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <label htmlFor='name' >Name house</label>
-                                        <Field type="text" name="name" id="name" placeholder="Enter name house" className="mb-28" />
-                                        {errors.name && touched.name ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.name}</p>
-                                        ) : null}
+                        <Formik
+                            initialValues={{
+                                name: '',
+                                numberOfBedrooms: '',
+                                price: '',
+                                address: '',
+                                numberOfLivingRooms: '',
+                                category: 0,
+                                description: '',
+                            }}
+                            validationSchema={validationSchema}
+                            onSubmit={handleSubmit}
+                        >
+                            {({ errors, touched }) => (
+                                <Form>
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <label htmlFor='name' >Name house</label>
+                                            <Field type="text" name="name" id="name" placeholder="Enter name house" className="mb-28" />
+                                            {errors.name && touched.name ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.name}</p>
+                                            ) : null}
 
-                                        <label htmlFor='numberOfBedrooms' >Number of bedrooms </label>
-                                        <Field type="number" name="numberOfBedrooms" id="numberOfBedrooms" placeholder="Enter number of bedrooms" className="mb-28" />
-                                        {errors.numberOfBedrooms && touched.numberOfBedrooms ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.numberOfBedrooms}</p>
-                                        ) : null}
+                                            <label htmlFor='numberOfBedrooms' >Number of bedrooms </label>
+                                            <Field type="number" name="numberOfBedrooms" id="numberOfBedrooms" placeholder="Enter number of bedrooms" className="mb-28" />
+                                            {errors.numberOfBedrooms && touched.numberOfBedrooms ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.numberOfBedrooms}</p>
+                                            ) : null}
 
-                                        <label htmlFor='price' >Price</label>
-                                        <Field type="number" name="price" id="price" placeholder="Enter price" className="mb-28" />
-                                        {errors.price && touched.price ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.price}</p>
-                                        ) : null}
+                                            <label htmlFor='price' >Price</label>
+                                            <Field type="number" name="price" id="price" placeholder="Enter price" className="mb-28" />
+                                            {errors.price && touched.price ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.price}</p>
+                                            ) : null}
 
 
-                                    </div>
-                                    <div className="col-lg-6">
-                                        <label htmlFor='address' >Address</label>
-                                        <Field type="text" name="address" id="address" placeholder="Address" className="mb-28" />
-                                        {errors.address && touched.address ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.address}</p>
-                                        ) : null}
-
-                                        <label htmlFor='numberOfLivingRooms'>Number of livingroon</label>
-                                        <Field type="number" name="numberOfLivingRooms" id="numberOfLivingRooms" placeholder="Enter number of living room" className="mb-28" />
-                                        {errors.numberOfLivingRooms && touched.numberOfLivingRooms ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.numberOfLivingRooms}</p>
-                                        ) : null}
-
-                                        <label htmlFor='category' >Category</label>
-                                        <select name="category" id="category" className="mb-28" onChange={(event) => handleCategoryChange(event)}>
-                                            {categories.map(category =>
-                                                <option key={category.id} value={category.id}>{category.name}</option>
-                                            )}
-                                        </select>
-                                    </div>
-                                    <div className="col-lg-12">
-                                        <label htmlFor='description' >Description</label>
-                                        <Field as="textarea" name="description" id="description" placeholder="Enter description" style={{ height: "100px" }} className="mb-28" />
-                                        {errors.description && touched.description ? (
-                                            <p style={{ color: "red", fontSize: "20px" }}>{errors.description}</p>
-                                        ) : null}
-
-                                        <label htmlFor='file-upload-input'>Choose a picture of your house</label>
-                                        <div className="file-upload">
-                                            <input ref={fileInputRef} type="file" name="image" id="file-upload-input" multiple accept=".jpeg, .jpg, .png" onChange={handleImageChange} />
-                                            <div className="file-upload-content" style={{ display: 'flex', flexWrap: 'wrap' }}>
-                                                {selectedImages.length > 0 &&
-                                                    selectedImages.map((image, index) => (
-                                                        <div className="image-preview" key={index}>
-                                                            <img className="file-upload-image" src={image} alt={`Image ${index + 1}`} style={{ width: "200px", height: "150px" }} />
-                                                            <div className="image-title-wrap">
-                                                                <button type="button" onClick={() => handleRemoveImage(index)} className="remove-image">
-                                                                    Remove
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                            </div>
                                         </div>
-                                        <button className=" button buttonShadow mt-20 mb-10" type="submit"  style={{width:"10%",marginLeft:"40%"}}><h3>Save</h3></button>
+                                        <div className="col-lg-6">
+                                            <label htmlFor='address' >Address</label>
+                                            <Field type="text" name="address" id="address" placeholder="Address" className="mb-28" />
+                                            {errors.address && touched.address ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.address}</p>
+                                            ) : null}
+
+                                            <label htmlFor='numberOfLivingRooms'>Number of livingroon</label>
+                                            <Field type="number" name="numberOfLivingRooms" id="numberOfLivingRooms" placeholder="Enter number of living room" className="mb-28" />
+                                            {errors.numberOfLivingRooms && touched.numberOfLivingRooms ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.numberOfLivingRooms}</p>
+                                            ) : null}
+
+                                            <label htmlFor='category' >Category</label>
+                                            <select name="category" id="category" className="mb-28" onChange={(event) => handleCategoryChange(event)}>
+                                                {categories.map(category =>
+                                                    <option key={category.id} value={category.id}>{category.name}</option>
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div className="col-lg-12">
+                                            <label htmlFor='description' >Description</label>
+                                            <Field as="textarea" name="description" id="description" placeholder="Enter description" style={{ height: "100px" }} className="mb-28" />
+                                            {errors.description && touched.description ? (
+                                                <p style={{ color: "red", fontSize: "20px" }}>{errors.description}</p>
+                                            ) : null}
+
+                                            <label htmlFor='file-upload-input'>Choose a picture of your house</label>
+                                            <div className="file-upload">
+                                                <input ref={fileInputRef} type="file" name="image" id="file-upload-input" multiple accept=".jpeg, .jpg, .png" onChange={handleImageChange} />
+                                                <div className="file-upload-content" style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                                    {selectedImages.length > 0 &&
+                                                        selectedImages.map((image, index) => (
+                                                            <div className="image-preview" key={index}>
+                                                                <img className="file-upload-image" src={image} alt={`Image ${index + 1}`} style={{ width: "200px", height: "150px" }} />
+                                                                <div className="image-title-wrap">
+                                                                    <button type="button" onClick={() => handleRemoveImage(index)} className="remove-image">
+                                                                        Remove
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            </div>
+                                            <button className=" button buttonShadow mt-20 mb-10" type="submit" style={{ width: "10%", marginLeft: "40%" }}><h3>Save</h3></button>
+                                        </div>
                                     </div>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ import Slide from './Slide';
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { editHouse, findAllHouse, findHouseByAccount, findTopHouse } from '../services/houseService';
+import { editHouse, findAllHouse, findHouseByAccount, findTopHouse, resetData } from '../services/houseService';
 
 
 
@@ -138,8 +138,7 @@ const EditHouse = () => {
           }
           customAxios.post("/images/updateImageHouse/" + house.id, images)
             .then((response) => {
-              dispatch(findAllHouse())
-              dispatch(findTopHouse())
+             dispatch(resetData())
             })
             .catch((error) => console.log(error))
         })

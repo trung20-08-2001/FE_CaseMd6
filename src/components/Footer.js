@@ -131,22 +131,21 @@ const Footer = () => {
                             <div className="single-footer-widget pull_right" style={{color:"whitesmoke"}}>
                                 <h3 className="text-white text-uppercase mb-21" style={{color:"white"}}>CONTACT US</h3>
                                 <div className="footer-contact-info mb-24">
-                                    <img src="images/icons/f-map.png" alt="" />
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/case-module6-79593.appspot.com/o/f-map.png?alt=media&token=d072deec-3250-45a6-b977-840176d89238&_gl=1*tgkxwi*_ga*MTc2NDE0MzExOS4xNjkyNjM1ODM5*_ga_CW55HF8NVT*MTY5NjMwMDUxMy4yNC4xLjE2OTYzMDA1OTIuNjAuMC4w" alt="" />
                                     <span className="pl-40 block">
-                                        11,P.Duy Tân,Dich Vọng Hậu,Cầu Giấy,Hà Nội,Việt Nam
-
+                                        CodeGym,Mỹ Đình,Nam Từ Liêm,Hà Nội,Việt Nam
                                     </span>
                                 </div>
                                 <div className="footer-contact-info mb-24">
-                                    <img src="images/icons/f-phone.png" alt="" />
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/case-module6-79593.appspot.com/o/f-phone.png?alt=media&token=abbe844d-d0f7-45f4-9349-d41f75304563&_gl=1*ewf4oh*_ga*MTc2NDE0MzExOS4xNjkyNjM1ODM5*_ga_CW55HF8NVT*MTY5NjMwMDUxMy4yNC4xLjE2OTYzMDA2ODcuNjAuMC4w" alt="" />
                                     <span className="pl-40 block">
-                                        Telephone : +099999999
+                                        Telephone : 0375073496
                                     </span>
                                 </div>
                                 <div className="footer-contact-info">
-                                    <img src="images/icons/f-globe.png" alt="" />
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/case-module6-79593.appspot.com/o/f-globe.png?alt=media&token=2740fb63-b1dc-4355-b072-0f3bbdf9ea90&_gl=1*2rpg8s*_ga*MTc2NDE0MzExOS4xNjkyNjM1ODM5*_ga_CW55HF8NVT*MTY5NjMwMDUxMy4yNC4xLjE2OTYzMDA3MjguMTkuMC4w" alt="" />
                                     <span className="pl-40 block">
-                                        Web : webthuenha.com.vn
+                                        Web : bookinghouse.top
                                     </span>
                                 </div>
                                 <MenuItem>
@@ -155,7 +154,7 @@ const Footer = () => {
                                           <EmailIcon/>
                                       </Badge></div>
                                     </IconButton>
-                                    <p style={{color:"white",fontSize:"12px"}}>Email:hoilamgi@gmail.com</p>
+                                    <p style={{color:"white",fontSize:"12px"}}>Email:chungtien2506@gmail.com</p>
                                 </MenuItem>
                             </div>
                         </div>

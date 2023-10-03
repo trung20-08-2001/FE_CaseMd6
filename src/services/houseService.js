@@ -58,3 +58,18 @@ export const changePageCurrent=createAsyncThunk(
         return page
     }
 )
+
+export const resetData=createAsyncThunk(
+    "houses/resetData",
+    async()=>{
+        return []
+    }
+)
+
+export const findHousePageSearch=createAsyncThunk(
+    "houses/findHousePageSearch",
+    async()=>{
+        const response=await customAxios.get("houses/findHousePageSearch")
+        return response.data
+    }
+)

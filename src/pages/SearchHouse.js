@@ -9,7 +9,7 @@ import {
 } from "../services/filterService";
 
 import { filterSearchHouse } from "../redux/selector";
-import { findAllHouse, findHouseTopSearch, saveHouseToServer } from "../services/houseService";
+import { findAllHouse, findHousePageSearch, findHouseTopSearch, saveHouseToServer } from "../services/houseService";
 import { useNavigate } from "react-router-dom";
 import Slider from '@mui/material/Slider';
 import { Label } from 'reactstrap';
@@ -24,7 +24,7 @@ const minDistance = 1000000;
 const SearchHouse = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const allHouse = useSelector(state => state.house.allHouse)
+    const allHouse = useSelector(state => state.house.housePageSearch)
     const resultSearch = useSelector(filterSearchHouse)
     const priceMin = useSelector(state => state.house.priceMin)
     const priceMax = useSelector(state => state.house.priceMax)
@@ -68,17 +68,15 @@ const SearchHouse = () => {
 
     useEffect(() => {
         if (allHouse.length === 0) {
-            dispatch(findAllHouse())
+            dispatch(findHousePageSearch())
         }
     }, [])
 
 
-
     const handleClick = (house) => {
-        console.log("rrr");
         saveHouseToServer({ ...house, searchVolume: house.searchVolume + 1 })
             .then(() => {
-                dispatch(findAllHouse())
+                dispatch(findAllHouse({page:0,size:100}))
                 dispatch(findHouseTopSearch())
             })
             .catch((err) => { console.log(err); })

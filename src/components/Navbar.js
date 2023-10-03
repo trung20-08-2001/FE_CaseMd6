@@ -28,6 +28,7 @@ import WebSocketConfig from "../config/configWebsocket";
 import { findAccountAdmin, findAccountById, login } from '../services/accountService';
 import { findListAccountYouMessaged } from '../services/messageService';
 import { findNotificationByIdAccount, updateStatus } from '../services/notificationService';
+import { findHousePageSearch } from "../services/houseService";
 
 const formatter = new Intl.DateTimeFormat('en-GB', {
     hour: '2-digit',
@@ -54,6 +55,7 @@ export default function PrimarySearchAppBar() {
     }, [notifications])
 
     useEffect(() => {
+        dispatch(findHousePageSearch())
         if (account !== null) {
             dispatch(findListAccountYouMessaged(account.id))
             dispatch(findAccountAdmin())

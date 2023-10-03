@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch, changePageCurrent } from "../../services/houseService"
+import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch, changePageCurrent, resetData, findHousePageSearch } from "../../services/houseService"
 import { filterStatusHouse, nameHouseSearch } from "../../services/filterService"
 import {
     filterBathroom,
@@ -26,7 +26,11 @@ const initState = {
         },
         loading:false
     },
-    topSearch:[],
+    topSearch:{
+        data:[],
+        loading:false
+    },
+    housePageSearch:[],
     statusHouse:"ALL",
     nameHouseSearch:"",
     nameAddress:"",
@@ -43,13 +47,7 @@ const houseSlice = createSlice({
     reducers: {},
     extraReducers: build => {
         build.addCase(saveHouse.fulfilled, (state, action) => {
-            state.myHousesDTO = [action.payload, ...state.myHousesDTO];
-        })
-        build.addCase(saveHouse.rejected, (state, action) => {
-            state.myHousesDTO = [];
-        })
-        build.addCase(saveHouse.pending, (state, action) => {   
-            state.myHousesDTO = [];
+            state.myHousesDTO.data.unshift(action.payload);
         })
         build.addCase(editHouse.fulfilled, (state, action) => {
             let {house, images, indexHouseEdit} = action.payload;
@@ -103,6 +101,15 @@ const houseSlice = createSlice({
         build.addCase(nameHouseSearch.fulfilled, (state, action) => {
             state.nameHouseSearch = action.payload
         })
+        build.addCase(findHousePageSearch.rejected, (state, action) => {
+            state.housePageSearch= [];
+        })
+        build.addCase(findHousePageSearch.pending, (state, action) => {
+            state.housePageSearch= [];
+        })
+        build.addCase(findHousePageSearch.fulfilled, (state, action) => {
+            state.housePageSearch= action.payload;
+        })
 
         build.addCase(filterNameAddress.fulfilled, (state, action) => {
             state.nameAddress = action.payload
@@ -125,14 +132,20 @@ const houseSlice = createSlice({
             state.searched=true;
         })
         build.addCase(findHouseTopSearch.fulfilled,(state,action) => {
-            state.topSearch=action.payload
+            state.topSearch.data=action.payload
+            state.topSearch.loading=false;
         })
         build.addCase(findHouseTopSearch.pending,(state,action)=>{
-            state.topSearch=[]
+            state.topSearch.data=[]
+            state.topSearch.loading=true;
         })
         build.addCase(findHouseTopSearch.rejected,(state,action)=>{
-            state.topSearch=[]
+            state.topSearch.data=[]
         })  
+        build.addCase(resetData.fulfilled,(state,action)=>{
+            // console.log(initState);
+            // state=initState;
+        })
     }
 })
 

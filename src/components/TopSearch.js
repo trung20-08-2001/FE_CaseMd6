@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { findHouseTopSearch } from "../services/houseService";
 import { Link } from "react-router-dom";
+import Loading from '../components/Loading'
 
 
 function TopSearch() {
     const dispatch = useDispatch()
-    const topSearch = useSelector(state => state.house.topSearch);
+    const topSearch = useSelector(state => state.house.topSearch.data);
+    const loading=useSelector(state=>state.house.topSearch.loading)
 
     useEffect(() => {
         if (topSearch.length === 0) {
@@ -25,7 +27,8 @@ function TopSearch() {
                 </div>
             </div>
             <div className='row mt-20'>
-                {topSearch.length !== 0 && topSearch.map((item, index) => {
+                {loading ? <Loading/>:
+                topSearch.length !== 0 && topSearch.map((item, index) => {
                     return (
                         <>
                             <div className="col-lg-3 mb-25" key={item.house.id}>
@@ -40,7 +43,7 @@ function TopSearch() {
                                             >
                                                 <div className="title-left pull_left">
                                                     <h4 className="text-white mb-12">
-                                                        <a href="properties-details.html">{item.house.name}</a>
+                                                        {item.house.name}
                                                     </h4>
                                                     <span style={{ color: "#fef1ec" }}>
                                                         <span className="mr-10">
@@ -87,7 +90,6 @@ function TopSearch() {
                                     </Link>
                                 </div>
                             </div>
-
                         </>
                     )
                 })}
