@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch, changePageCurrent, resetData, findHousePageSearch } from "../../services/houseService"
+import { saveHouse, findHouseByAccount, editHouse, findTopHouse, findAllHouse, findHouseTopSearch, changePageCurrent, resetData, findHousePageSearch, saving } from "../../services/houseService"
 import { filterStatusHouse, nameHouseSearch } from "../../services/filterService"
 import {
     filterBathroom,
@@ -28,7 +28,7 @@ const initState = {
     },
     topSearch:{
         data:[],
-        loading:false
+        loading:true
     },
     housePageSearch:[],
     statusHouse:"ALL",
@@ -38,7 +38,8 @@ const initState = {
     bathroom:0,
     priceMin:0,
     priceMax:10000000,
-    searched:false
+    searched:false,
+    saving:false,
 }
 
 const houseSlice = createSlice({
@@ -51,10 +52,10 @@ const houseSlice = createSlice({
         })
         build.addCase(editHouse.fulfilled, (state, action) => {
             let {house, images, indexHouseEdit} = action.payload;
-            state.myHousesDTO = [
-                ...state.myHousesDTO.slice(0, indexHouseEdit),
+            state.myHousesDTO.data = [
+                ...state.myHousesDTO.data.slice(0, indexHouseEdit),
                 {house, images},
-                ...state.myHousesDTO.slice(indexHouseEdit + 1)
+                ...state.myHousesDTO.data.slice(indexHouseEdit + 1)
             ];
         })
         build.addCase(findHouseByAccount.fulfilled, (state, action) => {
@@ -145,6 +146,9 @@ const houseSlice = createSlice({
         build.addCase(resetData.fulfilled,(state,action)=>{
             // console.log(initState);
             // state=initState;
+        })
+        build.addCase(saving.fulfilled,(state,action)=>{
+            state.saving=action.payload;
         })
     }
 })

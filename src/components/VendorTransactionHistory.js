@@ -74,7 +74,6 @@ function VendorTransactionHistory() {
                         currentDate.setHours(0, 0, 0, 0,)
                         dateCheckout.setHours(0, 0, 0, 0,)
                         dateCheckin.setHours(0, 0, 0, 0,)
-
                         if (bill.bill.status.id === 2) {
                             if (dateCheckin <= currentDate) {
                                 // Checkin is allowed

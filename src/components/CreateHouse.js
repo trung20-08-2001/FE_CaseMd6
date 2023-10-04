@@ -9,8 +9,8 @@ import "../assets/styleFormAddHouse.css";
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { findAllHouse, findHouseByAccount, findTopHouse, resetData, saveHouse } from '../services/houseService';
-import ReactLoading from 'react-loading';
+import { findHouseByAccount,resetData, saveHouse, saving } from '../services/houseService';
+import Saving from "./Saving";
 
 
 const validationSchema = Yup.object().shape({
@@ -40,14 +40,19 @@ const CreateHouse = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const account = useSelector(state => state.account.account);
     const categories = useSelector(state => state.categories.categories);
+    const allMyHouses = useSelector(state => state.house.myHousesDTO.data);
     const [idCategory, setIdCategorye] = useState(1)
+
 
 
     useEffect(() => {
         if (categories.length === 0) {
             dispatch(getAllCategory())
+        }
+        if (allMyHouses.length === 0) {
+            dispatch(findHouseByAccount(account.id));
         }
     }, [])
 
@@ -130,7 +135,11 @@ const CreateHouse = () => {
     const handleSaveImageToDatabase = (images) => {
         customAxios.post("/images/save", images)
             .then((response) => {
+                dispatch(saving(false))
                 displaySwalAlter();
+                fileInputRef.current.value = null;
+                setSelectedImages([]);
+                // navigate("/myaccount/host")
             })
             .catch((error) => console.log(error))
     }
@@ -155,16 +164,15 @@ const CreateHouse = () => {
         validationSchema
             .validate(values, { abortEarly: false })
             .then(() => {
+                dispatch(saving(true));
                 let newHouse = { ...values, category: { id: idCategory }, numberOfHire: 0, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4, name: "READY" } }
-                
+               
                 customAxios.post("/houses/save", newHouse)
                     .then(res => {
                         handleUploadMutilFile(res.data);
                     })
                     .catch(error => console.log(error));
                 resetForm();
-                fileInputRef.current.value = null;
-                setSelectedImages([]);
             })
     };
 
@@ -173,7 +181,6 @@ const CreateHouse = () => {
 
     return (
         <>
-         {/* <ReactLoading type={"spinningBubbles"} color={"black"} height={'20%'} width={'20%'}  /> */}
             <div className="row">
                 <div className="agency-container distanceBody">
                     <h2 className="text-center mb-15 headerInBody" >Create House</h2>
@@ -268,6 +275,7 @@ const CreateHouse = () => {
                     </div>
                 </div>
             </div>
+            <Saving></Saving>
         </>
     );
 };

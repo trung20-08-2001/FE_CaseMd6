@@ -8,8 +8,8 @@ const customAxios = axios.create({
     headers: {
         Authorization: `Bearer ${account?.token}`
     },
-    baseURL: 'http://45.117.177.92:8081/'
-    // baseURL: 'http://localhost:8081/'
+    // baseURL: 'http://45.117.177.92:8081/'
+    baseURL: 'http://localhost:8081/'
 })
 export default customAxios;
 
@@ -23,7 +23,7 @@ export const handleError=(error)=>{
       } else if (error.request) {
         // Xử lý lỗi không thể kết nối đến máy chủ
         console.log(error.request);
-        // Hiển thị thông báo lỗi hoặc chuyển hướng trang web
+       
       } else {
         console.log('Lỗi', error.message);
       }

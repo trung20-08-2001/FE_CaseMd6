@@ -10,7 +10,8 @@ import Slide from './Slide';
 import { storage } from "../config/configFirebase";
 import customAxios from '../services/api';
 import { getAllCategory } from "../services/categoryService";
-import { editHouse, findAllHouse, findHouseByAccount, findTopHouse, resetData } from '../services/houseService';
+import { editHouse, findAllHouse, findHouseByAccount, findTopHouse, resetData, saving } from '../services/houseService';
+import Saving from "./Saving";
 
 
 
@@ -35,8 +36,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditHouse = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const account = JSON.parse(localStorage.getItem('account'));
-  const myHousesDTO = useSelector(state => state.house.myHousesDTO);
+  const myHousesDTO = useSelector(state => state.house.myHousesDTO.data);
   const categories = useSelector(state => state.categories.categories);
 
   const { indexHouseEdit } = useParams();
@@ -47,8 +51,7 @@ const EditHouse = () => {
   const [files, setFiles] = useState([]);
   const [idCategory, setIdCategorye] = useState(1)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -118,6 +121,22 @@ const EditHouse = () => {
     setIdCategorye(event.target.value)
   }
 
+  const displaySwalAlter = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Congratulations on your  house edit successful',
+      allowOutsideClick: true,
+      willClose: (result) => {
+        if (result.dismiss === Swal.DismissReason.backdrop) {
+          navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
+        } else {
+          navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
+        }
+      }
+    })
+  }
+
   const handleUploadMutilFile = (house) => {
     if (files.length !== 0) {
       const uploadPromises = files.map((file) => {
@@ -138,7 +157,8 @@ const EditHouse = () => {
           }
           customAxios.post("/images/updateImageHouse/" + house.id, images)
             .then((response) => {
-             dispatch(resetData())
+              dispatch(saving(false))
+              displaySwalAlter();
             })
             .catch((error) => console.log(error))
         })
@@ -148,33 +168,19 @@ const EditHouse = () => {
     }
   };
 
-  const displaySwalAlter = () => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Success',
-      text: 'Congratulations on your  house edit successful',
-      allowOutsideClick: true,
-      willClose: (result) => {
-        if (result.dismiss === Swal.DismissReason.backdrop) {
-          navigate("/myaccount/host"); // Chuyển trang khi nhấn vào bên ngoài vùng Swal
-        } else {
-          navigate("/myaccount/host"); // Chuyển trang khi nhấn nút "OK" trong Swal
-        }
-      }
-    })
-  }
+
 
   const handleSubmit = (values, { resetForm }) => {
     validationSchema
       .validate(values, { abortEarly: false })
       .then(() => {
+        dispatch(saving(true))
         let newHouse = { ...values, category: { id: idCategory }, numberOfHire: 0, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4, name: "READY" } }
         if (selectedImages.length === 0) {
           dispatch(editHouse({ house: newHouse, images: house.images, indexHouseEdit }));
         } else {
           dispatch(editHouse({ house: newHouse, images: selectedImages, indexHouseEdit }))
         }
-        displaySwalAlter();
         customAxios.post("/houses/save", newHouse)
           .then(res => {
             if (selectedImages.length !== 0) {
@@ -285,7 +291,7 @@ const EditHouse = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="button buttonShadow mt-30 mb-10" type="submit" style={{ width: "10%", marginLeft: "40%"}}><h3>Save</h3></button>
+                  <button className="button buttonShadow mt-30 mb-10" type="submit" style={{ width: "10%", marginLeft: "40%" }}><h3>Save</h3></button>
                 </div>
               </Form>
             )}
@@ -293,6 +299,7 @@ const EditHouse = () => {
 
         </div>
       </div>}
+      <Saving />
     </>
   );
 };

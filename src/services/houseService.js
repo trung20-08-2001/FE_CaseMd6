@@ -73,3 +73,10 @@ export const findHousePageSearch=createAsyncThunk(
         return response.data
     }
 )
+
+export const saving=createAsyncThunk(
+    "houses/saveing",
+    async(saving)=>{
+        return saving;
+    }
+)

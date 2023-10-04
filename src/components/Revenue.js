@@ -30,7 +30,7 @@ export default function Income() {
     const revenue = useSelector(state => state.revenue.data);
     const loading = useSelector(state => state.revenue.loading);
     const dispatch = useDispatch()
-    console.log(revenue);
+    
     const options = {
         responsive: true,
         plugins: {
@@ -85,8 +85,8 @@ export default function Income() {
                 datasets: [
                     {
                         ...prevData.datasets[0],
-                        data: revenue[0].months,
-                        label: 'Revenue in ' + revenue[0].year,
+                        data: revenue[revenue.length-1].months,
+                        label: 'Revenue in ' + revenue[revenue.length-1].year,
                     },
                 ],
             }));

@@ -115,6 +115,14 @@ function Chat() {
                     showConfirmButton: false,
                     timer: 2000
                 });
+            }else if(accountReceiverCurrent.role.id==2){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Chat fail',
+                    text: "The two hosts are not allowed to chat with each other.",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else {
                 WebSocketConfig.sendMessage("/private/" + accountReceiverCurrent.id, newMessage);
                 dispatch(saveMessage({...newMessage, date: currentDate}))

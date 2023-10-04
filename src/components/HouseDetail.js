@@ -583,7 +583,7 @@ const HouseDetail = () => {
                                                     </div>
                                                     <div className="comment-text fix">
                                                         <div className="author-info">
-                                                            <h5 className="mb-8"><a href="#">{f.account.username}</a>
+                                                            <h5 className="mb-8"><a href="#">{f.account.fullName===null ? f.account.username :f.account.fullName}</a>
                                                             </h5>
                                                             <span className="block mb-11">{f.date}</span>
                                                             {numberOfStars.starts.map(item => {
