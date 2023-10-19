@@ -115,7 +115,7 @@ function Chat() {
                     showConfirmButton: false,
                     timer: 2000
                 });
-            }else if(accountReceiverCurrent.role.id==2){
+            }else if(accountReceiverCurrent.role.id==2 && accountLogin.role.id==2){
                 Swal.fire({
                     icon: 'error',
                     title: 'Chat fail',

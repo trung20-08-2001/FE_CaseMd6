@@ -167,7 +167,7 @@ const CreateHouse = () => {
                 dispatch(saving(true));
                 let newHouse = { ...values, category: { id: idCategory }, numberOfHire: 0, account: { id: JSON.parse(localStorage.getItem('account')).id }, status: { id: 4, name: "READY" } }
                
-                customAxios.post("/houses/save", newHouse)
+                customAxios.post("/host/saveHouse", newHouse)
                     .then(res => {
                         handleUploadMutilFile(res.data);
                     })

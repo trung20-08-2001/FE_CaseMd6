@@ -66,7 +66,7 @@ function UpRoleUserToVendor() {
         customAxios.post(`accounts/createAccount`, user)
             .then((res) => {
                 if (user.role.id == 3) {
-                    customAxios.post('send-email/'+user.email)
+                    customAxios.post('/admin/send-email/'+user.email)
                 }
                 navigate("/myaccount/vendors")
             })

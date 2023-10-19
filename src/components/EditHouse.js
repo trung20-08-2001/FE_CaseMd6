@@ -181,7 +181,7 @@ const EditHouse = () => {
         } else {
           dispatch(editHouse({ house: newHouse, images: selectedImages, indexHouseEdit }))
         }
-        customAxios.post("/houses/save", newHouse)
+        customAxios.post("/host/saveHouse", newHouse)
           .then(res => {
             if (selectedImages.length !== 0) {
               handleUploadMutilFile(res.data);

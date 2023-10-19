@@ -19,7 +19,7 @@ export const editHouse = createAsyncThunk(
 export const findHouseByAccount = createAsyncThunk(
     "houses/myHouses",
     async (idAccount) => {
-        const response = await customAxios.get("/houses/findHouseByAccount/" + idAccount)
+        const response = await customAxios.get("/host/findHouseByAccount/" + idAccount)
         return response.data;
     }
 )

@@ -21,7 +21,7 @@ function ListHouse() {
     useEffect(() => {
         if (content[currentPage] === undefined) {
            dispatch(findAllHouse({ page: currentPage, size: 8 }))
-        }
+        } 
     }, [currentPage])
 
     return (

@@ -36,7 +36,7 @@ const UpRole2 = () => {
     const handleSubmit = (values, {setSubmitting, resetForm}) => {
         values.img1 = img1;
         values.img2 = img2;
-        customAxios.post("admin/registration/req/" + account.id, values)
+        customAxios.post("/registration/req/" + account.id, values)
             .then(response => {
                 // Xử lý response từ server (nếu cần)
                 console.log(response);

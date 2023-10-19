@@ -199,7 +199,7 @@ const HouseDetail = () => {
     const disabledDates = availableDates.map(date => new Date(date));
 
     useEffect(() => {
-        customAxios.get("/houses/searchhouse/" + idHouse)
+        customAxios.get("/houses/searchHouse/" + idHouse)
             .then(res => {
                 setHouseDTO(res.data);
             })
@@ -569,7 +569,7 @@ const HouseDetail = () => {
 
                                 </div>
                                 <hr />
-                                <h4 className="details-title pb-8"> Feedback</h4>
+                                <h4 className="details-title pb-8"> Feedback({listFeedback.length})</h4>
                                 {
                                     displayedReviews.map((f) => {
 

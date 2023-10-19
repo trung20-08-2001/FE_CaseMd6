@@ -36,7 +36,7 @@ function App() {
                     <Route index element={<Home />}></Route>
                     {account &&
                         <>
-                            <Route path="myaccount" element={<SideBar />}>
+                                <Route path="myaccount" element={<SideBar />}>
                                 <Route path={"changePassword"} element={<ChangePassword></ChangePassword>}></Route>
                                 <Route path={'edit_profile/:id'} element={<EditProfile/>}></Route>
                                 <Route path={"profile/:id"} element={<Profile/>}></Route>

@@ -31,7 +31,7 @@ const SeeReviews = () => {
         setCurrentPage(pageNumber);
     };
     useEffect(() => {
-        customAxios.get("/houses/houseDetail/" + idHouse)
+        customAxios.get("/host/houseDetail/" + idHouse)
             .then(res => {
                 setHouse(res.data)
             })
